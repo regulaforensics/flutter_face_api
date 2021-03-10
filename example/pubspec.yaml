@@ -22,6 +22,4 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
-    - assets/regula.license
-    - assets/certificates/
   uses-material-design: true
