@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.flutter.plugins.regula.documentreader.flutter_document_reader_api_example">
+    package="io.flutter.plugins.regula.faceapi.flutter_face_api_example">
     <uses-permission android:name="android.permission.NFC" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="flutter_document_reader_api_example"
+        android:label="flutter_face_api_example"
         android:icon="@mipmap/ic_launcher"
         tools:ignore="AllowBackup">
         <activity
