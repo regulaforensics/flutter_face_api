@@ -1,3 +1,29 @@
+#import "FlutterFaceApiPlugin.h"
+
+@implementation FlutterFaceApiPlugin
+
+typedef void (^Callback)(NSString* response);
+
+- (void) result:(id _Nullable)message :(Callback)callback {
+    callback(message);
+}
+
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
+    FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"flutter_face_api/method" binaryMessenger:[registrar messenger]];
+    FlutterFaceApiPlugin* instance = [FlutterFaceApiPlugin new];
+    [registrar addMethodCallDelegate:instance channel:channel];
+}
+
+- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
+    NSString* action = call.method;
+    NSMutableArray* args = call.arguments;
+
+    Callback successCallback = ^(id _Nullable response){
+        result(response);
+    };
+    Callback errorCallback = ^(NSString* error){
+        result([FlutterError errorWithCode:@"error" message:error details:nil]);
+    };
 
     if([action isEqualToString:@"getServiceUrl"])
         [self getServiceUrl :successCallback :errorCallback];

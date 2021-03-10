@@ -9,11 +9,12 @@
 // From JSON
 
 +(RGLMatchFacesRequest*)RGLMatchFacesRequestFromJSON:(NSDictionary*)input {
-    NSNumber* similarityThreshold = [[input valueForKey:@"similarityThreshold"] numberValue];
-    NSDictionary* customMetadata = [input valueForKey:@"customMetadata"];
-    NSArray* images =[input valueForKey:@"images"];
-
-    return [[RGLMatchFacesRequest alloc] initWithImages:[JSONConstructor NSArrayRGLImageFromJSON:images] similarityThreshold:similarityThreshold customMetadata:customMetadata];
+    RGLMatchFacesRequest* result = [[RGLMatchFacesRequest alloc] initWithImages:[JSONConstructor NSArrayRGLImageFromJSON:[input valueForKey:@"images"]]];
+    
+    result.customMetadata = [input valueForKey:@"customMetadata"];
+    result.similarityThreshold = [[input valueForKey:@"similarityThreshold"] numberValue];
+    
+    return result;
 }
 
 +(RGLImage*)RGLImageFromJSON:(NSDictionary*)input {
