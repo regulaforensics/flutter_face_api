@@ -3,7 +3,7 @@ import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:async';
-import 'package:flutter_face_api_beta/face_api.dart';
+import 'package:flutter_face_api_beta/face_api.dart' as Regula;
 import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(new MaterialApp(home: new MyApp()));
