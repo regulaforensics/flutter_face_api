@@ -16,6 +16,15 @@ class FaceCaptureError {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (errorCode != null) result.addAll({"errorCode": errorCode});
+    if (message != null) result.addAll({"message": message});
+
+    return result;
+  }
 }
 
 class FaceProcessorError {
@@ -28,6 +37,15 @@ class FaceProcessorError {
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (errorCode != null) result.addAll({"errorCode": errorCode});
+    if (message != null) result.addAll({"message": message});
 
     return result;
   }
@@ -46,6 +64,15 @@ class LivenessError {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (errorCode != null) result.addAll({"errorCode": errorCode});
+    if (message != null) result.addAll({"message": message});
+
+    return result;
+  }
 }
 
 class MatchFacesError {
@@ -61,6 +88,15 @@ class MatchFacesError {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (errorCode != null) result.addAll({"errorCode": errorCode});
+    if (message != null) result.addAll({"message": message});
+
+    return result;
+  }
 }
 
 class LivenessParams {
@@ -71,6 +107,14 @@ class LivenessParams {
     var result = new LivenessParams();
 
     result.attemptsCount = jsonObject["attemptsCount"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (attemptsCount != null) result.addAll({"attemptsCount": attemptsCount});
 
     return result;
   }
@@ -89,6 +133,15 @@ class AgeRange {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (high != null) result.addAll({"high": high});
+    if (low != null) result.addAll({"low": low});
+
+    return result;
+  }
 }
 
 class ComparedFace {
@@ -103,6 +156,16 @@ class ComparedFace {
     result.tag = jsonObject["tag"];
     result.imageType = jsonObject["imageType"];
     result.position = jsonObject["position"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (tag != null) result.addAll({"tag": tag});
+    if (imageType != null) result.addAll({"imageType": imageType});
+    if (position != null) result.addAll({"position": position});
 
     return result;
   }
@@ -125,6 +188,17 @@ class ComparedFacesPair {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (first != null) result.addAll({"first": first});
+    if (second != null) result.addAll({"second": second});
+    if (similarity != null) result.addAll({"similarity": similarity});
+    if (error != null) result.addAll({"error": error});
+
+    return result;
+  }
 }
 
 class Ethnicity {
@@ -137,6 +211,15 @@ class Ethnicity {
 
     result.confidence = jsonObject["confidence"];
     result.value = jsonObject["value"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (confidence != null) result.addAll({"confidence": confidence});
+    if (value != null) result.addAll({"value": value});
 
     return result;
   }
@@ -155,6 +238,15 @@ class FaceCaptureResponse {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (error != null) result.addAll({"error": error});
+    if (image != null) result.addAll({"image": image});
+
+    return result;
+  }
 }
 
 class Gender {
@@ -167,6 +259,15 @@ class Gender {
 
     result.confidence = jsonObject["confidence"] == null ? null : jsonObject["confidence"].toDouble();
     result.value = jsonObject["value"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (confidence != null) result.addAll({"confidence": confidence});
+    if (value != null) result.addAll({"value": value});
 
     return result;
   }
@@ -187,6 +288,16 @@ class Landmark {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (type != null) result.addAll({"type": type});
+    if (x != null) result.addAll({"x": x});
+    if (y != null) result.addAll({"y": y});
+
+    return result;
+  }
 }
 
 class LivenessResponse {
@@ -201,6 +312,16 @@ class LivenessResponse {
     result.bitmap = jsonObject["bitmap"];
     result.liveness = jsonObject["liveness"];
     result.error = LivenessError.fromJson(jsonObject["error"]);
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (bitmap != null) result.addAll({"bitmap": bitmap});
+    if (liveness != null) result.addAll({"liveness": liveness});
+    if (error != null) result.addAll({"error": error});
 
     return result;
   }
@@ -225,6 +346,16 @@ class MatchFacesResponse {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (error != null) result.addAll({"error": error});
+    if (matchedFaces != null) result.addAll({"matchedFaces": matchedFaces});
+    if (unmatchedFaces != null) result.addAll({"unmatchedFaces": unmatchedFaces});
+
+    return result;
+  }
 }
 
 class Image {
@@ -239,6 +370,16 @@ class Image {
     result.imageType = jsonObject["imageType"];
     result.tag = jsonObject["tag"];
     result.bitmap = jsonObject["bitmap"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (imageType != null) result.addAll({"imageType": imageType});
+    if (tag != null) result.addAll({"tag": tag});
+    if (bitmap != null) result.addAll({"bitmap": bitmap});
 
     return result;
   }
@@ -261,6 +402,17 @@ class LivenessRequest {
 
     return result;
   }
+
+  Map toJson(){
+    Map result = {};
+
+    if (normalImageData != null) result.addAll({"normalImageData": normalImageData});
+    if (scaledImageData != null) result.addAll({"scaledImageData": scaledImageData});
+    if (requestBody != null) result.addAll({"requestBody": requestBody});
+    if (guid != null) result.addAll({"guid": guid});
+
+    return result;
+  }
 }
 
 class MatchFacesRequest {
@@ -277,6 +429,16 @@ class MatchFacesRequest {
       for (var item in jsonObject["images"])
         result.images.add(Image.fromJson(item));
     result.customMetadata = jsonObject["customMetadata"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (similarityThreshold != null) result.addAll({"similarityThreshold": similarityThreshold});
+    if (images != null) result.addAll({"images": images});
+    if (customMetadata != null) result.addAll({"customMetadata": customMetadata});
 
     return result;
   }
