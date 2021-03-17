@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   ImagePicker().getImage(source: ImageSource.gallery).then(
                       (value) => setImage(
-                          true,
+                          first,
                           io.File(value.path).readAsBytesSync(),
                           Regula.eInputFaceType.ift_DocumentPrinted));
                   Navigator.pop(context);

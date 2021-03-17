@@ -24,10 +24,6 @@ rootProject.allprojects {
             url "http://maven.regulaforensics.com/RegulaDocumentReader/Beta"
             allowInsecureProtocol true
         }
-        maven {
-            url "http://ftp.regula.local/RegulaDocumentReaderGit"
-            allowInsecureProtocol true
-        }
     }
 }
 
