@@ -113,7 +113,7 @@ class _MyAppState extends State<MyApp> {
         setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
             Regula.eInputFaceType.ift_Live);
         setState(
-            () => _liveness = result.liveness == 0 ? "passed" : "not passed");
+            () => _liveness = result.liveness == 0 ? "passed" : "unknown");
       });
 
   Widget createButton(String text, VoidCallback onPress) => Container(
