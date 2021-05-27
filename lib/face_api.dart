@@ -99,27 +99,6 @@ class MatchFacesError {
   }
 }
 
-class LivenessParams {
-  int attemptsCount;
-
-  static LivenessParams fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new LivenessParams();
-
-    result.attemptsCount = jsonObject["attemptsCount"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (attemptsCount != null) result.addAll({"attemptsCount": attemptsCount});
-
-    return result;
-  }
-}
-
 class AgeRange {
   int high;
   int low;
@@ -496,16 +475,12 @@ class Face {
     return await _channel.invokeMethod("getServiceUrl", []);
   }
 
-  static Future<dynamic> startLivenessMatching() async {
-    return await _channel.invokeMethod("startLivenessMatching", []);
+  static Future<dynamic> startLiveness() async {
+    return await _channel.invokeMethod("startLiveness", []);
   }
 
   static Future<dynamic> getFaceSdkVersion() async {
     return await _channel.invokeMethod("getFaceSdkVersion", []);
-  }
-
-  static Future<dynamic> livenessParams() async {
-    return await _channel.invokeMethod("livenessParams", []);
   }
 
   static Future<dynamic> presentFaceCaptureActivity() async {
@@ -524,8 +499,8 @@ class Face {
     return await _channel.invokeMethod("presentFaceCaptureActivityByCameraId", [cameraId]);
   }
 
-  static Future<dynamic> startLivenessMatchingByCameraId(cameraId) async {
-    return await _channel.invokeMethod("startLivenessMatchingByCameraId", [cameraId]);
+  static Future<dynamic> startLivenessByCameraId(cameraId) async {
+    return await _channel.invokeMethod("startLivenessByCameraId", [cameraId]);
   }
 
   static Future<dynamic> setServiceUrl(url) async {

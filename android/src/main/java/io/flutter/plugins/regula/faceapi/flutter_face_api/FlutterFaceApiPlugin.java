@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.regula.facesdk.configuration.FaceCaptureConfiguration;
+import com.regula.facesdk.configuration.LivenessConfiguration;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -109,14 +112,11 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "getServiceUrl":
                     getServiceUrl(callback);
                     break;
-                case "startLivenessMatching":
-                    startLivenessMatching(callback);
+                case "startLiveness":
+                    startLiveness(callback);
                     break;
                 case "getFaceSdkVersion":
                     getFaceSdkVersion(callback);
-                    break;
-                case "livenessParams":
-                    livenessParams(callback);
                     break;
                 case "presentFaceCaptureActivity":
                     presentFaceCaptureActivity(callback);
@@ -130,8 +130,8 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "presentFaceCaptureActivityByCameraId":
                     presentFaceCaptureActivityByCameraId(callback, args(0));
                     break;
-                case "startLivenessMatchingByCameraId":
-                    startLivenessMatchingByCameraId(callback, args(0));
+                case "startLivenessByCameraId":
+                    startLivenessByCameraId(callback, args(0));
                     break;
                 case "setServiceUrl":
                     setServiceUrl(callback, args(0));
@@ -148,16 +148,12 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success(Instance().getServiceUrl());
     }
 
-    private void startLivenessMatching(Callback callback) {
-        Instance().startLivenessMatching(getContext(), (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
+    private void startLiveness(Callback callback) {
+        Instance().startLiveness(getContext(), (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
     }
 
     private void getFaceSdkVersion(Callback callback) {
         callback.success(Instance().getFaceSdkVersion());
-    }
-
-    private void livenessParams(Callback callback) {
-        callback.success(JSONConstructor.generateLivenessParams(Instance().livenessParams()));
     }
 
     private void presentFaceCaptureActivity(Callback callback) {
@@ -175,11 +171,11 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void presentFaceCaptureActivityByCameraId(Callback callback, int cameraID) {
-        Instance().presentFaceCaptureActivity(getContext(), cameraID, (response) -> callback.success(JSONConstructor.generateFaceCaptureResponse(response).toString()));
+        Instance().presentFaceCaptureActivity(getContext(), new FaceCaptureConfiguration.Builder().setCameraId(cameraID).build(), (response) -> callback.success(JSONConstructor.generateFaceCaptureResponse(response).toString()));
     }
 
-    private void startLivenessMatchingByCameraId(Callback callback, int cameraID) {
-        Instance().startLivenessMatching(getContext(), cameraID, (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
+    private void startLivenessByCameraId(Callback callback, int cameraID) {
+        Instance().startLiveness(getContext(), new LivenessConfiguration.Builder().setCameraId(cameraID).build(), (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
     }
 
     private void setServiceUrl(Callback callback, String url) {
