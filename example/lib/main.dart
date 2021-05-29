@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  liveness() => Regula.Face.startLivenessMatching().then((value) {
+  liveness() => Regula.Face.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
             Regula.eInputFaceType.ift_Live);
