@@ -432,10 +432,10 @@ class eFaceRProcessorErrorCodes {
   static const int FR_FACE_ALIGHNER_FAILED = 4;
   static const int FR_DESCRIPTOR_EXTRACTOR_ERROR = 5;
   static const int SERVER_RESPONSE_IS_EMPTY = 1001;
-  static const int RGLFaceProcessorResultCodeNoLicense = 200;
-  static const int RGLFaceProcessorResultCodeIsNotInitialized = 201;
-  static const int RGLFaceProcessorResultCodeCommandIsNotSupported = 202;
-  static const int RGLFaceProcessorResultCodeCommandParamsReadError = 203;
+  static const int NO_LICENSE = 200;
+  static const int NOT_INITIALIZED = 201;
+  static const int COMMAND_IS_NOT_SUPPORTED = 202;
+  static const int COMMAND_PARAMS_READ_ERROR = 203;
 }
 
 class eInputFaceType {
@@ -456,6 +456,7 @@ class LivenessErrorCode {
   static const int INTERNAL_ERROR = 1000;
   static const int SERVER_ERROR = 1001;
   static const int ZOOM_NOT_SUPPORTED = 1002;
+  static const int NO_LICENSE = 200;
   static const int CANCELLED = 600;
   static const int PROCESSING_TIMEOUT = 601;
   static const int SERVER_RESPONSE_IS_EMPTY = 602;

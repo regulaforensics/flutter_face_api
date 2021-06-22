@@ -7,14 +7,14 @@
 @interface JSONConstructor : NSObject
 
 +(NSString* _Nonnull)dictToString:(NSMutableDictionary* _Nonnull)input;
-+(RGLMatchFacesRequest* _Nonnull)RGLMatchFacesRequestFromJSON:(NSDictionary* _Nonnull)input;
-+(NSMutableDictionary* _Nonnull)generateRGLLivenessResponse:(RGLLivenessResponse* _Nullable)input;
++(RFSMatchFacesRequest* _Nonnull)RFSMatchFacesRequestFromJSON:(NSDictionary* _Nonnull)input;
++(NSMutableDictionary* _Nonnull)generateRFSLivenessResponse:(RFSLivenessResponse* _Nullable)input;
 +(NSMutableDictionary* _Nonnull)generateNSError:(NSError* _Nullable)input;
-+(NSMutableDictionary* _Nonnull)generateRGLFaceCaptureResponse:(RGLFaceCaptureResponse* _Nullable)input;
-+(NSMutableDictionary* _Nonnull)generateRGLImage:(RGLImage* _Nullable)input;
-+(NSMutableDictionary* _Nonnull)generateRGLMatchFacesResponse:(RGLMatchFacesResponse* _Nullable)input;
-+(NSMutableDictionary* _Nonnull)generateRGLComparedFacesPair:(RGLComparedFacesPair* _Nullable)input;
-+(NSMutableDictionary* _Nonnull)generateRGLComparedFace:(RGLComparedFace* _Nullable)input;
++(NSMutableDictionary* _Nonnull)generateRFSFaceCaptureResponse:(RFSFaceCaptureResponse* _Nullable)input;
++(NSMutableDictionary* _Nonnull)generateRFSImage:(RFSImage* _Nullable)input;
++(NSMutableDictionary* _Nonnull)generateRFSMatchFacesResponse:(RFSMatchFacesResponse* _Nullable)input;
++(NSMutableDictionary* _Nonnull)generateRFSComparedFacesPair:(RFSComparedFacesPair* _Nullable)input;
++(NSMutableDictionary* _Nonnull)generateRFSComparedFace:(RFSComparedFace* _Nullable)input;
 
 @end
 #endif
