@@ -1,6 +1,6 @@
 #import <Flutter/Flutter.h>
 @import FaceSDK;
-#import "JSONConstructor.h"
+#import "RFSJSONConstructor.h"
 
 @interface FlutterFaceApiPlugin : NSObject<FlutterPlugin>
 
