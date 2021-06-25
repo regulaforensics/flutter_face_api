@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 // Classes
 
 class FaceCaptureError {
-  int errorCode;
-  String message;
+  int? errorCode;
+  String? message;
 
-  static FaceCaptureError fromJson(jsonObject) {
+  static FaceCaptureError? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new FaceCaptureError();
 
@@ -28,10 +28,10 @@ class FaceCaptureError {
 }
 
 class FaceProcessorError {
-  int errorCode;
-  String message;
+  int? errorCode;
+  String? message;
 
-  static FaceProcessorError fromJson(jsonObject) {
+  static FaceProcessorError? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new FaceProcessorError();
 
@@ -52,10 +52,10 @@ class FaceProcessorError {
 }
 
 class LivenessError {
-  int errorCode;
-  String message;
+  int? errorCode;
+  String? message;
 
-  static LivenessError fromJson(jsonObject) {
+  static LivenessError? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new LivenessError();
 
@@ -76,10 +76,10 @@ class LivenessError {
 }
 
 class MatchFacesError {
-  int errorCode;
-  String message;
+  int? errorCode;
+  String? message;
 
-  static MatchFacesError fromJson(jsonObject) {
+  static MatchFacesError? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new MatchFacesError();
 
@@ -100,10 +100,10 @@ class MatchFacesError {
 }
 
 class AgeRange {
-  int high;
-  int low;
+  int? high;
+  int? low;
 
-  static AgeRange fromJson(jsonObject) {
+  static AgeRange? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new AgeRange();
 
@@ -124,11 +124,11 @@ class AgeRange {
 }
 
 class ComparedFace {
-  String tag;
-  int imageType;
-  int position;
+  String? tag;
+  int? imageType;
+  int? position;
 
-  static ComparedFace fromJson(jsonObject) {
+  static ComparedFace? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new ComparedFace();
 
@@ -151,12 +151,12 @@ class ComparedFace {
 }
 
 class ComparedFacesPair {
-  ComparedFace first;
-  ComparedFace second;
-  double similarity;
-  MatchFacesError error;
+  ComparedFace? first;
+  ComparedFace? second;
+  double? similarity;
+  MatchFacesError? error;
 
-  static ComparedFacesPair fromJson(jsonObject) {
+  static ComparedFacesPair? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new ComparedFacesPair();
 
@@ -181,10 +181,10 @@ class ComparedFacesPair {
 }
 
 class Ethnicity {
-  int confidence;
-  int value;
+  int? confidence;
+  int? value;
 
-  static Ethnicity fromJson(jsonObject) {
+  static Ethnicity? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new Ethnicity();
 
@@ -205,10 +205,10 @@ class Ethnicity {
 }
 
 class FaceCaptureResponse {
-  FaceCaptureError error;
-  Image image;
+  FaceCaptureError? error;
+  Image? image;
 
-  static FaceCaptureResponse fromJson(jsonObject) {
+  static FaceCaptureResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new FaceCaptureResponse();
 
@@ -229,10 +229,10 @@ class FaceCaptureResponse {
 }
 
 class Gender {
-  double confidence;
-  int value;
+  double? confidence;
+  int? value;
 
-  static Gender fromJson(jsonObject) {
+  static Gender? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new Gender();
 
@@ -253,11 +253,11 @@ class Gender {
 }
 
 class Landmark {
-  int type;
-  int x;
-  int y;
+  int? type;
+  int? x;
+  int? y;
 
-  static Landmark fromJson(jsonObject) {
+  static Landmark? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new Landmark();
 
@@ -280,11 +280,11 @@ class Landmark {
 }
 
 class LivenessResponse {
-  String bitmap;
-  int liveness;
-  LivenessError error;
+  String? bitmap;
+  int? liveness;
+  LivenessError? error;
 
-  static LivenessResponse fromJson(jsonObject) {
+  static LivenessResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new LivenessResponse();
 
@@ -307,11 +307,11 @@ class LivenessResponse {
 }
 
 class MatchFacesResponse {
-  FaceProcessorError error;
-  List<ComparedFacesPair> matchedFaces = [];
-  List<ComparedFacesPair> unmatchedFaces = [];
+  FaceProcessorError? error;
+  List<ComparedFacesPair?> matchedFaces = [];
+  List<ComparedFacesPair?> unmatchedFaces = [];
 
-  static MatchFacesResponse fromJson(jsonObject) {
+  static MatchFacesResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new MatchFacesResponse();
 
@@ -338,11 +338,11 @@ class MatchFacesResponse {
 }
 
 class Image {
-  int imageType;
-  String tag;
-  String bitmap;
+  int? imageType;
+  String? tag;
+  String? bitmap;
 
-  static Image fromJson(jsonObject) {
+  static Image? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new Image();
 
@@ -365,12 +365,12 @@ class Image {
 }
 
 class LivenessRequest {
-  List<dynamic> normalImageData;
-  List<dynamic> scaledImageData;
-  List<dynamic> requestBody;
-  String guid;
+  List<dynamic>? normalImageData;
+  List<dynamic>? scaledImageData;
+  List<dynamic>? requestBody;
+  String? guid;
 
-  static LivenessRequest fromJson(jsonObject) {
+  static LivenessRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new LivenessRequest();
 
@@ -395,11 +395,11 @@ class LivenessRequest {
 }
 
 class MatchFacesRequest {
-  double similarityThreshold;
-  List<Image> images = [];
-  dynamic customMetadata;
+  double? similarityThreshold;
+  List<Image?> images = [];
+  dynamic? customMetadata;
 
-  static MatchFacesRequest fromJson(jsonObject) {
+  static MatchFacesRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new MatchFacesRequest();
 
