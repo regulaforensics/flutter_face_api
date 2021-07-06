@@ -99,30 +99,6 @@ class MatchFacesError {
   }
 }
 
-class AgeRange {
-  int? high;
-  int? low;
-
-  static AgeRange? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new AgeRange();
-
-    result.high = jsonObject["high"];
-    result.low = jsonObject["low"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (high != null) result.addAll({"high": high});
-    if (low != null) result.addAll({"low": low});
-
-    return result;
-  }
-}
-
 class ComparedFace {
   String? tag;
   int? imageType;
@@ -180,30 +156,6 @@ class ComparedFacesPair {
   }
 }
 
-class Ethnicity {
-  int? confidence;
-  int? value;
-
-  static Ethnicity? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new Ethnicity();
-
-    result.confidence = jsonObject["confidence"];
-    result.value = jsonObject["value"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (confidence != null) result.addAll({"confidence": confidence});
-    if (value != null) result.addAll({"value": value});
-
-    return result;
-  }
-}
-
 class FaceCaptureResponse {
   FaceCaptureError? error;
   Image? image;
@@ -223,57 +175,6 @@ class FaceCaptureResponse {
 
     if (error != null) result.addAll({"error": error});
     if (image != null) result.addAll({"image": image});
-
-    return result;
-  }
-}
-
-class Gender {
-  double? confidence;
-  int? value;
-
-  static Gender? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new Gender();
-
-    result.confidence = jsonObject["confidence"] == null ? null : jsonObject["confidence"].toDouble();
-    result.value = jsonObject["value"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (confidence != null) result.addAll({"confidence": confidence});
-    if (value != null) result.addAll({"value": value});
-
-    return result;
-  }
-}
-
-class Landmark {
-  int? type;
-  int? x;
-  int? y;
-
-  static Landmark? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new Landmark();
-
-    result.type = jsonObject["type"];
-    result.x = jsonObject["x"];
-    result.y = jsonObject["y"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (type != null) result.addAll({"type": type});
-    if (x != null) result.addAll({"x": x});
-    if (y != null) result.addAll({"y": y});
 
     return result;
   }
