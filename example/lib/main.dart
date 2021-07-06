@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
             FlatButton(
                 child: Text("Use camera"),
                 onPressed: () {
-                  Regula.Face.presentFaceCaptureActivity().then((result) =>
+                  Regula.FaceSDKpresentFaceCaptureActivity().then((result) =>
                       setImage(
                           first,
                           base64Decode(Regula.FaceCaptureResponse.fromJson(
@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
     setState(() => _similarity = "Processing...");
     var request = new Regula.MatchFacesRequest();
     request.images = [image1, image2];
-    Regula.Face.matchFaces(jsonEncode(request)).then((value) {
+    Regula.FaceSDKmatchFaces(jsonEncode(request)).then((value) {
       var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
       var matchedFaces = response.matchedFaces;
       setState(() => _similarity = matchedFaces.length > 0
@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  liveness() => Regula.Face.startLiveness().then((value) {
+  liveness() => Regula.FaceSDKstartLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
             Regula.eInputFaceType.ift_Live);

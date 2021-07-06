@@ -469,7 +469,7 @@ class LivenessStatus {
   static const int UNKNOWN = 1;
 }
 
-class Face {
+class FaceSDK {
   static const MethodChannel _channel = const MethodChannel('flutter_face_api/method');
 
   static Future<dynamic> getServiceUrl() async {
