@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 
 // Classes
 
-class FaceCaptureError {
+class FaceCaptureException {
   int? errorCode;
   String? message;
 
-  static FaceCaptureError? fromJson(jsonObject) {
+  static FaceCaptureException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new FaceCaptureError();
+    var result = new FaceCaptureException();
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
@@ -27,13 +27,13 @@ class FaceCaptureError {
   }
 }
 
-class FaceProcessorError {
+class LivenessErrorException {
   int? errorCode;
   String? message;
 
-  static FaceProcessorError? fromJson(jsonObject) {
+  static LivenessErrorException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new FaceProcessorError();
+    var result = new LivenessErrorException();
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
@@ -51,13 +51,13 @@ class FaceProcessorError {
   }
 }
 
-class LivenessError {
+class MatchFacesException {
   int? errorCode;
   String? message;
 
-  static LivenessError? fromJson(jsonObject) {
+  static MatchFacesException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new LivenessError();
+    var result = new MatchFacesException();
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
@@ -75,13 +75,13 @@ class LivenessError {
   }
 }
 
-class MatchFacesError {
+class ComparedFacesPairException {
   int? errorCode;
   String? message;
 
-  static MatchFacesError? fromJson(jsonObject) {
+  static ComparedFacesPairException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new MatchFacesError();
+    var result = new ComparedFacesPairException();
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
@@ -130,7 +130,7 @@ class ComparedFacesPair {
   ComparedFace? first;
   ComparedFace? second;
   double? similarity;
-  MatchFacesError? error;
+  ComparedFacesPairException? exception;
 
   static ComparedFacesPair? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -139,7 +139,7 @@ class ComparedFacesPair {
     result.first = ComparedFace.fromJson(jsonObject["first"]);
     result.second = ComparedFace.fromJson(jsonObject["second"]);
     result.similarity = jsonObject["similarity"] == null ? null : jsonObject["similarity"].toDouble();
-    result.error = MatchFacesError.fromJson(jsonObject["error"]);
+    result.exception = ComparedFacesPairException.fromJson(jsonObject["exception"]);
 
     return result;
   }
@@ -150,21 +150,21 @@ class ComparedFacesPair {
     if (first != null) result.addAll({"first": first});
     if (second != null) result.addAll({"second": second});
     if (similarity != null) result.addAll({"similarity": similarity});
-    if (error != null) result.addAll({"error": error});
+    if (exception != null) result.addAll({"exception": exception});
 
     return result;
   }
 }
 
 class FaceCaptureResponse {
-  FaceCaptureError? error;
+  FaceCaptureException? exception;
   Image? image;
 
   static FaceCaptureResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new FaceCaptureResponse();
 
-    result.error = FaceCaptureError.fromJson(jsonObject["error"]);
+    result.exception = FaceCaptureException.fromJson(jsonObject["exception"]);
     result.image = Image.fromJson(jsonObject["image"]);
 
     return result;
@@ -173,7 +173,7 @@ class FaceCaptureResponse {
   Map toJson(){
     Map result = {};
 
-    if (error != null) result.addAll({"error": error});
+    if (exception != null) result.addAll({"exception": exception});
     if (image != null) result.addAll({"image": image});
 
     return result;
@@ -183,7 +183,7 @@ class FaceCaptureResponse {
 class LivenessResponse {
   String? bitmap;
   int? liveness;
-  LivenessError? error;
+  LivenessErrorException? exception;
 
   static LivenessResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -191,7 +191,7 @@ class LivenessResponse {
 
     result.bitmap = jsonObject["bitmap"];
     result.liveness = jsonObject["liveness"];
-    result.error = LivenessError.fromJson(jsonObject["error"]);
+    result.exception = LivenessErrorException.fromJson(jsonObject["exception"]);
 
     return result;
   }
@@ -201,14 +201,14 @@ class LivenessResponse {
 
     if (bitmap != null) result.addAll({"bitmap": bitmap});
     if (liveness != null) result.addAll({"liveness": liveness});
-    if (error != null) result.addAll({"error": error});
+    if (exception != null) result.addAll({"exception": exception});
 
     return result;
   }
 }
 
 class MatchFacesResponse {
-  FaceProcessorError? error;
+  MatchFacesException? exception;
   List<ComparedFacesPair?> matchedFaces = [];
   List<ComparedFacesPair?> unmatchedFaces = [];
 
@@ -216,7 +216,7 @@ class MatchFacesResponse {
     if (jsonObject == null) return null;
     var result = new MatchFacesResponse();
 
-    result.error = FaceProcessorError.fromJson(jsonObject["error"]);
+    result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
     if (jsonObject["matchedFaces"] != null)
       for (var item in jsonObject["matchedFaces"])
         result.matchedFaces.add(ComparedFacesPair.fromJson(item));
@@ -230,7 +230,7 @@ class MatchFacesResponse {
   Map toJson(){
     Map result = {};
 
-    if (error != null) result.addAll({"error": error});
+    if (exception != null) result.addAll({"exception": exception});
     if (matchedFaces != null) result.addAll({"matchedFaces": matchedFaces});
     if (unmatchedFaces != null) result.addAll({"unmatchedFaces": unmatchedFaces});
 
@@ -260,36 +260,6 @@ class Image {
     if (imageType != null) result.addAll({"imageType": imageType});
     if (tag != null) result.addAll({"tag": tag});
     if (bitmap != null) result.addAll({"bitmap": bitmap});
-
-    return result;
-  }
-}
-
-class LivenessRequest {
-  List<dynamic>? normalImageData;
-  List<dynamic>? scaledImageData;
-  List<dynamic>? requestBody;
-  String? guid;
-
-  static LivenessRequest? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new LivenessRequest();
-
-    result.normalImageData = jsonObject["normalImageData"];
-    result.scaledImageData = jsonObject["scaledImageData"];
-    result.requestBody = jsonObject["requestBody"];
-    result.guid = jsonObject["guid"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (normalImageData != null) result.addAll({"normalImageData": normalImageData});
-    if (scaledImageData != null) result.addAll({"scaledImageData": scaledImageData});
-    if (requestBody != null) result.addAll({"requestBody": requestBody});
-    if (guid != null) result.addAll({"guid": guid});
 
     return result;
   }
@@ -326,24 +296,13 @@ class MatchFacesRequest {
 
 // Enum
 
-class eFaceRProcessorErrorCodes {
-  static const int FR_IMAGE_EMPTY = 1;
-  static const int FR_FACE_NOT_DETECTED = 2;
-  static const int FR_LANDMARKS_NOT_DETECTED = 3;
-  static const int FR_FACE_ALIGHNER_FAILED = 4;
-  static const int FR_DESCRIPTOR_EXTRACTOR_ERROR = 5;
-  static const int SERVER_RESPONSE_IS_EMPTY = 1001;
-  static const int NO_LICENSE = 200;
-  static const int NOT_INITIALIZED = 201;
-  static const int COMMAND_IS_NOT_SUPPORTED = 202;
-  static const int COMMAND_PARAMS_READ_ERROR = 203;
-}
-
-class eInputFaceType {
-  static const int ift_DocumentPrinted = 1;
-  static const int ift_DocumentRFID = 2;
-  static const int ift_Live = 3;
-  static const int ift_LiveWithDoc = 4;
+class ComparedFacesPairErrorCodes {
+  static const int IMAGE_EMPTY = 1;
+  static const int FACE_NOT_DETECTED = 2;
+  static const int LANDMARKS_NOT_DETECTED = 3;
+  static const int FACE_ALIGNER_FAILED = 4;
+  static const int DESCRIPTOR_EXTRACTOR_ERROR = 5;
+  static const int API_CALL_FAILED = 6;
 }
 
 class FaceCaptureResultCodes {
@@ -351,23 +310,45 @@ class FaceCaptureResultCodes {
   static const int CAMERA_NOT_AVAILABLE = 2;
   static const int CAMERA_NO_PERMISSION = 3;
   static const int IN_PROGRESS_ALREADY = 4;
+  static const int CONTEXT_IS_NULL = 5;
+}
+
+class ImageType {
+  static const int IMAGE_TYPE_PRINTED = 1;
+  static const int IMAGE_TYPE_RFID = 2;
+  static const int IMAGE_TYPE_LIVE = 3;
+  static const int IMAGE_TYPE_LIVE_WITH_DOC = 4;
 }
 
 class LivenessErrorCode {
-  static const int INTERNAL_ERROR = 1000;
-  static const int SERVER_ERROR = 1001;
-  static const int ZOOM_NOT_SUPPORTED = 1002;
-  static const int NO_LICENSE = 200;
-  static const int CANCELLED = 600;
-  static const int PROCESSING_TIMEOUT = 601;
-  static const int SERVER_RESPONSE_IS_EMPTY = 602;
-  static const int PROCESSING_FAILED = 603;
-  static const int PROCESSING_ATTEMPT_ENDED = 604;
+  static const int CONTEXT_IS_NULL = 1;
+  static const int IN_PROGRESS_ALREADY = 2;
+  static const int ZOOM_NOT_SUPPORTED = 3;
+  static const int NO_LICENSE = 4;
+  static const int CANCELLED = 5;
+  static const int PROCESSING_TIMEOUT = 6;
+  static const int API_CALL_FAILED = 7;
+  static const int PROCESSING_FAILED = 8;
+  static const int PROCESSING_ATTEMPTS_ENDED = 9;
 }
 
 class LivenessStatus {
   static const int PASSED = 0;
   static const int UNKNOWN = 1;
+}
+
+class MatchFacesErrorCodes {
+  static const int IMAGE_EMPTY = 1;
+  static const int FACE_NOT_DETECTED = 2;
+  static const int LANDMARKS_NOT_DETECTED = 3;
+  static const int FACE_ALIGNER_FAILED = 4;
+  static const int DESCRIPTOR_EXTRACTOR_ERROR = 5;
+  static const int NO_LICENSE = 6;
+  static const int NOT_INITIALIZED = 7;
+  static const int COMMAND_IS_NOT_SUPPORTED = 8;
+  static const int COMMAND_PARAMS_READ_ERROR = 9;
+  static const int API_CALL_FAILED = 10;
+  static const int PROCESSING_FAILED = 11;
 }
 
 class FaceSDK {

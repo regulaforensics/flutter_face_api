@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
                       (value) => setImage(
                           first,
                           io.File(value.path).readAsBytesSync(),
-                          Regula.eInputFaceType.ift_DocumentPrinted));
+                          Regula.ImageType.IMAGE_TYPE_PRINTED));
                   Navigator.pop(context);
                 }),
             // ignore: deprecated_member_use
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                               .image
                               .bitmap
                               .replaceAll("\n", "")),
-                          Regula.eInputFaceType.ift_Live));
+                          Regula.ImageType.IMAGE_TYPE_LIVE));
                   Navigator.pop(context);
                 })
           ]));
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
-            Regula.eInputFaceType.ift_Live);
+            Regula.ImageType.IMAGE_TYPE_LIVE);
         setState(
             () => _liveness = result.liveness == 0 ? "passed" : "unknown");
       });

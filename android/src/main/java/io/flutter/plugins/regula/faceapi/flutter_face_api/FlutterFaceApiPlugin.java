@@ -17,7 +17,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
-import static com.regula.facesdk.Face.Instance;
+import static com.regula.facesdk.FaceSDK.Instance;
 
 @SuppressWarnings({"unchecked", "NullableProblems", "ConstantConditions", "RedundantSuppression"})
 public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler {
