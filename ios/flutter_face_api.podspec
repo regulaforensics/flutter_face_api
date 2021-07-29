@@ -1,0 +1,18 @@
+Pod::Spec.new do |s|
+  s.name             = 'flutter_face_api'
+  s.version          = '3.0.0'
+  s.summary          = 'A new flutter plugin project.'
+  s.description      = <<-DESC
+A new flutter plugin project.
+                       DESC
+  s.homepage         = 'http://example.com'
+  s.license          = { :file => '../LICENSE' }
+  s.author           = { 'Your Company' => 'email@example.com' }
+  s.source           = { :path => '.' }
+  s.source_files = 'Classes/**/*'
+  s.public_header_files = 'Classes/**/*.h'
+  s.dependency 'Flutter'
+  s.platform = :ios, '9.0'
+  s.dependency 'FaceSDK', '3.0.798'
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
+end
