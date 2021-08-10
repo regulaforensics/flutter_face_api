@@ -45,6 +45,8 @@ typedef void (^Callback)(NSString* response);
         [self setServiceUrl :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"matchFaces"])
         [self matchFaces :[args objectAtIndex:0] :successCallback :errorCallback];
+    else if([action isEqualToString:@"setLanguage"])
+        [self setLanguage :[args objectAtIndex:0] :successCallback :errorCallback];
     else
         [self result:[NSString stringWithFormat:@"%@/%@", @"method not implemented: ", action] :errorCallback];
 }
@@ -94,6 +96,16 @@ typedef void (^Callback)(NSString* response);
 
 - (void) matchFaces:(NSString*)requestString : (Callback)successCallback :(Callback)errorCallback{
     [RFSFaceSDK.service matchFaces:[RFSWJSONConstructor RFSMatchFacesRequestFromJSON:[NSJSONSerialization JSONObjectWithData:[requestString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL]] completion:[self getMatchFacesCompletion:successCallback :errorCallback]];
+}
+
+- (void) setLanguage:(NSString*)language : (Callback)successCallback :(Callback)errorCallback{
+    RFSFaceSDK.service.localizationHandler = ^NSString * _Nullable(NSString * _Nonnull localizationKey) {
+        NSString *result = NSLocalizedStringFromTable(localizationKey, language, @"");
+        if (![result isEqualToString:localizationKey])
+            return result;
+        return nil;
+    };
+    [self result:@"" :successCallback];
 }
 
 - (void (^)(RFSLivenessResponse * _Nonnull)) getLivenessCompletion:(Callback)successCallback :(Callback)errorCallback {

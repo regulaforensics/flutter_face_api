@@ -393,4 +393,8 @@ class FaceSDK {
   static Future<dynamic> matchFaces(request) async {
     return await _channel.invokeMethod("matchFaces", [request]);
   }
+
+  static Future<dynamic> setLanguage(language) async {
+    return await _channel.invokeMethod("setLanguage", [language]);
+  }
 }

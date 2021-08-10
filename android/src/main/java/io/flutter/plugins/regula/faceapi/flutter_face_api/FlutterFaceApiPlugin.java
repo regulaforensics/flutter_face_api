@@ -139,6 +139,9 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "matchFaces":
                     matchFaces(callback, args(0));
                     break;
+                case "setLanguage":
+                    setLanguage(callback, args(0));
+                    break;
             }
         } catch (Exception ignored) {
         }
@@ -185,5 +188,9 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
 
     private void matchFaces(Callback callback, String request) throws JSONException {
         Instance().matchFaces(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)), (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+    }
+
+    private void setLanguage(Callback callback, @SuppressWarnings("unused") String language) {
+        callback.error("setLanguage() is an ios-only method");
     }
 }
