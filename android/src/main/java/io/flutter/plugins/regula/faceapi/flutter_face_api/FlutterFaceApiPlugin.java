@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.regula.facesdk.configuration.FaceCaptureConfiguration;
 import com.regula.facesdk.configuration.LivenessConfiguration;
+import com.regula.facesdk.configuration.MatchFaceConfiguration;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
