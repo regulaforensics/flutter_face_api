@@ -17,12 +17,10 @@ rootProject.allprojects {
         google()
         jcenter()
         maven {
-            url "http://maven.regulaforensics.com/RegulaDocumentReader"
-            allowInsecureProtocol true
+            url "https://maven.regulaforensics.com/RegulaDocumentReader"
         }
         maven {
-            url "http://maven.regulaforensics.com/RegulaDocumentReader/Beta"
-            allowInsecureProtocol true
+            url "https://maven.regulaforensics.com/RegulaDocumentReader/Beta"
         }
     }
 }
@@ -46,7 +44,7 @@ android {
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:3.0.1234'){
+    implementation('com.regula.face:api:3.1.1351'){
         transitive = true
     }
 }
