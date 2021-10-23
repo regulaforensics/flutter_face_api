@@ -1,4 +1,4 @@
-## 0.0.33\n
+## 0.0.34\n
 # 3.0.0
 Flutter plugin that provides a solution for biometric verification by leveraging the power of Regula Face SDK Web Service. Biometric verification is the quickest and most reliable way to confirm any user’s identity and protect your business and your clients from fraud.
 
