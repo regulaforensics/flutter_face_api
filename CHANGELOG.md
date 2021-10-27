@@ -1,3 +1,23 @@
+# 3.1.0
+### Added
+* Added [LivenessResponse.guid](https://dev.regulaforensics.com/FaceSDK-iOS-Docs/Classes/RFSLivenessResponse.html#/c:objc(cs)RFSLivenessResponse(py)guid) – the id of the processing from the liveness service.
+* **iOS**
+  * Added `RegulaCommon` – the internal shared library for Regula SDK products
+* **Android**:
+  * Added possibility to intercept network connections between server and client to change HTTP request settings
+
+### Fixed
+* **iOS**:
+  * Fixed copying of `debug-symbols`. Only correct ones are copied to the `xcframework`.
+  * Fixed hold the `image` for `LivenessResponse` even when error happens.
+
+### Changed
+* Changed `hint.fit` for Spanish localization to `Coloque su rostro en el óvalo`.
+* **iOS**:
+  * Changed camera settings to match `DocumentReader`'s. Used settings: `isSmoothAutoFocusEnabled`, `.continuousAutoWhiteBalance` and `.continuousAutoExposure`.
+* **Android**:
+  * FaceCapture detection logic tweaked for better and easier photo capture
+
 # 3.0.0
 Flutter plugin that provides a solution for biometric verification by leveraging the power of Regula Face SDK Web Service. Biometric verification is the quickest and most reliable way to confirm any user’s identity and protect your business and your clients from fraud.
 

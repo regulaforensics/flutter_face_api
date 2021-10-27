@@ -351,6 +351,11 @@ class MatchFacesErrorCodes {
   static const int PROCESSING_FAILED = 11;
 }
 
+class RFSCameraPosition {
+  static const int RFSCameraPositionBack = 0;
+  static const int RFSCameraPositionFront = 1;
+}
+
 class FaceSDK {
   static const MethodChannel _channel = const MethodChannel('flutter_face_api/method');
 
@@ -378,12 +383,12 @@ class FaceSDK {
     return await _channel.invokeMethod("stopLivenessProcessing", []);
   }
 
-  static Future<dynamic> presentFaceCaptureActivityByCameraId(cameraId) async {
-    return await _channel.invokeMethod("presentFaceCaptureActivityByCameraId", [cameraId]);
+  static Future<dynamic> presentFaceCaptureActivityWithConfig(config) async {
+    return await _channel.invokeMethod("presentFaceCaptureActivityWithConfig", [config]);
   }
 
-  static Future<dynamic> startLivenessByCameraId(cameraId) async {
-    return await _channel.invokeMethod("startLivenessByCameraId", [cameraId]);
+  static Future<dynamic> startLivenessWithConfig(config) async {
+    return await _channel.invokeMethod("startLivenessWithConfig", [config]);
   }
 
   static Future<dynamic> setServiceUrl(url) async {
@@ -392,5 +397,13 @@ class FaceSDK {
 
   static Future<dynamic> matchFaces(request) async {
     return await _channel.invokeMethod("matchFaces", [request]);
+  }
+
+  static Future<dynamic> setLanguage(language) async {
+    return await _channel.invokeMethod("setLanguage", [language]);
+  }
+
+  static Future<dynamic> matchFacesWithConfig(request, config) async {
+    return await _channel.invokeMethod("matchFacesWithConfig", [request, config]);
   }
 }

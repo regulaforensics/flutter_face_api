@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.regula.facesdk.configuration.FaceCaptureConfiguration;
 import com.regula.facesdk.configuration.LivenessConfiguration;
+import com.regula.facesdk.configuration.MatchFaceConfiguration;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -127,17 +128,23 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "stopLivenessProcessing":
                     stopLivenessProcessing(callback);
                     break;
-                case "presentFaceCaptureActivityByCameraId":
-                    presentFaceCaptureActivityByCameraId(callback, args(0));
+                case "presentFaceCaptureActivityWithConfig":
+                    presentFaceCaptureActivityWithConfig(callback, args(0));
                     break;
-                case "startLivenessByCameraId":
-                    startLivenessByCameraId(callback, args(0));
+                case "startLivenessWithConfig":
+                    startLivenessWithConfig(callback, args(0));
                     break;
                 case "setServiceUrl":
                     setServiceUrl(callback, args(0));
                     break;
                 case "matchFaces":
                     matchFaces(callback, args(0));
+                    break;
+                case "setLanguage":
+                    setLanguage(callback, args(0));
+                    break;
+                case "matchFacesWithConfig":
+                    matchFacesWithConfig(callback, args(0), args(1));
                     break;
             }
         } catch (Exception ignored) {
@@ -170,12 +177,28 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success();
     }
 
-    private void presentFaceCaptureActivityByCameraId(Callback callback, int cameraID) {
-        Instance().presentFaceCaptureActivity(getContext(), new FaceCaptureConfiguration.Builder().setCameraId(cameraID).build(), (response) -> callback.success(JSONConstructor.generateFaceCaptureResponse(response).toString()));
+    private void presentFaceCaptureActivityWithConfig(Callback callback, JSONObject config) throws JSONException {
+        FaceCaptureConfiguration.Builder builder = new FaceCaptureConfiguration.Builder();
+        if(config.has("cameraId"))
+            builder.setCameraId(config.getInt("cameraId"));
+        if(config.has("cameraSwitchEnabled"))
+            builder.setCameraSwitchEnabled(config.getBoolean("cameraSwitchEnabled"));
+        if(config.has("showHelpTextAnimation"))
+            builder.setShowHelpTextAnimation(config.getBoolean("showHelpTextAnimation"));
+        Instance().presentFaceCaptureActivity(getContext(), builder.build(), (response) -> callback.success(JSONConstructor.generateFaceCaptureResponse(response).toString()));
     }
 
-    private void startLivenessByCameraId(Callback callback, int cameraID) {
-        Instance().startLiveness(getContext(), new LivenessConfiguration.Builder().setCameraId(cameraID).build(), (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
+    private void startLivenessWithConfig(Callback callback, JSONObject config) throws JSONException {
+        LivenessConfiguration.Builder builder = new LivenessConfiguration.Builder();
+        if(config.has("attemptsCount"))
+            builder.setAttemptsCount(config.getInt("attemptsCount"));
+        if(config.has("cameraId"))
+            builder.setCameraId(config.getInt("cameraId"));
+        if(config.has("cameraSwitchEnabled"))
+            builder.setCameraSwitchEnabled(config.getBoolean("cameraSwitchEnabled"));
+        if(config.has("showHelpTextAnimation"))
+            builder.setShowHelpTextAnimation(config.getBoolean("showHelpTextAnimation"));
+        Instance().startLiveness(getContext(), builder.build(), (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
     }
 
     private void setServiceUrl(Callback callback, String url) {
@@ -185,5 +208,15 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
 
     private void matchFaces(Callback callback, String request) throws JSONException {
         Instance().matchFaces(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)), (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+    }
+
+    private void matchFacesWithConfig(Callback callback, String request, JSONObject config) throws JSONException {
+        MatchFaceConfiguration.Builder builder = new MatchFaceConfiguration.Builder();
+        config.has("TODO"); // in order to remove warning Unused
+        Instance().matchFaces(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)), builder.build(),(response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+    }
+
+    private void setLanguage(Callback callback, @SuppressWarnings("unused") String language) {
+        callback.error("setLanguage() is an ios-only method");
     }
 }
