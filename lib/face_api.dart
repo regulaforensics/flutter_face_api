@@ -403,6 +403,10 @@ class FaceSDK {
     return await _channel.invokeMethod("setLanguage", [language]);
   }
 
+  static Future<dynamic> setConfig(config) async {
+    return await _channel.invokeMethod("setConfig", [config]);
+  }
+
   static Future<dynamic> matchFacesWithConfig(request, config) async {
     return await _channel.invokeMethod("matchFacesWithConfig", [request, config]);
   }

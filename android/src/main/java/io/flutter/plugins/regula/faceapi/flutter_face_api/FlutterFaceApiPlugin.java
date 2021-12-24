@@ -1,6 +1,8 @@
 package io.flutter.plugins.regula.faceapi.flutter_face_api;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
 
 import com.regula.facesdk.configuration.FaceCaptureConfiguration;
 import com.regula.facesdk.configuration.LivenessConfiguration;
@@ -143,6 +146,9 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "setLanguage":
                     setLanguage(callback, args(0));
                     break;
+                case "setConfig":
+                    setConfig(callback, args(0));
+                    break;
                 case "matchFacesWithConfig":
                     matchFacesWithConfig(callback, args(0), args(1));
                     break;
@@ -206,6 +212,10 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success();
     }
 
+    private void setConfig(Callback callback, JSONObject config) {
+        callback.error("setConfig() is an ios-only method");
+    }
+
     private void matchFaces(Callback callback, String request) throws JSONException {
         Instance().matchFaces(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)), (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
     }
@@ -217,6 +227,12 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void setLanguage(Callback callback, @SuppressWarnings("unused") String language) {
-        callback.error("setLanguage() is an ios-only method");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Resources resources = getActivity().getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        callback.success();
     }
 }
