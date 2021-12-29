@@ -1,4 +1,4 @@
-## 0.0.37\n
+## 0.0.38\n
 # 3.1.0
 ### Added
 * Added [LivenessResponse.guid](https://dev.regulaforensics.com/FaceSDK-iOS-Docs/Classes/RFSLivenessResponse.html#/c:objc(cs)RFSLivenessResponse(py)guid) – the id of the processing from the liveness service.
