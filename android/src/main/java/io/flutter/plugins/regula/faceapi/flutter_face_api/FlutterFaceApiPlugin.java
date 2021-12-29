@@ -229,7 +229,7 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     private void setLanguage(Callback callback, @SuppressWarnings("unused") String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
-        Resources resources = getActivity().getResources();
+        Resources resources = getContext().getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
