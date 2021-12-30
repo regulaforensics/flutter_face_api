@@ -204,6 +204,8 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
             builder.setCameraSwitchEnabled(config.getBoolean("cameraSwitchEnabled"));
         if(config.has("showHelpTextAnimation"))
             builder.setShowHelpTextAnimation(config.getBoolean("showHelpTextAnimation"));
+        if(config.has("locationTrackingEnabled"))
+            builder.setLocationTrackingEnabled(config.getBoolean("locationTrackingEnabled"));
         Instance().startLiveness(getContext(), builder.build(), (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()));
     }
 
@@ -217,13 +219,13 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void matchFaces(Callback callback, String request) throws JSONException {
-        Instance().matchFaces(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)), (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+        Instance().matchFaces(Objects.requireNonNull(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request))), (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
     }
 
     private void matchFacesWithConfig(Callback callback, String request, JSONObject config) throws JSONException {
         MatchFaceConfiguration.Builder builder = new MatchFaceConfiguration.Builder();
         config.has("TODO"); // in order to remove warning Unused
-        Instance().matchFaces(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)), builder.build(),(response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+        Instance().matchFaces(Objects.requireNonNull(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request))), builder.build(),(response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
     }
 
     private void setLanguage(Callback callback, @SuppressWarnings("unused") String language) {

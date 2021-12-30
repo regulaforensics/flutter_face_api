@@ -75,87 +75,6 @@ class MatchFacesException {
   }
 }
 
-class ComparedFacesPairException {
-  int? errorCode;
-  String? message;
-
-  static ComparedFacesPairException? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new ComparedFacesPairException();
-
-    result.errorCode = jsonObject["errorCode"];
-    result.message = jsonObject["message"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (errorCode != null) result.addAll({"errorCode": errorCode});
-    if (message != null) result.addAll({"message": message});
-
-    return result;
-  }
-}
-
-class ComparedFace {
-  String? tag;
-  int? imageType;
-  int? position;
-
-  static ComparedFace? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new ComparedFace();
-
-    result.tag = jsonObject["tag"];
-    result.imageType = jsonObject["imageType"];
-    result.position = jsonObject["position"];
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (tag != null) result.addAll({"tag": tag});
-    if (imageType != null) result.addAll({"imageType": imageType});
-    if (position != null) result.addAll({"position": position});
-
-    return result;
-  }
-}
-
-class ComparedFacesPair {
-  ComparedFace? first;
-  ComparedFace? second;
-  double? similarity;
-  ComparedFacesPairException? exception;
-
-  static ComparedFacesPair? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new ComparedFacesPair();
-
-    result.first = ComparedFace.fromJson(jsonObject["first"]);
-    result.second = ComparedFace.fromJson(jsonObject["second"]);
-    result.similarity = jsonObject["similarity"] == null ? null : jsonObject["similarity"].toDouble();
-    result.exception = ComparedFacesPairException.fromJson(jsonObject["exception"]);
-
-    return result;
-  }
-
-  Map toJson(){
-    Map result = {};
-
-    if (first != null) result.addAll({"first": first});
-    if (second != null) result.addAll({"second": second});
-    if (similarity != null) result.addAll({"similarity": similarity});
-    if (exception != null) result.addAll({"exception": exception});
-
-    return result;
-  }
-}
-
 class FaceCaptureResponse {
   FaceCaptureException? exception;
   Image? image;
@@ -183,6 +102,7 @@ class FaceCaptureResponse {
 class LivenessResponse {
   String? bitmap;
   int? liveness;
+  String? guid;
   LivenessErrorException? exception;
 
   static LivenessResponse? fromJson(jsonObject) {
@@ -191,6 +111,7 @@ class LivenessResponse {
 
     result.bitmap = jsonObject["bitmap"];
     result.liveness = jsonObject["liveness"];
+    result.guid = jsonObject["guid"];
     result.exception = LivenessErrorException.fromJson(jsonObject["exception"]);
 
     return result;
@@ -201,6 +122,7 @@ class LivenessResponse {
 
     if (bitmap != null) result.addAll({"bitmap": bitmap});
     if (liveness != null) result.addAll({"liveness": liveness});
+    if (guid != null) result.addAll({"guid": guid});
     if (exception != null) result.addAll({"exception": exception});
 
     return result;
@@ -209,8 +131,10 @@ class LivenessResponse {
 
 class MatchFacesResponse {
   MatchFacesException? exception;
-  List<ComparedFacesPair?> matchedFaces = [];
-  List<ComparedFacesPair?> unmatchedFaces = [];
+  List<MatchFacesComparedFacesPair?> matchedFaces = [];
+  List<MatchFacesComparedFacesPair?> unmatchedFaces = [];
+  List<MatchFacesDetection?> facesResponse = [];
+  List<MatchFacesComparedFacesPair?> results = [];
 
   static MatchFacesResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -219,10 +143,16 @@ class MatchFacesResponse {
     result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
     if (jsonObject["matchedFaces"] != null)
       for (var item in jsonObject["matchedFaces"])
-        result.matchedFaces.add(ComparedFacesPair.fromJson(item));
+        result.matchedFaces.add(MatchFacesComparedFacesPair.fromJson(item));
     if (jsonObject["unmatchedFaces"] != null)
       for (var item in jsonObject["unmatchedFaces"])
-        result.unmatchedFaces.add(ComparedFacesPair.fromJson(item));
+        result.unmatchedFaces.add(MatchFacesComparedFacesPair.fromJson(item));
+    if (jsonObject["facesResponse"] != null)
+      for (var item in jsonObject["facesResponse"])
+        result.facesResponse.add(MatchFacesDetection.fromJson(item));
+    if (jsonObject["results"] != null)
+      for (var item in jsonObject["results"])
+        result.results.add(MatchFacesComparedFacesPair.fromJson(item));
 
     return result;
   }
@@ -233,6 +163,8 @@ class MatchFacesResponse {
     if (exception != null) result.addAll({"exception": exception});
     if (matchedFaces != null) result.addAll({"matchedFaces": matchedFaces});
     if (unmatchedFaces != null) result.addAll({"unmatchedFaces": unmatchedFaces});
+    if (facesResponse != null) result.addAll({"facesResponse": facesResponse});
+    if (results != null) result.addAll({"results": results});
 
     return result;
   }
@@ -266,19 +198,19 @@ class Image {
 }
 
 class MatchFacesRequest {
-  double? similarityThreshold;
-  List<Image?> images = [];
+  List<MatchFacesImage?> matchFacesImages = [];
   dynamic? customMetadata;
+  bool? thumbnails;
 
   static MatchFacesRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new MatchFacesRequest();
 
-    result.similarityThreshold = jsonObject["similarityThreshold"] == null ? null : jsonObject["similarityThreshold"].toDouble();
-    if (jsonObject["images"] != null)
-      for (var item in jsonObject["images"])
-        result.images.add(Image.fromJson(item));
+    if (jsonObject["matchFacesImages"] != null)
+      for (var item in jsonObject["matchFacesImages"])
+        result.matchFacesImages.add(MatchFacesImage.fromJson(item));
     result.customMetadata = jsonObject["customMetadata"];
+    result.thumbnails = jsonObject["thumbnails"];
 
     return result;
   }
@@ -286,9 +218,220 @@ class MatchFacesRequest {
   Map toJson(){
     Map result = {};
 
-    if (similarityThreshold != null) result.addAll({"similarityThreshold": similarityThreshold});
-    if (images != null) result.addAll({"images": images});
+    if (matchFacesImages != null) result.addAll({"matchFacesImages": matchFacesImages});
     if (customMetadata != null) result.addAll({"customMetadata": customMetadata});
+    if (thumbnails != null) result.addAll({"thumbnails": thumbnails});
+
+    return result;
+  }
+}
+
+class MatchFacesImage {
+  int? imageType;
+  bool? detectAll;
+  String? bitmap;
+
+  static MatchFacesImage? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new MatchFacesImage();
+
+    result.imageType = jsonObject["imageType"];
+    result.detectAll = jsonObject["detectAll"];
+    result.bitmap = jsonObject["bitmap"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (imageType != null) result.addAll({"imageType": imageType});
+    if (detectAll != null) result.addAll({"detectAll": detectAll});
+    if (bitmap != null) result.addAll({"bitmap": bitmap});
+
+    return result;
+  }
+}
+
+class MatchFacesComparedFacesPair {
+  MatchFacesComparedFace? first;
+  MatchFacesComparedFace? second;
+  double? similarity;
+  double? score;
+  MatchFacesException? exception;
+
+  static MatchFacesComparedFacesPair? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new MatchFacesComparedFacesPair();
+
+    result.first = MatchFacesComparedFace.fromJson(jsonObject["first"]);
+    result.second = MatchFacesComparedFace.fromJson(jsonObject["second"]);
+    result.similarity = jsonObject["similarity"] == null ? null : jsonObject["similarity"].toDouble();
+    result.score = jsonObject["score"] == null ? null : jsonObject["score"].toDouble();
+    result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (first != null) result.addAll({"first": first});
+    if (second != null) result.addAll({"second": second});
+    if (similarity != null) result.addAll({"similarity": similarity});
+    if (score != null) result.addAll({"score": score});
+    if (exception != null) result.addAll({"exception": exception});
+
+    return result;
+  }
+}
+
+class MatchFacesComparedFace {
+  MatchFacesDetectionFace? detectionFace;
+  MatchFacesImage? matchesFaceImage;
+  int? faceIndex;
+  int? imageIndex;
+
+  static MatchFacesComparedFace? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new MatchFacesComparedFace();
+
+    result.detectionFace = MatchFacesDetectionFace.fromJson(jsonObject["detectionFace"]);
+    result.matchesFaceImage = MatchFacesImage.fromJson(jsonObject["matchesFaceImage"]);
+    result.faceIndex = jsonObject["faceIndex"];
+    result.imageIndex = jsonObject["imageIndex"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (detectionFace != null) result.addAll({"detectionFace": detectionFace});
+    if (matchesFaceImage != null) result.addAll({"matchesFaceImage": matchesFaceImage});
+    if (faceIndex != null) result.addAll({"faceIndex": faceIndex});
+    if (imageIndex != null) result.addAll({"imageIndex": imageIndex});
+
+    return result;
+  }
+}
+
+class MatchFacesDetectionFace {
+  int? faceIndex;
+  List<Point?> landmarks = [];
+  Rect? faceRect;
+  double? rotationAngle;
+  String? thumbnail;
+
+  static MatchFacesDetectionFace? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new MatchFacesDetectionFace();
+
+    result.faceIndex = jsonObject["faceIndex"];
+    if (jsonObject["landmarks"] != null)
+      for (var item in jsonObject["landmarks"])
+        result.landmarks.add(Point.fromJson(item));
+    result.faceRect = Rect.fromJson(jsonObject["faceRect"]);
+    result.rotationAngle = jsonObject["rotationAngle"] == null ? null : jsonObject["rotationAngle"].toDouble();
+    result.thumbnail = jsonObject["thumbnail"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (faceIndex != null) result.addAll({"faceIndex": faceIndex});
+    if (landmarks != null) result.addAll({"landmarks": landmarks});
+    if (faceRect != null) result.addAll({"faceRect": faceRect});
+    if (rotationAngle != null) result.addAll({"rotationAngle": rotationAngle});
+    if (thumbnail != null) result.addAll({"thumbnail": thumbnail});
+
+    return result;
+  }
+}
+
+class MatchFacesDetection {
+  MatchFacesImage? image;
+  int? imageIndex;
+  List<MatchFacesDetectionFace?> faces = [];
+  MatchFacesException? exception;
+
+  static MatchFacesDetection? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new MatchFacesDetection();
+
+    result.image = MatchFacesImage.fromJson(jsonObject["image"]);
+    result.imageIndex = jsonObject["imageIndex"];
+    if (jsonObject["faces"] != null)
+      for (var item in jsonObject["faces"])
+        result.faces.add(MatchFacesDetectionFace.fromJson(item));
+    result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (image != null) result.addAll({"image": image});
+    if (imageIndex != null) result.addAll({"imageIndex": imageIndex});
+    if (faces != null) result.addAll({"faces": faces});
+    if (exception != null) result.addAll({"exception": exception});
+
+    return result;
+  }
+}
+
+class Point {
+  int? x;
+  int? y;
+
+  static Point? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new Point();
+
+    result.x = jsonObject["x"];
+    result.y = jsonObject["y"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (x != null) result.addAll({"x": x});
+    if (y != null) result.addAll({"y": y});
+
+    return result;
+  }
+}
+
+class Rect {
+  int? bottom;
+  int? top;
+  int? left;
+  int? right;
+
+  static Rect? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new Rect();
+
+    result.bottom = jsonObject["bottom"];
+    result.top = jsonObject["top"];
+    result.left = jsonObject["left"];
+    result.right = jsonObject["right"];
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (bottom != null) result.addAll({"bottom": bottom});
+    if (top != null) result.addAll({"top": top});
+    if (left != null) result.addAll({"left": left});
+    if (right != null) result.addAll({"right": right});
 
     return result;
   }

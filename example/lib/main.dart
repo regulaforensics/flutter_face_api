@@ -14,8 +14,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var image1 = new Regula.Image();
-  var image2 = new Regula.Image();
+  var image1 = new Regula.MatchFacesImage();
+  var image2 = new Regula.MatchFacesImage();
   var img1 = Image.asset('assets/images/portrait.png');
   var img2 = Image.asset('assets/images/portrait.png');
   String _similarity = "nil";
@@ -85,8 +85,8 @@ class _MyAppState extends State<MyApp> {
       _similarity = "nil";
       _liveness = "nil";
     });
-    image1 = new Regula.Image();
-    image2 = new Regula.Image();
+    image1 = new Regula.MatchFacesImage();
+    image2 = new Regula.MatchFacesImage();
   }
 
   matchFaces() {
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         image2.bitmap == "") return;
     setState(() => _similarity = "Processing...");
     var request = new Regula.MatchFacesRequest();
-    request.images = [image1, image2];
+    request.matchFacesImages = [image1, image2];
     Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
       var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
       var matchedFaces = response.matchedFaces;
