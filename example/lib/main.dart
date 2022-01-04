@@ -101,9 +101,9 @@ class _MyAppState extends State<MyApp> {
     request.matchFacesImages = [image1, image2];
     Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
       var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
-      var matchedFaces = response.matchedFaces;
-      setState(() => _similarity = matchedFaces.length > 0
-          ? ((matchedFaces[0].similarity * 100).toStringAsFixed(2) + "%")
+      var results = response.results;
+      setState(() => _similarity = results.length > 0
+          ? ((results[0].similarity * 100).toStringAsFixed(2) + "%")
           : "error");
     });
   }

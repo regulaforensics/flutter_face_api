@@ -131,8 +131,6 @@ class LivenessResponse {
 
 class MatchFacesResponse {
   MatchFacesException? exception;
-  List<MatchFacesComparedFacesPair?> matchedFaces = [];
-  List<MatchFacesComparedFacesPair?> unmatchedFaces = [];
   List<MatchFacesDetection?> facesResponse = [];
   List<MatchFacesComparedFacesPair?> results = [];
 
@@ -141,12 +139,6 @@ class MatchFacesResponse {
     var result = new MatchFacesResponse();
 
     result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
-    if (jsonObject["matchedFaces"] != null)
-      for (var item in jsonObject["matchedFaces"])
-        result.matchedFaces.add(MatchFacesComparedFacesPair.fromJson(item));
-    if (jsonObject["unmatchedFaces"] != null)
-      for (var item in jsonObject["unmatchedFaces"])
-        result.unmatchedFaces.add(MatchFacesComparedFacesPair.fromJson(item));
     if (jsonObject["facesResponse"] != null)
       for (var item in jsonObject["facesResponse"])
         result.facesResponse.add(MatchFacesDetection.fromJson(item));
@@ -161,8 +153,6 @@ class MatchFacesResponse {
     Map result = {};
 
     if (exception != null) result.addAll({"exception": exception});
-    if (matchedFaces != null) result.addAll({"matchedFaces": matchedFaces});
-    if (unmatchedFaces != null) result.addAll({"unmatchedFaces": unmatchedFaces});
     if (facesResponse != null) result.addAll({"facesResponse": facesResponse});
     if (results != null) result.addAll({"results": results});
 
@@ -172,7 +162,6 @@ class MatchFacesResponse {
 
 class Image {
   int? imageType;
-  String? tag;
   String? bitmap;
 
   static Image? fromJson(jsonObject) {
@@ -180,7 +169,6 @@ class Image {
     var result = new Image();
 
     result.imageType = jsonObject["imageType"];
-    result.tag = jsonObject["tag"];
     result.bitmap = jsonObject["bitmap"];
 
     return result;
@@ -190,7 +178,6 @@ class Image {
     Map result = {};
 
     if (imageType != null) result.addAll({"imageType": imageType});
-    if (tag != null) result.addAll({"tag": tag});
     if (bitmap != null) result.addAll({"bitmap": bitmap});
 
     return result;
@@ -287,8 +274,8 @@ class MatchFacesComparedFacesPair {
 }
 
 class MatchFacesComparedFace {
-  MatchFacesDetectionFace? detectionFace;
-  MatchFacesImage? matchesFaceImage;
+  MatchFacesDetectionFace? face;
+  MatchFacesImage? image;
   int? faceIndex;
   int? imageIndex;
 
@@ -296,8 +283,8 @@ class MatchFacesComparedFace {
     if (jsonObject == null) return null;
     var result = new MatchFacesComparedFace();
 
-    result.detectionFace = MatchFacesDetectionFace.fromJson(jsonObject["detectionFace"]);
-    result.matchesFaceImage = MatchFacesImage.fromJson(jsonObject["matchesFaceImage"]);
+    result.face = MatchFacesDetectionFace.fromJson(jsonObject["face"]);
+    result.image = MatchFacesImage.fromJson(jsonObject["image"]);
     result.faceIndex = jsonObject["faceIndex"];
     result.imageIndex = jsonObject["imageIndex"];
 
@@ -307,8 +294,8 @@ class MatchFacesComparedFace {
   Map toJson(){
     Map result = {};
 
-    if (detectionFace != null) result.addAll({"detectionFace": detectionFace});
-    if (matchesFaceImage != null) result.addAll({"matchesFaceImage": matchesFaceImage});
+    if (face != null) result.addAll({"face": face});
+    if (image != null) result.addAll({"image": image});
     if (faceIndex != null) result.addAll({"faceIndex": faceIndex});
     if (imageIndex != null) result.addAll({"imageIndex": imageIndex});
 
