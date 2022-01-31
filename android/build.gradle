@@ -31,7 +31,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 21
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -44,7 +44,7 @@ android {
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:5.4.1541'){
+    implementation('com.regula.face:api:5.4.1561'){
         transitive = true
     }
 }

@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
                       (value) => setImage(
                           first,
                           io.File(value.path).readAsBytesSync(),
-                          Regula.ImageType.IMAGE_TYPE_PRINTED));
+                          Regula.ImageType.PRINTED));
                   Navigator.pop(context);
                 }),
             // ignore: deprecated_member_use
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                               .image
                               .bitmap
                               .replaceAll("\n", "")),
-                          Regula.ImageType.IMAGE_TYPE_LIVE));
+                          Regula.ImageType.LIVE));
                   Navigator.pop(context);
                 })
           ]));
@@ -98,22 +98,21 @@ class _MyAppState extends State<MyApp> {
         image2.bitmap == "") return;
     setState(() => _similarity = "Processing...");
     var request = new Regula.MatchFacesRequest();
-    request.matchFacesImages = [image1, image2];
+    request.images = [image1, image2];
     Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
       var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
-      var results = response.results;
-      setState(() => _similarity = results.length > 0
-          ? ((results[0].similarity * 100).toStringAsFixed(2) + "%")
-          : "error");
+      Regula.FaceSDK.matchFacesSimilarityThresholdSplit(jsonEncode(response.results), 0.75).then((str) {
+        var split = Regula.MatchFacesSimilarityThresholdSplit.fromJson(json.decode(str));
+        setState(() => _similarity = split.matchedFaces.length > 0 ? ((split.matchedFaces[0].similarity * 100).toStringAsFixed(2) + "%") : "error");
+      });
     });
   }
 
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
-            Regula.ImageType.IMAGE_TYPE_LIVE);
-        setState(
-            () => _liveness = result.liveness == 0 ? "passed" : "unknown");
+            Regula.ImageType.LIVE);
+        setState(() => _liveness = result.liveness == 0 ? "passed" : "unknown");
       });
 
   Widget createButton(String text, VoidCallback onPress) => Container(

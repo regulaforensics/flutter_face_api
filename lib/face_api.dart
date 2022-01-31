@@ -131,7 +131,7 @@ class LivenessResponse {
 
 class MatchFacesResponse {
   MatchFacesException? exception;
-  List<MatchFacesDetection?> facesResponse = [];
+  List<MatchFacesDetection?> detections = [];
   List<MatchFacesComparedFacesPair?> results = [];
 
   static MatchFacesResponse? fromJson(jsonObject) {
@@ -139,9 +139,9 @@ class MatchFacesResponse {
     var result = new MatchFacesResponse();
 
     result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
-    if (jsonObject["facesResponse"] != null)
-      for (var item in jsonObject["facesResponse"])
-        result.facesResponse.add(MatchFacesDetection.fromJson(item));
+    if (jsonObject["detections"] != null)
+      for (var item in jsonObject["detections"])
+        result.detections.add(MatchFacesDetection.fromJson(item));
     if (jsonObject["results"] != null)
       for (var item in jsonObject["results"])
         result.results.add(MatchFacesComparedFacesPair.fromJson(item));
@@ -153,7 +153,7 @@ class MatchFacesResponse {
     Map result = {};
 
     if (exception != null) result.addAll({"exception": exception});
-    if (facesResponse != null) result.addAll({"facesResponse": facesResponse});
+    if (detections != null) result.addAll({"detections": detections});
     if (results != null) result.addAll({"results": results});
 
     return result;
@@ -185,7 +185,7 @@ class Image {
 }
 
 class MatchFacesRequest {
-  List<MatchFacesImage?> matchFacesImages = [];
+  List<MatchFacesImage?> images = [];
   dynamic? customMetadata;
   bool? thumbnails;
 
@@ -193,9 +193,9 @@ class MatchFacesRequest {
     if (jsonObject == null) return null;
     var result = new MatchFacesRequest();
 
-    if (jsonObject["matchFacesImages"] != null)
-      for (var item in jsonObject["matchFacesImages"])
-        result.matchFacesImages.add(MatchFacesImage.fromJson(item));
+    if (jsonObject["images"] != null)
+      for (var item in jsonObject["images"])
+        result.images.add(MatchFacesImage.fromJson(item));
     result.customMetadata = jsonObject["customMetadata"];
     result.thumbnails = jsonObject["thumbnails"];
 
@@ -205,7 +205,7 @@ class MatchFacesRequest {
   Map toJson(){
     Map result = {};
 
-    if (matchFacesImages != null) result.addAll({"matchFacesImages": matchFacesImages});
+    if (images != null) result.addAll({"images": images});
     if (customMetadata != null) result.addAll({"customMetadata": customMetadata});
     if (thumbnails != null) result.addAll({"thumbnails": thumbnails});
 
@@ -217,6 +217,7 @@ class MatchFacesImage {
   int? imageType;
   bool? detectAll;
   String? bitmap;
+  String? identifier;
 
   static MatchFacesImage? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -225,6 +226,7 @@ class MatchFacesImage {
     result.imageType = jsonObject["imageType"];
     result.detectAll = jsonObject["detectAll"];
     result.bitmap = jsonObject["bitmap"];
+    result.identifier = jsonObject["identifier"];
 
     return result;
   }
@@ -235,6 +237,7 @@ class MatchFacesImage {
     if (imageType != null) result.addAll({"imageType": imageType});
     if (detectAll != null) result.addAll({"detectAll": detectAll});
     if (bitmap != null) result.addAll({"bitmap": bitmap});
+    if (identifier != null) result.addAll({"identifier": identifier});
 
     return result;
   }
@@ -424,15 +427,39 @@ class Rect {
   }
 }
 
+class MatchFacesSimilarityThresholdSplit {
+  List<MatchFacesComparedFacesPair?> matchedFaces = [];
+  List<MatchFacesComparedFacesPair?> unmatchedFaces = [];
+
+  static MatchFacesSimilarityThresholdSplit? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new MatchFacesSimilarityThresholdSplit();
+
+    if (jsonObject["matchedFaces"] != null)
+      for (var item in jsonObject["matchedFaces"])
+        result.matchedFaces.add(MatchFacesComparedFacesPair.fromJson(item));
+    if (jsonObject["unmatchedFaces"] != null)
+      for (var item in jsonObject["unmatchedFaces"])
+        result.unmatchedFaces.add(MatchFacesComparedFacesPair.fromJson(item));
+
+    return result;
+  }
+
+  Map toJson(){
+    Map result = {};
+
+    if (matchedFaces != null) result.addAll({"matchedFaces": matchedFaces});
+    if (unmatchedFaces != null) result.addAll({"unmatchedFaces": unmatchedFaces});
+
+    return result;
+  }
+}
+
 // Enum
 
-class ComparedFacesPairErrorCodes {
-  static const int IMAGE_EMPTY = 1;
-  static const int FACE_NOT_DETECTED = 2;
-  static const int LANDMARKS_NOT_DETECTED = 3;
-  static const int FACE_ALIGNER_FAILED = 4;
-  static const int DESCRIPTOR_EXTRACTOR_ERROR = 5;
-  static const int API_CALL_FAILED = 6;
+class CameraPosition {
+  static const int Back = 0;
+  static const int Front = 1;
 }
 
 class FaceCaptureResultCodes {
@@ -444,10 +471,11 @@ class FaceCaptureResultCodes {
 }
 
 class ImageType {
-  static const int IMAGE_TYPE_PRINTED = 1;
-  static const int IMAGE_TYPE_RFID = 2;
-  static const int IMAGE_TYPE_LIVE = 3;
-  static const int IMAGE_TYPE_LIVE_WITH_DOC = 4;
+  static const int PRINTED = 1;
+  static const int RFID = 2;
+  static const int LIVE = 3;
+  static const int DOCUMENT_WITH_LIVE = 4;
+  static const int EXTERNAL = 5;
 }
 
 class LivenessErrorCode {
@@ -459,7 +487,6 @@ class LivenessErrorCode {
   static const int PROCESSING_TIMEOUT = 6;
   static const int API_CALL_FAILED = 7;
   static const int PROCESSING_FAILED = 8;
-  static const int PROCESSING_ATTEMPTS_ENDED = 9;
 }
 
 class LivenessStatus {
@@ -474,16 +501,9 @@ class MatchFacesErrorCodes {
   static const int FACE_ALIGNER_FAILED = 4;
   static const int DESCRIPTOR_EXTRACTOR_ERROR = 5;
   static const int NO_LICENSE = 6;
-  static const int NOT_INITIALIZED = 7;
-  static const int COMMAND_IS_NOT_SUPPORTED = 8;
-  static const int COMMAND_PARAMS_READ_ERROR = 9;
-  static const int API_CALL_FAILED = 10;
-  static const int PROCESSING_FAILED = 11;
-}
-
-class RFSCameraPosition {
-  static const int RFSCameraPositionBack = 0;
-  static const int RFSCameraPositionFront = 1;
+  static const int COUNT_LIMIT_EXCEEDED = 7;
+  static const int API_CALL_FAILED = 8;
+  static const int PROCESSING_FAILED = 9;
 }
 
 class FaceSDK {
@@ -533,11 +553,7 @@ class FaceSDK {
     return await _channel.invokeMethod("setLanguage", [language]);
   }
 
-  static Future<dynamic> setConfig(config) async {
-    return await _channel.invokeMethod("setConfig", [config]);
-  }
-
-  static Future<dynamic> matchFacesWithConfig(request, config) async {
-    return await _channel.invokeMethod("matchFacesWithConfig", [request, config]);
+  static Future<dynamic> matchFacesSimilarityThresholdSplit(faces, similarity) async {
+    return await _channel.invokeMethod("matchFacesSimilarityThresholdSplit", [faces, similarity]);
   }
 }

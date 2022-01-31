@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,8 @@ import java.util.Objects;
 
 import com.regula.facesdk.configuration.FaceCaptureConfiguration;
 import com.regula.facesdk.configuration.LivenessConfiguration;
-import com.regula.facesdk.configuration.MatchFaceConfiguration;
+import com.regula.facesdk.model.results.matchfaces.MatchFacesComparedFacesPair;
+import com.regula.facesdk.model.results.matchfaces.MatchFacesSimilarityThresholdSplit;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -147,11 +149,8 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "setLanguage":
                     setLanguage(callback, args(0));
                     break;
-                case "setConfig":
-                    setConfig(callback, args(0));
-                    break;
-                case "matchFacesWithConfig":
-                    matchFacesWithConfig(callback, args(0), args(1));
+                case "matchFacesSimilarityThresholdSplit":
+                    matchFacesSimilarityThresholdSplit(callback, args(0), args(1));
                     break;
             }
         } catch (Exception ignored) {
@@ -215,18 +214,14 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success();
     }
 
-    private void setConfig(Callback callback, JSONObject config) {
-        callback.error("setConfig() is an ios-only method");
-    }
-
     private void matchFaces(Callback callback, String request) throws JSONException {
         Instance().matchFaces(Objects.requireNonNull(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request))), (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
     }
 
-    private void matchFacesWithConfig(Callback callback, String request, JSONObject config) throws JSONException {
-        MatchFaceConfiguration.Builder builder = new MatchFaceConfiguration.Builder();
-        config.has("TODO"); // in order to remove warning Unused
-        Instance().matchFaces(Objects.requireNonNull(JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request))), builder.build(),(response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+    private void matchFacesSimilarityThresholdSplit(Callback callback, String array, Double similarity) throws JSONException {
+        List<MatchFacesComparedFacesPair> faces = JSONConstructor.MatchFacesComparedFacesPairListFromJSON(new JSONArray(array));
+        MatchFacesSimilarityThresholdSplit split = new MatchFacesSimilarityThresholdSplit(faces, similarity);
+        callback.success(JSONConstructor.generateMatchFacesSimilarityThresholdSplit(split).toString());
     }
 
     private void setLanguage(Callback callback, @SuppressWarnings("unused") String language) {
