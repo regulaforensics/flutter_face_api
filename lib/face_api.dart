@@ -462,7 +462,7 @@ class CameraPosition {
   static const int Front = 1;
 }
 
-class FaceCaptureResultCodes {
+class FaceCaptureErrorCode {
   static const int CANCEL = 1;
   static const int CAMERA_NOT_AVAILABLE = 2;
   static const int CAMERA_NO_PERMISSION = 3;
@@ -501,7 +501,7 @@ class MatchFacesErrorCodes {
   static const int FACE_ALIGNER_FAILED = 4;
   static const int DESCRIPTOR_EXTRACTOR_ERROR = 5;
   static const int NO_LICENSE = 6;
-  static const int COUNT_LIMIT_EXCEEDED = 7;
+  static const int IMAGES_COUNT_LIMIT_EXCEEDED = 7;
   static const int API_CALL_FAILED = 8;
   static const int PROCESSING_FAILED = 9;
 }
