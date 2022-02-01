@@ -14,8 +14,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var image1 = new Regula.Image();
-  var image2 = new Regula.Image();
+  var image1 = new Regula.MatchFacesImage();
+  var image2 = new Regula.MatchFacesImage();
   var img1 = Image.asset('assets/images/portrait.png');
   var img2 = Image.asset('assets/images/portrait.png');
   String _similarity = "nil";
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
                       (value) => setImage(
                           first,
                           io.File(value.path).readAsBytesSync(),
-                          Regula.ImageType.IMAGE_TYPE_PRINTED));
+                          Regula.ImageType.PRINTED));
                   Navigator.pop(context);
                 }),
             // ignore: deprecated_member_use
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                               .image
                               .bitmap
                               .replaceAll("\n", "")),
-                          Regula.ImageType.IMAGE_TYPE_LIVE));
+                          Regula.ImageType.LIVE));
                   Navigator.pop(context);
                 })
           ]));
@@ -85,8 +85,8 @@ class _MyAppState extends State<MyApp> {
       _similarity = "nil";
       _liveness = "nil";
     });
-    image1 = new Regula.Image();
-    image2 = new Regula.Image();
+    image1 = new Regula.MatchFacesImage();
+    image2 = new Regula.MatchFacesImage();
   }
 
   matchFaces() {
@@ -101,19 +101,18 @@ class _MyAppState extends State<MyApp> {
     request.images = [image1, image2];
     Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
       var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
-      var matchedFaces = response.matchedFaces;
-      setState(() => _similarity = matchedFaces.length > 0
-          ? ((matchedFaces[0].similarity * 100).toStringAsFixed(2) + "%")
-          : "error");
+      Regula.FaceSDK.matchFacesSimilarityThresholdSplit(jsonEncode(response.results), 0.75).then((str) {
+        var split = Regula.MatchFacesSimilarityThresholdSplit.fromJson(json.decode(str));
+        setState(() => _similarity = split.matchedFaces.length > 0 ? ((split.matchedFaces[0].similarity * 100).toStringAsFixed(2) + "%") : "error");
+      });
     });
   }
 
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
-            Regula.ImageType.IMAGE_TYPE_LIVE);
-        setState(
-            () => _liveness = result.liveness == 0 ? "passed" : "unknown");
+            Regula.ImageType.LIVE);
+        setState(() => _liveness = result.liveness == 0 ? "passed" : "unknown");
       });
 
   Widget createButton(String text, VoidCallback onPress) => Container(
