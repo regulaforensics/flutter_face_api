@@ -1,7 +1,7 @@
 name: flutter_face_api
 description: 
   This is a flutter module for compairing faces using phone`s camera. 
-version: 3.2.2
+version: 3.2.3
 homepage: "https://github.com/regulaforensics/flutter_face_api"
 
 environment:
