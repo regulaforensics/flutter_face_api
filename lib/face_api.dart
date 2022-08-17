@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 // Classes
 
@@ -462,20 +463,9 @@ class CameraPosition {
   static const int Front = 1;
 }
 
-class FaceCaptureErrorCode {
-  static const int CANCEL = 1;
-  static const int CAMERA_NOT_AVAILABLE = 2;
-  static const int CAMERA_NO_PERMISSION = 3;
-  static const int IN_PROGRESS_ALREADY = 4;
-  static const int CONTEXT_IS_NULL = 5;
-}
-
-class ImageType {
-  static const int PRINTED = 1;
-  static const int RFID = 2;
-  static const int LIVE = 3;
-  static const int DOCUMENT_WITH_LIVE = 4;
-  static const int EXTERNAL = 5;
+class LivenessStatus {
+  static const int PASSED = 0;
+  static const int UNKNOWN = 1;
 }
 
 class LivenessErrorCode {
@@ -489,9 +479,20 @@ class LivenessErrorCode {
   static const int PROCESSING_FAILED = 8;
 }
 
-class LivenessStatus {
-  static const int PASSED = 0;
-  static const int UNKNOWN = 1;
+class ImageType {
+  static const int PRINTED = 1;
+  static const int RFID = 2;
+  static const int LIVE = 3;
+  static const int DOCUMENT_WITH_LIVE = 4;
+  static const int EXTERNAL = 5;
+}
+
+class FaceCaptureErrorCode {
+  static const int CANCEL = 1;
+  static const int CAMERA_NOT_AVAILABLE = 2;
+  static const int CAMERA_NO_PERMISSION = 3;
+  static const int IN_PROGRESS_ALREADY = 4;
+  static const int CONTEXT_IS_NULL = 5;
 }
 
 class MatchFacesErrorCodes {
