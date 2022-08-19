@@ -18,12 +18,12 @@ class FaceCaptureException {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (errorCode != null) result.addAll({"errorCode": errorCode});
-    if (message != null) result.addAll({"message": message});
+    if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
 
-    return result;
+    return _result;
   }
 }
 
@@ -42,12 +42,12 @@ class LivenessErrorException {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (errorCode != null) result.addAll({"errorCode": errorCode});
-    if (message != null) result.addAll({"message": message});
+    if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
 
-    return result;
+    return _result;
   }
 }
 
@@ -66,12 +66,12 @@ class MatchFacesException {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (errorCode != null) result.addAll({"errorCode": errorCode});
-    if (message != null) result.addAll({"message": message});
+    if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
 
-    return result;
+    return _result;
   }
 }
 
@@ -90,12 +90,12 @@ class FaceCaptureResponse {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (exception != null) result.addAll({"exception": exception});
-    if (image != null) result.addAll({"image": image});
+    if (exception != null) _result.addAll({"exception": exception});
+    if (image != null) _result.addAll({"image": image});
 
-    return result;
+    return _result;
   }
 }
 
@@ -118,14 +118,14 @@ class LivenessResponse {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (bitmap != null) result.addAll({"bitmap": bitmap});
-    if (liveness != null) result.addAll({"liveness": liveness});
-    if (guid != null) result.addAll({"guid": guid});
-    if (exception != null) result.addAll({"exception": exception});
+    if (bitmap != null) _result.addAll({"bitmap": bitmap});
+    if (liveness != null) _result.addAll({"liveness": liveness});
+    if (guid != null) _result.addAll({"guid": guid});
+    if (exception != null) _result.addAll({"exception": exception});
 
-    return result;
+    return _result;
   }
 }
 
@@ -150,13 +150,13 @@ class MatchFacesResponse {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (exception != null) result.addAll({"exception": exception});
-    if (detections != null) result.addAll({"detections": detections});
-    if (results != null) result.addAll({"results": results});
+    if (exception != null) _result.addAll({"exception": exception});
+    _result.addAll({"detections": detections});
+    _result.addAll({"results": results});
 
-    return result;
+    return _result;
   }
 }
 
@@ -175,18 +175,18 @@ class Image {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (imageType != null) result.addAll({"imageType": imageType});
-    if (bitmap != null) result.addAll({"bitmap": bitmap});
+    if (imageType != null) _result.addAll({"imageType": imageType});
+    if (bitmap != null) _result.addAll({"bitmap": bitmap});
 
-    return result;
+    return _result;
   }
 }
 
 class MatchFacesRequest {
   List<MatchFacesImage?> images = [];
-  dynamic? customMetadata;
+  dynamic customMetadata;
   bool? thumbnails;
 
   static MatchFacesRequest? fromJson(jsonObject) {
@@ -203,13 +203,13 @@ class MatchFacesRequest {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (images != null) result.addAll({"images": images});
-    if (customMetadata != null) result.addAll({"customMetadata": customMetadata});
-    if (thumbnails != null) result.addAll({"thumbnails": thumbnails});
+    _result.addAll({"images": images});
+    if (customMetadata != null) _result.addAll({"customMetadata": customMetadata});
+    if (thumbnails != null) _result.addAll({"thumbnails": thumbnails});
 
-    return result;
+    return _result;
   }
 }
 
@@ -232,14 +232,14 @@ class MatchFacesImage {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (imageType != null) result.addAll({"imageType": imageType});
-    if (detectAll != null) result.addAll({"detectAll": detectAll});
-    if (bitmap != null) result.addAll({"bitmap": bitmap});
-    if (identifier != null) result.addAll({"identifier": identifier});
+    if (imageType != null) _result.addAll({"imageType": imageType});
+    if (detectAll != null) _result.addAll({"detectAll": detectAll});
+    if (bitmap != null) _result.addAll({"bitmap": bitmap});
+    if (identifier != null) _result.addAll({"identifier": identifier});
 
-    return result;
+    return _result;
   }
 }
 
@@ -264,15 +264,15 @@ class MatchFacesComparedFacesPair {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (first != null) result.addAll({"first": first});
-    if (second != null) result.addAll({"second": second});
-    if (similarity != null) result.addAll({"similarity": similarity});
-    if (score != null) result.addAll({"score": score});
-    if (exception != null) result.addAll({"exception": exception});
+    if (first != null) _result.addAll({"first": first});
+    if (second != null) _result.addAll({"second": second});
+    if (similarity != null) _result.addAll({"similarity": similarity});
+    if (score != null) _result.addAll({"score": score});
+    if (exception != null) _result.addAll({"exception": exception});
 
-    return result;
+    return _result;
   }
 }
 
@@ -295,14 +295,14 @@ class MatchFacesComparedFace {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (face != null) result.addAll({"face": face});
-    if (image != null) result.addAll({"image": image});
-    if (faceIndex != null) result.addAll({"faceIndex": faceIndex});
-    if (imageIndex != null) result.addAll({"imageIndex": imageIndex});
+    if (face != null) _result.addAll({"face": face});
+    if (image != null) _result.addAll({"image": image});
+    if (faceIndex != null) _result.addAll({"faceIndex": faceIndex});
+    if (imageIndex != null) _result.addAll({"imageIndex": imageIndex});
 
-    return result;
+    return _result;
   }
 }
 
@@ -329,15 +329,15 @@ class MatchFacesDetectionFace {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (faceIndex != null) result.addAll({"faceIndex": faceIndex});
-    if (landmarks != null) result.addAll({"landmarks": landmarks});
-    if (faceRect != null) result.addAll({"faceRect": faceRect});
-    if (rotationAngle != null) result.addAll({"rotationAngle": rotationAngle});
-    if (thumbnail != null) result.addAll({"thumbnail": thumbnail});
+    if (faceIndex != null) _result.addAll({"faceIndex": faceIndex});
+    _result.addAll({"landmarks": landmarks});
+    if (faceRect != null) _result.addAll({"faceRect": faceRect});
+    if (rotationAngle != null) _result.addAll({"rotationAngle": rotationAngle});
+    if (thumbnail != null) _result.addAll({"thumbnail": thumbnail});
 
-    return result;
+    return _result;
   }
 }
 
@@ -362,14 +362,14 @@ class MatchFacesDetection {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (image != null) result.addAll({"image": image});
-    if (imageIndex != null) result.addAll({"imageIndex": imageIndex});
-    if (faces != null) result.addAll({"faces": faces});
-    if (exception != null) result.addAll({"exception": exception});
+    if (image != null) _result.addAll({"image": image});
+    if (imageIndex != null) _result.addAll({"imageIndex": imageIndex});
+    _result.addAll({"faces": faces});
+    if (exception != null) _result.addAll({"exception": exception});
 
-    return result;
+    return _result;
   }
 }
 
@@ -388,12 +388,12 @@ class Point {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (x != null) result.addAll({"x": x});
-    if (y != null) result.addAll({"y": y});
+    if (x != null) _result.addAll({"x": x});
+    if (y != null) _result.addAll({"y": y});
 
-    return result;
+    return _result;
   }
 }
 
@@ -416,14 +416,14 @@ class Rect {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (bottom != null) result.addAll({"bottom": bottom});
-    if (top != null) result.addAll({"top": top});
-    if (left != null) result.addAll({"left": left});
-    if (right != null) result.addAll({"right": right});
+    if (bottom != null) _result.addAll({"bottom": bottom});
+    if (top != null) _result.addAll({"top": top});
+    if (left != null) _result.addAll({"left": left});
+    if (right != null) _result.addAll({"right": right});
 
-    return result;
+    return _result;
   }
 }
 
@@ -446,12 +446,12 @@ class MatchFacesSimilarityThresholdSplit {
   }
 
   Map toJson(){
-    Map result = {};
+    Map _result = {};
 
-    if (matchedFaces != null) result.addAll({"matchedFaces": matchedFaces});
-    if (unmatchedFaces != null) result.addAll({"unmatchedFaces": unmatchedFaces});
+    _result.addAll({"matchedFaces": matchedFaces});
+    _result.addAll({"unmatchedFaces": unmatchedFaces});
 
-    return result;
+    return _result;
   }
 }
 
@@ -462,20 +462,9 @@ class CameraPosition {
   static const int Front = 1;
 }
 
-class FaceCaptureErrorCode {
-  static const int CANCEL = 1;
-  static const int CAMERA_NOT_AVAILABLE = 2;
-  static const int CAMERA_NO_PERMISSION = 3;
-  static const int IN_PROGRESS_ALREADY = 4;
-  static const int CONTEXT_IS_NULL = 5;
-}
-
-class ImageType {
-  static const int PRINTED = 1;
-  static const int RFID = 2;
-  static const int LIVE = 3;
-  static const int DOCUMENT_WITH_LIVE = 4;
-  static const int EXTERNAL = 5;
+class LivenessStatus {
+  static const int PASSED = 0;
+  static const int UNKNOWN = 1;
 }
 
 class LivenessErrorCode {
@@ -489,9 +478,20 @@ class LivenessErrorCode {
   static const int PROCESSING_FAILED = 8;
 }
 
-class LivenessStatus {
-  static const int PASSED = 0;
-  static const int UNKNOWN = 1;
+class ImageType {
+  static const int PRINTED = 1;
+  static const int RFID = 2;
+  static const int LIVE = 3;
+  static const int DOCUMENT_WITH_LIVE = 4;
+  static const int EXTERNAL = 5;
+}
+
+class FaceCaptureErrorCode {
+  static const int CANCEL = 1;
+  static const int CAMERA_NOT_AVAILABLE = 2;
+  static const int CAMERA_NO_PERMISSION = 3;
+  static const int IN_PROGRESS_ALREADY = 4;
+  static const int CONTEXT_IS_NULL = 5;
 }
 
 class MatchFacesErrorCodes {
