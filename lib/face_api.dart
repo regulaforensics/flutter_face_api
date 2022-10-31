@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 // Classes
-
+// sample app face api
 class FaceCaptureException {
   int? errorCode;
   String? message;
@@ -17,7 +17,7 @@ class FaceCaptureException {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -41,7 +41,7 @@ class LivenessErrorException {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -65,7 +65,7 @@ class MatchFacesException {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -89,7 +89,7 @@ class FaceCaptureResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (exception != null) _result.addAll({"exception": exception});
@@ -117,7 +117,7 @@ class LivenessResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (bitmap != null) _result.addAll({"bitmap": bitmap});
@@ -149,7 +149,7 @@ class MatchFacesResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (exception != null) _result.addAll({"exception": exception});
@@ -174,7 +174,7 @@ class Image {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (imageType != null) _result.addAll({"imageType": imageType});
@@ -202,11 +202,12 @@ class MatchFacesRequest {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     _result.addAll({"images": images});
-    if (customMetadata != null) _result.addAll({"customMetadata": customMetadata});
+    if (customMetadata != null)
+      _result.addAll({"customMetadata": customMetadata});
     if (thumbnails != null) _result.addAll({"thumbnails": thumbnails});
 
     return _result;
@@ -231,7 +232,7 @@ class MatchFacesImage {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (imageType != null) _result.addAll({"imageType": imageType});
@@ -256,14 +257,17 @@ class MatchFacesComparedFacesPair {
 
     result.first = MatchFacesComparedFace.fromJson(jsonObject["first"]);
     result.second = MatchFacesComparedFace.fromJson(jsonObject["second"]);
-    result.similarity = jsonObject["similarity"] == null ? null : jsonObject["similarity"].toDouble();
-    result.score = jsonObject["score"] == null ? null : jsonObject["score"].toDouble();
+    result.similarity = jsonObject["similarity"] == null
+        ? null
+        : jsonObject["similarity"].toDouble();
+    result.score =
+        jsonObject["score"] == null ? null : jsonObject["score"].toDouble();
     result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (first != null) _result.addAll({"first": first});
@@ -294,7 +298,7 @@ class MatchFacesComparedFace {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (face != null) _result.addAll({"face": face});
@@ -322,13 +326,15 @@ class MatchFacesDetectionFace {
       for (var item in jsonObject["landmarks"])
         result.landmarks.add(Point.fromJson(item));
     result.faceRect = Rect.fromJson(jsonObject["faceRect"]);
-    result.rotationAngle = jsonObject["rotationAngle"] == null ? null : jsonObject["rotationAngle"].toDouble();
+    result.rotationAngle = jsonObject["rotationAngle"] == null
+        ? null
+        : jsonObject["rotationAngle"].toDouble();
     result.thumbnail = jsonObject["thumbnail"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (faceIndex != null) _result.addAll({"faceIndex": faceIndex});
@@ -361,7 +367,7 @@ class MatchFacesDetection {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (image != null) _result.addAll({"image": image});
@@ -387,7 +393,7 @@ class Point {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (x != null) _result.addAll({"x": x});
@@ -415,7 +421,7 @@ class Rect {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (bottom != null) _result.addAll({"bottom": bottom});
@@ -445,7 +451,7 @@ class MatchFacesSimilarityThresholdSplit {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     _result.addAll({"matchedFaces": matchedFaces});
@@ -507,7 +513,8 @@ class MatchFacesErrorCodes {
 }
 
 class FaceSDK {
-  static const MethodChannel _channel = const MethodChannel('flutter_face_api/method');
+  static const MethodChannel _channel =
+      const MethodChannel('flutter_face_api/method');
 
   static Future<dynamic> getServiceUrl() async {
     return await _channel.invokeMethod("getServiceUrl", []);
@@ -534,7 +541,8 @@ class FaceSDK {
   }
 
   static Future<dynamic> presentFaceCaptureActivityWithConfig(config) async {
-    return await _channel.invokeMethod("presentFaceCaptureActivityWithConfig", [config]);
+    return await _channel
+        .invokeMethod("presentFaceCaptureActivityWithConfig", [config]);
   }
 
   static Future<dynamic> startLivenessWithConfig(config) async {
@@ -550,14 +558,17 @@ class FaceSDK {
   }
 
   static Future<dynamic> matchFacesWithConfig(request, config) async {
-    return await _channel.invokeMethod("matchFacesWithConfig", [request, config]);
+    return await _channel
+        .invokeMethod("matchFacesWithConfig", [request, config]);
   }
 
   static Future<dynamic> setLanguage(language) async {
     return await _channel.invokeMethod("setLanguage", [language]);
   }
 
-  static Future<dynamic> matchFacesSimilarityThresholdSplit(faces, similarity) async {
-    return await _channel.invokeMethod("matchFacesSimilarityThresholdSplit", [faces, similarity]);
+  static Future<dynamic> matchFacesSimilarityThresholdSplit(
+      faces, similarity) async {
+    return await _channel.invokeMethod(
+        "matchFacesSimilarityThresholdSplit", [faces, similarity]);
   }
 }
