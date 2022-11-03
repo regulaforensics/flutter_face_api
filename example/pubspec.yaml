@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   path_provider: ^1.6.5
-  image_picker: ^0.6.4
+  image_picker: ^0.8.6
   flutter:
     sdk: flutter
   flutter_face_api_beta:
