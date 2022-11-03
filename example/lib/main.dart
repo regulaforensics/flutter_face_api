@@ -37,12 +37,14 @@ class _MyAppState extends State<MyApp> {
             TextButton(
                 child: Text("Use gallery"),
                 onPressed: () {
-                  ImagePicker().getImage(source: ImageSource.gallery).then(
-                      (value) => setImage(
-                          first,
-                          io.File(value.path).readAsBytesSync(),
-                          Regula.ImageType.PRINTED));
-                  Navigator.pop(context);
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery)
+                      .then((value) => {
+                            setImage(
+                                first,
+                                io.File(value!.path).readAsBytesSync(),
+                                Regula.ImageType.PRINTED)
+                          });
                 }),
             // ignore: deprecated_member_use
             TextButton(
