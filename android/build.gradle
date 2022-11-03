@@ -13,14 +13,14 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url "https://maven.regulaforensics.com/RegulaDocumentReader/Beta"
+            url "https://maven.regulaforensics.com/RegulaDocumentReader"
         }
     }
 }
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:4.1.1951'){
+    implementation('com.regula.face:api:4.1.1745'){
         transitive = true
     }
 }
