@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io' as io;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_face_api/face_api.dart' as Regula;
@@ -33,34 +34,36 @@ class _MyAppState extends State<MyApp> {
       builder: (BuildContext context) =>
           AlertDialog(title: Text("Select option"), actions: [
             // ignore: deprecated_member_use
-            FlatButton(
+            TextButton(
                 child: Text("Use gallery"),
                 onPressed: () {
-                  ImagePicker().getImage(source: ImageSource.gallery).then(
-                      (value) => setImage(
-                          first,
-                          io.File(value.path).readAsBytesSync(),
-                          Regula.ImageType.PRINTED));
-                  Navigator.pop(context);
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery)
+                      .then((value) => {
+                            setImage(
+                                first,
+                                io.File(value!.path).readAsBytesSync(),
+                                Regula.ImageType.PRINTED)
+                          });
                 }),
             // ignore: deprecated_member_use
-            FlatButton(
+            TextButton(
                 child: Text("Use camera"),
                 onPressed: () {
                   Regula.FaceSDK.presentFaceCaptureActivity().then((result) =>
                       setImage(
                           first,
                           base64Decode(Regula.FaceCaptureResponse.fromJson(
-                                  json.decode(result))
-                              .image
-                              .bitmap
+                                  json.decode(result))!
+                              .image!
+                              .bitmap!
                               .replaceAll("\n", "")),
                           Regula.ImageType.LIVE));
                   Navigator.pop(context);
                 })
           ]));
 
-  setImage(bool first, List<int> imageFile, int type) {
+  setImage(bool first, Uint8List? imageFile, int type) {
     if (imageFile == null) return;
     setState(() => _similarity = "nil");
     if (first) {
@@ -89,10 +92,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   matchFaces() {
-    if (image1 == null ||
-        image1.bitmap == null ||
+    if (image1.bitmap == null ||
         image1.bitmap == "" ||
-        image2 == null ||
         image2.bitmap == null ||
         image2.bitmap == "") return;
     setState(() => _similarity = "Processing...");
@@ -100,24 +101,33 @@ class _MyAppState extends State<MyApp> {
     request.images = [image1, image2];
     Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
       var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
-      Regula.FaceSDK.matchFacesSimilarityThresholdSplit(jsonEncode(response.results), 0.75).then((str) {
-        var split = Regula.MatchFacesSimilarityThresholdSplit.fromJson(json.decode(str));
-        setState(() => _similarity = split.matchedFaces.length > 0 ? ((split.matchedFaces[0].similarity * 100).toStringAsFixed(2) + "%") : "error");
+      Regula.FaceSDK.matchFacesSimilarityThresholdSplit(
+              jsonEncode(response!.results), 0.75)
+          .then((str) {
+        var split = Regula.MatchFacesSimilarityThresholdSplit.fromJson(
+            json.decode(str));
+        setState(() => _similarity = split!.matchedFaces.length > 0
+            ? ((split.matchedFaces[0]!.similarity! * 100).toStringAsFixed(2) +
+                "%")
+            : "error");
       });
     });
   }
 
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
-        setImage(true, base64Decode(result.bitmap.replaceAll("\n", "")),
+        setImage(true, base64Decode(result!.bitmap!.replaceAll("\n", "")),
             Regula.ImageType.LIVE);
         setState(() => _liveness = result.liveness == 0 ? "passed" : "unknown");
       });
 
   Widget createButton(String text, VoidCallback onPress) => Container(
         // ignore: deprecated_member_use
-        child: FlatButton(
-            color: Color.fromARGB(50, 10, 10, 10),
+        child: TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
+            ),
             onPressed: onPress,
             child: Text(text)),
         width: 250,

@@ -1,14 +1,10 @@
-group 'io.flutter.plugins.regula.faceapi.flutter_face_api'
-version '1.0'
+apply plugin: 'com.android.library'
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
+android {
+    compileSdkVersion 33
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.2'
+    defaultConfig {
+        minSdkVersion 21
     }
 }
 
@@ -19,32 +15,12 @@ rootProject.allprojects {
         maven {
             url "https://maven.regulaforensics.com/RegulaDocumentReader"
         }
-        maven {
-            url "https://maven.regulaforensics.com/RegulaDocumentReader/Beta"
-        }
-    }
-}
-
-apply plugin: 'com.android.library'
-
-android {
-    compileSdkVersion 32
-
-    defaultConfig {
-        minSdkVersion 21
-    }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
     }
 }
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:4.1.1745'){
+    implementation('com.regula.face:api:4.1.1988'){
         transitive = true
     }
 }
