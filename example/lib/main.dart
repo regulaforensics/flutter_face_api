@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io' as io;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:flutter_face_api/face_api.dart' as Regula;
 import 'package:image_picker/image_picker.dart';
@@ -25,9 +25,27 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    const EventChannel('flutter_face_api/event/video_encoder_completion')
+        .receiveBroadcastStream()
+        .listen((event) {
+      var response = jsonDecode(event);
+      String transactionId = response["transactionId"];
+      bool success = response["success"];
+      print("video_encoder_completion:");
+      print("    success: $success");
+      print("    transactionId: $transactionId");
+    });
   }
 
-  Future<void> initPlatformState() async {}
+  Future<void> initPlatformState() async {
+    Regula.FaceSDK.init().then((json) {
+      var response = jsonDecode(json);
+      if (!response["success"]) {
+        print("Init failed: ");
+        print(json);
+      }
+    });
+  }
 
   showAlertDialog(BuildContext context, bool first) => showDialog(
       context: context,
@@ -37,6 +55,7 @@ class _MyAppState extends State<MyApp> {
             TextButton(
                 child: Text("Use gallery"),
                 onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
                   ImagePicker()
                       .pickImage(source: ImageSource.gallery)
                       .then((value) => {
@@ -118,7 +137,10 @@ class _MyAppState extends State<MyApp> {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
         setImage(true, base64Decode(result!.bitmap!.replaceAll("\n", "")),
             Regula.ImageType.LIVE);
-        setState(() => _liveness = result.liveness == 0 ? "passed" : "unknown");
+        setState(() => _liveness =
+            result.liveness == Regula.LivenessStatus.PASSED
+                ? "passed"
+                : "unknown");
       });
 
   Widget createButton(String text, VoidCallback onPress) => Container(
