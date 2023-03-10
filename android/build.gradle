@@ -20,7 +20,7 @@ rootProject.allprojects {
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:5.1.2320'){
+    implementation('com.regula.face:api:5.1.2356'){
         transitive = true
     }
 }
