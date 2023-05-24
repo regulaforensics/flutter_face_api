@@ -155,7 +155,7 @@ class FaceCaptureResponse {
 class LivenessResponse {
   String? bitmap;
   String? liveness;
-  String? sessionId;
+  String? tag;
   String? transactionId;
   LivenessErrorException? exception;
 
@@ -165,7 +165,7 @@ class LivenessResponse {
 
     result.bitmap = jsonObject["bitmap"];
     result.liveness = jsonObject["liveness"];
-    result.sessionId = jsonObject["sessionId"];
+    result.tag = jsonObject["tag"];
     result.transactionId = jsonObject["transactionId"];
     result.exception = LivenessErrorException.fromJson(jsonObject["exception"]);
 
@@ -177,7 +177,7 @@ class LivenessResponse {
 
     if (bitmap != null) _result.addAll({"bitmap": bitmap});
     if (liveness != null) _result.addAll({"liveness": liveness});
-    if (sessionId != null) _result.addAll({"sessionId": sessionId});
+    if (tag != null) _result.addAll({"tag": tag});
     if (transactionId != null) _result.addAll({"transactionId": transactionId});
     if (exception != null) _result.addAll({"exception": exception});
 
@@ -186,6 +186,7 @@ class LivenessResponse {
 }
 
 class MatchFacesResponse {
+  String? tag;
   MatchFacesException? exception;
   List<MatchFacesDetection?> detections = [];
   List<MatchFacesComparedFacesPair?> results = [];
@@ -194,6 +195,7 @@ class MatchFacesResponse {
     if (jsonObject == null) return null;
     var result = new MatchFacesResponse();
 
+    result.tag = jsonObject["tag"];
     result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
     if (jsonObject["detections"] != null)
       for (var item in jsonObject["detections"])
@@ -208,6 +210,7 @@ class MatchFacesResponse {
   Map toJson() {
     Map _result = {};
 
+    if (tag != null) _result.addAll({"tag": tag});
     if (exception != null) _result.addAll({"exception": exception});
     _result.addAll({"detections": detections});
     _result.addAll({"results": results});
@@ -220,7 +223,7 @@ class Image {
   int? imageType;
   String? bitmap;
   String? tag;
-  List<dynamic>? imageData;
+  String? imageData;
 
   static Image? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -250,6 +253,7 @@ class MatchFacesRequest {
   List<MatchFacesImage?> images = [];
   dynamic customMetadata;
   bool? thumbnails;
+  String? tag;
 
   static MatchFacesRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -260,6 +264,7 @@ class MatchFacesRequest {
         result.images.add(MatchFacesImage.fromJson(item));
     result.customMetadata = jsonObject["customMetadata"];
     result.thumbnails = jsonObject["thumbnails"];
+    result.tag = jsonObject["tag"];
 
     return result;
   }
@@ -271,6 +276,7 @@ class MatchFacesRequest {
     if (customMetadata != null)
       _result.addAll({"customMetadata": customMetadata});
     if (thumbnails != null) _result.addAll({"thumbnails": thumbnails});
+    if (tag != null) _result.addAll({"tag": tag});
 
     return _result;
   }
@@ -524,6 +530,7 @@ class MatchFacesSimilarityThresholdSplit {
 }
 
 class DetectFacesRequest {
+  String? tag;
   String? scenario;
   String? image;
   DetectFacesConfiguration? configuration;
@@ -532,6 +539,7 @@ class DetectFacesRequest {
     if (jsonObject == null) return null;
     var result = new DetectFacesRequest();
 
+    result.tag = jsonObject["tag"];
     result.scenario = jsonObject["scenario"];
     result.image = jsonObject["image"];
     result.configuration =
@@ -543,6 +551,7 @@ class DetectFacesRequest {
   Map toJson() {
     Map _result = {};
 
+    if (tag != null) _result.addAll({"tag": tag});
     if (scenario != null) _result.addAll({"scenario": scenario});
     if (image != null) _result.addAll({"image": image});
     if (configuration != null) _result.addAll({"configuration": configuration});
@@ -924,6 +933,272 @@ class DetectFacesAttributeResult {
   }
 }
 
+class Person {
+  String? name;
+  String? updatedAt;
+  int? id;
+  dynamic metadata;
+  String? createdAt;
+
+  static Person? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new Person();
+
+    result.name = jsonObject["name"];
+    result.updatedAt = jsonObject["updatedAt"];
+    result.id = jsonObject["id"];
+    result.metadata = jsonObject["metadata"];
+    result.createdAt = jsonObject["createdAt"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (name != null) _result.addAll({"name": name});
+    if (updatedAt != null) _result.addAll({"updatedAt": updatedAt});
+    if (id != null) _result.addAll({"id": id});
+    if (metadata != null) _result.addAll({"metadata": metadata});
+    if (createdAt != null) _result.addAll({"createdAt": createdAt});
+
+    return _result;
+  }
+}
+
+class PersonGroup {
+  String? name;
+  int? id;
+  dynamic metadata;
+  String? createdAt;
+
+  static PersonGroup? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new PersonGroup();
+
+    result.name = jsonObject["name"];
+    result.id = jsonObject["id"];
+    result.metadata = jsonObject["metadata"];
+    result.createdAt = jsonObject["createdAt"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (name != null) _result.addAll({"name": name});
+    if (id != null) _result.addAll({"id": id});
+    if (metadata != null) _result.addAll({"metadata": metadata});
+    if (createdAt != null) _result.addAll({"createdAt": createdAt});
+
+    return _result;
+  }
+}
+
+class PersonImage {
+  String? path;
+  String? url;
+  String? contentType;
+  int? id;
+  dynamic metadata;
+  String? createdAt;
+
+  static PersonImage? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new PersonImage();
+
+    result.path = jsonObject["path"];
+    result.url = jsonObject["url"];
+    result.contentType = jsonObject["contentType"];
+    result.id = jsonObject["id"];
+    result.metadata = jsonObject["metadata"];
+    result.createdAt = jsonObject["createdAt"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (path != null) _result.addAll({"path": path});
+    if (url != null) _result.addAll({"url": url});
+    if (contentType != null) _result.addAll({"contentType": contentType});
+    if (id != null) _result.addAll({"id": id});
+    if (metadata != null) _result.addAll({"metadata": metadata});
+    if (createdAt != null) _result.addAll({"createdAt": createdAt});
+
+    return _result;
+  }
+}
+
+class ImageUpload {
+  String? imageData;
+
+  static ImageUpload? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new ImageUpload();
+
+    result.imageData = jsonObject["imageData"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (imageData != null) _result.addAll({"imageData": imageData});
+
+    return _result;
+  }
+}
+
+class EditGroupPersonsRequest {
+  List<int?> personIdsToAdd = [];
+  List<int?> personIdsToRemove = [];
+
+  static EditGroupPersonsRequest? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new EditGroupPersonsRequest();
+
+    if (jsonObject["personIdsToAdd"] != null)
+      for (var item in jsonObject["personIdsToAdd"])
+        result.personIdsToAdd.add(item);
+    if (jsonObject["personIdsToRemove"] != null)
+      for (var item in jsonObject["personIdsToRemove"])
+        result.personIdsToRemove.add(item);
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    _result.addAll({"personIdsToAdd": personIdsToAdd});
+    _result.addAll({"personIdsToRemove": personIdsToRemove});
+
+    return _result;
+  }
+}
+
+class SearchPersonRequest {
+  List<int?> groupIdsForSearch = [];
+  double? threshold;
+  int? limit;
+  ImageUpload? imageUpload;
+
+  static SearchPersonRequest? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new SearchPersonRequest();
+
+    if (jsonObject["groupIdsForSearch"] != null)
+      for (var item in jsonObject["groupIdsForSearch"])
+        result.groupIdsForSearch.add(item);
+    result.threshold = jsonObject["threshold"] == null
+        ? null
+        : jsonObject["threshold"].toDouble();
+    result.limit = jsonObject["limit"];
+    result.imageUpload = ImageUpload.fromJson(jsonObject["imageUpload"]);
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    _result.addAll({"groupIdsForSearch": groupIdsForSearch});
+    if (threshold != null) _result.addAll({"threshold": threshold});
+    if (limit != null) _result.addAll({"limit": limit});
+    if (imageUpload != null) _result.addAll({"imageUpload": imageUpload});
+
+    return _result;
+  }
+}
+
+class SearchPerson {
+  List<SearchPersonImage?> images = [];
+  String? name;
+  String? updatedAt;
+  int? id;
+  dynamic metadata;
+  String? createdAt;
+
+  static SearchPerson? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new SearchPerson();
+
+    if (jsonObject["images"] != null)
+      for (var item in jsonObject["images"])
+        result.images.add(SearchPersonImage.fromJson(item));
+    result.name = jsonObject["name"];
+    result.updatedAt = jsonObject["updatedAt"];
+    result.id = jsonObject["id"];
+    result.metadata = jsonObject["metadata"];
+    result.createdAt = jsonObject["createdAt"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    _result.addAll({"images": images});
+    if (name != null) _result.addAll({"name": name});
+    if (updatedAt != null) _result.addAll({"updatedAt": updatedAt});
+    if (id != null) _result.addAll({"id": id});
+    if (metadata != null) _result.addAll({"metadata": metadata});
+    if (createdAt != null) _result.addAll({"createdAt": createdAt});
+
+    return _result;
+  }
+}
+
+class SearchPersonImage {
+  double? similarity;
+  double? distance;
+  String? path;
+  String? url;
+  String? contentType;
+  int? id;
+  dynamic metadata;
+  String? createdAt;
+
+  static SearchPersonImage? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new SearchPersonImage();
+
+    result.similarity = jsonObject["similarity"] == null
+        ? null
+        : jsonObject["similarity"].toDouble();
+    result.distance = jsonObject["distance"] == null
+        ? null
+        : jsonObject["distance"].toDouble();
+    result.path = jsonObject["path"];
+    result.url = jsonObject["url"];
+    result.contentType = jsonObject["contentType"];
+    result.id = jsonObject["id"];
+    result.metadata = jsonObject["metadata"];
+    result.createdAt = jsonObject["createdAt"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (similarity != null) _result.addAll({"similarity": similarity});
+    if (distance != null) _result.addAll({"distance": distance});
+    if (path != null) _result.addAll({"path": path});
+    if (url != null) _result.addAll({"url": url});
+    if (contentType != null) _result.addAll({"contentType": contentType});
+    if (id != null) _result.addAll({"id": id});
+    if (metadata != null) _result.addAll({"metadata": metadata});
+    if (createdAt != null) _result.addAll({"createdAt": createdAt});
+
+    return _result;
+  }
+}
+
 // Enum
 
 class ImageQualityGroupName {
@@ -1056,6 +1331,18 @@ class ImageQualityCharacteristicName {
   static const String OTHER_FACES = "OtherFaces";
   static const String BACKGROUND_COLOR_MATCH = "BackgroundColorMatch";
   static const String UNKNOWN = "Unknown";
+  static const String IMAGE_CHARACTERISTIC_ALL_RECOMMENDED =
+      "ImageCharacteristic";
+  static const String HEAD_SIZE_AND_POSITION_ALL_RECOMMENDED =
+      "HeadSizeAndPosition";
+  static const String FACE_IMAGE_QUALITY_ALL_RECOMMENDED = "FaceImageQuality";
+  static const String EYES_CHARACTERISTICS_ALL_RECOMMENDED =
+      "EyesCharacteristics";
+  static const String SHADOW_AND_LIGHTING_ALL_RECOMMENDED =
+      "ShadowsAndLightning";
+  static const String POSE_AND_EXPRESSION_ALL_RECOMMENDED = "PoseAndExpression";
+  static const String HEAD_OCCLUSION_ALL_RECOMMENDED = "HeadOcclusion";
+  static const String QUALITY_BACKGROUND_ALL_RECOMMENDED = "QualityBackground";
 }
 
 class DetectFacesScenario {
@@ -1218,6 +1505,14 @@ class FaceSDK {
         .invokeMethod("matchFacesWithConfig", [request, config]);
   }
 
+  static Future<dynamic> setOnCustomButtonTappedListener() async {
+    return await _channel.invokeMethod("setOnCustomButtonTappedListener", []);
+  }
+
+  static Future<dynamic> setUiCustomizationLayer(json) async {
+    return await _channel.invokeMethod("setUiCustomizationLayer", [json]);
+  }
+
   static Future<dynamic> setLanguage(language) async {
     return await _channel.invokeMethod("setLanguage", [language]);
   }
@@ -1226,5 +1521,105 @@ class FaceSDK {
       faces, similarity) async {
     return await _channel.invokeMethod(
         "matchFacesSimilarityThresholdSplit", [faces, similarity]);
+  }
+
+  static Future<dynamic> getPersons() async {
+    return await _channel.invokeMethod("getPersons", []);
+  }
+
+  static Future<dynamic> getPersonsForPage(page, size) async {
+    return await _channel.invokeMethod("getPersonsForPage", [page, size]);
+  }
+
+  static Future<dynamic> getPerson(personId) async {
+    return await _channel.invokeMethod("getPerson", [personId]);
+  }
+
+  static Future<dynamic> createPerson(name, metadata) async {
+    return await _channel.invokeMethod("createPerson", [name, metadata]);
+  }
+
+  static Future<dynamic> updatePerson(personId, name, metadata) async {
+    return await _channel
+        .invokeMethod("updatePerson", [personId, name, metadata]);
+  }
+
+  static Future<dynamic> deletePerson(personId) async {
+    return await _channel.invokeMethod("deletePerson", [personId]);
+  }
+
+  static Future<dynamic> getPersonImages(personId) async {
+    return await _channel.invokeMethod("getPersonImages", [personId]);
+  }
+
+  static Future<dynamic> getPersonImagesForPage(personId, page, size) async {
+    return await _channel
+        .invokeMethod("getPersonImagesForPage", [personId, page, size]);
+  }
+
+  static Future<dynamic> addPersonImage(personId, image) async {
+    return await _channel.invokeMethod("addPersonImage", [personId, image]);
+  }
+
+  static Future<dynamic> getPersonImage(personId, imageId) async {
+    return await _channel.invokeMethod("getPersonImage", [personId, imageId]);
+  }
+
+  static Future<dynamic> deletePersonImage(personId, imageId) async {
+    return await _channel
+        .invokeMethod("deletePersonImage", [personId, imageId]);
+  }
+
+  static Future<dynamic> getGroups() async {
+    return await _channel.invokeMethod("getGroups", []);
+  }
+
+  static Future<dynamic> getGroupsForPage(page, size) async {
+    return await _channel.invokeMethod("getGroupsForPage", [page, size]);
+  }
+
+  static Future<dynamic> getPersonGroups(personId) async {
+    return await _channel.invokeMethod("getPersonGroups", [personId]);
+  }
+
+  static Future<dynamic> getPersonGroupsForPage(personId, page, size) async {
+    return await _channel
+        .invokeMethod("getPersonGroupsForPage", [personId, page, size]);
+  }
+
+  static Future<dynamic> createGroup(name, metadata) async {
+    return await _channel.invokeMethod("createGroup", [name, metadata]);
+  }
+
+  static Future<dynamic> getGroup(groupId) async {
+    return await _channel.invokeMethod("getGroup", [groupId]);
+  }
+
+  static Future<dynamic> updateGroup(groupId, name, metadata) async {
+    return await _channel
+        .invokeMethod("updateGroup", [groupId, name, metadata]);
+  }
+
+  static Future<dynamic> editPersonsInGroup(
+      groupId, editGroupPersonsRequest) async {
+    return await _channel
+        .invokeMethod("editPersonsInGroup", [groupId, editGroupPersonsRequest]);
+  }
+
+  static Future<dynamic> getPersonsInGroup(groupId) async {
+    return await _channel.invokeMethod("getPersonsInGroup", [groupId]);
+  }
+
+  static Future<dynamic> getPersonsInGroupForPage(groupId, page, size) async {
+    return await _channel
+        .invokeMethod("getPersonsInGroupForPage", [groupId, page, size]);
+  }
+
+  static Future<dynamic> deleteGroup(groupId) async {
+    return await _channel.invokeMethod("deleteGroup", [groupId]);
+  }
+
+  static Future<dynamic> searchPerson(searchPersonRequest) async {
+    return await _channel.invokeMethod("searchPerson", [searchPersonRequest]);
   }
 }
