@@ -7,10 +7,6 @@
     return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:input options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
 }
 
-+(NSString*)arrayToString:(NSMutableArray*)input {
-    return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:input options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-}
-
 +(NSMutableDictionary* _Nonnull)generateNSError:(NSError* _Nullable)input {
     NSMutableDictionary *result = [NSMutableDictionary new];
     if(input == nil) return result;
@@ -19,16 +15,6 @@
     result[@"message"] = input.localizedDescription;
 
     return result;
-}
-
-+(NSString* _Nonnull)generateNSDate:(NSDate*)input {
-    return [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                          dateStyle:NSDateFormatterShortStyle
-                                          timeStyle:NSDateFormatterFullStyle];
-}
-
-+(NSString* _Nonnull)generateNSURL:(NSURL*)input {
-    return input.absoluteString;
 }
 
 +(NSString*)generateRFSDetectFacesAttribute:(RFSDetectFacesAttribute)value {
@@ -281,11 +267,7 @@
 
     RFSDetectFacesConfiguration* configuration = [RFSWJSONConstructor RFSDetectFacesConfigurationFromJSON: [input objectForKey:@"configuration"]];
 
-    RFSDetectFacesRequest* request = [[RFSDetectFacesRequest alloc] initWithImage:image configuration:configuration];
-    if([input valueForKey:@"tag"] != nil)
-        request.tag = [input valueForKey:@"tag"];;
-
-    return request;
+    return [[RFSDetectFacesRequest alloc] initWithImage:image configuration:configuration];
 }
 
 +(RFSDetectFacesConfiguration*)RFSDetectFacesConfigurationFromJSON:(NSDictionary*)input {
@@ -303,7 +285,7 @@
     if([input valueForKey:@"customQuality"] != nil){
         NSMutableArray<RFSImageQualityCharacteristic*>* customQuality = [[NSMutableArray alloc] init];
         for(NSDictionary* item in [input objectForKey:@"customQuality"])
-            [customQuality addObjectsFromArray:[RFSWJSONConstructor RFSImageQualityCharacteristicFromJSON:item]];
+            [customQuality addObject:[RFSWJSONConstructor RFSImageQualityCharacteristicFromJSON:item]];
         result.customQuality = customQuality;
     }
     if([input valueForKey:@"outputImageParams"] != nil){
@@ -380,7 +362,7 @@
     return hexInt;
 }
 
-+(NSArray<RFSImageQualityCharacteristic *> *)RFSImageQualityCharacteristicFromJSON:(NSDictionary*)input {
++(RFSImageQualityCharacteristic*)RFSImageQualityCharacteristicFromJSON:(NSDictionary*)input {
     RFSImageQualityCharacteristic* result = RFSImageCharacteristics.paddingRatio;
 
     NSMutableArray<NSNumber*>* range = [NSMutableArray new];
@@ -413,8 +395,6 @@
         else return nil;
     } else if([name isEqualToString:@"PaddingRatio"])
         result = RFSImageCharacteristics.paddingRatio;
-    else if([name isEqualToString:@"ImageCharacteristic"])
-        return RFSImageCharacteristics.allRecommended;
 
     else if([name isEqualToString:@"FaceMidPointHorizontalPosition"])
         result = RFSHeadSizeAndPosition.faceMidPointHorizontalPosition;
@@ -432,8 +412,6 @@
         result = RFSHeadSizeAndPosition.pitch;
     else if([name isEqualToString:@"Roll"])
         result = RFSHeadSizeAndPosition.roll;
-    else if([name isEqualToString:@"HeadSizeAndPosition"])
-        return RFSHeadSizeAndPosition.allRecommended;
 
     else if([name isEqualToString:@"BlurLevel"])
         result = RFSFaceImageQuality.blurLevel;
@@ -443,8 +421,6 @@
         result = RFSFaceImageQuality.unnaturalSkinTone;
     else if([name isEqualToString:@"FaceDynamicRange"])
         result = RFSFaceImageQuality.faceDynamicRange;
-    else if([name isEqualToString:@"FaceImageQuality"])
-        return RFSFaceImageQuality.allRecommended;
 
     else if([name isEqualToString:@"EyeRightClosed"])
         result = RFSEyesCharacteristics.eyeRightClosed;
@@ -462,8 +438,6 @@
         result = RFSEyesCharacteristics.eyeLeftCoveredWithHair;
     else if([name isEqualToString:@"OffGaze"])
         result = RFSEyesCharacteristics.offGaze;
-    else if([name isEqualToString:@"EyesCharacteristics"])
-        return RFSEyesCharacteristics.allRecommended;
 
     else if([name isEqualToString:@"TooDark"])
         result = RFSShadowsAndLightning.tooDark;
@@ -473,8 +447,6 @@
         result = RFSShadowsAndLightning.faceGlare;
     else if([name isEqualToString:@"ShadowsOnFace"])
         result = RFSShadowsAndLightning.shadowsOnFace;
-    else if([name isEqualToString:@"ShadowsAndLightning"])
-        return RFSShadowsAndLightning.allRecommended;
 
     else if([name isEqualToString:@"ShouldersPose"])
         result = RFSPoseAndExpression.shouldersPose;
@@ -484,8 +456,6 @@
         result = RFSPoseAndExpression.mouthOpen;
     else if([name isEqualToString:@"Smile"])
         result = RFSPoseAndExpression.smile;
-    else if([name isEqualToString:@"PoseAndExpression"])
-        return RFSPoseAndExpression.allRecommended;
 
     else if([name isEqualToString:@"DarkGlasses"])
         result = RFSHeadOcclusion.darkGlasses;
@@ -505,8 +475,6 @@
         result = RFSHeadOcclusion.headphones;
     else if([name isEqualToString:@"MedicalMask"])
         result = RFSHeadOcclusion.medicalMask;
-    else if([name isEqualToString:@"HeadOcclusion"])
-        return RFSHeadOcclusion.allRecommended;
 
     else if([name isEqualToString:@"BackgroundUniformity"])
         result = RFSQualityBackground.backgroundUniformity;
@@ -519,10 +487,8 @@
             result = [RFSQualityBackground backgroundColorMatchWithColor:[RFSWJSONConstructor getUIColorObjectFromHexString:[input valueForKey:@"color"] alpha:1]];
         else
             result = RFSQualityBackground.backgroundColorMatch;
-    } else if([name isEqualToString:@"QualityBackground"])
-        return RFSQualityBackground.allRecommended;
+    }
 
-    NSMutableArray<RFSImageQualityCharacteristic*>* resultArray = [NSMutableArray new];
     if([input valueForKey:@"customRange"] != nil) {
         NSObject* customRange = [input valueForKey:@"customRange"];
         if([customRange valueForKey:@"min"] != nil)
@@ -530,11 +496,9 @@
         if([customRange valueForKey:@"max"] != nil)
             [range addObject:[customRange valueForKey:@"max"]];
 
-        [resultArray addObject:[result withCustomRange:range]];
-        return resultArray;
+        return [result withCustomRange:range];
     }
-    [resultArray addObject:result];
-    return resultArray;
+    return result;
 }
 
 +(RFSImage*)RFSImageFromJSON:(NSDictionary*)input {
@@ -713,99 +677,6 @@
     return [[RFSPoint alloc] initWithX:x y:y];
 }
 
-+(RFSEditGroupPersonsRequest*)RFSEditGroupPersonsRequestFromJSON:(NSDictionary*)input {
-    NSArray<NSNumber*> *personIdsToAdd = [NSArray new];
-    if([input valueForKey:@"personIdsToAdd"] != nil)
-        personIdsToAdd = [input valueForKey:@"personIdsToAdd"];
-    NSArray<NSNumber*> *personIdsToRemove = [NSArray new];
-    if([input valueForKey:@"personIdsToRemove"] != nil)
-        personIdsToRemove = [input valueForKey:@"personIdsToRemove"];
-
-    return [[RFSEditGroupPersonsRequest alloc] initWithPersonIdsToAdd:personIdsToAdd personIdsToRemove:personIdsToRemove];
-}
-
-+(RFSSearchPersonRequest*)RFSSearchPersonRequestFromJSON:(NSDictionary*)input {
-    RFSSearchPersonRequest *result;
-
-    RFSImageUpload *imageUpload = [RFSWJSONConstructor RFSImageUploadFromJSON: [input valueForKey:@"imageUpload"]];
-
-    if([input valueForKey:@"groupIdsForSearch"] != nil)
-        result = [[RFSSearchPersonRequest alloc] initWithGroupIds:[input valueForKey:@"groupIdsForSearch"] imageUpload:imageUpload];
-    else
-        result = [[RFSSearchPersonRequest alloc]  initWithImageUpload:imageUpload];
-
-    if([input valueForKey:@"threshold"] != nil)
-        result.threshold = [input valueForKey:@"threshold"];
-    if([input valueForKey:@"limit"] != nil)
-        result.limit = [input valueForKey:@"limit"];
-
-    return result;
-}
-
-+(RFSImageUpload*)RFSImageUploadFromJSON:(NSDictionary*)input {
-    return [[RFSImageUpload alloc]  initWithImageData:[[NSData alloc] initWithBase64EncodedString: [input valueForKey:@"imageData"] options:0]];
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSPagePersonResponse:(RFSPageResponse<RFSPerson *>* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    if(input.items != nil){
-        NSMutableArray *array = [NSMutableArray new];
-        for(RFSPerson* item in input.items)
-            if(item != nil)
-                [array addObject:[self generateRFSPerson:item]];
-        result[@"items"] = array;
-    }
-    result[@"page"] = @(input.page);
-    result[@"totalPages"] = @(input.totalPages);
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSPagePersonImageResponse:(RFSPageResponse<RFSPersonImage *>* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    if(input.items != nil){
-        NSMutableArray *array = [NSMutableArray new];
-        for(RFSPersonImage* item in input.items)
-            if(item != nil)
-                [array addObject:[self generateRFSPersonImage:item]];
-        result[@"items"] = array;
-    }
-    result[@"page"] = @(input.page);
-    result[@"totalPages"] = @(input.totalPages);
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSPagePersonGroupResponse:(RFSPageResponse<RFSPersonGroup *>* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    if(input.items != nil){
-        NSMutableArray *array = [NSMutableArray new];
-        for(RFSPersonGroup* item in input.items)
-            if(item != nil)
-                [array addObject:[self generateRFSPersonGroup:item]];
-        result[@"items"] = array;
-    }
-    result[@"page"] = @(input.page);
-    result[@"totalPages"] = @(input.totalPages);
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateNSDataImage:(NSData*)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    result[@"image"] = [input base64EncodedDataWithOptions:0];
-
-    return result;
-}
-
     // To JSON
 
 +(NSMutableDictionary* _Nonnull)generateRFSFaceCaptureResponse:(RFSFaceCaptureResponse* _Nullable)input {
@@ -825,7 +696,7 @@
     result[@"bitmap"] = [UIImageJPEGRepresentation(input.image, 1.0) base64EncodedStringWithOptions:0];
     result[@"liveness"] = [self generateRFSLivenessStatus:input.liveness];
     result[@"exception"] = [self generateNSError:input.error];
-    result[@"tag"] = input.tag;
+    result[@"sessionId"] = input.sessionId;
     result[@"transactionId"] = input.transactionId;
 
     return result;
@@ -835,7 +706,6 @@
     NSMutableDictionary *result = [NSMutableDictionary new];
     if(input == nil) return result;
 
-    result[@"tag"] = input.tag;
     result[@"exception"] = [self generateNSError:input.error];
     if(input.results != nil){
         NSMutableArray *array = [NSMutableArray new];
@@ -1053,83 +923,6 @@
     result[@"value"] = input.value;
     result[@"range"] = [self generateRFSImageQualityRange:input.range];
     result[@"confidence"] = input.confidence;
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSPerson:(RFSPerson* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    result[@"name"] = input.name;
-    result[@"updatedAt"] = [self generateNSDate:input.updatedAt];
-    result[@"id"] = @(input.itemId);
-    result[@"metadata"] = input.metadata;
-    result[@"createdAt"] = [self generateNSDate:input.createdAt];
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSPersonImage:(RFSPersonImage* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    result[@"path"] = input.path;
-    result[@"url"] = [self generateNSURL:input.url];
-    result[@"contentType"] = input.contentType;
-    result[@"updatedAt"] = [self generateNSDate:input.updatedAt];
-    result[@"id"] = @(input.itemId);
-    result[@"metadata"] = input.metadata;
-    result[@"createdAt"] = [self generateNSDate:input.createdAt];
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSPersonGroup:(RFSPersonGroup* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    result[@"name"] = input.name;
-    result[@"id"] = @(input.itemId);
-    result[@"metadata"] = input.metadata;
-    result[@"createdAt"] = [self generateNSDate:input.createdAt];
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSSearchPerson:(RFSSearchPerson* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    if(input.images != nil){
-        NSMutableArray *array = [NSMutableArray new];
-        for(RFSSearchPersonImage* item in input.images)
-            if(item != nil)
-                [array addObject:[self generateRFSSearchPersonImage:item]];
-        result[@"images"] = array;
-    }
-    result[@"name"] = input.name;
-    result[@"updatedAt"] = [self generateNSDate:input.updatedAt];
-    result[@"id"] = @(input.itemId);
-    result[@"metadata"] = input.metadata;
-    result[@"createdAt"] = [self generateNSDate:input.createdAt];
-
-    return result;
-}
-
-+(NSMutableDictionary* _Nonnull)generateRFSSearchPersonImage:(RFSSearchPersonImage* _Nullable)input {
-    NSMutableDictionary *result = [NSMutableDictionary new];
-    if(input == nil) return result;
-
-    result[@"similarity"] = input.similarity;
-    result[@"distance"] = input.distance;
-    result[@"path"] = input.path;
-    result[@"url"] = [self generateNSURL:input.url];
-    result[@"contentType"] = input.contentType;
-    result[@"updatedAt"] = [self generateNSDate:input.updatedAt];
-    result[@"id"] = @(input.itemId);
-    result[@"metadata"] = input.metadata;
-    result[@"createdAt"] = [self generateNSDate:input.createdAt];
 
     return result;
 }

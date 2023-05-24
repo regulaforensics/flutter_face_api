@@ -2,17 +2,9 @@
 @import FaceSDK;
 #import "RFSWJSONConstructor.h"
 
-typedef void (^RFSWCallback)(NSString* _Nullable response);
-
-@interface FlutterFaceApiPlugin : NSObject<FlutterPlugin,
-                                            RFSURLRequestInterceptingDelegate,
-                                            RFSVideoUploadingDelegate,
-                                            RFSCustomizationActionDelegate>
-@property NSDictionary* _Nullable headers;
+@interface FlutterFaceApiPlugin : NSObject<FlutterPlugin, RFSURLRequestInterceptingDelegate, RFSVideoUploadingDelegate>
+@property NSDictionary* headers;
 @end
 
-@interface RFSWVideoEncoderCompletionStreamHandler : NSObject <FlutterStreamHandler>
-@end
-
-@interface RFSWOnCustomButtonTappedStreamHandler : NSObject <FlutterStreamHandler>
+@interface VideoEncoderCompletionStreamHandler : NSObject <FlutterStreamHandler>
 @end
