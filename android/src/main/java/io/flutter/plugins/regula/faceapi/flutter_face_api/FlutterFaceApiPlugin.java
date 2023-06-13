@@ -17,12 +17,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Locale;
 
+import com.regula.facesdk.callback.PersonDBCallback;
 import com.regula.facesdk.configuration.FaceCaptureConfiguration;
 import com.regula.facesdk.configuration.LivenessConfiguration;
 import com.regula.facesdk.configuration.MatchFaceConfiguration;
 import com.regula.facesdk.exception.InitException;
 import com.regula.facesdk.model.results.matchfaces.MatchFacesComparedFacesPair;
 import com.regula.facesdk.model.results.matchfaces.MatchFacesSimilarityThresholdSplit;
+import com.regula.facesdk.model.results.personDb.DbBaseItem;
+import com.regula.facesdk.model.results.personDb.PageableItemList;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.EventChannel;
@@ -38,6 +41,8 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
 
     private EventChannel.EventSink eventVideoEncoderCompletion;
 
+    private EventChannel.EventSink onCustomButtonTappedEvent;
+
     public FlutterFaceApiPlugin() {
     }
 
@@ -52,6 +57,16 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
             @Override
             public void onListen(Object arguments, EventChannel.EventSink events) {
                 eventVideoEncoderCompletion = events;
+            }
+
+            @Override
+            public void onCancel(Object arguments) {
+            }
+        });
+        new EventChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_face_api/event/onCustomButtonTappedEvent").setStreamHandler(new EventChannel.StreamHandler() {
+            @Override
+            public void onListen(Object arguments, EventChannel.EventSink events) {
+                onCustomButtonTappedEvent = events;
             }
 
             @Override
@@ -120,6 +135,11 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
             new Handler(Looper.getMainLooper()).post(() -> eventVideoEncoderCompletion.success(JSONConstructor.generateVideoEncoderCompletion(transactionId, success).toString()));
     }
 
+    void sendOnCustomButtonTappedEvent(int tag) {
+        if (onCustomButtonTappedEvent != null)
+            new Handler(Looper.getMainLooper()).post(() -> onCustomButtonTappedEvent.success(tag));
+    }
+
     @Override
     public void onMethodCall(MethodCall call, MethodChannel.Result result) {
         String action = call.method;
@@ -186,11 +206,80 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "matchFacesWithConfig":
                     matchFacesWithConfig(callback, args(0), args(1));
                     break;
+                case "setOnCustomButtonTappedListener":
+                    setOnCustomButtonTappedListener(callback);
+                    break;
+                case "setUiCustomizationLayer":
+                    setUiCustomizationLayer(callback, args(0));
+                    break;
                 case "setLanguage":
                     setLanguage(callback, args(0));
                     break;
                 case "matchFacesSimilarityThresholdSplit":
                     matchFacesSimilarityThresholdSplit(callback, args(0), args(1));
+                    break;
+                case "getPerson":
+                    getPerson(callback, args(0));
+                    break;
+                case "createPerson":
+                    createPerson(callback, args(0));
+                    break;
+                case "updatePerson":
+                    updatePerson(callback, args(0));
+                    break;
+                case "deletePerson":
+                    deletePerson(callback, args(0));
+                    break;
+                case "getPersonImages":
+                    getPersonImages(callback, args(0));
+                    break;
+                case "getPersonImagesForPage":
+                    getPersonImagesForPage(callback, args(0), args(1), args(2));
+                    break;
+                case "addPersonImage":
+                    addPersonImage(callback, args(0), args(1));
+                    break;
+                case "getPersonImage":
+                    getPersonImage(callback, args(0), args(1));
+                    break;
+                case "deletePersonImage":
+                    deletePersonImage(callback, args(0), args(1));
+                    break;
+                case "getGroups":
+                    getGroups(callback);
+                    break;
+                case "getGroupsForPage":
+                    getGroupsForPage(callback, args(0), args(1));
+                    break;
+                case "getPersonGroups":
+                    getPersonGroups(callback, args(0));
+                    break;
+                case "getPersonGroupsForPage":
+                    getPersonGroupsForPage(callback, args(0), args(1), args(2));
+                    break;
+                case "createGroup":
+                    createGroup(callback, args(0));
+                    break;
+                case "getGroup":
+                    getGroup(callback, args(0));
+                    break;
+                case "updateGroup":
+                    updateGroup(callback, args(0));
+                    break;
+                case "editPersonsInGroup":
+                    editPersonsInGroup(callback, args(0), args(1));
+                    break;
+                case "getPersonsInGroup":
+                    getPersonsInGroup(callback, args(0));
+                    break;
+                case "getPersonsInGroupForPage":
+                    getPersonsInGroupForPage(callback, args(0), args(1), args(2));
+                    break;
+                case "deleteGroup":
+                    deleteGroup(callback, args(0));
+                    break;
+                case "searchPerson":
+                    searchPerson(callback, args(0));
                     break;
             }
         } catch (Exception e) {
@@ -270,9 +359,9 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         if (config.has("attemptsCount"))
             builder.setAttemptsCount(config.getInt("attemptsCount"));
         if (config.has("sessionId"))
-            builder.setSessionId(config.getString("sessionId"));
+            builder.setTag(config.getString("tag"));
         if (config.has("skipStep"))
-            builder.setSkipStep(JSONConstructor.LivenessSkipStepArrayFromJSON(config.getInt("skipStep")));
+            builder.setSkipStep(JSONConstructor.LivenessSkipStepArrayFromJSON(config.getJSONArray("skipStep")));
         if (config.has("showHelpTextAnimation"))
             builder.setShowHelpTextAnimation(config.getBoolean("showHelpTextAnimation"));
         if (config.has("locationTrackingEnabled"))
@@ -321,6 +410,16 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success(JSONConstructor.generateMatchFacesSimilarityThresholdSplit(split).toString());
     }
 
+    private void setOnCustomButtonTappedListener(Callback callback) {
+        Instance().setOnClickListener(view -> sendOnCustomButtonTappedEvent((int) view.getTag()));
+        callback.success();
+    }
+
+    private void setUiCustomizationLayer(Callback callback, JSONObject json) {
+        Instance().getCustomization().setUiCustomizationLayer(json);
+        callback.success();
+    }
+
     private void setLanguage(Callback callback, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
@@ -329,5 +428,153 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
         callback.success();
+    }
+
+    <T> PersonDBCallback<T> createPersonDBCallback(Callback callback, JSONConstructor.JSONObjectGenerator<T> generator) {
+        return new PersonDBCallback<T>() {
+            @Override
+            public void onSuccess(T t) {
+                try {
+                    if (generator == null)
+                        callback.success();
+                    callback.success(generator.generateJSONObject(t).toString());
+                } catch (JSONException e) {
+                    callback.error(e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(String s) {
+                callback.error(s);
+            }
+        };
+    }
+
+    <T> PersonDBCallback<List<T>> createPersonDBListCallback(Callback callback, JSONConstructor.JSONObjectGenerator<T> generator) {
+        return new PersonDBCallback<List<T>>() {
+            @Override
+            public void onSuccess(List<T> list) {
+                try {
+                    callback.success(JSONConstructor.generateList(list, generator).toString());
+                } catch (JSONException e) {
+                    callback.error(e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(String s) {
+                callback.error(s);
+            }
+        };
+    }
+
+    <T extends DbBaseItem> PersonDBCallback<PageableItemList<List<T>, T>> createPersonDBPageableListCallback(Callback callback, JSONConstructor.JSONObjectGenerator<T> generator) {
+        return new PersonDBCallback<PageableItemList<List<T>, T>>() {
+            @Override
+            public void onSuccess(PageableItemList<List<T>, T> listTPageableItemList) {
+                try {
+                    callback.success(JSONConstructor.generateList(listTPageableItemList.getItemsList(), generator).toString());
+                } catch (JSONException e) {
+                    callback.error(e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(String s) {
+                callback.error(s);
+            }
+        };
+    }
+
+//    private void getPersons(Callback callback) {
+//        Instance().personDatabase().getPersons(createPersonDBPageableListCallback(callback, JSONConstructor::generatePerson));
+//    }
+//
+//    private void getPersonsForPage(Callback callback, int page, int size) {
+//        Instance().personDatabase().getPersonsForPage(page, size, createPersonDBPageableListCallback(callback, JSONConstructor::generatePerson));
+//    }
+
+    private void getPerson(Callback callback, String personId) {
+        Instance().personDatabase().getPerson(personId, createPersonDBCallback(callback, JSONConstructor::generatePerson));
+    }
+
+    private void createPerson(Callback callback, JSONObject person) {
+        Instance().personDatabase().createPerson(JSONConstructor.PersonFromJSON(person), createPersonDBCallback(callback, JSONConstructor::generatePerson));
+    }
+
+    private void updatePerson(Callback callback, JSONObject person) {
+        Instance().personDatabase().updatePerson(JSONConstructor.PersonFromJSON(person),  createPersonDBCallback(callback, null));
+    }
+
+    private void deletePerson(Callback callback, String personId) {
+        Instance().personDatabase().deletePerson(personId, createPersonDBCallback(callback, null));
+    }
+
+    private void getPersonImages(Callback callback, String personId) {
+        Instance().personDatabase().getPersonImages(personId, createPersonDBPageableListCallback(callback, JSONConstructor::generatePersonImage));
+    }
+
+    private void getPersonImagesForPage(Callback callback, String personId, int page, int size) {
+        Instance().personDatabase().getPersonImages(personId, page, size, createPersonDBPageableListCallback(callback, JSONConstructor::generatePersonImage));
+    }
+
+    private void addPersonImage(Callback callback, String personId, JSONObject image) {
+        Instance().personDatabase().addPersonImage(personId, JSONConstructor.ImageUploadFromJSON(image), createPersonDBCallback(callback, JSONConstructor::generatePersonImage));
+    }
+
+    private void getPersonImage(Callback callback, String personId, String imageId) {
+        Instance().personDatabase().getPersonImageById(personId, imageId, createPersonDBCallback(callback, JSONConstructor::generateByteArrayImage));
+    }
+
+    private void deletePersonImage(Callback callback, String personId, String imageId) {
+        Instance().personDatabase().deletePersonImage(personId, imageId, createPersonDBCallback(callback, null));
+    }
+
+    private void getGroups(Callback callback) {
+        Instance().personDatabase().getGroups(createPersonDBPageableListCallback(callback, JSONConstructor::generatePersonGroup));
+    }
+
+    private void getGroupsForPage(Callback callback, int page, int size) {
+        Instance().personDatabase().getGroupsForPage(page, size, createPersonDBPageableListCallback(callback, JSONConstructor::generatePersonGroup));
+    }
+
+    private void getPersonGroups(Callback callback, String personId) {
+        Instance().personDatabase().getPersonGroups(personId, createPersonDBPageableListCallback(callback, JSONConstructor::generatePersonGroup));
+    }
+
+    private void getPersonGroupsForPage(Callback callback, String personId, int page, int size) {
+        Instance().personDatabase().getPersonGroups(personId, page, size, createPersonDBPageableListCallback(callback, JSONConstructor::generatePersonGroup));
+    }
+
+    private void createGroup(Callback callback, JSONObject group) {
+        Instance().personDatabase().createGroup(JSONConstructor.PersonGroupFromJSON(group), createPersonDBCallback(callback, JSONConstructor::generatePersonGroup));
+    }
+
+    private void getGroup(Callback callback, String groupId) {
+        Instance().personDatabase().getGroup(groupId, createPersonDBCallback(callback, JSONConstructor::generatePersonGroup));
+    }
+
+    private void updateGroup(Callback callback, JSONObject group) {
+        Instance().personDatabase().updateGroup(JSONConstructor.PersonGroupFromJSON(group), createPersonDBCallback(callback, null));
+    }
+
+    private void editPersonsInGroup(Callback callback, String groupId, JSONObject editGroupPersonsRequest) {
+        Instance().personDatabase().editPersonsInGroup(groupId, JSONConstructor.EditGroupPersonsRequestFromJSON(editGroupPersonsRequest), createPersonDBCallback(callback, null));
+    }
+
+    private void getPersonsInGroup(Callback callback, String groupId) {
+        Instance().personDatabase().getPersonsInGroup(groupId, createPersonDBPageableListCallback(callback, JSONConstructor::generatePerson));
+    }
+
+    private void getPersonsInGroupForPage(Callback callback, String groupId, int page, int size) {
+        Instance().personDatabase().getPersonsInGroup(groupId, page, size, createPersonDBPageableListCallback(callback, JSONConstructor::generatePerson));
+    }
+
+    private void deleteGroup(Callback callback, String groupId) {
+        Instance().personDatabase().deleteGroup(groupId, createPersonDBCallback(callback, null));
+    }
+
+    private void searchPerson(Callback callback, JSONObject searchPersonRequest) {
+        Instance().personDatabase().searchPerson(JSONConstructor.SearchPersonRequestFromJSON(searchPersonRequest), createPersonDBListCallback(callback, JSONConstructor::generateSearchPerson));
     }
 }
