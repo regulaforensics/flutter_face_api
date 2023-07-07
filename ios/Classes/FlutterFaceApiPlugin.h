@@ -7,7 +7,8 @@ typedef void (^RFSWCallback)(NSString* _Nullable response);
 @interface FlutterFaceApiPlugin : NSObject<FlutterPlugin,
                                             RFSURLRequestInterceptingDelegate,
                                             RFSVideoUploadingDelegate,
-                                            RFSCustomizationActionDelegate>
+                                            RFSCustomizationActionDelegate,
+                                            RFSLivenessProcessStatusDelegate>
 @property NSDictionary* _Nullable headers;
 @end
 
@@ -15,4 +16,7 @@ typedef void (^RFSWCallback)(NSString* _Nullable response);
 @end
 
 @interface RFSWOnCustomButtonTappedStreamHandler : NSObject <FlutterStreamHandler>
+@end
+
+@interface RFSWLivenessNotificationStreamHandler : NSObject <FlutterStreamHandler>
 @end

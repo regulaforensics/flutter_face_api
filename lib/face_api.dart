@@ -936,6 +936,33 @@ class DetectFacesAttributeResult {
   }
 }
 
+class Font {
+  String? name;
+  int? style;
+  int? size;
+
+  static Font? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new Font();
+
+    result.name = jsonObject["name"];
+    result.style = jsonObject["style"];
+    result.size = jsonObject["size"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (name != null) _result.addAll({"name": name});
+    if (style != null) _result.addAll({"style": style});
+    if (size != null) _result.addAll({"size": size});
+
+    return _result;
+  }
+}
+
 class Person {
   String? name;
   List<String?> groups = [];
@@ -1089,15 +1116,19 @@ class EditGroupPersonsRequest {
 }
 
 class SearchPersonRequest {
+  OutputImageParams? outputImageParams;
   List<String?> groupIdsForSearch = [];
   double? threshold;
   int? limit;
   ImageUpload? imageUpload;
+  bool? detectAll;
 
   static SearchPersonRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new SearchPersonRequest();
 
+    result.outputImageParams =
+        OutputImageParams.fromJson(jsonObject["outputImageParams"]);
     if (jsonObject["groupIdsForSearch"] != null)
       for (var item in jsonObject["groupIdsForSearch"])
         result.groupIdsForSearch.add(item);
@@ -1106,6 +1137,7 @@ class SearchPersonRequest {
         : jsonObject["threshold"].toDouble();
     result.limit = jsonObject["limit"];
     result.imageUpload = ImageUpload.fromJson(jsonObject["imageUpload"]);
+    result.detectAll = jsonObject["detectAll"];
 
     return result;
   }
@@ -1113,16 +1145,20 @@ class SearchPersonRequest {
   Map toJson() {
     Map _result = {};
 
+    if (outputImageParams != null)
+      _result.addAll({"outputImageParams": outputImageParams});
     _result.addAll({"groupIdsForSearch": groupIdsForSearch});
     if (threshold != null) _result.addAll({"threshold": threshold});
     if (limit != null) _result.addAll({"limit": limit});
     if (imageUpload != null) _result.addAll({"imageUpload": imageUpload});
+    if (detectAll != null) _result.addAll({"detectAll": detectAll});
 
     return _result;
   }
 }
 
 class SearchPerson {
+  SearchPersonDetection? detection;
   List<SearchPersonImage?> images = [];
   String? name;
   List<String?> groups = [];
@@ -1135,6 +1171,7 @@ class SearchPerson {
     if (jsonObject == null) return null;
     var result = new SearchPerson();
 
+    result.detection = SearchPersonDetection.fromJson(jsonObject["detection"]);
     if (jsonObject["images"] != null)
       for (var item in jsonObject["images"])
         result.images.add(SearchPersonImage.fromJson(item));
@@ -1152,6 +1189,7 @@ class SearchPerson {
   Map toJson() {
     Map _result = {};
 
+    if (detection != null) _result.addAll({"detection": detection});
     _result.addAll({"images": images});
     if (name != null) _result.addAll({"name": name});
     _result.addAll({"groups": groups});
@@ -1210,7 +1248,147 @@ class SearchPersonImage {
   }
 }
 
+class SearchPersonDetection {
+  List<Point?> landmarks = [];
+  Rect? rect;
+  String? cropImage;
+  double? rotationAngle;
+
+  static SearchPersonDetection? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new SearchPersonDetection();
+
+    if (jsonObject["landmarks"] != null)
+      for (var item in jsonObject["landmarks"])
+        result.landmarks.add(Point.fromJson(item));
+    result.rect = Rect.fromJson(jsonObject["rect"]);
+    result.cropImage = jsonObject["cropImage"];
+    result.rotationAngle = jsonObject["rotationAngle"] == null
+        ? null
+        : jsonObject["rotationAngle"].toDouble();
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    _result.addAll({"landmarks": landmarks});
+    if (rect != null) _result.addAll({"rect": rect});
+    if (cropImage != null) _result.addAll({"cropImage": cropImage});
+    if (rotationAngle != null) _result.addAll({"rotationAngle": rotationAngle});
+
+    return _result;
+  }
+}
+
+class LivenessNotification {
+  String? status;
+  LivenessResponse? response;
+
+  static LivenessNotification? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new LivenessNotification();
+
+    result.status = jsonObject["status"];
+    result.response = LivenessResponse.fromJson(jsonObject["response"]);
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (status != null) _result.addAll({"status": status});
+    if (response != null) _result.addAll({"response": response});
+
+    return _result;
+  }
+}
+
+class VideoEncoderCompletion {
+  bool? success;
+  String? transactionId;
+
+  static VideoEncoderCompletion? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new VideoEncoderCompletion();
+
+    result.success = jsonObject["success"];
+    result.transactionId = jsonObject["transactionId"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (success != null) _result.addAll({"success": success});
+    if (transactionId != null) _result.addAll({"transactionId": transactionId});
+
+    return _result;
+  }
+}
+
 // Enum
+
+class FontStyle {
+  static const int NORMAL = 0;
+  static const int BOLD = 1;
+  static const int ITALIC = 2;
+  static const int BOLD_ITALIC = 3;
+}
+
+class CustomizationColor {
+  static const String ONBOARDING_SCREEN_START_BUTTON_BACKGROUND =
+      "CustomizationColor.ONBOARDING_SCREEN_START_BUTTON_BACKGROUND";
+  static const String ONBOARDING_SCREEN_START_BUTTON_TITLE =
+      "CustomizationColor.ONBOARDING_SCREEN_START_BUTTON_TITLE";
+  static const String ONBOARDING_SCREEN_BACKGROUND =
+      "CustomizationColor.ONBOARDING_SCREEN_BACKGROUND";
+  static const String ONBOARDING_SCREEN_TITLE_LABEL_TEXT =
+      "CustomizationColor.ONBOARDING_SCREEN_TITLE_LABEL_TEXT";
+  static const String ONBOARDING_SCREEN_MESSAGE_LABEL_TEXT =
+      "CustomizationColor.ONBOARDING_SCREEN_MESSAGE_LABEL_TEXT";
+  static const String CAMERA_SCREEN_STROKE_NORMAL =
+      "CustomizationColor.CAMERA_SCREEN_STROKE_NORMAL";
+  static const String CAMERA_SCREEN_STROKE_ACTIVE =
+      "CustomizationColor.CAMERA_SCREEN_STROKE_ACTIVE";
+  static const String CAMERA_SCREEN_SECTOR_TARGET =
+      "CustomizationColor.CAMERA_SCREEN_SECTOR_TARGET";
+  static const String CAMERA_SCREEN_SECTOR_ACTIVE =
+      "CustomizationColor.CAMERA_SCREEN_SECTOR_ACTIVE";
+  static const String CAMERA_SCREEN_FRONT_HINT_LABEL_BACKGROUND =
+      "CustomizationColor.CAMERA_SCREEN_FRONT_HINT_LABEL_BACKGROUND";
+  static const String CAMERA_SCREEN_FRONT_HINT_LABEL_TEXT =
+      "CustomizationColor.CAMERA_SCREEN_FRONT_HINT_LABEL_TEXT";
+  static const String CAMERA_SCREEN_BACK_HINT_LABEL_BACKGROUND =
+      "CustomizationColor.CAMERA_SCREEN_BACK_HINT_LABEL_BACKGROUND";
+  static const String CAMERA_SCREEN_BACK_HINT_LABEL_TEXT =
+      "CustomizationColor.CAMERA_SCREEN_BACK_HINT_LABEL_TEXT";
+  static const String CAMERA_SCREEN_LIGHT_TOOLBAR_TINT =
+      "CustomizationColor.CAMERA_SCREEN_LIGHT_TOOLBAR_TINT";
+  static const String CAMERA_SCREEN_DARK_TOOLBAR_TINT =
+      "CustomizationColor.CAMERA_SCREEN_DARK_TOOLBAR_TINT";
+  static const String RETRY_SCREEN_BACKGROUND =
+      "CustomizationColor.RETRY_SCREEN_BACKGROUND";
+  static const String RETRY_SCREEN_RETRY_BUTTON_BACKGROUND =
+      "CustomizationColor.RETRY_SCREEN_RETRY_BUTTON_BACKGROUND";
+  static const String RETRY_SCREEN_RETRY_BUTTON_TITLE =
+      "CustomizationColor.RETRY_SCREEN_RETRY_BUTTON_TITLE";
+  static const String RETRY_SCREEN_TITLE_LABEL_TEXT =
+      "CustomizationColor.RETRY_SCREEN_TITLE_LABEL_TEXT";
+  static const String RETRY_SCREEN_HINT_LABELS_TEXT =
+      "CustomizationColor.RETRY_SCREEN_HINT_LABELS_TEXT";
+  static const String PROCESSING_SCREEN_BACKGROUND =
+      "CustomizationColor.PROCESSING_SCREEN_BACKGROUND";
+  static const String PROCESSING_SCREEN_PROGRESS =
+      "CustomizationColor.PROCESSING_SCREEN_PROGRESS";
+  static const String PROCESSING_SCREEN_TITLE =
+      "CustomizationColor.PROCESSING_SCREEN_TITLE";
+  static const String SUCCESS_SCREEN_BACKGROUND =
+      "CustomizationColor.SUCCESS_SCREEN_BACKGROUND";
+}
 
 class ImageQualityGroupName {
   static const int IMAGE_CHARACTERISTICS = 1;
@@ -1268,6 +1446,7 @@ class LivenessErrorCode {
   static const String CAMERA_NO_PERMISSION = "CAMERA_NO_PERMISSION";
   static const String CAMERA_NOT_AVAILABLE = "CAMERA_NOT_AVAILABLE";
   static const String PROCESSING_FRAME_FAILED = "PROCESSING_FRAME_FAILED";
+  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
 }
 
 class DetectFacesBackendErrorCode {
@@ -1297,6 +1476,7 @@ class ImageQualityCharacteristicName {
   static const String IMAGE_HEIGHT = "ImageHeight";
   static const String IMAGE_WIDTH_TO_HEIGHT = "ImageWidthToHeight";
   static const String IMAGE_CHANNELS_NUMBER = "ImageChannelsNumber";
+  static const String ART_FACE = "ArtFace";
   static const String PADDING_RATIO = "PaddingRatio";
   static const String FACE_MID_POINT_HORIZONTAL_POSITION =
       "FaceMidPointHorizontalPosition";
@@ -1356,6 +1536,30 @@ class ImageQualityCharacteristicName {
   static const String QUALITY_BACKGROUND_ALL_RECOMMENDED = "QualityBackground";
 }
 
+class ButtonTag {
+  static const int CLOSE = 1001;
+  static const int TORCH = 1002;
+  static const int CAMERA_SWITCH = 1003;
+}
+
+class CustomizationFont {
+  static const String ONBOARDING_SCREEN_START_BUTTON =
+      "CustomizationFont.ONBOARDING_SCREEN_START_BUTTON";
+  static const String ONBOARDING_SCREEN_TITLE_LABEL =
+      "CustomizationFont.ONBOARDING_SCREEN_TITLE_LABEL";
+  static const String ONBOARDING_SCREEN_MESSAGE_LABEL =
+      "CustomizationFont.ONBOARDING_SCREEN_MESSAGE_LABEL";
+  static const String CAMERA_SCREEN_HINT_LABEL =
+      "CustomizationFont.CAMERA_SCREEN_HINT_LABEL";
+  static const String RETRY_SCREEN_RETRY_BUTTON =
+      "CustomizationFont.RETRY_SCREEN_RETRY_BUTTON";
+  static const String RETRY_SCREEN_TITLE_LABEL =
+      "CustomizationFont.RETRY_SCREEN_TITLE_LABEL";
+  static const String RETRY_SCREEN_HINT_LABELS =
+      "CustomizationFont.RETRY_SCREEN_HINT_LABELS";
+  static const String PROCESSING_SCREEN = "CustomizationFont.PROCESSING_SCREEN";
+}
+
 class DetectFacesScenario {
   static const String CROP_CENTRAL_FACE = "CropCentralFace";
   static const String CROP_ALL_FACES = "CropAllFaces";
@@ -1367,6 +1571,24 @@ class DetectFacesScenario {
   static const String QUALITY_VISA_USA = "QualityVisaUSA";
 }
 
+class LivenessProcessStatus {
+  static const String START = "START";
+  static const String PREPARING = "PREPARING";
+  static const String NEW_SESSION = "NEW_SESSION";
+  static const String NEXT_STAGE = "NEXT_STAGE";
+  static const String SECTOR_CHANGED = "SECTOR_CHANGED";
+  static const String PROGRESS = "PROGRESS";
+  static const String LOW_BRIGHTNESS = "LOW_BRIGHTNESS";
+  static const String FIT_FACE = "FIT_FACE";
+  static const String MOVE_AWAY = "MOVE_AWAY";
+  static const String MOVE_CLOSER = "MOVE_CLOSER";
+  static const String TURN_HEAD = "TURN_HEAD";
+  static const String PROCESSING = "PROCESSING";
+  static const String FAILED = "FAILED";
+  static const String RETRY = "RETRY";
+  static const String SUCCESS = "SUCCESS";
+}
+
 class OutputImageCropAspectRatio {
   static const int OUTPUT_IMAGE_CROP_ASPECT_RATIO_3X4 = 0;
   static const int OUTPUT_IMAGE_CROP_ASPECT_RATIO_4X5 = 1;
@@ -1376,9 +1598,8 @@ class OutputImageCropAspectRatio {
 }
 
 class LivenessSkipStep {
-  static const int NONE = 0;
-  static const int START_STEP = 1;
-  static const int DONE_STEP = 2;
+  static const int ONBOARDING_STEP = 1;
+  static const int SUCCESS_STEP = 2;
 }
 
 class ImageQualityResultStatus {
@@ -1404,6 +1625,7 @@ class FaceCaptureErrorCode {
   static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
   static const String TIMEOUT = "TIMEOUT";
   static const String NOT_INITIALIZED = "NOT_INITIALIZED";
+  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
 }
 
 class LivenessBackendErrorCode {
@@ -1428,6 +1650,35 @@ class LivenessBackendErrorCode {
   static const int WRONG_GEO = 247;
   static const int WRONG_OF = 248;
   static const int WRONG_VIEW = 249;
+}
+
+class CustomizationImage {
+  static const String ONBOARDING_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.ONBOARDING_SCREEN_CLOSE_BUTTON";
+  static const String ONBOARDING_SCREEN_ILLUMINATION =
+      "CustomizationImage.ONBOARDING_SCREEN_ILLUMINATION";
+  static const String ONBOARDING_SCREEN_ACCESSORIES =
+      "CustomizationImage.ONBOARDING_SCREEN_ACCESSORIES";
+  static const String ONBOARDING_SCREEN_CAMERA_LEVEL =
+      "CustomizationImage.ONBOARDING_SCREEN_CAMERA_LEVEL";
+  static const String CAMERA_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_CLOSE_BUTTON";
+  static const String CAMERA_SCREEN_LIGHT_ON_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_LIGHT_ON_BUTTON";
+  static const String CAMERA_SCREEN_LIGHT_OFF_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_LIGHT_OFF_BUTTON";
+  static const String CAMERA_SCREEN_SWITCH_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_SWITCH_BUTTON";
+  static const String RETRY_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.RETRY_SCREEN_CLOSE_BUTTON";
+  static const String RETRY_SCREEN_HINT_ENVIRONMENT =
+      "CustomizationImage.RETRY_SCREEN_HINT_ENVIRONMENT";
+  static const String RETRY_SCREEN_HINT_SUBJECT =
+      "CustomizationImage.RETRY_SCREEN_HINT_SUBJECT";
+  static const String PROCESSING_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.PROCESSING_SCREEN_CLOSE_BUTTON";
+  static const String SUCCESS_SCREEN_IMAGE =
+      "CustomizationImage.SUCCESS_SCREEN_IMAGE";
 }
 
 class DetectFacesAttribute {
@@ -1511,17 +1762,16 @@ class FaceSDK {
     return await _channel.invokeMethod("detectFaces", [request]);
   }
 
-  static Future<dynamic> matchFacesWithConfig(request, config) async {
-    return await _channel
-        .invokeMethod("matchFacesWithConfig", [request, config]);
-  }
-
   static Future<dynamic> setOnCustomButtonTappedListener() async {
     return await _channel.invokeMethod("setOnCustomButtonTappedListener", []);
   }
 
   static Future<dynamic> setUiCustomizationLayer(json) async {
     return await _channel.invokeMethod("setUiCustomizationLayer", [json]);
+  }
+
+  static Future<dynamic> setUiConfiguration(config) async {
+    return await _channel.invokeMethod("setUiConfiguration", [config]);
   }
 
   static Future<dynamic> setLanguage(language) async {
@@ -1538,8 +1788,9 @@ class FaceSDK {
     return await _channel.invokeMethod("getPerson", [personId]);
   }
 
-  static Future<dynamic> createPerson(person) async {
-    return await _channel.invokeMethod("createPerson", [person]);
+  static Future<dynamic> createPerson(name, groupIds, metadata) async {
+    return await _channel
+        .invokeMethod("createPerson", [name, groupIds, metadata]);
   }
 
   static Future<dynamic> updatePerson(person) async {
@@ -1589,8 +1840,8 @@ class FaceSDK {
         .invokeMethod("getPersonGroupsForPage", [personId, page, size]);
   }
 
-  static Future<dynamic> createGroup(group) async {
-    return await _channel.invokeMethod("createGroup", [group]);
+  static Future<dynamic> createGroup(name, metadata) async {
+    return await _channel.invokeMethod("createGroup", [name, metadata]);
   }
 
   static Future<dynamic> getGroup(groupId) async {

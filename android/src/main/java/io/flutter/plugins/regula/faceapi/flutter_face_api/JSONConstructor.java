@@ -1,11 +1,12 @@
 package io.flutter.plugins.regula.faceapi.flutter_face_api;
 
+import static io.flutter.plugins.regula.faceapi.flutter_face_api.UtilsKt.*;
+
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Base64;
+import android.graphics.Typeface;
 import android.util.Size;
 
 import com.regula.facesdk.detection.request.DetectFacesConfiguration;
@@ -28,6 +29,7 @@ import com.regula.facesdk.exception.LivenessBackendException;
 import com.regula.facesdk.exception.LivenessErrorException;
 import com.regula.facesdk.exception.MatchFacesException;
 import com.regula.facesdk.model.Image;
+import com.regula.facesdk.model.LivenessNotification;
 import com.regula.facesdk.model.MatchFacesImage;
 import com.regula.facesdk.model.results.FaceCaptureResponse;
 import com.regula.facesdk.model.results.LivenessResponse;
@@ -51,81 +53,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@SuppressWarnings({"UnnecessaryLocalVariable", "UnusedAssignment", "ConstantConditions"})
+@SuppressWarnings({"UnnecessaryLocalVariable", "UnusedAssignment", "ConstantConditions", "EnhancedSwitchMigration", "RedundantSuppression"})
 class JSONConstructor {
-
-    // Generators
-
-    interface JSONObjectGenerator<T> {
-        JSONObject generateJSONObject(T param) throws JSONException;
-    }
-
-    interface FromJSONGenerator<T> {
-        T fromJSON(JSONObject input) throws JSONException;
-    }
-
-    static <T> List<T> listFromJSON(JSONArray input, FromJSONGenerator<T> generator) {
-        List<T> result = new ArrayList<>();
-        if (input == null) return result;
-        try {
-            for (int i = 0; i < input.length(); i++)
-                result.add(generator.fromJSON(input.getJSONObject(i)));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    static <T> JSONArray generateList(List<T> list, JSONObjectGenerator<T> generator) throws JSONException {
-        JSONArray result = new JSONArray();
-        if (list == null) return result;
-        for (T t : list)
-            if (t != null)
-                result.put(generator.generateJSONObject(t));
-
-        return result;
-    }
-
-    static <T> JSONArray generateArray(T[] array) throws JSONException {
-        JSONArray result = new JSONArray();
-        if (array == null) return result;
-        for (int i = 0; i < array.length; i++)
-            result.put(i, array[i]);
-
-        return result;
-    }
-
-    static String generateByteArray(byte[] byteArray) throws JSONException {
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
-    static byte[] ByteArrayFromJSON(String base64) throws JSONException {
-        return Base64.decode(base64, 0);
-    }
-
-    static String generateBitmap(Bitmap input) {
-        if (input == null) return "";
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        input.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
     static JSONObject generateByteArrayImage(byte[] input) {
+        if (input == null) return null;
         JSONObject result = new JSONObject();
-
         try {
             result.put("image", generateByteArray(input));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
@@ -151,14 +92,17 @@ class JSONConstructor {
         return result;
     }
 
-    static Bitmap BitmapFromJSON(String input) {
-        byte[] decodedString = Base64.decode(input, Base64.DEFAULT);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        Bitmap result = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, options);
-        int sizeMultiplier = result.getByteCount() / 5000000;
-        if (result.getByteCount() > 5000000)
-            result = Bitmap.createScaledBitmap(result, result.getWidth() / (int) Math.sqrt(sizeMultiplier), result.getHeight() / (int) Math.sqrt(sizeMultiplier), false);
+    static JSONObject generateSearchPersonDetection(SearchPerson.Detection input) {
+        JSONObject result = new JSONObject();
+        if (input == null) return null;
+        try {
+            result.put("landmarks", generateList(input.getLandmarks(), JSONConstructor::generatePoint));
+            result.put("rect", generateRect(input.getRect()));
+            result.put("cropImage", input.getCropImage());
+            result.put("rotationAngle", input.getRotationAngle());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
@@ -232,7 +176,7 @@ class JSONConstructor {
 
     static List<ImageQualityCharacteristic> ImageQualityCharacteristicFromJSON(JSONObject input) {
         try {
-            ImageQualityCharacteristic result = ImageQualityGroup.ImageCharacteristic.paddingRatio();
+            ImageQualityCharacteristic result = ImageQualityGroup.ImageCharacteristic.paddingRatio(0, 0.5);
             if (!input.has("characteristicName")) return null;
             String name = input.getString("characteristicName");
 
@@ -265,7 +209,10 @@ class JSONConstructor {
                     else return null;
                     break;
                 case "PaddingRatio":
-                    result = ImageQualityGroup.ImageCharacteristic.paddingRatio();
+                    result = ImageQualityGroup.ImageCharacteristic.paddingRatio(min, max);
+                    break;
+                case "ArtFace":
+                    result = ImageQualityGroup.ImageCharacteristic.artFace();
                     break;
                 case "ImageCharacteristic":
                     return ImageQualityGroup.ImageCharacteristic.allRecommended();
@@ -544,6 +491,34 @@ class JSONConstructor {
         return null;
     }
 
+    static MatchFacesDetectionFace MatchFacesDetectionFaceFromJSON(JSONObject input) {
+        try {
+            int faceIndex = 0;
+            if (input.has("faceIndex") && !input.isNull("faceIndex")) {
+                faceIndex = input.getInt("faceIndex");
+            }
+            List<Point> landmarks = new ArrayList<>();
+            if (input.has("landmarks") && !input.isNull("landmarks")) {
+                JSONArray jsonArray_landmarks = input.getJSONArray("landmarks");
+                for (int i = 0; i < jsonArray_landmarks.length(); i++)
+                    landmarks.add(PointFromJSON(jsonArray_landmarks.getJSONObject(i)));
+            }
+            Rect faceRect = null;
+            if (input.has("faceRect") && !input.isNull("faceRect")) {
+                faceRect = RectFromJSON(input.getJSONObject("faceRect"));
+            }
+            double rotationAngle = 0;
+            if (input.has("rotationAngle") && !input.isNull("rotationAngle")) {
+                rotationAngle = input.getDouble("rotationAngle");
+            }
+            MatchFacesDetectionFace result = (new MatchFacesDetectionFace.a()).a(faceIndex, rotationAngle, landmarks, faceRect).a();
+            return result;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     static MatchFacesComparedFace MatchFacesComparedFaceFromJSON(JSONObject input) {
         try {
             MatchFacesDetectionFace face = null;
@@ -570,27 +545,57 @@ class JSONConstructor {
         return null;
     }
 
-    static MatchFacesDetectionFace MatchFacesDetectionFaceFromJSON(JSONObject input) {
+    static Typeface typeFaceFromJSON(JSONObject input){
         try {
-            int faceIndex = 0;
-            if (input.has("faceIndex") && !input.isNull("faceIndex")) {
-                faceIndex = input.getInt("faceIndex");
+            String name = input.getString("name");
+            int style = input.optInt("style", Typeface.NORMAL);
+            return Typeface.create(name, style);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static String idFromJSON(JSONObject input){
+        try {
+            return input.getString("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static Person updatePersonFromJSON(Person result, JSONObject input) {
+        try {
+            String name = null;
+            if (input.has("name") && !input.isNull("name")) {
+                name = input.getString("name");
+                result.setName(name);
             }
-            List<Point> landmarks = new ArrayList<>();
-            if (input.has("landmarks") && !input.isNull("landmarks")) {
-                JSONArray jsonArray_landmarks = input.getJSONArray("landmarks");
-                for (int i = 0; i < jsonArray_landmarks.length(); i++)
-                    landmarks.add(PointFromJSON(jsonArray_landmarks.getJSONObject(i)));
+            JSONObject metadata = null;
+            if (input.has("metadata") && !input.isNull("metadata")) {
+                metadata = input.getJSONObject("metadata");
+                result.setMetaData(metadata);
             }
-            Rect faceRect = null;
-            if (input.has("faceRect") && !input.isNull("faceRect")) {
-                faceRect = RectFromJSON(input.getJSONObject("faceRect"));
+            return result;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static PersonGroup updatePersonGroupFromJSON(PersonGroup result, JSONObject input) {
+        try {
+            String name = null;
+            if (input.has("name") && !input.isNull("name")) {
+                name = input.getString("name");
+                result.setName(name);
             }
-            double rotationAngle = 0;
-            if (input.has("rotationAngle") && !input.isNull("rotationAngle")) {
-                rotationAngle = input.getDouble("rotationAngle");
+            JSONObject metadata = null;
+            if (input.has("metadata") && !input.isNull("metadata")) {
+                metadata = input.getJSONObject("metadata");
+                result.setMetaData(metadata);
             }
-            MatchFacesDetectionFace result = (new MatchFacesDetectionFace.a()).a(faceIndex, rotationAngle, landmarks, faceRect).a();
             return result;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -974,6 +979,7 @@ class JSONConstructor {
         JSONObject result = new JSONObject();
         if (input == null) return null;
         try {
+            result.put("detection", generateSearchPersonDetection(input.getDetection()));
             result.put("images", generateList(input.getImages(), JSONConstructor::generateSearchPersonImage));
             result.put("name", input.getName());
             result.put("groups", generateArray(input.getGroups()));
@@ -999,6 +1005,18 @@ class JSONConstructor {
             result.put("id", input.getId());
             result.put("metadata", input.getMetadata());
             result.put("createdAt", input.getCreatedAt().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    static JSONObject generateLivenessNotification(LivenessNotification input) {
+        JSONObject result = new JSONObject();
+        if (input == null) return null;
+        try {
+            result.put("status", input.getStatus() == null ? input.getStatus() : input.getStatus().toString());
+            result.put("response", generateLivenessResponse(input.getResponse()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1146,44 +1164,6 @@ class JSONConstructor {
         return null;
     }
 
-    static Person PersonFromJSON(JSONObject input) {
-        try {
-            Person result = new Person();
-            String name = null;
-            if (input.has("name") && !input.isNull("name")) {
-                name = input.getString("name");
-                result.setName(name);
-            }
-            String[] groups = new String[0];
-            if (input.has("groups") && !input.isNull("groups")) {
-                JSONArray jsonArray_groups = input.getJSONArray("groups");
-            groups = new String[jsonArray_groups.length()];
-                for (int i = 0; i < jsonArray_groups.length(); i++)
-                    groups[i] = jsonArray_groups.getString(i);
-                result.setGroups(groups);
-            }
-            return result;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    static PersonGroup PersonGroupFromJSON(JSONObject input) {
-        try {
-            PersonGroup result = new PersonGroup();
-            String name = null;
-            if (input.has("name") && !input.isNull("name")) {
-                name = input.getString("name");
-                result.setName(name);
-            }
-            return result;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     static ImageUpload ImageUploadFromJSON(JSONObject input) {
         try {
             ImageUpload result = new ImageUpload();
@@ -1228,6 +1208,11 @@ class JSONConstructor {
     static SearchPersonRequest SearchPersonRequestFromJSON(JSONObject input) {
         try {
             SearchPersonRequest result = new SearchPersonRequest();
+            OutputImageParams outputImageParams = null;
+            if (input.has("outputImageParams") && !input.isNull("outputImageParams")) {
+                outputImageParams = OutputImageParamsFromJSON(input.getJSONObject("outputImageParams"));
+                result.setOutputImageParams(outputImageParams);
+            }
             String[] groupIdsForSearch = new String[0];
             if (input.has("groupIdsForSearch") && !input.isNull("groupIdsForSearch")) {
                 JSONArray jsonArray_groupIdsForSearch = input.getJSONArray("groupIdsForSearch");
@@ -1250,6 +1235,11 @@ class JSONConstructor {
             if (input.has("imageUpload") && !input.isNull("imageUpload")) {
                 imageUpload = ImageUploadFromJSON(input.getJSONObject("imageUpload"));
                 result.setImageUpload(imageUpload);
+            }
+            boolean detectAll = false;
+            if (input.has("detectAll") && !input.isNull("detectAll")) {
+                detectAll = input.getBoolean("detectAll");
+                result.setDetectAll(detectAll);
             }
             return result;
         } catch (JSONException e) {

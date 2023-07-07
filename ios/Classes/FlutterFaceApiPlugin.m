@@ -1,8 +1,8 @@
 #import "FlutterFaceApiPlugin.h"
 
 FlutterEventSink RFSWVideoEncoderCompletionEvent;
-
 FlutterEventSink RFSWOnCustomButtonTappedEvent;
+FlutterEventSink RFSWLivenessNotificationEvent;
 
 @implementation RFSWVideoEncoderCompletionStreamHandler
 - (FlutterError*)onListenWithArguments:(id)arguments eventSink:(FlutterEventSink)eventSink {
@@ -28,6 +28,18 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 }
 @end
 
+@implementation RFSWLivenessNotificationStreamHandler
+- (FlutterError*)onListenWithArguments:(id)arguments eventSink:(FlutterEventSink)eventSink {
+    RFSWLivenessNotificationEvent = eventSink;
+  return nil;
+}
+
+- (FlutterError*)onCancelWithArguments:(id)arguments {
+    RFSWLivenessNotificationEvent = nil;
+  return nil;
+}
+@end
+
 @implementation FlutterFaceApiPlugin
 
 - (void) result:(id _Nullable)message :(RFSWCallback)callback {
@@ -39,14 +51,20 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
         RFSWVideoEncoderCompletionEvent([RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateVideoEncoderCompletion:transactionId :success]]);
 }
 
-- (void)onCustomButtonTappedWithTag:(NSInteger)tag {
+- (void)onFaceCustomButtonTappedWithTag:(NSInteger)tag {
     if(RFSWOnCustomButtonTappedEvent != nil)
         RFSWOnCustomButtonTappedEvent([NSString stringWithFormat:@"%ld", tag]);
+}
+
+- (void)processStatusChanged:(RFSLivenessProcessStatus)status result:(RFSLivenessResponse*)result {
+    if(RFSWLivenessNotificationEvent != nil)
+        RFSWLivenessNotificationEvent([RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateLivenessNotification:status result:result]]);
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     [[FlutterEventChannel eventChannelWithName:@"flutter_face_api/event/video_encoder_completion" binaryMessenger:[registrar messenger]] setStreamHandler:[RFSWVideoEncoderCompletionStreamHandler new]];
     [[FlutterEventChannel eventChannelWithName:@"flutter_face_api/event/onCustomButtonTappedEvent" binaryMessenger:[registrar messenger]] setStreamHandler:[RFSWOnCustomButtonTappedStreamHandler new]];
+    [[FlutterEventChannel eventChannelWithName:@"flutter_face_api/event/livenessNotification" binaryMessenger:[registrar messenger]] setStreamHandler:[RFSWLivenessNotificationStreamHandler new]];
 
     FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"flutter_face_api/method" binaryMessenger:[registrar messenger]];
     FlutterFaceApiPlugin* instance = [FlutterFaceApiPlugin new];
@@ -94,12 +112,12 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
         [self matchFaces :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"detectFaces"])
         [self detectFaces :[args objectAtIndex:0] :successCallback :errorCallback];
-    else if([action isEqualToString:@"matchFacesWithConfig"])
-        [self matchFacesWithConfig :[args objectAtIndex:0] :[args objectAtIndex:1] :successCallback :errorCallback];
     else if([action isEqualToString:@"setOnCustomButtonTappedListener"])
         [self setOnCustomButtonTappedListener :successCallback :errorCallback];
     else if([action isEqualToString:@"setUiCustomizationLayer"])
         [self setUiCustomizationLayer :[args objectAtIndex:0] :successCallback :errorCallback];
+    else if([action isEqualToString:@"setUiConfiguration"])
+        [self setUiConfiguration :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"setLanguage"])
         [self setLanguage :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"matchFacesSimilarityThresholdSplit"])
@@ -107,7 +125,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
     else if([action isEqualToString:@"getPerson"])
         [self getPerson :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"createPerson"])
-        [self createPerson :[args objectAtIndex:0] :successCallback :errorCallback];
+        [self createPerson :[args objectAtIndex:0] :[args objectAtIndex:1] :[args objectAtIndex:2] :successCallback :errorCallback];
     else if([action isEqualToString:@"updatePerson"])
         [self updatePerson :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"deletePerson"])
@@ -131,7 +149,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
     else if([action isEqualToString:@"getPersonGroupsForPage"])
         [self getPersonGroupsForPage :[args objectAtIndex:0] :[args objectAtIndex:1] :[args objectAtIndex:2] :successCallback :errorCallback];
     else if([action isEqualToString:@"createGroup"])
-        [self createGroup :[args objectAtIndex:0] :successCallback :errorCallback];
+        [self createGroup :[args objectAtIndex:0] :[args objectAtIndex:1] :successCallback :errorCallback];
     else if([action isEqualToString:@"getGroup"])
         [self getGroup :[args objectAtIndex:0] :successCallback :errorCallback];
     else if([action isEqualToString:@"updateGroup"])
@@ -172,8 +190,10 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) init:(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service initializeWithCompletion:^(BOOL success, NSError * _Nullable error) {
-        if(success)
+        if(success){
             [RFSFaceSDK.service setVideoUploadingDelegate:self];
+            [RFSFaceSDK.service setProcessStatusDelegate:self];
+        }
         [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateInitCompletion:success :error]] :successCallback];
     }];
 }
@@ -194,6 +214,11 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) setUiCustomizationLayer:(NSDictionary*)json :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     RFSFaceSDK.service.customization.customUILayerJSON = json;
+    [self result:@"" :successCallback];
+}
+
+- (void) setUiConfiguration:(NSDictionary*)config :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
+    RFSFaceSDK.service.customization.configuration = [RFSWJSONConstructor RFSUIConfigurationFromJSON:config];
     [self result:@"" :successCallback];
 }
 
@@ -345,27 +370,6 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
     return RFSLivenessStepSkipNone;
 }
 
--(unsigned int)intFromHexString:(NSString *)hexStr {
-    unsigned int hexInt = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexStr];
-    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"#"]];
-    [scanner scanHexInt:&hexInt];
-
-    return hexInt;
-}
-
--(UIColor *)getUIColorObjectFromHexString:(NSString *)hexStr alpha:(CGFloat)alpha {
-    unsigned int hexInt = [self intFromHexString:hexStr];
-
-    UIColor *color =
-    [UIColor colorWithRed:((CGFloat) ((hexInt & 0xFF0000) >> 16))/255
-                    green:((CGFloat) ((hexInt & 0xFF00) >> 8))/255
-                     blue:((CGFloat) (hexInt & 0xFF))/255
-                    alpha:alpha];
-
-    return color;
-}
-
 - (NSURLRequest*)interceptorPrepareRequest:(NSURLRequest*)request {
     NSMutableURLRequest *interceptedRequest = [request mutableCopy];
     for(NSString* key in self.headers.allKeys)
@@ -373,27 +377,9 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
     return interceptedRequest;
 }
 
-//- (void) getPersons:(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
-//    [RFSFaceSDK.service.personDatabase getPersons:^(RFSPageResponse<RFSPerson *> * response) {
-//        if(response.error != nil)
-//            [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonResponse:response]] :successCallback];
-//        else
-//            [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
-//    }];
-//}
-//
-//- (void) getPersonsForPage:(NSNumber*)page :(NSNumber*)size :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
-//    [RFSFaceSDK.service.personDatabase getPersonsForPage:[page integerValue] size:[size integerValue] completion:^(RFSPageResponse<RFSPerson *> * response) {
-//        if(response.error != nil)
-//            [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonResponse:response]] :successCallback];
-//        else
-//            [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
-//    }];
-//}
-
 - (void) getPerson:(NSString*)personId :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getPersonByPersonId:personId completion:^(RFSItemResponse<RFSPerson *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPerson:response.item]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -410,11 +396,19 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 }
 
 - (void) updatePerson:(NSDictionary*)person :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
-    [RFSFaceSDK.service.personDatabase updatePerson:[RFSWJSONConstructor RFSPersonFromJSON:person] completion:^(RFSComfirmResponse * success) {
-        if(success)
-            [self result:@"" :successCallback];
-        else
-            [self result:@"" :errorCallback];
+    [RFSFaceSDK.service.personDatabase getPersonByPersonId:[RFSWJSONConstructor idFromJSON:person] completion:^(RFSItemResponse<RFSPerson *> * response) {
+        if(response.error == nil) {
+            if(response.item != nil) {
+                [RFSFaceSDK.service.personDatabase updatePerson:[RFSWJSONConstructor updatePersonFromJSON:response.item :person] completion:^(RFSComfirmResponse * success) {
+                    if(success)
+                        [self result:@"" :successCallback];
+                    else
+                        [self result:@"" :errorCallback];
+                }];
+            } else
+                [self result:@"id does not exist" :errorCallback];
+        } else
+            [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
     }];
 }
 
@@ -429,7 +423,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonImages:(NSString*)personId :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getPersonImagesByPersonId:personId completion:^(RFSPageResponse<RFSPersonImage *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonImageResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -438,7 +432,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonImagesForPage:(NSString*)personId :(NSNumber*)page :(NSNumber*)size :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getPersonImagesByPersonId:personId page:[page integerValue] size:[size integerValue] completion:^(RFSPageResponse<RFSPersonImage *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonImageResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -448,7 +442,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 - (void) addPersonImage:(NSString*)personId :(NSDictionary*)image :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     RFSImageUpload *imageUpload = [RFSWJSONConstructor RFSImageUploadFromJSON:image];
     [RFSFaceSDK.service.personDatabase addPersonImageByPersonId:personId imageUpload:imageUpload completion:^(RFSItemResponse<RFSPersonImage *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPersonImage:response.item]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -457,7 +451,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonImage:(NSString*)personId :(NSString*)imageId :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getPersonImageByPersonId:personId imageId:imageId completion:^(RFSDataResponse* response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateNSDataImage:response.data]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -475,7 +469,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getGroups:(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getGroups:^(RFSPageResponse<RFSPersonGroup *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonGroupResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -484,7 +478,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getGroupsForPage:(NSNumber*)page :(NSNumber*)size :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getGroupsForPage:[page integerValue] size:[size integerValue] completion:^(RFSPageResponse<RFSPersonGroup *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonGroupResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -493,7 +487,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonGroups:(NSString*)personId :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getPersonGroupsByPersonId:personId completion:^(RFSPageResponse<RFSPersonGroup *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonGroupResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -502,7 +496,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonGroupsForPage:(NSString*)personId :(NSNumber*)page :(NSNumber*)size :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getPersonGroupsByPersonId:personId page:[page integerValue] size:[size integerValue] completion:^(RFSPageResponse<RFSPersonGroup *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonGroupResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -528,11 +522,19 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 }
 
 - (void) updateGroup:(NSDictionary*)group :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
-    [RFSFaceSDK.service.personDatabase updateGroup:[RFSWJSONConstructor RFSPersonGroupFromJSON:group] completion:^(RFSComfirmResponse * success) {
-        if(success)
-            [self result:@"" :successCallback];
-        else
-            [self result:@"" :errorCallback];
+    [RFSFaceSDK.service.personDatabase getGroupByGroupId:[RFSWJSONConstructor idFromJSON:group] completion:^(RFSItemResponse<RFSPersonGroup *> * response) {
+        if(response.error == nil) {
+            if(response.item != nil) {
+                [RFSFaceSDK.service.personDatabase updateGroup:[RFSWJSONConstructor updatePersonGroupFromJSON:response.item :group] completion:^(RFSComfirmResponse * success) {
+                    if(success)
+                        [self result:@"" :successCallback];
+                    else
+                        [self result:@"" :errorCallback];
+                }];
+            } else
+                [self result:@"id does not exist" :errorCallback];
+        } else
+            [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
     }];
 }
 
@@ -548,7 +550,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonsInGroup:(NSString*)groupId :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getGroupPersonsByGroupId:groupId completion:^(RFSPageResponse<RFSPerson *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -557,7 +559,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 
 - (void) getPersonsInGroupForPage:(NSString*)groupId :(NSNumber*)page :(NSNumber*)size :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     [RFSFaceSDK.service.personDatabase getGroupPersonsByGroupId:groupId page:[page integerValue] size:[size integerValue] completion:^(RFSPageResponse<RFSPerson *> * response) {
-        if(response.error != nil)
+        if(response.error == nil)
             [self result:[RFSWJSONConstructor dictToString:[RFSWJSONConstructor generateRFSPagePersonResponse:response]] :successCallback];
         else
             [self result:[RFSWJSONConstructor generateNSError:response.error] :errorCallback];
@@ -576,7 +578,7 @@ FlutterEventSink RFSWOnCustomButtonTappedEvent;
 - (void) searchPerson:(NSDictionary*)searchPersonRequest :(RFSWCallback)successCallback :(RFSWCallback)errorCallback{
     RFSSearchPersonRequest *request = [RFSWJSONConstructor RFSSearchPersonRequestFromJSON:searchPersonRequest];
     [RFSFaceSDK.service.personDatabase searchPerson:request completion:^(RFSSearchPersonResponse *response) {
-        if(response.error != nil) {
+        if(response.error == nil) {
             NSMutableArray<NSDictionary*> *results = [NSMutableArray new];
             for(RFSSearchPerson* searchPerson in response.results)
                 [results addObject:[RFSWJSONConstructor generateRFSSearchPerson:searchPerson]];
