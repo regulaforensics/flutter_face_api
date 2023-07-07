@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         .receiveBroadcastStream()
         .listen((event) {
       var completion =
-          Regula.VideoEncoderCompletion.fromJson(json.decode(event));
+          Regula.VideoEncoderCompletion.fromJson(json.decode(event))!;
       print("VideoEncoderCompletion:");
       print("    success:  ${completion.success}");
       print("    transactionId:  ${completion.transactionId}");
