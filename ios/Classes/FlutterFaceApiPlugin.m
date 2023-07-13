@@ -269,7 +269,7 @@ FlutterEventSink RFSWLivenessNotificationEvent;
         if([config valueForKey:@"recordingProcess"] != nil)
             [builder setRecordingProcessEnabled:[[config valueForKey:@"recordingProcess"] boolValue]];
         if([config valueForKey:@"closeButtonEnabled"] != nil)
-            [builder setCloseButtonEnabled:[self RFSCameraPositionWithNSInteger:[[config valueForKey:@"closeButtonEnabled"] integerValue]]];
+            [builder setCloseButtonEnabled:[[config valueForKey:@"closeButtonEnabled"] boolValue]];
         if([config valueForKey:@"tag"] != nil)
             [builder setTag:[config valueForKey:@"tag"]];
         if([config valueForKey:@"skipStep"] != nil) {
