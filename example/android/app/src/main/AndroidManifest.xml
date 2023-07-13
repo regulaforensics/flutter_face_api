@@ -6,7 +6,8 @@
     android:name="${applicationName}"
     android:label="flutter_face_api_example"
     android:icon="@mipmap/ic_flutter_launcher"
-    tools:ignore="AllowBackup">
+    tools:ignore="AllowBackup"
+    android:usesCleartextTraffic="true">
     <activity
       android:name=".MainActivity"
       android:exported="true"
