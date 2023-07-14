@@ -28,12 +28,23 @@ class _MyAppState extends State<MyApp> {
     const EventChannel('flutter_face_api/event/video_encoder_completion')
         .receiveBroadcastStream()
         .listen((event) {
-      var response = jsonDecode(event);
-      String transactionId = response["transactionId"];
-      bool success = response["success"];
-      print("video_encoder_completion:");
-      print("    success: $success");
-      print("    transactionId: $transactionId");
+      var completion =
+          Regula.VideoEncoderCompletion.fromJson(json.decode(event))!;
+      print("VideoEncoderCompletion:");
+      print("    success:  ${completion.success}");
+      print("    transactionId:  ${completion.transactionId}");
+    });
+    const EventChannel('flutter_face_api/event/onCustomButtonTappedEvent')
+        .receiveBroadcastStream()
+        .listen((event) {
+      print("Pressed button with id: $event");
+    });
+    const EventChannel('flutter_face_api/event/livenessNotification')
+        .receiveBroadcastStream()
+        .listen((event) {
+      var notification =
+          Regula.LivenessNotification.fromJson(json.decode(event));
+      print("LivenessProcessStatus: ${notification!.status}");
     });
   }
 
@@ -69,15 +80,17 @@ class _MyAppState extends State<MyApp> {
             TextButton(
                 child: Text("Use camera"),
                 onPressed: () {
-                  Regula.FaceSDK.presentFaceCaptureActivity().then((result) =>
+                  Regula.FaceSDK.presentFaceCaptureActivity().then((result) {
+                    var response = Regula.FaceCaptureResponse.fromJson(
+                        json.decode(result))!;
+                    if (response.image != null &&
+                        response.image!.bitmap != null)
                       setImage(
                           first,
-                          base64Decode(Regula.FaceCaptureResponse.fromJson(
-                                  json.decode(result))!
-                              .image!
-                              .bitmap!
-                              .replaceAll("\n", "")),
-                          Regula.ImageType.LIVE));
+                          base64Decode(
+                              response.image!.bitmap!.replaceAll("\n", "")),
+                          Regula.ImageType.LIVE);
+                  });
                   Navigator.pop(context);
                 })
           ]));
@@ -135,7 +148,8 @@ class _MyAppState extends State<MyApp> {
 
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
-        setImage(true, base64Decode(result!.bitmap!.replaceAll("\n", "")),
+        if (result!.bitmap == null) return;
+        setImage(true, base64Decode(result.bitmap!.replaceAll("\n", "")),
             Regula.ImageType.LIVE);
         setState(() => _liveness =
             result.liveness == Regula.LivenessStatus.PASSED
