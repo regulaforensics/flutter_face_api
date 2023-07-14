@@ -22,14 +22,14 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url "https://maven.regulaforensics.com/RegulaDocumentReader/Beta"
+            url "https://maven.regulaforensics.com/RegulaDocumentReader"
         }
     }
 }
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:5.2.2713'){
+    implementation('com.regula.face:api:5.2.2715'){
         transitive = true
     }
     implementation 'androidx.core:core-ktx:1.10.1'

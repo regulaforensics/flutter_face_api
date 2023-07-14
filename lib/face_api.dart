@@ -1762,10 +1762,6 @@ class FaceSDK {
     return await _channel.invokeMethod("detectFaces", [request]);
   }
 
-  static Future<dynamic> setOnCustomButtonTappedListener() async {
-    return await _channel.invokeMethod("setOnCustomButtonTappedListener", []);
-  }
-
   static Future<dynamic> setUiCustomizationLayer(json) async {
     return await _channel.invokeMethod("setUiCustomizationLayer", [json]);
   }

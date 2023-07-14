@@ -173,9 +173,6 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "detectFaces":
                     detectFaces(callback, args(0));
                     break;
-                case "setOnCustomButtonTappedListener":
-                    setOnCustomButtonTappedListener(callback);
-                    break;
                 case "setUiCustomizationLayer":
                     setUiCustomizationLayer(callback, args(0));
                     break;
@@ -332,8 +329,10 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
 
     private void init(Callback callback) {
         Instance().init(getContext(), (boolean success, InitException error) -> {
-            if (success)
+            if (success) {
                 Instance().setVideoEncoderCompletion(this::sendVideoEncoderCompletion);
+                Instance().setOnClickListener(view -> sendOnCustomButtonTappedEvent((int) view.getTag()));
+            }
             callback.success(JSONConstructor.generateInitCompletion(success, error).toString());
         });
     }
@@ -359,13 +358,9 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success(JSONConstructor.generateMatchFacesSimilarityThresholdSplit(split).toString());
     }
 
-    private void setOnCustomButtonTappedListener(Callback callback) {
-        Instance().setOnClickListener(view -> sendOnCustomButtonTappedEvent((int) view.getTag()));
-        callback.success(null);
-    }
-
-    private void setUiCustomizationLayer(Callback callback, JSONObject customization) {
-        Instance().getCustomization().setUiCustomizationLayer(customization);
+    private void setUiCustomizationLayer(Callback callback, JSONObject customization) throws JSONException {
+        // Fore some reason if we convert JSONObject to String and then back, it fixes react
+        Instance().getCustomization().setUiCustomizationLayer(new JSONObject(customization.toString()));
         callback.success(null);
     }
 
