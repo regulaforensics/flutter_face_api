@@ -4,10 +4,13 @@ import static com.regula.facesdk.FaceSDK.Instance;
 import static io.flutter.plugins.regula.faceapi.flutter_face_api.ConfigKt.*;
 import static io.flutter.plugins.regula.faceapi.flutter_face_api.UtilsKt.*;
 
+import android.app.LocaleManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -370,12 +373,17 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void setLanguage(Callback callback, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Resources resources = getContext().getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            LocaleManager localeManager = (LocaleManager) getContext().getSystemService(Context.LOCALE_SERVICE);
+            localeManager.setApplicationLocales(new LocaleList(Locale.forLanguageTag(language)));
+        } else {
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+            Resources resources = getContext().getResources();
+            Configuration config = resources.getConfiguration();
+            config.setLocale(locale);
+            resources.updateConfiguration(config, resources.getDisplayMetrics());
+        }
         callback.success(null);
     }
 
