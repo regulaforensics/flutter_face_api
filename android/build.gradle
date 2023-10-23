@@ -29,7 +29,7 @@ rootProject.allprojects {
 
 dependencies {
     //noinspection GradleDependency
-    implementation('com.regula.face:api:5.2.2715'){
+    implementation('com.regula.face:api:5.2.2825'){
         transitive = true
     }
     implementation 'androidx.core:core-ktx:1.10.1'

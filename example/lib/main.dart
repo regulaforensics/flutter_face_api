@@ -28,8 +28,7 @@ class _MyAppState extends State<MyApp> {
     const EventChannel('flutter_face_api/event/video_encoder_completion')
         .receiveBroadcastStream()
         .listen((event) {
-      var completion =
-          Regula.VideoEncoderCompletion.fromJson(json.decode(event))!;
+      var completion = Regula.VideoEncoderCompletion.fromJson(json.decode(event))!;
       print("VideoEncoderCompletion:");
       print("    success:  ${completion.success}");
       print("    transactionId:  ${completion.transactionId}");
@@ -42,8 +41,7 @@ class _MyAppState extends State<MyApp> {
     const EventChannel('flutter_face_api/event/livenessNotification')
         .receiveBroadcastStream()
         .listen((event) {
-      var notification =
-          Regula.LivenessNotification.fromJson(json.decode(event));
+      var notification = Regula.LivenessNotification.fromJson(json.decode(event));
       print("LivenessProcessStatus: ${notification!.status}");
     });
   }
@@ -148,7 +146,7 @@ class _MyAppState extends State<MyApp> {
 
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
         var result = Regula.LivenessResponse.fromJson(json.decode(value));
-        if (result!.bitmap == null) return;
+        if(result!.bitmap == null) return;
         setImage(true, base64Decode(result.bitmap!.replaceAll("\n", "")),
             Regula.ImageType.LIVE);
         setState(() => _liveness =
