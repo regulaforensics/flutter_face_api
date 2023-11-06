@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 // Classes
-
 class FaceCaptureException {
   String? errorCode;
   String? message;
@@ -53,7 +52,7 @@ class InitException {
 
 class LivenessErrorException {
   String? errorCode;
-  LivenessBackendException? underlyingException;
+  AlivenessBackendException? underlyingException;
   String? message;
 
   static LivenessErrorException? fromJson(jsonObject) {
@@ -61,7 +60,7 @@ class LivenessErrorException {
     var result = new LivenessErrorException();
 
     result.errorCode = jsonObject["errorCode"];
-    result.underlyingException = LivenessBackendException.fromJson(jsonObject["underlyingException"]);
+    result.underlyingException = AlivenessBackendException.fromJson(jsonObject["underlyingException"]);
     result.message = jsonObject["message"];
 
     return result;
@@ -78,13 +77,13 @@ class LivenessErrorException {
   }
 }
 
-class LivenessBackendException {
+class AlivenessBackendException {
   int? errorCode;
   String? message;
 
-  static LivenessBackendException? fromJson(jsonObject) {
+  static AlivenessBackendException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new LivenessBackendException();
+    var result = new AlivenessBackendException();
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
@@ -150,20 +149,20 @@ class FaceCaptureResponse {
   }
 }
 
-class LivenessResponse {
+class AlivenessResponse {
   String? bitmap;
-  String? liveness;
+  String? aliveness;
   String? tag;
   String? transactionId;
   int? estimatedAge;
   LivenessErrorException? exception;
 
-  static LivenessResponse? fromJson(jsonObject) {
+  static AlivenessResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new LivenessResponse();
+    var result = new AlivenessResponse();
 
     result.bitmap = jsonObject["bitmap"];
-    result.liveness = jsonObject["liveness"];
+    result.aliveness = jsonObject["liveness"];
     result.tag = jsonObject["tag"];
     result.transactionId = jsonObject["transactionId"];
     result.estimatedAge = jsonObject["estimatedAge"];
@@ -176,7 +175,7 @@ class LivenessResponse {
     Map _result = {};
 
     if (bitmap != null) _result.addAll({"bitmap": bitmap});
-    if (liveness != null) _result.addAll({"liveness": liveness});
+    if (aliveness != null) _result.addAll({"liveness": aliveness});
     if (tag != null) _result.addAll({"tag": tag});
     if (transactionId != null) _result.addAll({"transactionId": transactionId});
     if (estimatedAge != null) _result.addAll({"estimatedAge": estimatedAge});
@@ -1251,14 +1250,14 @@ class SearchPersonDetection {
 
 class LivenessNotification {
   String? status;
-  LivenessResponse? response;
+  AlivenessResponse? response;
 
   static LivenessNotification? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new LivenessNotification();
 
     result.status = jsonObject["status"];
-    result.response = LivenessResponse.fromJson(jsonObject["response"]);
+    result.response = AlivenessResponse.fromJson(jsonObject["response"]);
 
     return result;
   }

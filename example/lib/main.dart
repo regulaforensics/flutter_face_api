@@ -145,12 +145,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   liveness() => Regula.FaceSDK.startLiveness().then((value) {
-        var result = Regula.LivenessResponse.fromJson(json.decode(value));
+        var result = Regula.AlivenessResponse.fromJson(json.decode(value));
         if(result!.bitmap == null) return;
         setImage(true, base64Decode(result.bitmap!.replaceAll("\n", "")),
             Regula.ImageType.LIVE);
         setState(() => _liveness =
-            result.liveness == Regula.LivenessStatus.PASSED
+            result.aliveness == Regula.LivenessStatus.PASSED
                 ? "passed"
                 : "unknown");
       });
