@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 
-// Classes
 class FaceCaptureException {
   String? errorCode;
   String? message;
