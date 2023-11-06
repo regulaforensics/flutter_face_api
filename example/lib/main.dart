@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   var img1 = Image.asset('assets/images/portrait.png');
   var img2 = Image.asset('assets/images/portrait.png');
   String _similarity = "nil";
-  String _liveness = "nil";
+  String _aliveness = "nil";
 
   @override
   void initState() {
@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
       image1.imageType = type;
       setState(() {
         img1 = Image.memory(imageFile);
-        _liveness = "nil";
+        _aliveness = "nil";
       });
     } else {
       image2.bitmap = base64Encode(imageFile);
@@ -115,7 +115,7 @@ class _MyAppState extends State<MyApp> {
       img1 = Image.asset('assets/images/portrait.png');
       img2 = Image.asset('assets/images/portrait.png');
       _similarity = "nil";
-      _liveness = "nil";
+      _aliveness = "nil";
     });
     image1 = new Regula.MatchFacesImage();
     image2 = new Regula.MatchFacesImage();
@@ -149,7 +149,7 @@ class _MyAppState extends State<MyApp> {
         if(result!.bitmap == null) return;
         setImage(true, base64Decode(result.bitmap!.replaceAll("\n", "")),
             Regula.ImageType.LIVE);
-        setState(() => _liveness =
+        setState(() => _aliveness =
             result.aliveness == Regula.LivenessStatus.PASSED
                 ? "passed"
                 : "unknown");
@@ -201,7 +201,7 @@ class _MyAppState extends State<MyApp> {
                           Text("Similarity: " + _similarity,
                               style: TextStyle(fontSize: 18)),
                           Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
-                          Text("Liveness: " + _liveness,
+                          Text("Liveness: " + _aliveness,
                               style: TextStyle(fontSize: 18))
                         ],
                       ))
