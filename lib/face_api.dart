@@ -71,7 +71,7 @@ class LivenessErrorException {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (underlyingException != null) _result.addAll({"underlyingException": underlyingException});
+    if (underlyingException != null) _result.addAll({"underlyingException": underlyingException!.toJson()});
     if (message != null) _result.addAll({"message": message});
 
     return _result;
@@ -143,8 +143,8 @@ class FaceCaptureResponse {
   Map toJson(){
     Map _result = {};
 
-    if (exception != null) _result.addAll({"exception": exception});
-    if (image != null) _result.addAll({"image": image});
+    if (exception != null) _result.addAll({"exception": exception!.toJson()});
+    if (image != null) _result.addAll({"image": image!.toJson()});
 
     return _result;
   }
@@ -180,7 +180,7 @@ class LivenessResponse {
     if (tag != null) _result.addAll({"tag": tag});
     if (transactionId != null) _result.addAll({"transactionId": transactionId});
     if (estimatedAge != null) _result.addAll({"estimatedAge": estimatedAge});
-    if (exception != null) _result.addAll({"exception": exception});
+    if (exception != null) _result.addAll({"exception": exception!.toJson()});
 
     return _result;
   }
@@ -212,9 +212,17 @@ class MatchFacesResponse {
     Map _result = {};
 
     if (tag != null) _result.addAll({"tag": tag});
-    if (exception != null) _result.addAll({"exception": exception});
-    _result.addAll({"detections": detections});
-    _result.addAll({"results": results});
+    if (exception != null) _result.addAll({"exception": exception!.toJson()});
+    if (!detections.isEmpty) {
+      var list = [];
+      for (var item in detections) list.add(item!.toJson());
+      _result.addAll({"detections": list});
+    }
+    if (!results.isEmpty) {
+      var list = [];
+      for (var item in results) list.add(item!.toJson());
+      _result.addAll({"results": list});
+    }
 
     return _result;
   }
@@ -273,7 +281,11 @@ class MatchFacesRequest {
   Map toJson(){
     Map _result = {};
 
-    _result.addAll({"images": images});
+    if (!images.isEmpty) {
+      var list = [];
+      for (var item in images) list.add(item!.toJson());
+      _result.addAll({"images": list});
+    }
     if (customMetadata != null) _result.addAll({"customMetadata": customMetadata});
     if (thumbnails != null) _result.addAll({"thumbnails": thumbnails});
     if (tag != null) _result.addAll({"tag": tag});
@@ -335,11 +347,11 @@ class MatchFacesComparedFacesPair {
   Map toJson(){
     Map _result = {};
 
-    if (first != null) _result.addAll({"first": first});
-    if (second != null) _result.addAll({"second": second});
+    if (first != null) _result.addAll({"first": first!.toJson()});
+    if (second != null) _result.addAll({"second": second!.toJson()});
     if (similarity != null) _result.addAll({"similarity": similarity});
     if (score != null) _result.addAll({"score": score});
-    if (exception != null) _result.addAll({"exception": exception});
+    if (exception != null) _result.addAll({"exception": exception!.toJson()});
 
     return _result;
   }
@@ -366,8 +378,8 @@ class MatchFacesComparedFace {
   Map toJson(){
     Map _result = {};
 
-    if (face != null) _result.addAll({"face": face});
-    if (image != null) _result.addAll({"image": image});
+    if (face != null) _result.addAll({"face": face!.toJson()});
+    if (image != null) _result.addAll({"image": image!.toJson()});
     if (faceIndex != null) _result.addAll({"faceIndex": faceIndex});
     if (imageIndex != null) _result.addAll({"imageIndex": imageIndex});
 
@@ -401,8 +413,12 @@ class MatchFacesDetectionFace {
     Map _result = {};
 
     if (faceIndex != null) _result.addAll({"faceIndex": faceIndex});
-    _result.addAll({"landmarks": landmarks});
-    if (faceRect != null) _result.addAll({"faceRect": faceRect});
+    if (!landmarks.isEmpty) {
+      var list = [];
+      for (var item in landmarks) list.add(item!.toJson());
+      _result.addAll({"landmarks": list});
+    }
+    if (faceRect != null) _result.addAll({"faceRect": faceRect!.toJson()});
     if (rotationAngle != null) _result.addAll({"rotationAngle": rotationAngle});
     if (thumbnail != null) _result.addAll({"thumbnail": thumbnail});
 
@@ -433,10 +449,14 @@ class MatchFacesDetection {
   Map toJson(){
     Map _result = {};
 
-    if (image != null) _result.addAll({"image": image});
+    if (image != null) _result.addAll({"image": image!.toJson()});
     if (imageIndex != null) _result.addAll({"imageIndex": imageIndex});
-    _result.addAll({"faces": faces});
-    if (exception != null) _result.addAll({"exception": exception});
+    if (!faces.isEmpty) {
+      var list = [];
+      for (var item in faces) list.add(item!.toJson());
+      _result.addAll({"faces": list});
+    }
+    if (exception != null) _result.addAll({"exception": exception!.toJson()});
 
     return _result;
   }
@@ -517,8 +537,16 @@ class MatchFacesSimilarityThresholdSplit {
   Map toJson(){
     Map _result = {};
 
-    _result.addAll({"matchedFaces": matchedFaces});
-    _result.addAll({"unmatchedFaces": unmatchedFaces});
+    if (!matchedFaces.isEmpty) {
+      var list = [];
+      for (var item in matchedFaces) list.add(item!.toJson());
+      _result.addAll({"matchedFaces": list});
+    }
+    if (!unmatchedFaces.isEmpty) {
+      var list = [];
+      for (var item in unmatchedFaces) list.add(item!.toJson());
+      _result.addAll({"unmatchedFaces": list});
+    }
 
     return _result;
   }
@@ -548,7 +576,7 @@ class DetectFacesRequest {
     if (tag != null) _result.addAll({"tag": tag});
     if (scenario != null) _result.addAll({"scenario": scenario});
     if (image != null) _result.addAll({"image": image});
-    if (configuration != null) _result.addAll({"configuration": configuration});
+    if (configuration != null) _result.addAll({"configuration": configuration!.toJson()});
 
     return _result;
   }
@@ -580,8 +608,12 @@ class DetectFacesConfiguration {
     Map _result = {};
 
     _result.addAll({"attributes": attributes});
-    _result.addAll({"customQuality": customQuality});
-    if (outputImageParams != null) _result.addAll({"outputImageParams": outputImageParams});
+    if (!customQuality.isEmpty) {
+      var list = [];
+      for (var item in customQuality) list.add(item!.toJson());
+      _result.addAll({"customQuality": list});
+    }
+    if (outputImageParams != null) _result.addAll({"outputImageParams": outputImageParams!.toJson()});
     if (onlyCentralFace != null) _result.addAll({"onlyCentralFace": onlyCentralFace});
 
     return _result;
@@ -606,7 +638,7 @@ class OutputImageParams {
     Map _result = {};
 
     if (backgroundColor != null) _result.addAll({"backgroundColor": backgroundColor});
-    if (crop != null) _result.addAll({"crop": crop});
+    if (crop != null) _result.addAll({"crop": crop!.toJson()});
 
     return _result;
   }
@@ -634,7 +666,7 @@ class OutputImageCrop {
     Map _result = {};
 
     if (type != null) _result.addAll({"type": type});
-    if (size != null) _result.addAll({"size": size});
+    if (size != null) _result.addAll({"size": size!.toJson()});
     if (padColor != null) _result.addAll({"padColor": padColor});
     if (returnOriginalRect != null) _result.addAll({"returnOriginalRect": returnOriginalRect});
 
@@ -665,8 +697,8 @@ class ImageQualityCharacteristic {
 
     if (characteristicName != null) _result.addAll({"characteristicName": characteristicName});
     if (imageQualityGroup != null) _result.addAll({"imageQualityGroup": imageQualityGroup});
-    if (recommendedRange != null) _result.addAll({"recommendedRange": recommendedRange});
-    if (customRange != null) _result.addAll({"customRange": customRange});
+    if (recommendedRange != null) _result.addAll({"recommendedRange": recommendedRange!.toJson()});
+    if (customRange != null) _result.addAll({"customRange": customRange!.toJson()});
 
     return _result;
   }
@@ -743,10 +775,14 @@ class DetectFacesResponse {
   Map toJson(){
     Map _result = {};
 
-    if (detection != null) _result.addAll({"detection": detection});
+    if (detection != null) _result.addAll({"detection": detection!.toJson()});
     if (scenario != null) _result.addAll({"scenario": scenario});
-    if (error != null) _result.addAll({"error": error});
-    _result.addAll({"allDetections": allDetections});
+    if (error != null) _result.addAll({"error": error!.toJson()});
+    if (!allDetections.isEmpty) {
+      var list = [];
+      for (var item in allDetections) list.add(item!.toJson());
+      _result.addAll({"allDetections": list});
+    }
 
     return _result;
   }
@@ -772,7 +808,7 @@ class DetectFacesErrorException {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (underlyingException != null) _result.addAll({"underlyingException": underlyingException});
+    if (underlyingException != null) _result.addAll({"underlyingException": underlyingException!.toJson()});
     if (message != null) _result.addAll({"message": message});
 
     return _result;
@@ -836,12 +872,24 @@ class DetectFaceResult {
   Map toJson(){
     Map _result = {};
 
-    _result.addAll({"quality": quality});
-    _result.addAll({"attributes": attributes});
-    _result.addAll({"landmarks": landmarks});
+    if (!quality.isEmpty) {
+      var list = [];
+      for (var item in quality) list.add(item!.toJson());
+      _result.addAll({"quality": list});
+    }
+    if (!attributes.isEmpty) {
+      var list = [];
+      for (var item in attributes) list.add(item!.toJson());
+      _result.addAll({"attributes": list});
+    }
+    if (!landmarks.isEmpty) {
+      var list = [];
+      for (var item in landmarks) list.add(item!.toJson());
+      _result.addAll({"landmarks": list});
+    }
     if (crop != null) _result.addAll({"crop": crop});
-    if (faceRect != null) _result.addAll({"faceRect": faceRect});
-    if (originalRect != null) _result.addAll({"originalRect": originalRect});
+    if (faceRect != null) _result.addAll({"faceRect": faceRect!.toJson()});
+    if (originalRect != null) _result.addAll({"originalRect": originalRect!.toJson()});
     if (isQualityCompliant != null) _result.addAll({"isQualityCompliant": isQualityCompliant});
 
     return _result;
@@ -874,7 +922,7 @@ class ImageQualityResult {
     if (name != null) _result.addAll({"name": name});
     if (group != null) _result.addAll({"group": group});
     if (status != null) _result.addAll({"status": status});
-    if (range != null) _result.addAll({"range": range});
+    if (range != null) _result.addAll({"range": range!.toJson()});
     if (value != null) _result.addAll({"value": value});
 
     return _result;
@@ -904,7 +952,7 @@ class DetectFacesAttributeResult {
 
     if (attribute != null) _result.addAll({"attribute": attribute});
     if (value != null) _result.addAll({"value": value});
-    if (range != null) _result.addAll({"range": range});
+    if (range != null) _result.addAll({"range": range!.toJson()});
     if (confidence != null) _result.addAll({"confidence": confidence});
 
     return _result;
@@ -1118,11 +1166,11 @@ class SearchPersonRequest {
   Map toJson(){
     Map _result = {};
 
-    if (outputImageParams != null) _result.addAll({"outputImageParams": outputImageParams});
+    if (outputImageParams != null) _result.addAll({"outputImageParams": outputImageParams!.toJson()});
     _result.addAll({"groupIdsForSearch": groupIdsForSearch});
     if (threshold != null) _result.addAll({"threshold": threshold});
     if (limit != null) _result.addAll({"limit": limit});
-    if (imageUpload != null) _result.addAll({"imageUpload": imageUpload});
+    if (imageUpload != null) _result.addAll({"imageUpload": imageUpload!.toJson()});
     if (detectAll != null) _result.addAll({"detectAll": detectAll});
 
     return _result;
@@ -1162,8 +1210,12 @@ class SearchPerson {
   Map toJson(){
     Map _result = {};
 
-    if (detection != null) _result.addAll({"detection": detection});
-    _result.addAll({"images": images});
+    if (detection != null) _result.addAll({"detection": detection!.toJson()});
+    if (!images.isEmpty) {
+      var list = [];
+      for (var item in images) list.add(item!.toJson());
+      _result.addAll({"images": list});
+    }
     if (name != null) _result.addAll({"name": name});
     _result.addAll({"groups": groups});
     if (updatedAt != null) _result.addAll({"updatedAt": updatedAt});
@@ -1240,8 +1292,12 @@ class SearchPersonDetection {
   Map toJson(){
     Map _result = {};
 
-    _result.addAll({"landmarks": landmarks});
-    if (rect != null) _result.addAll({"rect": rect});
+    if (!landmarks.isEmpty) {
+      var list = [];
+      for (var item in landmarks) list.add(item!.toJson());
+      _result.addAll({"landmarks": list});
+    }
+    if (rect != null) _result.addAll({"rect": rect!.toJson()});
     if (cropImage != null) _result.addAll({"cropImage": cropImage});
     if (rotationAngle != null) _result.addAll({"rotationAngle": rotationAngle});
 
@@ -1267,7 +1323,7 @@ class LivenessNotification {
     Map _result = {};
 
     if (status != null) _result.addAll({"status": status});
-    if (response != null) _result.addAll({"response": response});
+    if (response != null) _result.addAll({"response": response!.toJson()});
 
     return _result;
   }
@@ -1682,8 +1738,8 @@ class FaceSDK {
     return await _channel.invokeMethod("setUiConfiguration", [config]);
   }
 
-  static Future<dynamic> setLanguage(language) async {
-    return await _channel.invokeMethod("setLanguage", [language]);
+  static Future<dynamic> setLocalizationDictionary(dictionary) async {
+    return await _channel.invokeMethod("setLocalizationDictionary", [dictionary]);
   }
 
   static Future<dynamic> matchFacesSimilarityThresholdSplit(faces, similarity) async {
