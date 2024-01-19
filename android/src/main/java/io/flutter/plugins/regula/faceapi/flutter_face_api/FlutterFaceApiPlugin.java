@@ -2,6 +2,7 @@ package io.flutter.plugins.regula.faceapi.flutter_face_api;
 
 import static com.regula.facesdk.FaceSDK.Instance;
 import static io.flutter.plugins.regula.faceapi.flutter_face_api.ConfigKt.*;
+import static io.flutter.plugins.regula.faceapi.flutter_face_api.JSONConstructor.*;
 import static io.flutter.plugins.regula.faceapi.flutter_face_api.UtilsKt.*;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.regula.common.LocalizationCallbacks;
+import com.regula.facesdk.callback.FaceInitializationCompletion;
 import com.regula.facesdk.callback.PersonDBCallback;
 import com.regula.facesdk.exception.InitException;
 import com.regula.facesdk.listener.NetworkInterceptorListener;
@@ -145,8 +147,17 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "init":
                     init(callback);
                     break;
+                case "initialize":
+                    initialize(callback);
+                    break;
+                case "initializeWithConfig":
+                    initializeWithConfig(callback, args(0));
+                    break;
                 case "deinit":
                     deinit(callback);
+                    break;
+                case "deinitialize":
+                    deinitialize(callback);
                     break;
                 case "isInitialized":
                     isInitialized(callback);
@@ -160,11 +171,23 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                 case "presentFaceCaptureActivityWithConfig":
                     presentFaceCaptureActivityWithConfig(callback, args(0));
                     break;
+                case "matchFacesWithConfig":
+                    matchFacesWithConfig(callback, args(0), args(1));
+                    break;
                 case "startLivenessWithConfig":
                     startLivenessWithConfig(callback, args(0));
                     break;
                 case "setServiceUrl":
                     setServiceUrl(callback, args(0));
+                    break;
+                case "setLogs":
+                    setLogs(callback, args(0));
+                    break;
+                case "setSaveLogs":
+                    setSaveLogs(callback, args(0));
+                    break;
+                case "setLogsFolder":
+                    setLogsFolder(callback, args(0));
                     break;
                 case "matchFaces":
                     matchFaces(callback, args(0));
@@ -273,14 +296,14 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     private void startLiveness(Callback callback) {
         Instance().startLiveness(
                 getContext(),
-                response -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()),
+                response -> callback.success(generateLivenessResponse(response).toString()),
                 this::sendLivenessNotification);
     }
 
     private void detectFaces(Callback callback, String request) throws JSONException {
         Instance().detectFaces(
-                JSONConstructor.DetectFacesRequestFromJSON(new JSONObject(request)),
-                (response) -> callback.success(JSONConstructor.generateDetectFacesResponse(response).toString()));
+                DetectFacesRequestFromJSON(new JSONObject(request)),
+                (response) -> callback.success(generateDetectFacesResponse(response).toString()));
     }
 
     private void getFaceSdkVersion(Callback callback) {
@@ -290,7 +313,7 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     private void presentFaceCaptureActivity(Callback callback) {
         Instance().presentFaceCaptureActivity(
                 getContext(),
-                (response) -> callback.success(JSONConstructor.generateFaceCaptureResponse(response).toString()));
+                (response) -> callback.success(generateFaceCaptureResponse(response).toString()));
     }
 
     private void stopFaceCaptureActivity(Callback callback) {
@@ -307,14 +330,21 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         Instance().presentFaceCaptureActivity(
                 getContext(),
                 faceCaptureConfigFromJSON(config),
-                (response) -> callback.success(JSONConstructor.generateFaceCaptureResponse(response).toString()));
+                (response) -> callback.success(generateFaceCaptureResponse(response).toString()));
+    }
+
+    private void matchFacesWithConfig(Callback callback, String request, JSONObject config) throws JSONException {
+        Instance().matchFaces(
+                MatchFacesRequestFromJSON(new JSONObject(request)),
+                matchFacesConfigFromJSON(config),
+                (response) -> callback.success(generateMatchFacesResponse(response).toString()));
     }
 
     private void startLivenessWithConfig(Callback callback, JSONObject config) {
         Instance().startLiveness(
                 getContext(),
                 livenessConfigFromJSON(config),
-                (response) -> callback.success(JSONConstructor.generateLivenessResponse(response).toString()),
+                (response) -> callback.success(generateLivenessResponse(response).toString()),
                 this::sendLivenessNotification);
     }
 
@@ -323,18 +353,46 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
         callback.success(null);
     }
 
-    private void init(Callback callback) {
-        Instance().init(getContext(), (boolean success, InitException error) -> {
-            if (success) {
-                Instance().setVideoEncoderCompletion(this::sendVideoEncoderCompletion);
-                Instance().setOnClickListener(view -> sendOnCustomButtonTappedEvent((int) view.getTag()));
-            }
-            callback.success(JSONConstructor.generateInitCompletion(success, error).toString());
-        });
+    private void setLogs(Callback callback, boolean isEnable) {
+        Instance().setLogs(isEnable);
+        callback.success(null);
     }
 
+    private void setSaveLogs(Callback callback, boolean isSaveLog) {
+        Instance().setSaveLogs(isSaveLog);
+        callback.success(null);
+    }
+
+    private void setLogsFolder(Callback callback, String path) {
+        Instance().setLogsFolder(path);
+        callback.success(null);
+    }
+
+    /**
+     * @noinspection deprecation
+     */
+    private void init(Callback callback) {
+        Instance().init(getContext(), getInitCompletion(callback));
+    }
+
+    private void initialize(Callback callback) {
+        Instance().initialize(getContext(), getInitCompletion(callback));
+    }
+
+    private void initializeWithConfig(Callback callback, JSONObject config) {
+        Instance().initialize(getContext(), InitializationConfigurationFromJSON(config), getInitCompletion(callback));
+    }
+
+    /**
+     * @noinspection deprecation
+     */
     private void deinit(Callback callback) {
         Instance().deinit();
+        callback.success(null);
+    }
+
+    private void deinitialize(Callback callback) {
+        Instance().deinitialize();
         callback.success(null);
     }
 
@@ -344,14 +402,14 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
 
     private void matchFaces(Callback callback, String request) throws JSONException {
         Instance().matchFaces(
-                JSONConstructor.MatchFacesRequestFromJSON(new JSONObject(request)),
-                (response) -> callback.success(JSONConstructor.generateMatchFacesResponse(response).toString()));
+                MatchFacesRequestFromJSON(new JSONObject(request)),
+                (response) -> callback.success(generateMatchFacesResponse(response).toString()));
     }
 
     private void matchFacesSimilarityThresholdSplit(Callback callback, String array, Double similarity) throws JSONException {
         List<MatchFacesComparedFacesPair> faces = listFromJSON(new JSONArray(array), JSONConstructor::MatchFacesComparedFacesPairFromJSON);
         MatchFacesSimilarityThresholdSplit split = new MatchFacesSimilarityThresholdSplit(faces, similarity);
-        callback.success(JSONConstructor.generateMatchFacesSimilarityThresholdSplit(split).toString());
+        callback.success(generateMatchFacesSimilarityThresholdSplit(split).toString());
     }
 
     private void setUiCustomizationLayer(Callback callback, JSONObject customization) throws JSONException {
@@ -380,11 +438,11 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void updatePerson(Callback callback, JSONObject personJson) {
-        Instance().personDatabase().getPerson(JSONConstructor.idFromJSON(personJson), new PersonDBCallback<Person>() {
+        Instance().personDatabase().getPerson(idFromJSON(personJson), new PersonDBCallback<Person>() {
             @Override
             public void onSuccess(@Nullable Person person) {
                 if (person != null)
-                    Instance().personDatabase().updatePerson(JSONConstructor.updatePersonFromJSON(person, personJson), createPersonDBCallback(callback, null));
+                    Instance().personDatabase().updatePerson(updatePersonFromJSON(person, personJson), createPersonDBCallback(callback, null));
                 else
                     callback.error("id does not exist");
             }
@@ -409,7 +467,7 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void addPersonImage(Callback callback, String personId, JSONObject image) {
-        Instance().personDatabase().addPersonImage(personId, JSONConstructor.ImageUploadFromJSON(image), createPersonDBCallback(callback, JSONConstructor::generatePersonImage));
+        Instance().personDatabase().addPersonImage(personId, ImageUploadFromJSON(image), createPersonDBCallback(callback, JSONConstructor::generatePersonImage));
     }
 
     private void getPersonImage(Callback callback, String personId, String imageId) {
@@ -445,11 +503,11 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void updateGroup(Callback callback, JSONObject groupJson) {
-        Instance().personDatabase().getGroup(JSONConstructor.idFromJSON(groupJson), new PersonDBCallback<PersonGroup>() {
+        Instance().personDatabase().getGroup(idFromJSON(groupJson), new PersonDBCallback<PersonGroup>() {
             @Override
             public void onSuccess(@Nullable PersonGroup group) {
                 if (group != null)
-                    Instance().personDatabase().updateGroup(JSONConstructor.updatePersonGroupFromJSON(group, groupJson), createPersonDBCallback(callback, null));
+                    Instance().personDatabase().updateGroup(updatePersonGroupFromJSON(group, groupJson), createPersonDBCallback(callback, null));
                 else
                     callback.error("id does not exist");
             }
@@ -462,7 +520,7 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void editPersonsInGroup(Callback callback, String groupId, JSONObject editGroupPersonsRequest) {
-        Instance().personDatabase().editPersonsInGroup(groupId, JSONConstructor.EditGroupPersonsRequestFromJSON(editGroupPersonsRequest), createPersonDBCallback(callback, null));
+        Instance().personDatabase().editPersonsInGroup(groupId, EditGroupPersonsRequestFromJSON(editGroupPersonsRequest), createPersonDBCallback(callback, null));
     }
 
     private void getPersonsInGroup(Callback callback, String groupId) {
@@ -478,7 +536,17 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
     }
 
     private void searchPerson(Callback callback, JSONObject searchPersonRequest) {
-        Instance().personDatabase().searchPerson(JSONConstructor.SearchPersonRequestFromJSON(searchPersonRequest), createPersonDBListCallback(callback, JSONConstructor::generateSearchPerson));
+        Instance().personDatabase().searchPerson(SearchPersonRequestFromJSON(searchPersonRequest), createPersonDBListCallback(callback, JSONConstructor::generateSearchPerson));
+    }
+
+    private FaceInitializationCompletion getInitCompletion(Callback callback) {
+        return (boolean success, InitException error) -> {
+            if (success) {
+                Instance().setVideoEncoderCompletion(this::sendVideoEncoderCompletion);
+                Instance().setOnClickListener(view -> sendOnCustomButtonTappedEvent((int) view.getTag()));
+            }
+            callback.success(generateInitCompletion(success, error).toString());
+        };
     }
 
     // Weak references

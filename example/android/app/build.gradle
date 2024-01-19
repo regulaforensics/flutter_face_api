@@ -25,7 +25,7 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 34
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.regula.face.api"
@@ -43,6 +43,10 @@ android {
     namespace 'io.flutter.plugins.regula.faceapi.flutter_face_api_example'
     lint {
         disable 'InvalidPackage'
+    }
+
+    aaptOptions {
+        noCompress "Regula/faceSdkResource.dat"
     }
 }
 
