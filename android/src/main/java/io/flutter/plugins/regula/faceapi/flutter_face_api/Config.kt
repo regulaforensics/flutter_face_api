@@ -73,10 +73,12 @@ fun uiConfigFromJSON(config: JSONObject, context: Context): UiConfiguration {
                 drawableFromJSON(value as String, context)
             )
 
-            "CustomizationFont" -> builder.setFont(
-                CustomizationFont.valueOf(key.substringAfter('.')),
-                JSONConstructor.typeFaceFromJSON(value as JSONObject)
-            )
+            "CustomizationFont" -> {
+                val font = JSONConstructor.typeFaceFromJSON(value as JSONObject)
+                val name = CustomizationFont.valueOf(key.substringAfter('.'))
+                builder.setFont(name, font.first)
+                builder.setFontSize(name, font.second)
+            }
         }
     }
     return builder.build()

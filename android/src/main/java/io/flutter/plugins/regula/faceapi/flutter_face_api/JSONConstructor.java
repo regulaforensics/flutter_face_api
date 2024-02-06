@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.util.Pair;
 import android.util.Size;
 
 import com.regula.facesdk.configuration.InitializationConfiguration;
@@ -583,10 +584,11 @@ class JSONConstructor {
         return null;
     }
 
-    static Typeface typeFaceFromJSON(JSONObject input) {
+    static Pair<Typeface, Integer> typeFaceFromJSON(JSONObject input) {
         String name = input.optString("name", "");
         int style = input.optInt("style", Typeface.NORMAL);
-        return Typeface.create(name, style);
+        int size = input.optInt("size", 0);
+        return new Pair<>(Typeface.create(name, style), size);
     }
 
     static String idFromJSON(JSONObject input) {
