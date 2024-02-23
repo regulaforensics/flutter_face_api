@@ -1538,13 +1538,14 @@ class DetectFacesErrorCode {
 }
 
 class InitErrorCode {
-  static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
-  static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
-  static const String MISSING_CORE = "MISSING_CORE";
-  static const String INTERNAL_CORE_ERROR = "INTERNAL_CORE_ERROR";
-  static const String RESOURCE_DAT_ABSENT = "RESOURCE_DAT_ABSENT";
-  static const String LICENSE_IS_NULL = "LICENSE_IS_NULL";
-  static const String LICENSE_ISSUE = "LICENSE_ISSUE";
+  static const int IN_PROGRESS_ALREADY = 0;
+  static const int MISSING_CORE = 1;
+  static const int INTERNAL_CORE_ERROR = 2;
+  static const int BAD_LICENSE = 3;
+  static const int UNAVAILABLE = 4;
+  static const int CONTEXT_IS_NULL = 100;
+  static const int RESOURCE_DAT_ABSENT = 101;
+  static const int LICENSE_IS_NULL = 102;
 }
 
 class LivenessStatus {
