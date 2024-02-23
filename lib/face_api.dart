@@ -1432,6 +1432,54 @@ class VideoEncoderCompletion {
   }
 }
 
+class InitializationConfiguration {
+  String? license;
+  bool? licenseUpdate;
+
+  static InitializationConfiguration? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new InitializationConfiguration();
+
+    result.license = jsonObject["license"];
+    result.licenseUpdate = jsonObject["licenseUpdate"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (license != null) _result.addAll({"license": license});
+    if (licenseUpdate != null) _result.addAll({"licenseUpdate": licenseUpdate});
+
+    return _result;
+  }
+}
+
+class InitResponse {
+  bool? success;
+  InitException? error;
+
+  static InitResponse? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new InitResponse();
+
+    result.success = jsonObject["success"];
+    result.error = InitException.fromJson(jsonObject["error"]);
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (success != null) _result.addAll({"success": success});
+    if (error != null) _result.addAll({"error": error!.toJson()});
+
+    return _result;
+  }
+}
+
 // Enum
 
 class FontStyle {
@@ -1559,19 +1607,20 @@ class CameraErrorCode {
 }
 
 class LivenessErrorCode {
+  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
+  static const String NO_LICENSE = "NO_LICENSE";
+  static const String API_CALL_FAILED = "API_CALL_FAILED";
+  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
+  static const String CANCELLED = "CANCELLED";
+  static const String PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT";
+  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
+  static const String PROCESSING_FRAME_FAILED = "PROCESSING_FRAME_FAILED";
+  static const String APPLICATION_INACTIVE = "APPLICATION_INACTIVE";
   static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
   static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
   static const String ZOOM_NOT_SUPPORTED = "ZOOM_NOT_SUPPORTED";
-  static const String NO_LICENSE = "NO_LICENSE";
-  static const String CANCELLED = "CANCELLED";
-  static const String PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT";
-  static const String API_CALL_FAILED = "API_CALL_FAILED";
-  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
-  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
   static const String CAMERA_NO_PERMISSION = "CAMERA_NO_PERMISSION";
   static const String CAMERA_NOT_AVAILABLE = "CAMERA_NOT_AVAILABLE";
-  static const String PROCESSING_FRAME_FAILED = "PROCESSING_FRAME_FAILED";
-  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
 }
 
 class RecordingProcess {
@@ -1778,9 +1827,9 @@ class LivenessBackendErrorCode {
   static const int UNDEFINED = -1;
   static const int NO_LICENSE = 200;
   static const int LOW_QUALITY = 231;
-  static const int HIGH_ASYMMETRY = 232;
   static const int TRACK_BREAK = 246;
   static const int CLOSED_EYES_DETECTED = 230;
+  static const int HIGH_ASYMMETRY = 232;
   static const int FACE_OVER_EMOTIONAL = 233;
   static const int SUNGLASSES_DETECTED = 234;
   static const int SMALL_AGE = 235;

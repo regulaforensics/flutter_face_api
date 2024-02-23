@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   String _liveness = "nil";
 
   Future<void> initPlatformState() async {
-    FaceSDK.initialize().then((json) {
+    var onInitialized = (json) {
       var response = jsonDecode(json);
       if (!response["success"]) {
         print("Init failed: ");
@@ -30,14 +30,27 @@ class _MyAppState extends State<MyApp> {
       } else {
         print("Init complete");
       }
-    });
+    };
+    initialize(onInitialized);
+  }
+
+  // If 'assets/regula.license' exists, init using license(enables offline match)
+  // otherwise init without license.
+  Future<void> initialize(onInit(dynamic response)) async {
+    var licenseData = await loadAssetIfExists("assets/regula.license");
+    if (licenseData != null) {
+      var config = InitializationConfiguration();
+      config.license = base64Encode(licenseData.buffer.asUint8List());
+      FaceSDK.initializeWithConfig(config.toJson()).then(onInit);
+    } else
+      FaceSDK.initialize().then(onInit);
   }
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
-    const EventChannel('flutter_face_api/event/video_encoder_completion')
+    const EventChannel('flutter_face_api_beta/event/video_encoder_completion')
         .receiveBroadcastStream()
         .listen((event) {
       var completion = VideoEncoderCompletion.fromJson(json.decode(event))!;
@@ -45,12 +58,12 @@ class _MyAppState extends State<MyApp> {
       print("    success:  ${completion.success}");
       print("    transactionId:  ${completion.transactionId}");
     });
-    const EventChannel('flutter_face_api/event/onCustomButtonTappedEvent')
+    const EventChannel('flutter_face_api_beta/event/onCustomButtonTappedEvent')
         .receiveBroadcastStream()
         .listen((event) {
       print("Pressed button with id: $event");
     });
-    const EventChannel('flutter_face_api/event/livenessNotification')
+    const EventChannel('flutter_face_api_beta/event/livenessNotification')
         .receiveBroadcastStream()
         .listen((event) {
       var notification = LivenessNotification.fromJson(json.decode(event));
@@ -151,6 +164,14 @@ class _MyAppState extends State<MyApp> {
         setState(() => _liveness =
             result.liveness == LivenessStatus.PASSED ? "passed" : "unknown");
       });
+
+  Future<ByteData?> loadAssetIfExists(String path) async {
+    try {
+      return await rootBundle.load(path);
+    } catch (_) {
+      return null;
+    }
+  }
 
   Widget createButton(String text, VoidCallback onPress) => Container(
         child: TextButton(
