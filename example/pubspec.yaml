@@ -8,14 +8,14 @@ environment:
   flutter: ">=3.3.0"
 
 dependencies:
-  path_provider: ^2.0.11
-  image_picker: ^0.8.6
+  path_provider: ^2.1.1
+  image_picker: ^1.0.4
   flutter:
     sdk: flutter
   flutter_face_api:
     path: ../
-  flutter_face_core: 5.2.0
-  cupertino_icons: ^1.0.5
+  flutter_face_core_basic: 6.1.0
+  cupertino_icons: ^1.0.6
 
 dev_dependencies:
   flutter_test:
@@ -23,5 +23,6 @@ dev_dependencies:
 
 flutter:
   assets:
+    - assets/
     - assets/images/
   uses-material-design: true

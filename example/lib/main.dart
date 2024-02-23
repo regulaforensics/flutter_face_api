@@ -3,7 +3,7 @@ import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:flutter_face_api/face_api.dart' as Regula;
+import 'package:flutter_face_api/face_api.dart' hide Image;
 import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(new MaterialApp(home: new MyApp()));
@@ -14,12 +14,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var image1 = new Regula.MatchFacesImage();
-  var image2 = new Regula.MatchFacesImage();
+  var image1 = new MatchFacesImage();
+  var image2 = new MatchFacesImage();
   var img1 = Image.asset('assets/images/portrait.png');
   var img2 = Image.asset('assets/images/portrait.png');
   String _similarity = "nil";
   String _liveness = "nil";
+
+  Future<void> initPlatformState() async {
+    var onInitialized = (json) {
+      var response = jsonDecode(json);
+      if (!response["success"]) {
+        print("Init failed: ");
+        print(json);
+      } else {
+        print("Init complete");
+      }
+    };
+    initialize(onInitialized);
+  }
+
+  // If 'assets/regula.license' exists, init using license(enables offline match)
+  // otherwise init without license.
+  Future<void> initialize(onInit(dynamic response)) async {
+    var licenseData = await loadAssetIfExists("assets/regula.license");
+    if (licenseData != null) {
+      var config = InitializationConfiguration();
+      config.license = base64Encode(licenseData.buffer.asUint8List());
+      FaceSDK.initializeWithConfig(config.toJson()).then(onInit);
+    } else
+      FaceSDK.initialize().then(onInit);
+  }
 
   @override
   void initState() {
@@ -28,7 +53,7 @@ class _MyAppState extends State<MyApp> {
     const EventChannel('flutter_face_api/event/video_encoder_completion')
         .receiveBroadcastStream()
         .listen((event) {
-      var completion = Regula.VideoEncoderCompletion.fromJson(json.decode(event))!;
+      var completion = VideoEncoderCompletion.fromJson(json.decode(event))!;
       print("VideoEncoderCompletion:");
       print("    success:  ${completion.success}");
       print("    transactionId:  ${completion.transactionId}");
@@ -41,18 +66,8 @@ class _MyAppState extends State<MyApp> {
     const EventChannel('flutter_face_api/event/livenessNotification')
         .receiveBroadcastStream()
         .listen((event) {
-      var notification = Regula.LivenessNotification.fromJson(json.decode(event));
+      var notification = LivenessNotification.fromJson(json.decode(event));
       print("LivenessProcessStatus: ${notification!.status}");
-    });
-  }
-
-  Future<void> initPlatformState() async {
-    Regula.FaceSDK.init().then((json) {
-      var response = jsonDecode(json);
-      if (!response["success"]) {
-        print("Init failed: ");
-        print(json);
-      }
     });
   }
 
@@ -60,34 +75,31 @@ class _MyAppState extends State<MyApp> {
       context: context,
       builder: (BuildContext context) =>
           AlertDialog(title: Text("Select option"), actions: [
-            // ignore: deprecated_member_use
             TextButton(
                 child: Text("Use gallery"),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  ImagePicker()
-                      .pickImage(source: ImageSource.gallery)
-                      .then((value) => {
+                  ImagePicker().pickImage(source: ImageSource.gallery).then(
+                      (value) => {
                             setImage(
                                 first,
                                 io.File(value!.path).readAsBytesSync(),
-                                Regula.ImageType.PRINTED)
+                                ImageType.PRINTED)
                           });
                 }),
-            // ignore: deprecated_member_use
             TextButton(
                 child: Text("Use camera"),
                 onPressed: () {
-                  Regula.FaceSDK.presentFaceCaptureActivity().then((result) {
-                    var response = Regula.FaceCaptureResponse.fromJson(
-                        json.decode(result))!;
+                  FaceSDK.presentFaceCaptureActivity().then((result) {
+                    var response =
+                        FaceCaptureResponse.fromJson(json.decode(result))!;
                     if (response.image != null &&
                         response.image!.bitmap != null)
                       setImage(
                           first,
                           base64Decode(
                               response.image!.bitmap!.replaceAll("\n", "")),
-                          Regula.ImageType.LIVE);
+                          ImageType.LIVE);
                   });
                   Navigator.pop(context);
                 })
@@ -117,8 +129,8 @@ class _MyAppState extends State<MyApp> {
       _similarity = "nil";
       _liveness = "nil";
     });
-    image1 = new Regula.MatchFacesImage();
-    image2 = new Regula.MatchFacesImage();
+    image1 = new MatchFacesImage();
+    image2 = new MatchFacesImage();
   }
 
   matchFaces() {
@@ -127,15 +139,15 @@ class _MyAppState extends State<MyApp> {
         image2.bitmap == null ||
         image2.bitmap == "") return;
     setState(() => _similarity = "Processing...");
-    var request = new Regula.MatchFacesRequest();
+    var request = new MatchFacesRequest();
     request.images = [image1, image2];
-    Regula.FaceSDK.matchFaces(jsonEncode(request)).then((value) {
-      var response = Regula.MatchFacesResponse.fromJson(json.decode(value));
-      Regula.FaceSDK.matchFacesSimilarityThresholdSplit(
+    FaceSDK.matchFaces(jsonEncode(request)).then((value) {
+      var response = MatchFacesResponse.fromJson(json.decode(value));
+      FaceSDK.matchFacesSimilarityThresholdSplit(
               jsonEncode(response!.results), 0.75)
           .then((str) {
-        var split = Regula.MatchFacesSimilarityThresholdSplit.fromJson(
-            json.decode(str));
+        var split =
+            MatchFacesSimilarityThresholdSplit.fromJson(json.decode(str));
         setState(() => _similarity = split!.matchedFaces.length > 0
             ? ((split.matchedFaces[0]!.similarity! * 100).toStringAsFixed(2) +
                 "%")
@@ -144,19 +156,24 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  liveness() => Regula.FaceSDK.startLiveness().then((value) {
-        var result = Regula.LivenessResponse.fromJson(json.decode(value));
-        if(result!.bitmap == null) return;
+  liveness() => FaceSDK.startLiveness().then((value) {
+        var result = LivenessResponse.fromJson(json.decode(value));
+        if (result!.bitmap == null) return;
         setImage(true, base64Decode(result.bitmap!.replaceAll("\n", "")),
-            Regula.ImageType.LIVE);
+            ImageType.LIVE);
         setState(() => _liveness =
-            result.liveness == Regula.LivenessStatus.PASSED
-                ? "passed"
-                : "unknown");
+            result.liveness == LivenessStatus.PASSED ? "passed" : "unknown");
       });
 
+  Future<ByteData?> loadAssetIfExists(String path) async {
+    try {
+      return await rootBundle.load(path);
+    } catch (_) {
+      return null;
+    }
+  }
+
   Widget createButton(String text, VoidCallback onPress) => Container(
-        // ignore: deprecated_member_use
         child: TextButton(
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),

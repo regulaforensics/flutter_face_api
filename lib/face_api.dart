@@ -17,7 +17,7 @@ class FaceCaptureException {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -29,6 +29,7 @@ class FaceCaptureException {
 
 class InitException {
   String? errorCode;
+  LicenseException? underlyingException;
   String? message;
 
   static InitException? fromJson(jsonObject) {
@@ -36,12 +37,40 @@ class InitException {
     var result = new InitException();
 
     result.errorCode = jsonObject["errorCode"];
+    result.underlyingException =
+        LicenseException.fromJson(jsonObject["underlyingException"]);
     result.message = jsonObject["message"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
+    Map _result = {};
+
+    if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (underlyingException != null)
+      _result.addAll({"underlyingException": underlyingException!.toJson()});
+    if (message != null) _result.addAll({"message": message});
+
+    return _result;
+  }
+}
+
+class LicenseException {
+  int? errorCode;
+  String? message;
+
+  static LicenseException? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new LicenseException();
+
+    result.errorCode = jsonObject["errorCode"];
+    result.message = jsonObject["message"];
+
+    return result;
+  }
+
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -61,17 +90,19 @@ class LivenessErrorException {
     var result = new LivenessErrorException();
 
     result.errorCode = jsonObject["errorCode"];
-    result.underlyingException = LivenessBackendException.fromJson(jsonObject["underlyingException"]);
+    result.underlyingException =
+        LivenessBackendException.fromJson(jsonObject["underlyingException"]);
     result.message = jsonObject["message"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (underlyingException != null) _result.addAll({"underlyingException": underlyingException!.toJson()});
+    if (underlyingException != null)
+      _result.addAll({"underlyingException": underlyingException!.toJson()});
     if (message != null) _result.addAll({"message": message});
 
     return _result;
@@ -92,7 +123,7 @@ class LivenessBackendException {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -105,6 +136,7 @@ class LivenessBackendException {
 class MatchFacesException {
   String? errorCode;
   String? message;
+  String? detailedErrorMessage;
 
   static MatchFacesException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -112,15 +144,18 @@ class MatchFacesException {
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
+    result.detailedErrorMessage = jsonObject["detailedErrorMessage"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
     if (message != null) _result.addAll({"message": message});
+    if (detailedErrorMessage != null)
+      _result.addAll({"detailedErrorMessage": detailedErrorMessage});
 
     return _result;
   }
@@ -140,7 +175,7 @@ class FaceCaptureResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (exception != null) _result.addAll({"exception": exception!.toJson()});
@@ -172,7 +207,7 @@ class LivenessResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (bitmap != null) _result.addAll({"bitmap": bitmap});
@@ -208,7 +243,7 @@ class MatchFacesResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (tag != null) _result.addAll({"tag": tag});
@@ -246,7 +281,7 @@ class Image {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (imageType != null) _result.addAll({"imageType": imageType});
@@ -261,8 +296,8 @@ class Image {
 class MatchFacesRequest {
   List<MatchFacesImage?> images = [];
   dynamic customMetadata;
-  bool? thumbnails;
   String? tag;
+  OutputImageParams? outputImageParams;
 
   static MatchFacesRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -272,13 +307,14 @@ class MatchFacesRequest {
       for (var item in jsonObject["images"])
         result.images.add(MatchFacesImage.fromJson(item));
     result.customMetadata = jsonObject["customMetadata"];
-    result.thumbnails = jsonObject["thumbnails"];
     result.tag = jsonObject["tag"];
+    result.outputImageParams =
+        OutputImageParams.fromJson(jsonObject["outputImageParams"]);
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (!images.isEmpty) {
@@ -286,9 +322,11 @@ class MatchFacesRequest {
       for (var item in images) list.add(item!.toJson());
       _result.addAll({"images": list});
     }
-    if (customMetadata != null) _result.addAll({"customMetadata": customMetadata});
-    if (thumbnails != null) _result.addAll({"thumbnails": thumbnails});
+    if (customMetadata != null)
+      _result.addAll({"customMetadata": customMetadata});
     if (tag != null) _result.addAll({"tag": tag});
+    if (outputImageParams != null)
+      _result.addAll({"outputImageParams": outputImageParams!.toJson()});
 
     return _result;
   }
@@ -312,7 +350,7 @@ class MatchFacesImage {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (imageType != null) _result.addAll({"imageType": imageType});
@@ -337,14 +375,17 @@ class MatchFacesComparedFacesPair {
 
     result.first = MatchFacesComparedFace.fromJson(jsonObject["first"]);
     result.second = MatchFacesComparedFace.fromJson(jsonObject["second"]);
-    result.similarity = jsonObject["similarity"] == null ? null : jsonObject["similarity"].toDouble();
-    result.score = jsonObject["score"] == null ? null : jsonObject["score"].toDouble();
+    result.similarity = jsonObject["similarity"] == null
+        ? null
+        : jsonObject["similarity"].toDouble();
+    result.score =
+        jsonObject["score"] == null ? null : jsonObject["score"].toDouble();
     result.exception = MatchFacesException.fromJson(jsonObject["exception"]);
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (first != null) _result.addAll({"first": first!.toJson()});
@@ -375,7 +416,7 @@ class MatchFacesComparedFace {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (face != null) _result.addAll({"face": face!.toJson()});
@@ -389,38 +430,44 @@ class MatchFacesComparedFace {
 
 class MatchFacesDetectionFace {
   int? faceIndex;
+  double? rotationAngle;
   List<Point?> landmarks = [];
   Rect? faceRect;
-  double? rotationAngle;
-  String? thumbnail;
+  Rect? originalRect;
+  String? crop;
 
   static MatchFacesDetectionFace? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new MatchFacesDetectionFace();
 
     result.faceIndex = jsonObject["faceIndex"];
+    result.rotationAngle = jsonObject["rotationAngle"] == null
+        ? null
+        : jsonObject["rotationAngle"].toDouble();
     if (jsonObject["landmarks"] != null)
       for (var item in jsonObject["landmarks"])
         result.landmarks.add(Point.fromJson(item));
     result.faceRect = Rect.fromJson(jsonObject["faceRect"]);
-    result.rotationAngle = jsonObject["rotationAngle"] == null ? null : jsonObject["rotationAngle"].toDouble();
-    result.thumbnail = jsonObject["thumbnail"];
+    result.originalRect = Rect.fromJson(jsonObject["originalRect"]);
+    result.crop = jsonObject["crop"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (faceIndex != null) _result.addAll({"faceIndex": faceIndex});
+    if (rotationAngle != null) _result.addAll({"rotationAngle": rotationAngle});
     if (!landmarks.isEmpty) {
       var list = [];
       for (var item in landmarks) list.add(item!.toJson());
       _result.addAll({"landmarks": list});
     }
     if (faceRect != null) _result.addAll({"faceRect": faceRect!.toJson()});
-    if (rotationAngle != null) _result.addAll({"rotationAngle": rotationAngle});
-    if (thumbnail != null) _result.addAll({"thumbnail": thumbnail});
+    if (originalRect != null)
+      _result.addAll({"originalRect": originalRect!.toJson()});
+    if (crop != null) _result.addAll({"crop": crop});
 
     return _result;
   }
@@ -446,7 +493,7 @@ class MatchFacesDetection {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (image != null) _result.addAll({"image": image!.toJson()});
@@ -476,7 +523,7 @@ class Point {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (x != null) _result.addAll({"x": x});
@@ -504,7 +551,7 @@ class Rect {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (bottom != null) _result.addAll({"bottom": bottom});
@@ -534,7 +581,7 @@ class MatchFacesSimilarityThresholdSplit {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (!matchedFaces.isEmpty) {
@@ -565,18 +612,20 @@ class DetectFacesRequest {
     result.tag = jsonObject["tag"];
     result.scenario = jsonObject["scenario"];
     result.image = jsonObject["image"];
-    result.configuration = DetectFacesConfiguration.fromJson(jsonObject["configuration"]);
+    result.configuration =
+        DetectFacesConfiguration.fromJson(jsonObject["configuration"]);
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (tag != null) _result.addAll({"tag": tag});
     if (scenario != null) _result.addAll({"scenario": scenario});
     if (image != null) _result.addAll({"image": image});
-    if (configuration != null) _result.addAll({"configuration": configuration!.toJson()});
+    if (configuration != null)
+      _result.addAll({"configuration": configuration!.toJson()});
 
     return _result;
   }
@@ -593,18 +642,18 @@ class DetectFacesConfiguration {
     var result = new DetectFacesConfiguration();
 
     if (jsonObject["attributes"] != null)
-      for (var item in jsonObject["attributes"])
-        result.attributes.add(item);
+      for (var item in jsonObject["attributes"]) result.attributes.add(item);
     if (jsonObject["customQuality"] != null)
       for (var item in jsonObject["customQuality"])
         result.customQuality.add(ImageQualityCharacteristic.fromJson(item));
-    result.outputImageParams = OutputImageParams.fromJson(jsonObject["outputImageParams"]);
+    result.outputImageParams =
+        OutputImageParams.fromJson(jsonObject["outputImageParams"]);
     result.onlyCentralFace = jsonObject["onlyCentralFace"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     _result.addAll({"attributes": attributes});
@@ -613,8 +662,10 @@ class DetectFacesConfiguration {
       for (var item in customQuality) list.add(item!.toJson());
       _result.addAll({"customQuality": list});
     }
-    if (outputImageParams != null) _result.addAll({"outputImageParams": outputImageParams!.toJson()});
-    if (onlyCentralFace != null) _result.addAll({"onlyCentralFace": onlyCentralFace});
+    if (outputImageParams != null)
+      _result.addAll({"outputImageParams": outputImageParams!.toJson()});
+    if (onlyCentralFace != null)
+      _result.addAll({"onlyCentralFace": onlyCentralFace});
 
     return _result;
   }
@@ -634,10 +685,11 @@ class OutputImageParams {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
-    if (backgroundColor != null) _result.addAll({"backgroundColor": backgroundColor});
+    if (backgroundColor != null)
+      _result.addAll({"backgroundColor": backgroundColor});
     if (crop != null) _result.addAll({"crop": crop!.toJson()});
 
     return _result;
@@ -662,13 +714,14 @@ class OutputImageCrop {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (type != null) _result.addAll({"type": type});
     if (size != null) _result.addAll({"size": size!.toJson()});
     if (padColor != null) _result.addAll({"padColor": padColor});
-    if (returnOriginalRect != null) _result.addAll({"returnOriginalRect": returnOriginalRect});
+    if (returnOriginalRect != null)
+      _result.addAll({"returnOriginalRect": returnOriginalRect});
 
     return _result;
   }
@@ -686,19 +739,24 @@ class ImageQualityCharacteristic {
 
     result.characteristicName = jsonObject["characteristicName"];
     result.imageQualityGroup = jsonObject["imageQualityGroup"];
-    result.recommendedRange = ImageQualityRange.fromJson(jsonObject["recommendedRange"]);
+    result.recommendedRange =
+        ImageQualityRange.fromJson(jsonObject["recommendedRange"]);
     result.customRange = ImageQualityRange.fromJson(jsonObject["customRange"]);
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
-    if (characteristicName != null) _result.addAll({"characteristicName": characteristicName});
-    if (imageQualityGroup != null) _result.addAll({"imageQualityGroup": imageQualityGroup});
-    if (recommendedRange != null) _result.addAll({"recommendedRange": recommendedRange!.toJson()});
-    if (customRange != null) _result.addAll({"customRange": customRange!.toJson()});
+    if (characteristicName != null)
+      _result.addAll({"characteristicName": characteristicName});
+    if (imageQualityGroup != null)
+      _result.addAll({"imageQualityGroup": imageQualityGroup});
+    if (recommendedRange != null)
+      _result.addAll({"recommendedRange": recommendedRange!.toJson()});
+    if (customRange != null)
+      _result.addAll({"customRange": customRange!.toJson()});
 
     return _result;
   }
@@ -712,13 +770,15 @@ class ImageQualityRange {
     if (jsonObject == null) return null;
     var result = new ImageQualityRange();
 
-    result.min = jsonObject["min"] == null ? null : jsonObject["min"].toDouble();
-    result.max = jsonObject["max"] == null ? null : jsonObject["max"].toDouble();
+    result.min =
+        jsonObject["min"] == null ? null : jsonObject["min"].toDouble();
+    result.max =
+        jsonObject["max"] == null ? null : jsonObject["max"].toDouble();
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (min != null) _result.addAll({"min": min});
@@ -742,7 +802,7 @@ class Size {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (width != null) _result.addAll({"width": width});
@@ -772,7 +832,7 @@ class DetectFacesResponse {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (detection != null) _result.addAll({"detection": detection!.toJson()});
@@ -798,17 +858,19 @@ class DetectFacesErrorException {
     var result = new DetectFacesErrorException();
 
     result.errorCode = jsonObject["errorCode"];
-    result.underlyingException = DetectFacesBackendException.fromJson(jsonObject["underlyingException"]);
+    result.underlyingException =
+        DetectFacesBackendException.fromJson(jsonObject["underlyingException"]);
     result.message = jsonObject["message"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (underlyingException != null) _result.addAll({"underlyingException": underlyingException!.toJson()});
+    if (underlyingException != null)
+      _result.addAll({"underlyingException": underlyingException!.toJson()});
     if (message != null) _result.addAll({"message": message});
 
     return _result;
@@ -829,7 +891,7 @@ class DetectFacesBackendException {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
@@ -869,7 +931,7 @@ class DetectFaceResult {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (!quality.isEmpty) {
@@ -889,8 +951,10 @@ class DetectFaceResult {
     }
     if (crop != null) _result.addAll({"crop": crop});
     if (faceRect != null) _result.addAll({"faceRect": faceRect!.toJson()});
-    if (originalRect != null) _result.addAll({"originalRect": originalRect!.toJson()});
-    if (isQualityCompliant != null) _result.addAll({"isQualityCompliant": isQualityCompliant});
+    if (originalRect != null)
+      _result.addAll({"originalRect": originalRect!.toJson()});
+    if (isQualityCompliant != null)
+      _result.addAll({"isQualityCompliant": isQualityCompliant});
 
     return _result;
   }
@@ -911,12 +975,13 @@ class ImageQualityResult {
     result.group = jsonObject["group"];
     result.status = jsonObject["status"];
     result.range = ImageQualityRange.fromJson(jsonObject["range"]);
-    result.value = jsonObject["value"] == null ? null : jsonObject["value"].toDouble();
+    result.value =
+        jsonObject["value"] == null ? null : jsonObject["value"].toDouble();
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (name != null) _result.addAll({"name": name});
@@ -942,12 +1007,14 @@ class DetectFacesAttributeResult {
     result.attribute = jsonObject["attribute"];
     result.value = jsonObject["value"];
     result.range = ImageQualityRange.fromJson(jsonObject["range"]);
-    result.confidence = jsonObject["confidence"] == null ? null : jsonObject["confidence"].toDouble();
+    result.confidence = jsonObject["confidence"] == null
+        ? null
+        : jsonObject["confidence"].toDouble();
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (attribute != null) _result.addAll({"attribute": attribute});
@@ -975,7 +1042,7 @@ class Font {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (name != null) _result.addAll({"name": name});
@@ -1000,8 +1067,7 @@ class Person {
 
     result.name = jsonObject["name"];
     if (jsonObject["groups"] != null)
-      for (var item in jsonObject["groups"])
-        result.groups.add(item);
+      for (var item in jsonObject["groups"]) result.groups.add(item);
     result.updatedAt = jsonObject["updatedAt"];
     result.id = jsonObject["id"];
     result.metadata = jsonObject["metadata"];
@@ -1010,7 +1076,7 @@ class Person {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (name != null) _result.addAll({"name": name});
@@ -1042,7 +1108,7 @@ class PersonGroup {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (name != null) _result.addAll({"name": name});
@@ -1076,7 +1142,7 @@ class PersonImage {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (path != null) _result.addAll({"path": path});
@@ -1092,20 +1158,23 @@ class PersonImage {
 
 class ImageUpload {
   String? imageData;
+  String? imageUrl;
 
   static ImageUpload? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new ImageUpload();
 
     result.imageData = jsonObject["imageData"];
+    result.imageUrl = jsonObject["imageUrl"];
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (imageData != null) _result.addAll({"imageData": imageData});
+    if (imageUrl != null) _result.addAll({"imageUrl": imageUrl});
 
     return _result;
   }
@@ -1129,7 +1198,7 @@ class EditGroupPersonsRequest {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     _result.addAll({"personIdsToAdd": personIdsToAdd});
@@ -1151,11 +1220,14 @@ class SearchPersonRequest {
     if (jsonObject == null) return null;
     var result = new SearchPersonRequest();
 
-    result.outputImageParams = OutputImageParams.fromJson(jsonObject["outputImageParams"]);
+    result.outputImageParams =
+        OutputImageParams.fromJson(jsonObject["outputImageParams"]);
     if (jsonObject["groupIdsForSearch"] != null)
       for (var item in jsonObject["groupIdsForSearch"])
         result.groupIdsForSearch.add(item);
-    result.threshold = jsonObject["threshold"] == null ? null : jsonObject["threshold"].toDouble();
+    result.threshold = jsonObject["threshold"] == null
+        ? null
+        : jsonObject["threshold"].toDouble();
     result.limit = jsonObject["limit"];
     result.imageUpload = ImageUpload.fromJson(jsonObject["imageUpload"]);
     result.detectAll = jsonObject["detectAll"];
@@ -1163,14 +1235,16 @@ class SearchPersonRequest {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
-    if (outputImageParams != null) _result.addAll({"outputImageParams": outputImageParams!.toJson()});
+    if (outputImageParams != null)
+      _result.addAll({"outputImageParams": outputImageParams!.toJson()});
     _result.addAll({"groupIdsForSearch": groupIdsForSearch});
     if (threshold != null) _result.addAll({"threshold": threshold});
     if (limit != null) _result.addAll({"limit": limit});
-    if (imageUpload != null) _result.addAll({"imageUpload": imageUpload!.toJson()});
+    if (imageUpload != null)
+      _result.addAll({"imageUpload": imageUpload!.toJson()});
     if (detectAll != null) _result.addAll({"detectAll": detectAll});
 
     return _result;
@@ -1197,8 +1271,7 @@ class SearchPerson {
         result.images.add(SearchPersonImage.fromJson(item));
     result.name = jsonObject["name"];
     if (jsonObject["groups"] != null)
-      for (var item in jsonObject["groups"])
-        result.groups.add(item);
+      for (var item in jsonObject["groups"]) result.groups.add(item);
     result.updatedAt = jsonObject["updatedAt"];
     result.id = jsonObject["id"];
     result.metadata = jsonObject["metadata"];
@@ -1207,7 +1280,7 @@ class SearchPerson {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (detection != null) _result.addAll({"detection": detection!.toJson()});
@@ -1241,8 +1314,12 @@ class SearchPersonImage {
     if (jsonObject == null) return null;
     var result = new SearchPersonImage();
 
-    result.similarity = jsonObject["similarity"] == null ? null : jsonObject["similarity"].toDouble();
-    result.distance = jsonObject["distance"] == null ? null : jsonObject["distance"].toDouble();
+    result.similarity = jsonObject["similarity"] == null
+        ? null
+        : jsonObject["similarity"].toDouble();
+    result.distance = jsonObject["distance"] == null
+        ? null
+        : jsonObject["distance"].toDouble();
     result.path = jsonObject["path"];
     result.url = jsonObject["url"];
     result.contentType = jsonObject["contentType"];
@@ -1253,7 +1330,7 @@ class SearchPersonImage {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (similarity != null) _result.addAll({"similarity": similarity});
@@ -1284,12 +1361,14 @@ class SearchPersonDetection {
         result.landmarks.add(Point.fromJson(item));
     result.rect = Rect.fromJson(jsonObject["rect"]);
     result.cropImage = jsonObject["cropImage"];
-    result.rotationAngle = jsonObject["rotationAngle"] == null ? null : jsonObject["rotationAngle"].toDouble();
+    result.rotationAngle = jsonObject["rotationAngle"] == null
+        ? null
+        : jsonObject["rotationAngle"].toDouble();
 
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (!landmarks.isEmpty) {
@@ -1319,7 +1398,7 @@ class LivenessNotification {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (status != null) _result.addAll({"status": status});
@@ -1343,11 +1422,59 @@ class VideoEncoderCompletion {
     return result;
   }
 
-  Map toJson(){
+  Map toJson() {
     Map _result = {};
 
     if (success != null) _result.addAll({"success": success});
     if (transactionId != null) _result.addAll({"transactionId": transactionId});
+
+    return _result;
+  }
+}
+
+class InitializationConfiguration {
+  String? license;
+  bool? licenseUpdate;
+
+  static InitializationConfiguration? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new InitializationConfiguration();
+
+    result.license = jsonObject["license"];
+    result.licenseUpdate = jsonObject["licenseUpdate"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (license != null) _result.addAll({"license": license});
+    if (licenseUpdate != null) _result.addAll({"licenseUpdate": licenseUpdate});
+
+    return _result;
+  }
+}
+
+class InitResponse {
+  bool? success;
+  InitException? error;
+
+  static InitResponse? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new InitResponse();
+
+    result.success = jsonObject["success"];
+    result.error = InitException.fromJson(jsonObject["error"]);
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (success != null) _result.addAll({"success": success});
+    if (error != null) _result.addAll({"error": error!.toJson()});
 
     return _result;
   }
@@ -1363,30 +1490,58 @@ class FontStyle {
 }
 
 class CustomizationColor {
-  static const String ONBOARDING_SCREEN_START_BUTTON_BACKGROUND = "CustomizationColor.ONBOARDING_SCREEN_START_BUTTON_BACKGROUND";
-  static const String ONBOARDING_SCREEN_START_BUTTON_TITLE = "CustomizationColor.ONBOARDING_SCREEN_START_BUTTON_TITLE";
-  static const String ONBOARDING_SCREEN_BACKGROUND = "CustomizationColor.ONBOARDING_SCREEN_BACKGROUND";
-  static const String ONBOARDING_SCREEN_TITLE_LABEL_TEXT = "CustomizationColor.ONBOARDING_SCREEN_TITLE_LABEL_TEXT";
-  static const String ONBOARDING_SCREEN_MESSAGE_LABEL_TEXT = "CustomizationColor.ONBOARDING_SCREEN_MESSAGE_LABEL_TEXT";
-  static const String CAMERA_SCREEN_STROKE_NORMAL = "CustomizationColor.CAMERA_SCREEN_STROKE_NORMAL";
-  static const String CAMERA_SCREEN_STROKE_ACTIVE = "CustomizationColor.CAMERA_SCREEN_STROKE_ACTIVE";
-  static const String CAMERA_SCREEN_SECTOR_TARGET = "CustomizationColor.CAMERA_SCREEN_SECTOR_TARGET";
-  static const String CAMERA_SCREEN_SECTOR_ACTIVE = "CustomizationColor.CAMERA_SCREEN_SECTOR_ACTIVE";
-  static const String CAMERA_SCREEN_FRONT_HINT_LABEL_BACKGROUND = "CustomizationColor.CAMERA_SCREEN_FRONT_HINT_LABEL_BACKGROUND";
-  static const String CAMERA_SCREEN_FRONT_HINT_LABEL_TEXT = "CustomizationColor.CAMERA_SCREEN_FRONT_HINT_LABEL_TEXT";
-  static const String CAMERA_SCREEN_BACK_HINT_LABEL_BACKGROUND = "CustomizationColor.CAMERA_SCREEN_BACK_HINT_LABEL_BACKGROUND";
-  static const String CAMERA_SCREEN_BACK_HINT_LABEL_TEXT = "CustomizationColor.CAMERA_SCREEN_BACK_HINT_LABEL_TEXT";
-  static const String CAMERA_SCREEN_LIGHT_TOOLBAR_TINT = "CustomizationColor.CAMERA_SCREEN_LIGHT_TOOLBAR_TINT";
-  static const String CAMERA_SCREEN_DARK_TOOLBAR_TINT = "CustomizationColor.CAMERA_SCREEN_DARK_TOOLBAR_TINT";
-  static const String RETRY_SCREEN_BACKGROUND = "CustomizationColor.RETRY_SCREEN_BACKGROUND";
-  static const String RETRY_SCREEN_RETRY_BUTTON_BACKGROUND = "CustomizationColor.RETRY_SCREEN_RETRY_BUTTON_BACKGROUND";
-  static const String RETRY_SCREEN_RETRY_BUTTON_TITLE = "CustomizationColor.RETRY_SCREEN_RETRY_BUTTON_TITLE";
-  static const String RETRY_SCREEN_TITLE_LABEL_TEXT = "CustomizationColor.RETRY_SCREEN_TITLE_LABEL_TEXT";
-  static const String RETRY_SCREEN_HINT_LABELS_TEXT = "CustomizationColor.RETRY_SCREEN_HINT_LABELS_TEXT";
-  static const String PROCESSING_SCREEN_BACKGROUND = "CustomizationColor.PROCESSING_SCREEN_BACKGROUND";
-  static const String PROCESSING_SCREEN_PROGRESS = "CustomizationColor.PROCESSING_SCREEN_PROGRESS";
-  static const String PROCESSING_SCREEN_TITLE = "CustomizationColor.PROCESSING_SCREEN_TITLE";
-  static const String SUCCESS_SCREEN_BACKGROUND = "CustomizationColor.SUCCESS_SCREEN_BACKGROUND";
+  static const String ONBOARDING_SCREEN_START_BUTTON_BACKGROUND =
+      "CustomizationColor.ONBOARDING_SCREEN_START_BUTTON_BACKGROUND";
+  static const String ONBOARDING_SCREEN_START_BUTTON_TITLE =
+      "CustomizationColor.ONBOARDING_SCREEN_START_BUTTON_TITLE";
+  static const String ONBOARDING_SCREEN_BACKGROUND =
+      "CustomizationColor.ONBOARDING_SCREEN_BACKGROUND";
+  static const String ONBOARDING_SCREEN_TITLE_LABEL_TEXT =
+      "CustomizationColor.ONBOARDING_SCREEN_TITLE_LABEL_TEXT";
+  static const String ONBOARDING_SCREEN_SUBTITLE_LABEL_TEXT =
+      "CustomizationColor.ONBOARDING_SCREEN_SUBTITLE_LABEL_TEXT";
+  static const String ONBOARDING_SCREEN_MESSAGE_LABELS_TEXT =
+      "CustomizationColor.ONBOARDING_SCREEN_MESSAGE_LABELS_TEXT";
+  static const String CAMERA_SCREEN_STROKE_NORMAL =
+      "CustomizationColor.CAMERA_SCREEN_STROKE_NORMAL";
+  static const String CAMERA_SCREEN_STROKE_ACTIVE =
+      "CustomizationColor.CAMERA_SCREEN_STROKE_ACTIVE";
+  static const String CAMERA_SCREEN_SECTOR_TARGET =
+      "CustomizationColor.CAMERA_SCREEN_SECTOR_TARGET";
+  static const String CAMERA_SCREEN_SECTOR_ACTIVE =
+      "CustomizationColor.CAMERA_SCREEN_SECTOR_ACTIVE";
+  static const String CAMERA_SCREEN_FRONT_HINT_LABEL_BACKGROUND =
+      "CustomizationColor.CAMERA_SCREEN_FRONT_HINT_LABEL_BACKGROUND";
+  static const String CAMERA_SCREEN_FRONT_HINT_LABEL_TEXT =
+      "CustomizationColor.CAMERA_SCREEN_FRONT_HINT_LABEL_TEXT";
+  static const String CAMERA_SCREEN_BACK_HINT_LABEL_BACKGROUND =
+      "CustomizationColor.CAMERA_SCREEN_BACK_HINT_LABEL_BACKGROUND";
+  static const String CAMERA_SCREEN_BACK_HINT_LABEL_TEXT =
+      "CustomizationColor.CAMERA_SCREEN_BACK_HINT_LABEL_TEXT";
+  static const String CAMERA_SCREEN_LIGHT_TOOLBAR_TINT =
+      "CustomizationColor.CAMERA_SCREEN_LIGHT_TOOLBAR_TINT";
+  static const String CAMERA_SCREEN_DARK_TOOLBAR_TINT =
+      "CustomizationColor.CAMERA_SCREEN_DARK_TOOLBAR_TINT";
+  static const String RETRY_SCREEN_BACKGROUND =
+      "CustomizationColor.RETRY_SCREEN_BACKGROUND";
+  static const String RETRY_SCREEN_RETRY_BUTTON_BACKGROUND =
+      "CustomizationColor.RETRY_SCREEN_RETRY_BUTTON_BACKGROUND";
+  static const String RETRY_SCREEN_RETRY_BUTTON_TITLE =
+      "CustomizationColor.RETRY_SCREEN_RETRY_BUTTON_TITLE";
+  static const String RETRY_SCREEN_TITLE_LABEL_TEXT =
+      "CustomizationColor.RETRY_SCREEN_TITLE_LABEL_TEXT";
+  static const String RETRY_SCREEN_SUBTITLE_LABEL_TEXT =
+      "CustomizationColor.RETRY_SCREEN_SUBTITLE_LABEL_TEXT";
+  static const String RETRY_SCREEN_HINT_LABELS_TEXT =
+      "CustomizationColor.RETRY_SCREEN_HINT_LABELS_TEXT";
+  static const String PROCESSING_SCREEN_BACKGROUND =
+      "CustomizationColor.PROCESSING_SCREEN_BACKGROUND";
+  static const String PROCESSING_SCREEN_PROGRESS =
+      "CustomizationColor.PROCESSING_SCREEN_PROGRESS";
+  static const String PROCESSING_SCREEN_TITLE =
+      "CustomizationColor.PROCESSING_SCREEN_TITLE";
+  static const String SUCCESS_SCREEN_BACKGROUND =
+      "CustomizationColor.SUCCESS_SCREEN_BACKGROUND";
 }
 
 class ImageQualityGroupName {
@@ -1401,23 +1556,44 @@ class ImageQualityGroupName {
   static const int UNKNOWN = 9;
 }
 
+class LicensingResultCode {
+  static const String OK = "OK";
+  static const String LICENSE_CORRUPTED = "LICENSE_CORRUPTED";
+  static const String INVALID_DATE = "INVALID_DATE";
+  static const String INVALID_VERSION = "INVALID_VERSION";
+  static const String INVALID_DEVICE_ID = "INVALID_DEVICE_ID";
+  static const String INVALID_SYSTEM_OR_APP_ID = "INVALID_SYSTEM_OR_APP_ID";
+  static const String NO_CAPABILITIES = "NO_CAPABILITIES";
+  static const String NO_AUTHENTICITY = "NO_AUTHENTICITY";
+  static const String LICENSE_ABSENT = "LICENSE_ABSENT";
+  static const String NO_INTERNET = "NO_INTERNET";
+  static const String NO_DATABASE = "NO_DATABASE";
+  static const String DATABASE_INCORRECT = "DATABASE_INCORRECT";
+}
+
 class DetectFacesErrorCode {
   static const String IMAGE_EMPTY = "IMAGE_EMPTY";
   static const String FR_FACE_NOT_DETECTED = "FR_FACE_NOT_DETECTED";
   static const String FACER_NO_LICENSE = "FACER_NO_LICENSE";
   static const String FACER_IS_NOT_INITIALIZED = "FACER_IS_NOT_INITIALIZED";
-  static const String FACER_COMMAND_IS_NOT_SUPPORTED = "FACER_COMMAND_IS_NOT_SUPPORTED";
-  static const String FACER_COMMAND_PARAMS_READ_ERROR = "FACER_COMMAND_PARAMS_READ_ERROR";
+  static const String FACER_COMMAND_IS_NOT_SUPPORTED =
+      "FACER_COMMAND_IS_NOT_SUPPORTED";
+  static const String FACER_COMMAND_PARAMS_READ_ERROR =
+      "FACER_COMMAND_PARAMS_READ_ERROR";
   static const String PROCESSING_FAILED = "PROCESSING_FAILED";
   static const String REQUEST_FAILED = "REQUEST_FAILED";
   static const String API_CALL_FAILED = "API_CALL_FAILED";
 }
 
 class InitErrorCode {
-  static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
-  static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
-  static const String MISSING_CORE = "MISSING_CORE";
-  static const String INTERNAL_CORE_ERROR = "INTERNAL_CORE_ERROR";
+  static const int IN_PROGRESS_ALREADY = 0;
+  static const int MISSING_CORE = 1;
+  static const int INTERNAL_CORE_ERROR = 2;
+  static const int BAD_LICENSE = 3;
+  static const int UNAVAILABLE = 4;
+  static const int CONTEXT_IS_NULL = 100;
+  static const int RESOURCE_DAT_ABSENT = 101;
+  static const int LICENSE_IS_NULL = 102;
 }
 
 class LivenessStatus {
@@ -1431,19 +1607,26 @@ class CameraErrorCode {
 }
 
 class LivenessErrorCode {
+  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
+  static const String NO_LICENSE = "NO_LICENSE";
+  static const String API_CALL_FAILED = "API_CALL_FAILED";
+  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
+  static const String CANCELLED = "CANCELLED";
+  static const String PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT";
+  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
+  static const String PROCESSING_FRAME_FAILED = "PROCESSING_FRAME_FAILED";
+  static const String APPLICATION_INACTIVE = "APPLICATION_INACTIVE";
   static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
   static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
   static const String ZOOM_NOT_SUPPORTED = "ZOOM_NOT_SUPPORTED";
-  static const String NO_LICENSE = "NO_LICENSE";
-  static const String CANCELLED = "CANCELLED";
-  static const String PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT";
-  static const String API_CALL_FAILED = "API_CALL_FAILED";
-  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
-  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
   static const String CAMERA_NO_PERMISSION = "CAMERA_NO_PERMISSION";
   static const String CAMERA_NOT_AVAILABLE = "CAMERA_NOT_AVAILABLE";
-  static const String PROCESSING_FRAME_FAILED = "PROCESSING_FRAME_FAILED";
-  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
+}
+
+class RecordingProcess {
+  static const String ASYNCHRONOUS_UPLOAD = "ASYNCHRONOUS_UPLOAD";
+  static const String SYNCHRONOUS_UPLOAD = "SYNCHRONOUS_UPLOAD";
+  static const String NOT_UPLOAD = "NOT_UPLOAD";
 }
 
 class DetectFacesBackendErrorCode {
@@ -1461,10 +1644,11 @@ class MatchFacesErrorCode {
   static const String LANDMARKS_NOT_DETECTED = "LANDMARKS_NOT_DETECTED";
   static const String FACE_ALIGNER_FAILED = "FACE_ALIGNER_FAILED";
   static const String DESCRIPTOR_EXTRACTOR_ERROR = "DESCRIPTOR_EXTRACTOR_ERROR";
-  static const String NO_LICENSE = "NO_LICENSE";
-  static const String IMAGES_COUNT_LIMIT_EXCEEDED = "IMAGES_COUNT_LIMIT_EXCEEDED";
+  static const String IMAGES_COUNT_LIMIT_EXCEEDED =
+      "IMAGES_COUNT_LIMIT_EXCEEDED";
   static const String API_CALL_FAILED = "API_CALL_FAILED";
   static const String PROCESSING_FAILED = "PROCESSING_FAILED";
+  static const String NO_LICENSE = "NO_LICENSE";
 }
 
 class ImageQualityCharacteristicName {
@@ -1474,8 +1658,10 @@ class ImageQualityCharacteristicName {
   static const String IMAGE_CHANNELS_NUMBER = "ImageChannelsNumber";
   static const String ART_FACE = "ArtFace";
   static const String PADDING_RATIO = "PaddingRatio";
-  static const String FACE_MID_POINT_HORIZONTAL_POSITION = "FaceMidPointHorizontalPosition";
-  static const String FACE_MID_POINT_VERTICAL_POSITION = "FaceMidPointVerticalPosition";
+  static const String FACE_MID_POINT_HORIZONTAL_POSITION =
+      "FaceMidPointHorizontalPosition";
+  static const String FACE_MID_POINT_VERTICAL_POSITION =
+      "FaceMidPointVerticalPosition";
   static const String HEAD_WIDTH_RATIO = "HeadWidthRatio";
   static const String HEAD_HEIGHT_RATIO = "HeadHeightRatio";
   static const String EYES_DISTANCE = "EyesDistance";
@@ -1516,14 +1702,23 @@ class ImageQualityCharacteristicName {
   static const String OTHER_FACES = "OtherFaces";
   static const String BACKGROUND_COLOR_MATCH = "BackgroundColorMatch";
   static const String UNKNOWN = "Unknown";
-  static const String IMAGE_CHARACTERISTIC_ALL_RECOMMENDED = "ImageCharacteristic";
-  static const String HEAD_SIZE_AND_POSITION_ALL_RECOMMENDED = "HeadSizeAndPosition";
+  static const String IMAGE_CHARACTERISTIC_ALL_RECOMMENDED =
+      "ImageCharacteristic";
+  static const String HEAD_SIZE_AND_POSITION_ALL_RECOMMENDED =
+      "HeadSizeAndPosition";
   static const String FACE_IMAGE_QUALITY_ALL_RECOMMENDED = "FaceImageQuality";
-  static const String EYES_CHARACTERISTICS_ALL_RECOMMENDED = "EyesCharacteristics";
-  static const String SHADOW_AND_LIGHTING_ALL_RECOMMENDED = "ShadowsAndLightning";
+  static const String EYES_CHARACTERISTICS_ALL_RECOMMENDED =
+      "EyesCharacteristics";
+  static const String SHADOW_AND_LIGHTING_ALL_RECOMMENDED =
+      "ShadowsAndLightning";
   static const String POSE_AND_EXPRESSION_ALL_RECOMMENDED = "PoseAndExpression";
   static const String HEAD_OCCLUSION_ALL_RECOMMENDED = "HeadOcclusion";
   static const String QUALITY_BACKGROUND_ALL_RECOMMENDED = "QualityBackground";
+}
+
+class ScreenOrientation {
+  static const int PORTRAIT = 1;
+  static const int LANDSCAPE = 2;
 }
 
 class ButtonTag {
@@ -1533,13 +1728,24 @@ class ButtonTag {
 }
 
 class CustomizationFont {
-  static const String ONBOARDING_SCREEN_START_BUTTON = "CustomizationFont.ONBOARDING_SCREEN_START_BUTTON";
-  static const String ONBOARDING_SCREEN_TITLE_LABEL = "CustomizationFont.ONBOARDING_SCREEN_TITLE_LABEL";
-  static const String ONBOARDING_SCREEN_MESSAGE_LABEL = "CustomizationFont.ONBOARDING_SCREEN_MESSAGE_LABEL";
-  static const String CAMERA_SCREEN_HINT_LABEL = "CustomizationFont.CAMERA_SCREEN_HINT_LABEL";
-  static const String RETRY_SCREEN_RETRY_BUTTON = "CustomizationFont.RETRY_SCREEN_RETRY_BUTTON";
-  static const String RETRY_SCREEN_TITLE_LABEL = "CustomizationFont.RETRY_SCREEN_TITLE_LABEL";
-  static const String RETRY_SCREEN_HINT_LABELS = "CustomizationFont.RETRY_SCREEN_HINT_LABELS";
+  static const String ONBOARDING_SCREEN_START_BUTTON =
+      "CustomizationFont.ONBOARDING_SCREEN_START_BUTTON";
+  static const String ONBOARDING_SCREEN_TITLE_LABEL =
+      "CustomizationFont.ONBOARDING_SCREEN_TITLE_LABEL";
+  static const String ONBOARDING_SCREEN_SUBTITLE_LABEL =
+      "CustomizationFont.ONBOARDING_SCREEN_SUBTITLE_LABEL";
+  static const String ONBOARDING_SCREEN_MESSAGE_LABELS =
+      "CustomizationFont.ONBOARDING_SCREEN_MESSAGE_LABELS";
+  static const String CAMERA_SCREEN_HINT_LABEL =
+      "CustomizationFont.CAMERA_SCREEN_HINT_LABEL";
+  static const String RETRY_SCREEN_RETRY_BUTTON =
+      "CustomizationFont.RETRY_SCREEN_RETRY_BUTTON";
+  static const String RETRY_SCREEN_TITLE_LABEL =
+      "CustomizationFont.RETRY_SCREEN_TITLE_LABEL";
+  static const String RETRY_SCREEN_SUBTITLE_LABEL =
+      "CustomizationFont.RETRY_SCREEN_SUBTITLE_LABEL";
+  static const String RETRY_SCREEN_HINT_LABELS =
+      "CustomizationFont.RETRY_SCREEN_HINT_LABELS";
   static const String PROCESSING_SCREEN = "CustomizationFont.PROCESSING_SCREEN";
 }
 
@@ -1580,6 +1786,11 @@ class OutputImageCropAspectRatio {
   static const int OUTPUT_IMAGE_CROP_ASPECT_RATIO_7X9 = 4;
 }
 
+class LivenessType {
+  static const String ACTIVE = "ACTIVE";
+  static const String PASSIVE = "PASSIVE";
+}
+
 class LivenessSkipStep {
   static const int ONBOARDING_STEP = 1;
   static const int SUCCESS_STEP = 2;
@@ -1598,26 +1809,27 @@ class ImageType {
   static const int DOCUMENT_WITH_LIVE = 4;
   static const int EXTERNAL = 5;
   static const int GHOST_PORTRAIT = 6;
+  static const int BARCODE = 7;
 }
 
 class FaceCaptureErrorCode {
   static const String CANCEL = "CANCEL";
+  static const String TIMEOUT = "TIMEOUT";
+  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
+  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
   static const String CAMERA_NOT_AVAILABLE = "CAMERA_NOT_AVAILABLE";
   static const String CAMERA_NO_PERMISSION = "CAMERA_NO_PERMISSION";
   static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
   static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
-  static const String TIMEOUT = "TIMEOUT";
-  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
-  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
 }
 
 class LivenessBackendErrorCode {
   static const int UNDEFINED = -1;
   static const int NO_LICENSE = 200;
   static const int LOW_QUALITY = 231;
-  static const int HIGH_ASYMMETRY = 232;
   static const int TRACK_BREAK = 246;
   static const int CLOSED_EYES_DETECTED = 230;
+  static const int HIGH_ASYMMETRY = 232;
   static const int FACE_OVER_EMOTIONAL = 233;
   static const int SUNGLASSES_DETECTED = 234;
   static const int SMALL_AGE = 235;
@@ -1635,20 +1847,38 @@ class LivenessBackendErrorCode {
   static const int WRONG_VIEW = 249;
 }
 
+class ProcessingMode {
+  static const String ONLINE = "ONLINE";
+  static const String OFFLINE = "OFFLINE";
+}
+
 class CustomizationImage {
-  static const String ONBOARDING_SCREEN_CLOSE_BUTTON = "CustomizationImage.ONBOARDING_SCREEN_CLOSE_BUTTON";
-  static const String ONBOARDING_SCREEN_ILLUMINATION = "CustomizationImage.ONBOARDING_SCREEN_ILLUMINATION";
-  static const String ONBOARDING_SCREEN_ACCESSORIES = "CustomizationImage.ONBOARDING_SCREEN_ACCESSORIES";
-  static const String ONBOARDING_SCREEN_CAMERA_LEVEL = "CustomizationImage.ONBOARDING_SCREEN_CAMERA_LEVEL";
-  static const String CAMERA_SCREEN_CLOSE_BUTTON = "CustomizationImage.CAMERA_SCREEN_CLOSE_BUTTON";
-  static const String CAMERA_SCREEN_LIGHT_ON_BUTTON = "CustomizationImage.CAMERA_SCREEN_LIGHT_ON_BUTTON";
-  static const String CAMERA_SCREEN_LIGHT_OFF_BUTTON = "CustomizationImage.CAMERA_SCREEN_LIGHT_OFF_BUTTON";
-  static const String CAMERA_SCREEN_SWITCH_BUTTON = "CustomizationImage.CAMERA_SCREEN_SWITCH_BUTTON";
-  static const String RETRY_SCREEN_CLOSE_BUTTON = "CustomizationImage.RETRY_SCREEN_CLOSE_BUTTON";
-  static const String RETRY_SCREEN_HINT_ENVIRONMENT = "CustomizationImage.RETRY_SCREEN_HINT_ENVIRONMENT";
-  static const String RETRY_SCREEN_HINT_SUBJECT = "CustomizationImage.RETRY_SCREEN_HINT_SUBJECT";
-  static const String PROCESSING_SCREEN_CLOSE_BUTTON = "CustomizationImage.PROCESSING_SCREEN_CLOSE_BUTTON";
-  static const String SUCCESS_SCREEN_IMAGE = "CustomizationImage.SUCCESS_SCREEN_IMAGE";
+  static const String ONBOARDING_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.ONBOARDING_SCREEN_CLOSE_BUTTON";
+  static const String ONBOARDING_SCREEN_ILLUMINATION =
+      "CustomizationImage.ONBOARDING_SCREEN_ILLUMINATION";
+  static const String ONBOARDING_SCREEN_ACCESSORIES =
+      "CustomizationImage.ONBOARDING_SCREEN_ACCESSORIES";
+  static const String ONBOARDING_SCREEN_CAMERA_LEVEL =
+      "CustomizationImage.ONBOARDING_SCREEN_CAMERA_LEVEL";
+  static const String CAMERA_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_CLOSE_BUTTON";
+  static const String CAMERA_SCREEN_LIGHT_ON_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_LIGHT_ON_BUTTON";
+  static const String CAMERA_SCREEN_LIGHT_OFF_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_LIGHT_OFF_BUTTON";
+  static const String CAMERA_SCREEN_SWITCH_BUTTON =
+      "CustomizationImage.CAMERA_SCREEN_SWITCH_BUTTON";
+  static const String RETRY_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.RETRY_SCREEN_CLOSE_BUTTON";
+  static const String RETRY_SCREEN_HINT_ENVIRONMENT =
+      "CustomizationImage.RETRY_SCREEN_HINT_ENVIRONMENT";
+  static const String RETRY_SCREEN_HINT_SUBJECT =
+      "CustomizationImage.RETRY_SCREEN_HINT_SUBJECT";
+  static const String PROCESSING_SCREEN_CLOSE_BUTTON =
+      "CustomizationImage.PROCESSING_SCREEN_CLOSE_BUTTON";
+  static const String SUCCESS_SCREEN_IMAGE =
+      "CustomizationImage.SUCCESS_SCREEN_IMAGE";
 }
 
 class DetectFacesAttribute {
@@ -1668,7 +1898,8 @@ class DetectFacesAttribute {
 }
 
 class FaceSDK {
-  static const MethodChannel _channel = const MethodChannel('flutter_face_api/method');
+  static const MethodChannel _channel =
+      const MethodChannel('flutter_face_api/method');
 
   static Future<dynamic> getServiceUrl() async {
     return await _channel.invokeMethod("getServiceUrl", []);
@@ -1690,12 +1921,26 @@ class FaceSDK {
     return await _channel.invokeMethod("stopFaceCaptureActivity", []);
   }
 
+  @deprecated
   static Future<dynamic> init() async {
     return await _channel.invokeMethod("init", []);
   }
 
+  static Future<dynamic> initialize() async {
+    return await _channel.invokeMethod("initialize", []);
+  }
+
+  static Future<dynamic> initializeWithConfig(config) async {
+    return await _channel.invokeMethod("initializeWithConfig", [config]);
+  }
+
+  @deprecated
   static Future<dynamic> deinit() async {
     return await _channel.invokeMethod("deinit", []);
+  }
+
+  static Future<dynamic> deinitialize() async {
+    return await _channel.invokeMethod("deinitialize", []);
   }
 
   static Future<dynamic> isInitialized() async {
@@ -1711,7 +1956,13 @@ class FaceSDK {
   }
 
   static Future<dynamic> presentFaceCaptureActivityWithConfig(config) async {
-    return await _channel.invokeMethod("presentFaceCaptureActivityWithConfig", [config]);
+    return await _channel
+        .invokeMethod("presentFaceCaptureActivityWithConfig", [config]);
+  }
+
+  static Future<dynamic> matchFacesWithConfig(request, config) async {
+    return await _channel
+        .invokeMethod("matchFacesWithConfig", [request, config]);
   }
 
   static Future<dynamic> startLivenessWithConfig(config) async {
@@ -1720,6 +1971,18 @@ class FaceSDK {
 
   static Future<dynamic> setServiceUrl(url) async {
     return await _channel.invokeMethod("setServiceUrl", [url]);
+  }
+
+  static Future<dynamic> setLogs(isEnable) async {
+    return await _channel.invokeMethod("setLogs", [isEnable]);
+  }
+
+  static Future<dynamic> setSaveLogs(isSaveLog) async {
+    return await _channel.invokeMethod("setSaveLogs", [isSaveLog]);
+  }
+
+  static Future<dynamic> setLogsFolder(path) async {
+    return await _channel.invokeMethod("setLogsFolder", [path]);
   }
 
   static Future<dynamic> matchFaces(request) async {
@@ -1739,11 +2002,14 @@ class FaceSDK {
   }
 
   static Future<dynamic> setLocalizationDictionary(dictionary) async {
-    return await _channel.invokeMethod("setLocalizationDictionary", [dictionary]);
+    return await _channel
+        .invokeMethod("setLocalizationDictionary", [dictionary]);
   }
 
-  static Future<dynamic> matchFacesSimilarityThresholdSplit(faces, similarity) async {
-    return await _channel.invokeMethod("matchFacesSimilarityThresholdSplit", [faces, similarity]);
+  static Future<dynamic> matchFacesSimilarityThresholdSplit(
+      faces, similarity) async {
+    return await _channel.invokeMethod(
+        "matchFacesSimilarityThresholdSplit", [faces, similarity]);
   }
 
   static Future<dynamic> getPerson(personId) async {
@@ -1751,7 +2017,8 @@ class FaceSDK {
   }
 
   static Future<dynamic> createPerson(name, groupIds, metadata) async {
-    return await _channel.invokeMethod("createPerson", [name, groupIds, metadata]);
+    return await _channel
+        .invokeMethod("createPerson", [name, groupIds, metadata]);
   }
 
   static Future<dynamic> updatePerson(person) async {
@@ -1767,7 +2034,8 @@ class FaceSDK {
   }
 
   static Future<dynamic> getPersonImagesForPage(personId, page, size) async {
-    return await _channel.invokeMethod("getPersonImagesForPage", [personId, page, size]);
+    return await _channel
+        .invokeMethod("getPersonImagesForPage", [personId, page, size]);
   }
 
   static Future<dynamic> addPersonImage(personId, image) async {
@@ -1779,7 +2047,8 @@ class FaceSDK {
   }
 
   static Future<dynamic> deletePersonImage(personId, imageId) async {
-    return await _channel.invokeMethod("deletePersonImage", [personId, imageId]);
+    return await _channel
+        .invokeMethod("deletePersonImage", [personId, imageId]);
   }
 
   static Future<dynamic> getGroups() async {
@@ -1795,7 +2064,8 @@ class FaceSDK {
   }
 
   static Future<dynamic> getPersonGroupsForPage(personId, page, size) async {
-    return await _channel.invokeMethod("getPersonGroupsForPage", [personId, page, size]);
+    return await _channel
+        .invokeMethod("getPersonGroupsForPage", [personId, page, size]);
   }
 
   static Future<dynamic> createGroup(name, metadata) async {
@@ -1810,8 +2080,10 @@ class FaceSDK {
     return await _channel.invokeMethod("updateGroup", [group]);
   }
 
-  static Future<dynamic> editPersonsInGroup(groupId, editGroupPersonsRequest) async {
-    return await _channel.invokeMethod("editPersonsInGroup", [groupId, editGroupPersonsRequest]);
+  static Future<dynamic> editPersonsInGroup(
+      groupId, editGroupPersonsRequest) async {
+    return await _channel
+        .invokeMethod("editPersonsInGroup", [groupId, editGroupPersonsRequest]);
   }
 
   static Future<dynamic> getPersonsInGroup(groupId) async {
@@ -1819,7 +2091,8 @@ class FaceSDK {
   }
 
   static Future<dynamic> getPersonsInGroupForPage(groupId, page, size) async {
-    return await _channel.invokeMethod("getPersonsInGroupForPage", [groupId, page, size]);
+    return await _channel
+        .invokeMethod("getPersonsInGroupForPage", [groupId, page, size]);
   }
 
   static Future<dynamic> deleteGroup(groupId) async {
