@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 // Classes
 
 class FaceCaptureException {
-  String? errorCode;
+  int? errorCode;
   String? message;
 
   static FaceCaptureException? fromJson(jsonObject) {
@@ -28,18 +28,18 @@ class FaceCaptureException {
 }
 
 class InitException {
-  String? errorCode;
-  LicenseException? underlyingException;
+  int? errorCode;
   String? message;
+  UnderlyingException? underlyingException;
 
   static InitException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new InitException();
 
     result.errorCode = jsonObject["errorCode"];
-    result.underlyingException =
-        LicenseException.fromJson(jsonObject["underlyingException"]);
     result.message = jsonObject["message"];
+    result.underlyingException =
+        UnderlyingException.fromJson(jsonObject["underlyingException"]);
 
     return result;
   }
@@ -48,51 +48,27 @@ class InitException {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
     if (underlyingException != null)
       _result.addAll({"underlyingException": underlyingException!.toJson()});
-    if (message != null) _result.addAll({"message": message});
-
-    return _result;
-  }
-}
-
-class LicenseException {
-  int? errorCode;
-  String? message;
-
-  static LicenseException? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new LicenseException();
-
-    result.errorCode = jsonObject["errorCode"];
-    result.message = jsonObject["message"];
-
-    return result;
-  }
-
-  Map toJson() {
-    Map _result = {};
-
-    if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (message != null) _result.addAll({"message": message});
 
     return _result;
   }
 }
 
 class LivenessErrorException {
-  String? errorCode;
-  LivenessBackendException? underlyingException;
+  int? errorCode;
   String? message;
+  UnderlyingException? underlyingException;
 
   static LivenessErrorException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     var result = new LivenessErrorException();
 
     result.errorCode = jsonObject["errorCode"];
-    result.underlyingException =
-        LivenessBackendException.fromJson(jsonObject["underlyingException"]);
     result.message = jsonObject["message"];
+    result.underlyingException =
+        UnderlyingException.fromJson(jsonObject["underlyingException"]);
 
     return result;
   }
@@ -101,42 +77,18 @@ class LivenessErrorException {
     Map _result = {};
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
     if (underlyingException != null)
       _result.addAll({"underlyingException": underlyingException!.toJson()});
-    if (message != null) _result.addAll({"message": message});
-
-    return _result;
-  }
-}
-
-class LivenessBackendException {
-  int? errorCode;
-  String? message;
-
-  static LivenessBackendException? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new LivenessBackendException();
-
-    result.errorCode = jsonObject["errorCode"];
-    result.message = jsonObject["message"];
-
-    return result;
-  }
-
-  Map toJson() {
-    Map _result = {};
-
-    if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (message != null) _result.addAll({"message": message});
 
     return _result;
   }
 }
 
 class MatchFacesException {
-  String? errorCode;
+  int? errorCode;
   String? message;
-  String? detailedErrorMessage;
+  UnderlyingException? underlyingException;
 
   static MatchFacesException? fromJson(jsonObject) {
     if (jsonObject == null) return null;
@@ -144,7 +96,8 @@ class MatchFacesException {
 
     result.errorCode = jsonObject["errorCode"];
     result.message = jsonObject["message"];
-    result.detailedErrorMessage = jsonObject["detailedErrorMessage"];
+    result.underlyingException =
+        UnderlyingException.fromJson(jsonObject["underlyingException"]);
 
     return result;
   }
@@ -154,8 +107,61 @@ class MatchFacesException {
 
     if (errorCode != null) _result.addAll({"errorCode": errorCode});
     if (message != null) _result.addAll({"message": message});
-    if (detailedErrorMessage != null)
-      _result.addAll({"detailedErrorMessage": detailedErrorMessage});
+    if (underlyingException != null)
+      _result.addAll({"underlyingException": underlyingException!.toJson()});
+
+    return _result;
+  }
+}
+
+class DetectFacesErrorException {
+  int? errorCode;
+  String? message;
+  UnderlyingException? underlyingException;
+
+  static DetectFacesErrorException? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new DetectFacesErrorException();
+
+    result.errorCode = jsonObject["errorCode"];
+    result.message = jsonObject["message"];
+    result.underlyingException =
+        UnderlyingException.fromJson(jsonObject["underlyingException"]);
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
+    if (underlyingException != null)
+      _result.addAll({"underlyingException": underlyingException!.toJson()});
+
+    return _result;
+  }
+}
+
+class UnderlyingException {
+  int? errorCode;
+  String? message;
+
+  static UnderlyingException? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new UnderlyingException();
+
+    result.errorCode = jsonObject["errorCode"];
+    result.message = jsonObject["message"];
+
+    return result;
+  }
+
+  Map toJson() {
+    Map _result = {};
+
+    if (errorCode != null) _result.addAll({"errorCode": errorCode});
+    if (message != null) _result.addAll({"message": message});
 
     return _result;
   }
@@ -848,59 +854,6 @@ class DetectFacesResponse {
   }
 }
 
-class DetectFacesErrorException {
-  String? errorCode;
-  DetectFacesBackendException? underlyingException;
-  String? message;
-
-  static DetectFacesErrorException? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new DetectFacesErrorException();
-
-    result.errorCode = jsonObject["errorCode"];
-    result.underlyingException =
-        DetectFacesBackendException.fromJson(jsonObject["underlyingException"]);
-    result.message = jsonObject["message"];
-
-    return result;
-  }
-
-  Map toJson() {
-    Map _result = {};
-
-    if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (underlyingException != null)
-      _result.addAll({"underlyingException": underlyingException!.toJson()});
-    if (message != null) _result.addAll({"message": message});
-
-    return _result;
-  }
-}
-
-class DetectFacesBackendException {
-  int? errorCode;
-  String? message;
-
-  static DetectFacesBackendException? fromJson(jsonObject) {
-    if (jsonObject == null) return null;
-    var result = new DetectFacesBackendException();
-
-    result.errorCode = jsonObject["errorCode"];
-    result.message = jsonObject["message"];
-
-    return result;
-  }
-
-  Map toJson() {
-    Map _result = {};
-
-    if (errorCode != null) _result.addAll({"errorCode": errorCode});
-    if (message != null) _result.addAll({"message": message});
-
-    return _result;
-  }
-}
-
 class DetectFaceResult {
   List<ImageQualityResult?> quality = [];
   List<DetectFacesAttributeResult?> attributes = [];
@@ -1557,32 +1510,30 @@ class ImageQualityGroupName {
 }
 
 class LicensingResultCode {
-  static const String OK = "OK";
-  static const String LICENSE_CORRUPTED = "LICENSE_CORRUPTED";
-  static const String INVALID_DATE = "INVALID_DATE";
-  static const String INVALID_VERSION = "INVALID_VERSION";
-  static const String INVALID_DEVICE_ID = "INVALID_DEVICE_ID";
-  static const String INVALID_SYSTEM_OR_APP_ID = "INVALID_SYSTEM_OR_APP_ID";
-  static const String NO_CAPABILITIES = "NO_CAPABILITIES";
-  static const String NO_AUTHENTICITY = "NO_AUTHENTICITY";
-  static const String LICENSE_ABSENT = "LICENSE_ABSENT";
-  static const String NO_INTERNET = "NO_INTERNET";
-  static const String NO_DATABASE = "NO_DATABASE";
-  static const String DATABASE_INCORRECT = "DATABASE_INCORRECT";
+  static const int OK = 0;
+  static const int LICENSE_CORRUPTED = 1;
+  static const int INVALID_DATE = 2;
+  static const int INVALID_VERSION = 3;
+  static const int INVALID_DEVICE_ID = 4;
+  static const int INVALID_SYSTEM_OR_APP_ID = 5;
+  static const int NO_CAPABILITIES = 6;
+  static const int NO_AUTHENTICITY = 7;
+  static const int LICENSE_ABSENT = 8;
+  static const int NO_INTERNET = 9;
+  static const int NO_DATABASE = 10;
+  static const int DATABASE_INCORRECT = 11;
 }
 
 class DetectFacesErrorCode {
-  static const String IMAGE_EMPTY = "IMAGE_EMPTY";
-  static const String FR_FACE_NOT_DETECTED = "FR_FACE_NOT_DETECTED";
-  static const String FACER_NO_LICENSE = "FACER_NO_LICENSE";
-  static const String FACER_IS_NOT_INITIALIZED = "FACER_IS_NOT_INITIALIZED";
-  static const String FACER_COMMAND_IS_NOT_SUPPORTED =
-      "FACER_COMMAND_IS_NOT_SUPPORTED";
-  static const String FACER_COMMAND_PARAMS_READ_ERROR =
-      "FACER_COMMAND_PARAMS_READ_ERROR";
-  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
-  static const String REQUEST_FAILED = "REQUEST_FAILED";
-  static const String API_CALL_FAILED = "API_CALL_FAILED";
+  static const int IMAGE_EMPTY = 0;
+  static const int FR_FACE_NOT_DETECTED = 1;
+  static const int FACER_NO_LICENSE = 2;
+  static const int FACER_IS_NOT_INITIALIZED = 3;
+  static const int FACER_COMMAND_IS_NOT_SUPPORTED = 4;
+  static const int FACER_COMMAND_PARAMS_READ_ERROR = 5;
+  static const int PROCESSING_FAILED = 6;
+  static const int REQUEST_FAILED = 7;
+  static const int API_CALL_FAILED = 8;
 }
 
 class InitErrorCode {
@@ -1607,20 +1558,20 @@ class CameraErrorCode {
 }
 
 class LivenessErrorCode {
-  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
-  static const String NO_LICENSE = "NO_LICENSE";
-  static const String API_CALL_FAILED = "API_CALL_FAILED";
-  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
-  static const String CANCELLED = "CANCELLED";
-  static const String PROCESSING_TIMEOUT = "PROCESSING_TIMEOUT";
-  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
-  static const String PROCESSING_FRAME_FAILED = "PROCESSING_FRAME_FAILED";
-  static const String APPLICATION_INACTIVE = "APPLICATION_INACTIVE";
-  static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
-  static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
-  static const String ZOOM_NOT_SUPPORTED = "ZOOM_NOT_SUPPORTED";
-  static const String CAMERA_NO_PERMISSION = "CAMERA_NO_PERMISSION";
-  static const String CAMERA_NOT_AVAILABLE = "CAMERA_NOT_AVAILABLE";
+  static const int NOT_INITIALIZED = 0;
+  static const int NO_LICENSE = 1;
+  static const int API_CALL_FAILED = 2;
+  static const int SESSION_START_FAILED = 3;
+  static const int CANCELLED = 4;
+  static const int PROCESSING_TIMEOUT = 5;
+  static const int PROCESSING_FAILED = 6;
+  static const int PROCESSING_FRAME_FAILED = 7;
+  static const int APPLICATION_INACTIVE = 8;
+  static const int CONTEXT_IS_NULL = 9;
+  static const int IN_PROGRESS_ALREADY = 10;
+  static const int ZOOM_NOT_SUPPORTED = 11;
+  static const int CAMERA_NO_PERMISSION = 12;
+  static const int CAMERA_NOT_AVAILABLE = 13;
 }
 
 class RecordingProcess {
@@ -1639,16 +1590,15 @@ class DetectFacesBackendErrorCode {
 }
 
 class MatchFacesErrorCode {
-  static const String IMAGE_EMPTY = "IMAGE_EMPTY";
-  static const String FACE_NOT_DETECTED = "FACE_NOT_DETECTED";
-  static const String LANDMARKS_NOT_DETECTED = "LANDMARKS_NOT_DETECTED";
-  static const String FACE_ALIGNER_FAILED = "FACE_ALIGNER_FAILED";
-  static const String DESCRIPTOR_EXTRACTOR_ERROR = "DESCRIPTOR_EXTRACTOR_ERROR";
-  static const String IMAGES_COUNT_LIMIT_EXCEEDED =
-      "IMAGES_COUNT_LIMIT_EXCEEDED";
-  static const String API_CALL_FAILED = "API_CALL_FAILED";
-  static const String PROCESSING_FAILED = "PROCESSING_FAILED";
-  static const String NO_LICENSE = "NO_LICENSE";
+  static const int IMAGE_EMPTY = 0;
+  static const int FACE_NOT_DETECTED = 1;
+  static const int LANDMARKS_NOT_DETECTED = 2;
+  static const int FACE_ALIGNER_FAILED = 3;
+  static const int DESCRIPTOR_EXTRACTOR_ERROR = 4;
+  static const int IMAGES_COUNT_LIMIT_EXCEEDED = 5;
+  static const int API_CALL_FAILED = 6;
+  static const int PROCESSING_FAILED = 7;
+  static const int NO_LICENSE = 8;
 }
 
 class ImageQualityCharacteristicName {
@@ -1813,14 +1763,14 @@ class ImageType {
 }
 
 class FaceCaptureErrorCode {
-  static const String CANCEL = "CANCEL";
-  static const String TIMEOUT = "TIMEOUT";
-  static const String NOT_INITIALIZED = "NOT_INITIALIZED";
-  static const String SESSION_START_FAILED = "SESSION_START_FAILED";
-  static const String CAMERA_NOT_AVAILABLE = "CAMERA_NOT_AVAILABLE";
-  static const String CAMERA_NO_PERMISSION = "CAMERA_NO_PERMISSION";
-  static const String IN_PROGRESS_ALREADY = "IN_PROGRESS_ALREADY";
-  static const String CONTEXT_IS_NULL = "CONTEXT_IS_NULL";
+  static const int CANCEL = 0;
+  static const int TIMEOUT = 1;
+  static const int NOT_INITIALIZED = 2;
+  static const int SESSION_START_FAILED = 3;
+  static const int CAMERA_NOT_AVAILABLE = 4;
+  static const int CAMERA_NO_PERMISSION = 5;
+  static const int IN_PROGRESS_ALREADY = 6;
+  static const int CONTEXT_IS_NULL = 7;
 }
 
 class LivenessBackendErrorCode {

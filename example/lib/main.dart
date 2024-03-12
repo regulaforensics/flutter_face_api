@@ -79,12 +79,14 @@ class _MyAppState extends State<MyApp> {
                 child: Text("Use gallery"),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
-                  ImagePicker().pickImage(source: ImageSource.gallery).then(
-                      (value) => {
-                            setImage(
-                                first,
-                                io.File(value!.path).readAsBytesSync(),
-                                ImageType.PRINTED)
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery)
+                      .then((value) => {
+                            if (value != null)
+                              setImage(
+                                  first,
+                                  io.File(value.path).readAsBytesSync(),
+                                  ImageType.PRINTED)
                           });
                 }),
             TextButton(
@@ -105,8 +107,7 @@ class _MyAppState extends State<MyApp> {
                 })
           ]));
 
-  setImage(bool first, Uint8List? imageFile, int type) {
-    if (imageFile == null) return;
+  setImage(bool first, Uint8List imageFile, int type) {
     setState(() => _similarity = "nil");
     if (first) {
       image1.bitmap = base64Encode(imageFile);

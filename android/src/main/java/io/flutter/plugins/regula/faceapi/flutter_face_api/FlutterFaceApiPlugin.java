@@ -8,6 +8,7 @@ import static io.flutter.plugins.regula.faceapi.flutter_face_api.UtilsKt.*;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -272,7 +273,7 @@ public class FlutterFaceApiPlugin implements FlutterPlugin, MethodChannel.Method
                     break;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, e.toString());
         }
     }
 
