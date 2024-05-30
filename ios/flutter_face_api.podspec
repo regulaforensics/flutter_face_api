@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_face_api'
-  s.version          = '6.1.455'
+  s.version          = '6.1.456'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -13,6 +13,6 @@ A new flutter plugin project.
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.platform = :ios, '11.0'
-  s.dependency 'FaceSDKNightly', '6.1.739'
+  s.dependency 'FaceSDKNightly', '6.2.1889'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
 end
