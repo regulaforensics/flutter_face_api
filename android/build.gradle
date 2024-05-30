@@ -1,19 +1,47 @@
 apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-android'
 
 android {
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
         namespace 'io.flutter.plugins.regula.faceapi.flutter_face_api'
     }
-    compileSdkVersion 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 21
+        minSdk 21
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+
+    dependencies {
+        //noinspection GradleDependency
+        implementation('com.regula.face:api:6.1.3188'){
+            transitive = true
+        }
+
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'androidx.test:core:1.5.0'
+        testImplementation 'org.robolectric:robolectric:4.10.3'
+        testImplementation 'org.json:json:20180813'
+        testImplementation 'org.skyscreamer:jsonassert:1.5.1'
+
+        testOptions {
+            unitTests {
+                includeAndroidResources = true
+            }
+            unitTests.all {
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                    outputs.upToDateWhen { false }
+                    showStandardStreams = true
+                }
+            }
+        }
     }
 }
 
@@ -22,15 +50,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url "https://maven.regulaforensics.com/RegulaDocumentReader"
+            url "https://maven.regulaforensics.com/RegulaDocumentReader/Beta"
         }
     }
-}
-
-dependencies {
-    //noinspection GradleDependency
-    implementation('com.regula.face:api:6.1.3021'){
-        transitive = true
-    }
-    implementation 'androidx.core:core-ktx:1.10.1'
 }

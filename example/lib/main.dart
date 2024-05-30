@@ -1,170 +1,89 @@
-import 'dart:convert';
-import 'dart:io' as io;
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:flutter_face_api/face_api.dart' hide Image;
+import 'package:flutter_face_api/flutter_face_api.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(new MaterialApp(home: new MyApp()));
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
 class _MyAppState extends State<MyApp> {
-  var image1 = new MatchFacesImage();
-  var image2 = new MatchFacesImage();
-  var img1 = Image.asset('assets/images/portrait.png');
-  var img2 = Image.asset('assets/images/portrait.png');
-  String _similarity = "nil";
-  String _liveness = "nil";
+  var faceSdk = FaceSDK.instance;
 
-  Future<void> initPlatformState() async {
-    var onInitialized = (json) {
-      var response = jsonDecode(json);
-      if (!response["success"]) {
-        print("Init failed: ");
-        print(json);
-      } else {
-        print("Init complete");
-      }
-    };
-    initialize(onInitialized);
+  var _status = "nil";
+  var _similarityStatus = "nil";
+  var _livenessStatus = "nil";
+  var _uiImage1 = Image.asset('assets/images/portrait.png');
+  var _uiImage2 = Image.asset('assets/images/portrait.png');
+
+  set status(String val) => setState(() => _status = val);
+  set similarityStatus(String val) => setState(() => _similarityStatus = val);
+  set livenessStatus(String val) => setState(() => _livenessStatus = val);
+  set uiImage1(Image val) => setState(() => _uiImage1 = val);
+  set uiImage2(Image val) => setState(() => _uiImage2 = val);
+
+  MatchFacesImage? mfImage1;
+  MatchFacesImage? mfImage2;
+
+  void init() async {
+    super.initState();
+    if (!await initialize()) return;
+    status = "Ready";
+  }
+
+  startLiveness() async {
+    var result = await faceSdk.startLiveness(
+      config: LivenessConfig(skipStep: [LivenessSkipStep.ONBOARDING_STEP]),
+      notificationCompletion: (notification) {
+        print(notification.status);
+      },
+    );
+    if (result.image == null) return;
+    setImage(result.image!, ImageType.LIVE, 1);
+    livenessStatus = result.liveness.name.toLowerCase();
+  }
+
+  matchFaces() async {
+    if (mfImage1 == null || mfImage2 == null) {
+      status = "Both images required!";
+      return;
+    }
+    status = "Processing...";
+    var request = MatchFacesRequest([mfImage1!, mfImage2!]);
+    var response = await faceSdk.matchFaces(request);
+    var split = await faceSdk.splitComparedFaces(response.results, 0.75);
+    var match = split.matchedFaces;
+    similarityStatus = "failed";
+    if (match.isNotEmpty) {
+      similarityStatus = (match[0].similarity * 100).toStringAsFixed(2) + "%";
+    }
+    status = "Ready";
+  }
+
+  clearResults() {
+    status = "Ready";
+    similarityStatus = "nil";
+    livenessStatus = "nil";
+    uiImage2 = Image.asset('assets/images/portrait.png');
+    uiImage1 = Image.asset('assets/images/portrait.png');
+    mfImage1 = null;
+    mfImage2 = null;
   }
 
   // If 'assets/regula.license' exists, init using license(enables offline match)
   // otherwise init without license.
-  Future<void> initialize(onInit(dynamic response)) async {
-    var licenseData = await loadAssetIfExists("assets/regula.license");
-    if (licenseData != null) {
-      var config = InitializationConfiguration();
-      config.license = base64Encode(licenseData.buffer.asUint8List());
-      FaceSDK.initializeWithConfig(config.toJson()).then(onInit);
-    } else
-      FaceSDK.initialize().then(onInit);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-    const EventChannel('flutter_face_api/event/video_encoder_completion')
-        .receiveBroadcastStream()
-        .listen((event) {
-      var completion = VideoEncoderCompletion.fromJson(json.decode(event))!;
-      print("VideoEncoderCompletion:");
-      print("    success:  ${completion.success}");
-      print("    transactionId:  ${completion.transactionId}");
-    });
-    const EventChannel('flutter_face_api/event/onCustomButtonTappedEvent')
-        .receiveBroadcastStream()
-        .listen((event) {
-      print("Pressed button with id: $event");
-    });
-    const EventChannel('flutter_face_api/event/livenessNotification')
-        .receiveBroadcastStream()
-        .listen((event) {
-      var notification = LivenessNotification.fromJson(json.decode(event));
-      print("LivenessProcessStatus: ${notification!.status}");
-    });
-  }
-
-  showAlertDialog(BuildContext context, bool first) => showDialog(
-      context: context,
-      builder: (BuildContext context) =>
-          AlertDialog(title: Text("Select option"), actions: [
-            TextButton(
-                child: Text("Use gallery"),
-                onPressed: () {
-                  Navigator.of(context, rootNavigator: true).pop();
-                  ImagePicker()
-                      .pickImage(source: ImageSource.gallery)
-                      .then((value) => {
-                            if (value != null)
-                              setImage(
-                                  first,
-                                  io.File(value.path).readAsBytesSync(),
-                                  ImageType.PRINTED)
-                          });
-                }),
-            TextButton(
-                child: Text("Use camera"),
-                onPressed: () {
-                  FaceSDK.presentFaceCaptureActivity().then((result) {
-                    var response =
-                        FaceCaptureResponse.fromJson(json.decode(result))!;
-                    if (response.image != null &&
-                        response.image!.bitmap != null)
-                      setImage(
-                          first,
-                          base64Decode(
-                              response.image!.bitmap!.replaceAll("\n", "")),
-                          ImageType.LIVE);
-                  });
-                  Navigator.pop(context);
-                })
-          ]));
-
-  setImage(bool first, Uint8List imageFile, int type) {
-    setState(() => _similarity = "nil");
-    if (first) {
-      image1.bitmap = base64Encode(imageFile);
-      image1.imageType = type;
-      setState(() {
-        img1 = Image.memory(imageFile);
-        _liveness = "nil";
-      });
-    } else {
-      image2.bitmap = base64Encode(imageFile);
-      image2.imageType = type;
-      setState(() => img2 = Image.memory(imageFile));
+  Future<bool> initialize() async {
+    status = "Initializing...";
+    var license = await loadAssetIfExists("assets/regula.license");
+    InitConfig? config = null;
+    if (license != null) config = InitConfig(license);
+    var (success, error) = await faceSdk.initialize(config: config);
+    if (!success) {
+      status = error!.message;
+      print("${error.code}: ${error.message}");
     }
+    return success;
   }
-
-  clearResults() {
-    setState(() {
-      img1 = Image.asset('assets/images/portrait.png');
-      img2 = Image.asset('assets/images/portrait.png');
-      _similarity = "nil";
-      _liveness = "nil";
-    });
-    image1 = new MatchFacesImage();
-    image2 = new MatchFacesImage();
-  }
-
-  matchFaces() {
-    if (image1.bitmap == null ||
-        image1.bitmap == "" ||
-        image2.bitmap == null ||
-        image2.bitmap == "") return;
-    setState(() => _similarity = "Processing...");
-    var request = new MatchFacesRequest();
-    request.images = [image1, image2];
-    FaceSDK.matchFaces(jsonEncode(request)).then((value) {
-      var response = MatchFacesResponse.fromJson(json.decode(value));
-      FaceSDK.matchFacesSimilarityThresholdSplit(
-              jsonEncode(response!.results), 0.75)
-          .then((str) {
-        var split =
-            MatchFacesSimilarityThresholdSplit.fromJson(json.decode(str));
-        setState(() => _similarity = split!.matchedFaces.length > 0
-            ? ((split.matchedFaces[0]!.similarity! * 100).toStringAsFixed(2) +
-                "%")
-            : "error");
-      });
-    });
-  }
-
-  liveness() => FaceSDK.startLiveness().then((value) {
-        var result = LivenessResponse.fromJson(json.decode(value));
-        if (result!.bitmap == null) return;
-        setImage(true, base64Decode(result.bitmap!.replaceAll("\n", "")),
-            ImageType.LIVE);
-        setState(() => _liveness =
-            result.liveness == LivenessStatus.PASSED ? "passed" : "unknown");
-      });
 
   Future<ByteData?> loadAssetIfExists(String path) async {
     try {
@@ -174,55 +93,109 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Widget createButton(String text, VoidCallback onPress) => Container(
-        child: TextButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.black12),
-            ),
-            onPressed: onPress,
-            child: Text(text)),
-        width: 250,
+  setImage(Uint8List bytes, ImageType type, int number) {
+    similarityStatus = "nil";
+    var mfImage = MatchFacesImage(bytes, type);
+    if (number == 1) {
+      mfImage1 = mfImage;
+      uiImage1 = Image.memory(bytes);
+      livenessStatus = "nil";
+    }
+    if (number == 2) {
+      mfImage2 = mfImage;
+      uiImage2 = Image.memory(bytes);
+    }
+  }
+
+  Widget useGallery(int number) {
+    return textButton("Use gallery", () async {
+      Navigator.pop(context);
+      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setImage(File(image.path).readAsBytesSync(), ImageType.PRINTED, number);
+      }
+    });
+  }
+
+  Widget useCamera(int number) {
+    return textButton("Use camera", () async {
+      Navigator.pop(context);
+      var response = await faceSdk.startFaceCapture();
+      var image = response.image;
+      if (image != null) setImage(image.image, image.imageType, number);
+    });
+  }
+
+  Widget image(Image image, Function() onTap) => GestureDetector(
+        onTap: onTap,
+        child: Image(height: 150, width: 150, image: image.image),
       );
 
-  Widget createImage(image, VoidCallback onPress) => Material(
-          child: InkWell(
-        onTap: onPress,
-        child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image(height: 150, width: 150, image: image),
-          ),
+  Widget button(String text, Function() onPressed) {
+    return Container(
+      child: textButton(text, onPressed,
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
+          )),
+      width: 250,
+    );
+  }
+
+  Widget text(String text) => Text(text, style: TextStyle(fontSize: 18));
+  Widget textButton(String text, Function() onPressed, {ButtonStyle? style}) =>
+      TextButton(
+        child: Text(text),
+        onPressed: onPressed,
+        style: style,
+      );
+
+  setImageDialog(BuildContext context, int number) => showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text("Select option"),
+          actions: [useGallery(number), useCamera(number)],
         ),
-      ));
+      );
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 100),
-            width: double.infinity,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  createImage(img1.image, () => showAlertDialog(context, true)),
-                  createImage(
-                      img2.image, () => showAlertDialog(context, false)),
-                  Container(margin: EdgeInsets.fromLTRB(0, 0, 0, 15)),
-                  createButton("Match", () => matchFaces()),
-                  createButton("Liveness", () => liveness()),
-                  createButton("Clear", () => clearResults()),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Similarity: " + _similarity,
-                              style: TextStyle(fontSize: 18)),
-                          Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
-                          Text("Liveness: " + _liveness,
-                              style: TextStyle(fontSize: 18))
-                        ],
-                      ))
-                ])),
-      );
+  Widget build(BuildContext bc) {
+    return Scaffold(
+      appBar: AppBar(title: Center(child: Text(_status))),
+      body: Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(bc).size.height / 8),
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            image(_uiImage1, () => setImageDialog(bc, 1)),
+            image(_uiImage2, () => setImageDialog(bc, 2)),
+            Container(margin: EdgeInsets.fromLTRB(0, 0, 0, 15)),
+            button("Match", () => matchFaces()),
+            button("Liveness", () => startLiveness()),
+            button("Clear", () => clearResults()),
+            Container(margin: EdgeInsets.fromLTRB(0, 15, 0, 0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                text("Similarity: " + _similarityStatus),
+                Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
+                text("Liveness: " + _livenessStatus)
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
 }

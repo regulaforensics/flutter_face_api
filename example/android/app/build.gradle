@@ -29,8 +29,8 @@ android {
 
     defaultConfig {
         applicationId "com.regula.face.api"
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdk 21
+        targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -44,9 +44,8 @@ android {
     lint {
         disable 'InvalidPackage'
     }
-
-    aaptOptions {
-        noCompress "Regula/faceSdkResource.dat"
+    androidResources {
+        noCompress += 'Regula/faceSdkResource.dat'
     }
 }
 
