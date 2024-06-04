@@ -1,9 +1,12 @@
 part of "../../flutter_face_api.dart";
 
+/// Base range value for Image Quality parameters
 class ImageQualityRange {
+  /// Minimum range value.
   double get min => _min;
   double _min;
 
+  /// Maximum range value.
   double get max => _max;
   double _max;
 

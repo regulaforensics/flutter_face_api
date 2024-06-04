@@ -1,9 +1,12 @@
 part of "../../flutter_face_api.dart";
 
+/// A Person Database object that represents th result of Person search.
 class SearchPerson extends Person {
+  /// Array of images where the Person is found.
   List<SearchPersonImage> get images => _images;
   List<SearchPersonImage> _images = [];
 
+  /// Detection data relative to the search input image.
   SearchPersonDetection? get detection => _detection;
   SearchPersonDetection? _detection;
 

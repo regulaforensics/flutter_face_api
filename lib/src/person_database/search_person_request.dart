@@ -1,11 +1,27 @@
 part of "../../flutter_face_api.dart";
 
+/// Request object that configures Search settings.
 class SearchPersonRequest {
+  /// Image Upload object to appply search with.
   ImageUpload _imageUpload;
+
+  /// The Group IDs of the groups in which the search is performed.
   List<String>? _groupIdsForSearch;
+
+  /// The similarity distance threshold, should be between 0.0 and 2.0,
+  /// where 0.0 is for returning results for only the most similar persons and 2.0 is for all the persons, even the dissimilar ones.
+  /// Default: 1
   double? _threshold;
+
+  /// The number of returned Persons limit.
+  /// Default: 100.
   int? _limit;
+
+  /// Whether to process only the one face on the image or all the faces.
+  /// Default: NO
   bool _detectAll;
+
+  /// If set. the uploaded image is processed according to the indicated settings
   OutputImageParams? _outputImageParams;
 
   SearchPersonRequest(

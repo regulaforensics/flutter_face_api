@@ -1,8 +1,15 @@
 part of "../../flutter_face_api.dart";
 
+/// Image Quality parameter to include in `DetectFacesConfig` as `customQuality`.
 class ImageQualityCharacteristic {
+  /// Image Quality Characteristic Name
   ImageQualityCharacteristicName _characteristicName;
+
+  /// Default range of values where Image Quality Characteristic passes validation.
   ImageQualityRange? _recommendedRange;
+
+  /// Custom range of values where Image Quality Characteristic passes validation.
+  /// Use `ImageQualityCharacteristic.withCustomRange:` to update the range.
   ImageQualityRange? _customRange;
   Color? _color;
 

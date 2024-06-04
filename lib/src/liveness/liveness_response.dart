@@ -1,9 +1,12 @@
 part of "../../flutter_face_api.dart";
 
+/// The response from the Liveness module.
 class LivenessResponse {
+  /// The input image used to determine the liveness.
   Uint8List? get image => _image;
   Uint8List? _image;
 
+  /// The status of the Liveness processing.
   LivenessStatus get liveness => _liveness;
   late LivenessStatus _liveness;
 
@@ -16,6 +19,8 @@ class LivenessResponse {
   int? get estimatedAge => _estimatedAge;
   int? _estimatedAge;
 
+  /// The error describes a failed liveness check and contains `LivenessErrorCode` codes.
+  /// This error belongs to the `LivenessErrorCode`.
   LivenessException? get error => _error;
   LivenessException? _error;
 
@@ -47,8 +52,12 @@ class LivenessResponse {
       }.clearNulls();
 }
 
+/// The status of the Liveness processing.
 enum LivenessStatus {
+  /// The liveness check is passed successfully.
   PASSED(0),
+
+  /// The liveness check result is unknown.
   UNKNOWN(1);
 
   const LivenessStatus(this.value);

@@ -1,7 +1,11 @@
 part of "../../flutter_face_api.dart";
 
+/// An object that represents uploaded image with its settings.
 class ImageUpload {
+  /// Data object that contains an image.
   Uint8List? _imageData;
+
+  /// URL of requested image.
   String? _imageUrl;
 
   ImageUpload._privateConstructor();

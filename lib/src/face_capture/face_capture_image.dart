@@ -37,13 +37,27 @@ class FaceCaptureImage {
       }.clearNulls();
 }
 
+/// The image type of `FaceCaptureImage` influences matching results and provides the information about the source of the image.
 enum ImageType {
+  /// The image contains a printed portrait of a person.
   PRINTED(1),
+
+  /// The image contains a portrait of a person and is taken from the RFID chip.
   RFID(2),
+
+  /// The image is taken from the camera.
   LIVE(3),
+
+  /// The image contains a document with a portrait of a person.
   DOCUMENT_WITH_LIVE(4),
+
+  /// The image from an unknown source.
   EXTERNAL(5),
+
+  /// The image is a ghost portrait.
   GHOST_PORTRAIT(6),
+
+  /// The image from a barcode
   BARCODE(7);
 
   const ImageType(this.value);

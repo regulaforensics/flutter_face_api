@@ -1,12 +1,20 @@
 part of "../../flutter_face_api.dart";
 
+/// Custom configuration for `DetectFacesRequest`.
 class DetectFacesConfig {
+  /// Current array for the face image detection attributes.
   List<DetectFacesAttribute>? attributes;
 
+  /// Current array for the face image quality assessment rules.
   List<ImageQualityCharacteristic>? customQuality;
 
+  /// If set. the uploaded image is processed according to the indicated settings
   OutputImageParams? outputImageParams;
 
+  /// Whether to process only the central face on the image or all the faces.
+  /// If set to YES, the SDK detects and processes only one—the most central face in the image.
+  /// If set to NO, the SDK processes all faces in the image.
+  /// Default is NO.
   bool onlyCentralFace;
 
   DetectFacesConfig({

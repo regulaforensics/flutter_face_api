@@ -1,14 +1,24 @@
 part of "../../flutter_face_api.dart";
 
+/// Configuration for the Liveness processing.
+/// The configuration provides convenient properties to change the behavior and the appearance of the Liveness UI module.
 class LivenessConfig {
+  /// Defines, whether the logo is visible on the bottom of Liveness UI screens. Defaults to `true`.
   bool copyright;
 
+  /// Defines, whether the camera's toolbar switch camera button is available on the Liveness UI. Defaults to `false`.
+  /// When set to `true` the CameraToolbarView will contain a button to change current `cameraPosition`.
+  /// Only for livenessType = `LivenessType - PASSIVE`.
   bool cameraSwitchEnabled;
 
   bool closeButtonEnabled;
 
+  /// Defines, whether the camera's toolbar torch button is available on the Liveness UI. Defaults to `true`.
+  /// When set to `false` the CameraToolbarView won't contain a button to toggle camera's flashlight.
+  /// Only for livenessType = `LivenessType - PASSIVE`.
   bool torchButtonEnabled;
 
+  /// Enables vibration during Liveness processing. Defaults to `true`.
   bool vibrateOnSteps;
 
   /// Android only.
@@ -20,16 +30,27 @@ class LivenessConfig {
   /// Android only.
   List<ScreenOrientation> screenOrientation;
 
+  /// Defines whether the liveness request sends a location of a device. Defaults to `true`.
+  /// When set to `true` the liveness request to web service will contain the `location`
+  /// object within the json `metadata` object.
+  /// The location is used only when permissions are granted and the location is available.
   bool locationTrackingEnabled;
 
+  /// The number of attempts to pass the Liveness before completing with error. Defaults to `0`.
+  /// When set to `0`  the Liveness will always ask to retry on error.
   int attemptsCount;
 
+  /// Defines whether the liveness recording video of processing.
+  /// Defaults to `RecordingProcessAsynchronousUpload`.
   RecordingProcess recordingProcess;
 
+  /// Defines whether the liveness processing type. Defaults to `LivenessType - ACTIVE`.
   LivenessType livenessType;
 
+  /// Defines tag that can be used in Liveness processing. Defaults to `nil`.
   String? tag;
 
+  /// Defines which steps of the user interface can be omitted. See LivenessSkipStep enum for details.
   List<LivenessSkipStep> skipStep;
 
   dynamic metadata;

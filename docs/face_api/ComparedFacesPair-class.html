@@ -61,6 +61,9 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p><code>ComparedFacesPair</code> represents a result of the <code>ComparedFacesRequest</code> attempt to compare input images.</p>
+</section>
 
 
 
@@ -78,7 +81,7 @@
 
 </dt>
 <dd>
-  
+  The error describes a failed pair comparison and contains <code>MatchFacesErrorCode</code> codes.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -90,7 +93,7 @@
 
 </dt>
 <dd>
-  
+  The first face in the comparison pair.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -126,7 +129,9 @@
 
 </dt>
 <dd>
-  
+  The raw value returned by the service without applying any thresholds or comparison rules.
+The value shows the degree of similarity of compared faces, the lower - the more similar, and vice versa less similar.
+The <code>score</code> is used in conjunction with the input image <code>imageType</code> to evaluate <code>similarity</code>.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -138,7 +143,7 @@
 
 </dt>
 <dd>
-  
+  The second face in the comparison pair.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -150,7 +155,7 @@
 
 </dt>
 <dd>
-  
+  Similarity of the faces pair. Floating point value from 0 to 1.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -277,7 +282,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.1.3-beta
+      6.1.4-beta
   </span>
 
   

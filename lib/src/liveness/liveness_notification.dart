@@ -27,6 +27,7 @@ class LivenessNotification {
       }.clearNulls();
 }
 
+/// Liveness process statuses.
 enum LivenessProcessStatus {
   START(0),
   PREPARING(1),

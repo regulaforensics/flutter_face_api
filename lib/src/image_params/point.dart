@@ -1,5 +1,6 @@
 part of "../../flutter_face_api.dart";
 
+/// Point class represents a two number X, Y value.
 class Point {
   int get x => _x;
   late int _x;

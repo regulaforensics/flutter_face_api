@@ -1,12 +1,17 @@
 part of "../../flutter_face_api.dart";
 
+/// A PersonData object that represents Image linked with a Person.
 class PersonImage {
+  /// Image s3 path.
   String get path => _path;
   late String _path;
 
+  /// Full URL for Image.
   String get url => _url;
   late String _url;
 
+  /// The original media type of the uploaded image.
+  /// PersonDatabase applies default content-type if it isn't specified during upload.
   String get contentType => _contentType;
   late String _contentType;
 
