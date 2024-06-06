@@ -1,3 +1,6 @@
+/**
+ * Regula Face SDK
+ */
 library face_api;
 
 import 'dart:async';

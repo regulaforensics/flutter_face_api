@@ -66,7 +66,7 @@ class Customization {
 }
 
 /// Callback for receiving signal, when a custom button,
-/// configured in `FaceSDK.uiCustomizationLayer`, is pressed.
+/// configured in [Customization.uiCustomizationLayer], is pressed.
 ///
 /// [tag] button id, indication which button was pressed.
 typedef CustomButtonTappedCompletion = void Function(int tag);
