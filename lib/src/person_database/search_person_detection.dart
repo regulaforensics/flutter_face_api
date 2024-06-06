@@ -10,8 +10,8 @@ class SearchPersonDetection {
   Uint8List? get crop => _crop;
   Uint8List? _crop;
 
-  double get rotationAngle => _rotationAngle;
-  late double _rotationAngle;
+  double? get rotationAngle => _rotationAngle;
+  double? _rotationAngle;
 
   SearchPersonDetection._privateConstructor();
 
@@ -25,7 +25,7 @@ class SearchPersonDetection {
     }
     result._rect = Rect.fromJson(jsonObject["rect"])!;
     result._crop = _bytesFromBase64(jsonObject["crop"]);
-    result._rotationAngle = _toDouble(jsonObject["rotationAngle"])!;
+    result._rotationAngle = _toDouble(jsonObject["rotationAngle"]);
 
     return result;
   }

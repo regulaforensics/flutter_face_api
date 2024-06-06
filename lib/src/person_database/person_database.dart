@@ -184,14 +184,24 @@ class PersonDatabase {
     return _listResponseFromJson(response, Person.fromJson);
   }
 
-  Future<(SearchPerson, String?)> searchPerson(
+  Future<(List<SearchPerson>?, String?)> searchPerson(
     SearchPersonRequest request,
   ) async {
     var response = await _bridge.invokeMethod(
       "searchPerson",
       [request.toJson()],
     );
-    return _itemResponseFromJson(response, SearchPerson.fromJson);
+
+    var jsonObject = _decode(response);
+    List<SearchPerson>? data = null;
+    if (jsonObject["data"] != null) {
+      data = [];
+      for (var item in jsonObject["data"]) {
+        data.add(SearchPerson.fromJson(item)!);
+      }
+    }
+    String? error = jsonObject["error"];
+    return (data, error);
   }
 
   (bool, String?) _successResponseFromJson(String jsonString) {
@@ -202,12 +212,13 @@ class PersonDatabase {
     return (success, error);
   }
 
-  (T, String?) _itemResponseFromJson<T>(
+  (T?, String?) _itemResponseFromJson<T>(
     String jsonString,
-    T Function(dynamic) fromJSON,
+    T? Function(Map<String, dynamic>?) fromJSON,
   ) {
+    print(jsonString);
     var jsonObject = _decode(jsonString);
-    var data = fromJSON(jsonObject["data"])!;
+    var data = fromJSON(jsonObject["data"]);
     var error = jsonObject["error"];
     return (data, error);
   }

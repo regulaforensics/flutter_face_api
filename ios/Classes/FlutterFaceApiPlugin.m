@@ -158,7 +158,7 @@ NSString* RFSWOnCustomButtonTappedEvent = @"onCustomButtonTappedEvent";
 - (NSURLRequest*)interceptorPrepareRequest:(NSURLRequest*)request {
     NSMutableURLRequest *interceptedRequest = [request mutableCopy];
     for (NSString* key in self.headers.allKeys)
-        [interceptedRequest addValue:key forHTTPHeaderField:[self.headers valueForKey:key]];
+        [interceptedRequest addValue:[self.headers valueForKey:key] forHTTPHeaderField:key];
     return interceptedRequest;
 }
 
@@ -358,12 +358,6 @@ NSString* RFSWOnCustomButtonTappedEvent = @"onCustomButtonTappedEvent";
         [RFSFaceSDK.service setLivenessDelegate:self];
         RFSFaceSDK.service.customization.actionDelegate = self;
         callback([RFSWJSONConstructor generateInitCompletion:success :error]);
-    };
-}
-
-- (void (^)(NSNumber*)) cameraSwitchCallback {
-    return ^(NSNumber* cameraId) {
-        sendEvent(RFSWCameraSwitchEvent, cameraId);
     };
 }
 

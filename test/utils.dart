@@ -14,7 +14,10 @@ Future<void> writeJson(String name, Map<String, dynamic> contents) async {
 
 @isTest
 void compare<T>(
-    String name, Map<String, dynamic> json, T Function(dynamic) fromJson) {
+  String name,
+  Map<String, dynamic> json,
+  T Function(Map<String, dynamic>) fromJson,
+) {
   test(name, () async {
     var toJson = (input) => input.toJson();
     var actual = toJson(fromJson(json));
@@ -45,8 +48,11 @@ void compare<T>(
 
 @isTest
 void compareParams<T>(
-    String name, Map<String, dynamic> json, T Function(dynamic) fromJson,
-    {List<String>? skip}) {
+  String name,
+  Map<String, dynamic> json,
+  T Function(Map<String, dynamic>) fromJson, {
+  List<String>? skip,
+}) {
   test(name, () {
     var toJson = (input) => input.toJson();
     var getTestSetters = (input) => input.testSetters;
