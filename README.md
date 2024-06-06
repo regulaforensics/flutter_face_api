@@ -1,26 +1,14 @@
-# Regula Face API (Flutter version)
-Face API is a framework that is used for face matching, recognition and liveness detection.
+# Regula Face SDK plugin for Flutter
+<?code-excerpt path-base="example/lib"?>
 
-# Contents
-* [How to build the demo application](#how-to-build-the-demo-application)
-* [Documentation](#documentation)
-* [Additional information](#additional-information)
+[![pub package](https://img.shields.io/pub/v/flutter_face_api.svg)](https://pub.dev/packages/flutter_face_api)
 
-## How to build the demo application
-1. Download or the clone current repository using the command `git clone https://github.com/regulaforensics/flutter_face_api.git.git`.
-2. Run the following commands within the root directory:
-```bash
-$ cd example
-# Install packages
-$ flutter pub get
-# Check that supported devices are running
-$ flutter devices
-# Run the app
-$ flutter run
-```
+Face SDK is a framework that is used for face matching, recognition and liveness detection.
 
 ## Documentation
-You can find documentation on API [here](https://docs.regulaforensics.com/flutter-face).
 
-## Additional information
-If you have any technical questions, feel free to [contact](mailto:support@regulaforensics.com) us or create issues [here](https://github.com/regulaforensics/flutter_face_api/issues).
+You can find documentation [here](https://docs.regulaforensics.com/develop/face-sdk/mobile/).
+
+## Support
+
+Please do not hesitate to [contact us](https://support.regulaforensics.com/hc/requests/new), if you need any assistance or want to report a bug / suggest an improvement.

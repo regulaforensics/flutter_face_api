@@ -1,3 +1,9 @@
+# 6.2
+
+#### Plugin:
+
+* BREAKING CHANGE: whole FaceSDK plugin rewritten from scratch with focus on user experience and convenience. Migration instructions can be found [here](https://docs.regulaforensics.com/develop/face-sdk/migration-guides/v6.1-to-v6.2/flutter/).
+
 # 3.1.0
 ### Added
 * Added [LivenessResponse.guid](https://dev.regulaforensics.com/FaceSDK-iOS-Docs/Classes/RFSLivenessResponse.html#/c:objc(cs)RFSLivenessResponse(py)guid) – the id of the processing from the liveness service.
