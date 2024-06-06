@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// `ComparedFacesPair` represents a result of the `ComparedFacesRequest` attempt to compare input images.
+/// [ComparedFacesPair] represents a result of the [ComparedFace] attempt to compare input images.
 class ComparedFacesPair {
   /// The first face in the comparison pair.
   ComparedFace get first => _first;
@@ -20,7 +20,7 @@ class ComparedFacesPair {
   double get score => _score;
   late double _score;
 
-  /// The error describes a failed pair comparison and contains `MatchFacesErrorCode` codes.
+  /// The error describes a failed pair comparison and contains [MatchFacesErrorCode] codes.
   MatchFacesException? get error => _error;
   MatchFacesException? _error;
 

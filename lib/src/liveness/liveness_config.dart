@@ -41,13 +41,13 @@ class LivenessConfig {
   int attemptsCount;
 
   /// Defines whether the liveness recording video of processing.
-  /// Defaults to `RecordingProcessAsynchronousUpload`.
+  /// Defaults to [RecordingProcess.ASYNCHRONOUS_UPLOAD].
   RecordingProcess recordingProcess;
 
   /// Defines whether the liveness processing type. Defaults to `LivenessType - ACTIVE`.
   LivenessType livenessType;
 
-  /// Defines tag that can be used in Liveness processing. Defaults to `nil`.
+  /// Defines tag that can be used in Liveness processing. Defaults to `null`.
   String? tag;
 
   /// Defines which steps of the user interface can be omitted. See LivenessSkipStep enum for details.

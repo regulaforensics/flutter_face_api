@@ -18,7 +18,7 @@ class SearchPersonRequest {
   int? _limit;
 
   /// Whether to process only the one face on the image or all the faces.
-  /// Default: NO
+  /// Default: `false`
   bool _detectAll;
 
   /// If set. the uploaded image is processed according to the indicated settings
