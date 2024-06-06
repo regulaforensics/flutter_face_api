@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// `MatchFacesDetectionFace` represents face detection information as a part of `MatchFacesResponse`.
+/// [MatchFacesDetectionFace] represents face detection information as a part of [MatchFacesResponse].
 class MatchFacesDetectionFace {
   /// The index of the face detection object in the array of detections.
   int get faceIndex => _faceIndex;
@@ -20,13 +20,13 @@ class MatchFacesDetectionFace {
   double? _rotationAngle;
 
   /// Coordinates of the rectangle with the face on the original image prepared for the face crop.
-  /// Requires `OutputImageCrop.returnOriginalRect` is set.
-  /// Returns 'CGRectZero' if `OutputImageCrop.returnOriginalRect` isn't set.
+  /// Requires [OutputImageCrop.returnOriginalRect] is set.
+  /// Returns `CGRectZero` if [OutputImageCrop.returnOriginalRect] isn't set.
   Rect? get originalRect => _originalRect;
   Rect? _originalRect;
 
   /// Base64 image of the aligned and cropped portrait.
-  /// Returned if `MatchFacesRequest.outputImageParams` is set or predefined scenario is used.
+  /// Returned if [MatchFacesRequest.outputImageParams] is set or predefined scenario is used.
   Uint8List? get crop => _crop;
   Uint8List? _crop;
 

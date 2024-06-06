@@ -37,7 +37,7 @@ class FaceCaptureImage {
       }.clearNulls();
 }
 
-/// The image type of `FaceCaptureImage` influences matching results and provides the information about the source of the image.
+/// The image type of [FaceCaptureImage] influences matching results and provides the information about the source of the image.
 enum ImageType {
   /// The image contains a printed portrait of a person.
   PRINTED(1),

@@ -1,21 +1,21 @@
 part of "../../flutter_face_api.dart";
 
 /// Detect Faces Request.
-/// Could be created by predefined scenarios (e.g: `qualityICAORequest`, `cropAllFacesRequest` etc. )
-/// or by using custom `DetectFacesConfig`.
+/// Could be created by predefined scenarios (e.g: [DetectFacesRequest.qualityICAO(image)], [DetectFacesRequest.cropAllFaces(image)] etc. )
+/// or by using custom [DetectFacesConfig].
 class DetectFacesRequest {
-  /// Defines tag that can be used in detect faces processing. Defaults to `nil`.
+  /// Defines tag that can be used in detect faces processing. Defaults to `null`.
   String? _tag;
 
   /// Current Face Detection scenario.
-  /// `nil` for custom `DetectFacesRequest`
+  /// `null` for custom [DetectFacesRequest].
   DetectFacesScenario? _scenario;
 
   /// Image to process request
   late Uint8List _image;
 
   /// Custom Request configuration to specify  image, quality, attributes parameters.
-  /// `nil` for request with predefined scenario (like ICAO, VisaSchengen etc.).
+  /// `null` for request with predefined scenario (like ICAO, VisaSchengen etc.).
   DetectFacesConfig? _configuration;
 
   DetectFacesRequest._privateConstructor();
