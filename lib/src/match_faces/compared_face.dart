@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// [ComparedFace] represents a reference information of the compared face.
+/// Represents a reference information of the compared face.
 class ComparedFace {
   /// The index to the input image in the input array provided to the request.
   int get imageIndex => _imageIndex;

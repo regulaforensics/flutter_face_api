@@ -2,7 +2,7 @@ part of "../../flutter_face_api.dart";
 
 /// Crop settings for [OutputImageParams].
 class OutputImageCrop {
-  /// The aspect ratio according to which alignment is performed
+  /// The aspect ratio according to which alignment is performed.
   OutputImageCropAspectRatio get type => _type;
   OutputImageCropAspectRatio _type;
 
@@ -19,7 +19,7 @@ class OutputImageCrop {
 
   /// If set, the coordinates of the rectangle with the face in the original image prepared for the face crop
   /// are returned in the [DetectFaceResult.originalRect] field.
-  /// Default is `false`
+  /// Default is `false`.
   bool get returnOriginalRect => _returnOriginalRect;
   bool _returnOriginalRect;
 

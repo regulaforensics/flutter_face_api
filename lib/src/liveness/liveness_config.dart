@@ -8,14 +8,14 @@ class LivenessConfig {
 
   /// Defines, whether the camera's toolbar switch camera button is available on the Liveness UI. Defaults to `false`.
   /// When set to `true` the CameraToolbarView will contain a button to change current `cameraPosition`.
-  /// Only for livenessType = `LivenessType - PASSIVE`.
+  /// Only for livenessType = [LivenessType.PASSIVE].
   bool cameraSwitchEnabled;
 
   bool closeButtonEnabled;
 
   /// Defines, whether the camera's toolbar torch button is available on the Liveness UI. Defaults to `true`.
   /// When set to `false` the CameraToolbarView won't contain a button to toggle camera's flashlight.
-  /// Only for livenessType = `LivenessType - PASSIVE`.
+  /// Only for livenessType = [LivenessType.PASSIVE].
   bool torchButtonEnabled;
 
   /// Enables vibration during Liveness processing. Defaults to `true`.
@@ -44,13 +44,13 @@ class LivenessConfig {
   /// Defaults to [RecordingProcess.ASYNCHRONOUS_UPLOAD].
   RecordingProcess recordingProcess;
 
-  /// Defines whether the liveness processing type. Defaults to `LivenessType - ACTIVE`.
+  /// Defines whether the liveness processing type. Defaults to [LivenessType.ACTIVE].
   LivenessType livenessType;
 
   /// Defines tag that can be used in Liveness processing. Defaults to `null`.
   String? tag;
 
-  /// Defines which steps of the user interface can be omitted. See LivenessSkipStep enum for details.
+  /// Defines which steps of the user interface can be omitted. See [LivenessSkipStep] enum for details.
   List<LivenessSkipStep> skipStep;
 
   dynamic metadata;

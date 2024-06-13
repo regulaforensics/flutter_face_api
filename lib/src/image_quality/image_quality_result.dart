@@ -2,7 +2,7 @@ part of "../../flutter_face_api.dart";
 
 /// Quality assessment result.
 class ImageQualityResult {
-  /// Image quality characteristic group
+  /// Image quality characteristic group.
   ImageQualityGroupName get group => _group;
   late ImageQualityGroupName _group;
 
@@ -10,7 +10,7 @@ class ImageQualityResult {
   ImageQualityCharacteristicName get name => _name;
   late ImageQualityCharacteristicName _name;
 
-  /// The assessment status of the characteristic
+  /// The assessment status of the characteristic.
   ImageQualityResultStatus get status => _status;
   late ImageQualityResultStatus _status;
 

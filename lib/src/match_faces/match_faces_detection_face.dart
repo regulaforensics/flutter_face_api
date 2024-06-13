@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// [MatchFacesDetectionFace] represents face detection information as a part of [MatchFacesResponse].
+/// Represents face detection information as a part of [MatchFacesResponse].
 class MatchFacesDetectionFace {
   /// The index of the face detection object in the array of detections.
   int get faceIndex => _faceIndex;
@@ -21,7 +21,7 @@ class MatchFacesDetectionFace {
 
   /// Coordinates of the rectangle with the face on the original image prepared for the face crop.
   /// Requires [OutputImageCrop.returnOriginalRect] is set.
-  /// Returns `CGRectZero` if [OutputImageCrop.returnOriginalRect] isn't set.
+  /// Returns `null` if [OutputImageCrop.returnOriginalRect] isn't set.
   Rect? get originalRect => _originalRect;
   Rect? _originalRect;
 

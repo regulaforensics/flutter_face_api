@@ -85,7 +85,7 @@ part 'src/person_database/search_person.dart';
 class FaceSDK {
   FaceSDK._privateConstructor();
 
-  /// The only instanse of singleton class [FaceSDK].
+  /// The only instance of singleton class [FaceSDK].
   static FaceSDK get instance => _instance;
   static final FaceSDK _instance = FaceSDK._privateConstructor();
 

@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// [MatchFacesDetection] represents detection results on an input image as a part of [MatchFacesResponse].
+/// Represents detection results on an input image as a part of [MatchFacesResponse].
 class MatchFacesDetection {
   /// The index to the input image in the input array provided to the request.
   int get imageIndex => _imageIndex;
@@ -15,7 +15,6 @@ class MatchFacesDetection {
   List<MatchFacesDetectionFace> _faces = [];
 
   /// The error describes a failed face detection and contains [MatchFacesErrorCode] codes.
-  /// This error belongs to the [MatchFacesErrorCode].
   MatchFacesException? get error => _error;
   MatchFacesException? _error;
 

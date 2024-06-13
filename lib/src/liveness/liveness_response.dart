@@ -20,7 +20,6 @@ class LivenessResponse {
   int? _estimatedAge;
 
   /// The error describes a failed liveness check and contains [LivenessErrorCode] codes.
-  /// This error belongs to the [LivenessErrorCode].
   LivenessException? get error => _error;
   LivenessException? _error;
 
