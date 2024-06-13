@@ -60,6 +60,7 @@ enum LivenessStatus {
   UNKNOWN(1);
 
   const LivenessStatus(this.value);
+
   final int value;
 
   static LivenessStatus? getByValue(int? i) {
