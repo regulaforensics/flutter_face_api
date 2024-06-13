@@ -1,9 +1,9 @@
 part of "../../flutter_face_api.dart";
 
-/// Person Database object that represents Group of persons.
+/// Person Database object that represents Group of [Person].
 class PersonGroup {
   /// PersonGroup name.
-  /// Updatable fields.
+  /// Updatable field.
   late String name;
 
   String get id => _id;

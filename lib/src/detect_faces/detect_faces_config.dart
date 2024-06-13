@@ -8,7 +8,7 @@ class DetectFacesConfig {
   /// Current array for the face image quality assessment rules.
   List<ImageQualityCharacteristic>? customQuality;
 
-  /// If set. the uploaded image is processed according to the indicated settings
+  /// If set the uploaded image is processed according to the indicated settings.
   OutputImageParams? outputImageParams;
 
   /// Whether to process only the central face on the image or all the faces.

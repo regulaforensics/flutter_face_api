@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// Image Quality charactestic group
+/// Image Quality characteristic group
 class ImageQualityGroup {
   /// The Image characteristics group includes width, height, width to height proportions,
   /// the image RGB channels number, and padding ratio.
@@ -34,7 +34,7 @@ class ImageQualityGroup {
   static _HeadOcclusion headOcclusion = _HeadOcclusion._privateConstructor();
 
   /// The Background characteristics group checks the background uniformity,
-  /// shadows on background, and other faces' presence on the picture.
+  /// shadows on background, and other faces presence on the picture.
   static _Background background = _Background._privateConstructor();
 }
 
@@ -70,7 +70,7 @@ class _Image {
 
   /// The image RGB channels number.
   /// Doesn't have recommended value.
-  /// Range value [3, 3] is for RGB images.
+  /// `channelsNumber` 3 is for RGB images.
   ImageQualityCharacteristic imageChannelsNumber(int channelsNumber) {
     return ImageQualityCharacteristic._create(
       ImageQualityCharacteristicName.IMAGE_CHANNELS_NUMBER,
