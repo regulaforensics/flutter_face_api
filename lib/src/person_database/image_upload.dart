@@ -7,7 +7,7 @@ class ImageUpload {
 
   ImageUpload._privateConstructor();
 
-  /// Creates an object using an image.
+  /// Creates an object of [ImageUpload] using an image.
   ///
   /// `imageData` - Image base64.
   ImageUpload.withImageData(Uint8List imageData) : _imageData = imageData;

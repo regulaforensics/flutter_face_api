@@ -11,7 +11,7 @@ class SearchPersonRequest {
 
   /// Create [SearchPersonRequest] object.
   ///
-  /// `image` - Image Upload object of [ImageUpload] to apply search with.
+  /// `image` - Image Upload object to apply search with.
   ///
   /// `groupIdsForSearch` - The Group IDs of the groups in which the search is performed.
   ///
