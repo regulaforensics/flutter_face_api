@@ -57,7 +57,7 @@ static FlutterMethodChannel * _channel;
 + (FlutterMethodChannel *)channel { return _channel; }
 + (void)setChannel:(FlutterMethodChannel *)newChannel { _channel = newChannel; }
 
-RFSWEventSender sendEvent = ^(NSString* event, id data) {
+static RFSWEventSender sendEvent = ^(NSString* event, id data) {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (RFSWEventSinks[event] != nil) RFSWEventSinks[event]([RFSWJSONConstructor toSendable:data]);
     });
