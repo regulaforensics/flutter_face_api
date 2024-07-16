@@ -7,8 +7,8 @@ class PersonImage {
   String get url => _url;
   late String _url;
 
-  String get contentType => _contentType;
-  late String _contentType;
+  String? get contentType => _contentType;
+  String? _contentType;
 
   String get id => _id;
   late String _id;

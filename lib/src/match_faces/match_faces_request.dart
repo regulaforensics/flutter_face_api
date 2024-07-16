@@ -1,12 +1,17 @@
 part of "../../flutter_face_api.dart";
 
+/// Compares two or more images with faces on them to find out the similarity of pairs.
+/// The request is used as a parameter to [FaceSDK.matchFaces].
 class MatchFacesRequest {
+  /// Images with faces to match.
   List<MatchFacesImage> get images => _images;
   List<MatchFacesImage> _images;
 
+  /// If set the uploaded image is processed according to the indicated settings.
   OutputImageParams? get outputImageParams => _outputImageParams;
   OutputImageParams? _outputImageParams;
 
+  /// Defines tag that can be used in match faces processing. Defaults to `null`.
   String? get tag => _tag;
   String? _tag;
 

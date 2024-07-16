@@ -1,17 +1,24 @@
 part of "../../flutter_face_api.dart";
 
+/// A Person Database object that represents Person.
 class Person {
+  /// Person name.
+  /// Updatable field.
   late String name;
 
+  /// Person update date.
   DateTime get updatedAt => _updatedAt;
   late DateTime _updatedAt;
 
+  /// Array if Group IDs Person belongs to.
   List<String> get groups => _groups;
   late List<String> _groups;
 
   String get id => _id;
   late String _id;
 
+  /// A free-form object containing Person extended attributes.
+  /// Updatable field.
   dynamic metadata;
 
   DateTime get createdAt => _createdAt;

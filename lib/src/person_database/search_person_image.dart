@@ -1,9 +1,15 @@
 part of "../../flutter_face_api.dart";
 
+/// A Person Database object that represents Image result of Person Search.
 class SearchPersonImage extends PersonImage {
+  /// The similarity score.
+  /// From 0.0 to 1.0.
   double get similarity => _similarity;
   late double _similarity;
 
+  /// The similarity distance score.
+  /// The lower the distance, the higher the face's similarity.
+  /// From 0.0 to 2.0.
   double get distance => _distance;
   late double _distance;
 

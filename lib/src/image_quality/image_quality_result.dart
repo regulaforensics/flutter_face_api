@@ -1,18 +1,24 @@
 part of "../../flutter_face_api.dart";
 
+/// Quality assessment result.
 class ImageQualityResult {
+  /// Image quality characteristic group.
   ImageQualityGroupName get group => _group;
   late ImageQualityGroupName _group;
 
+  /// The name of the characteristic.
   ImageQualityCharacteristicName get name => _name;
   late ImageQualityCharacteristicName _name;
 
+  /// The assessment status of the characteristic.
   ImageQualityResultStatus get status => _status;
   late ImageQualityResultStatus _status;
 
+  /// The assessed value for the characteristic.
   double get value => _value;
   late double _value;
 
+  /// The range of set values for this characteristic.
   ImageQualityRange get range => _range;
   late ImageQualityRange _range;
 
@@ -63,9 +69,15 @@ enum ImageQualityGroupName {
   }
 }
 
+/// The assessment status of Image Quality Characteristic
 enum ImageQualityResultStatus {
+  /// The characteristic is defined but is out of the range of set values.
   FALSE(0),
+
+  /// The characteristic is defined and fits the range of set values.
   TRUE(1),
+
+  /// The characteristic is not defined.
   UNDETERMINED(2);
 
   const ImageQualityResultStatus(this.value);

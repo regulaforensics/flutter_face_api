@@ -1,11 +1,16 @@
 part of "../../flutter_face_api.dart";
 
+/// Person Database object that represents Group of [Person].
 class PersonGroup {
+  /// PersonGroup name.
+  /// Updatable field.
   late String name;
 
   String get id => _id;
   late String _id;
 
+  /// A free-form object containing Group extended attributes.
+  /// Updatable field.
   dynamic metadata;
 
   DateTime get createdAt => _createdAt;

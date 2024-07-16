@@ -33,6 +33,7 @@ class DetectFacesException {
       }.clearNulls();
 }
 
+/// Error codes for the [DetectFacesResponse] errors.
 enum DetectFacesErrorCode {
   IMAGE_EMPTY(0),
   FR_FACE_NOT_DETECTED(1),

@@ -1,5 +1,6 @@
 part of "../../flutter_face_api.dart";
 
+/// Image Quality Characteristic Name.
 enum ImageQualityCharacteristicName {
   IMAGE_WIDTH("ImageWidth"),
   IMAGE_HEIGHT("ImageHeight"),
