@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// [ComparedFacesPair] represents a result of the [ComparedFace] attempt to compare input images.
+/// Represents a result of the [ComparedFace] attempt to compare input images.
 class ComparedFacesPair {
   /// The first face in the comparison pair.
   ComparedFace get first => _first;

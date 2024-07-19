@@ -20,7 +20,6 @@ class LivenessResponse {
   int? _estimatedAge;
 
   /// The error describes a failed liveness check and contains [LivenessErrorCode] codes.
-  /// This error belongs to the [LivenessErrorCode].
   LivenessException? get error => _error;
   LivenessException? _error;
 
@@ -61,6 +60,7 @@ enum LivenessStatus {
   UNKNOWN(1);
 
   const LivenessStatus(this.value);
+
   final int value;
 
   static LivenessStatus? getByValue(int? i) {

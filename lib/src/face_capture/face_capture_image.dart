@@ -57,7 +57,7 @@ enum ImageType {
   /// The image is a ghost portrait.
   GHOST_PORTRAIT(6),
 
-  /// The image from a barcode
+  /// The image from a barcode.
   BARCODE(7);
 
   const ImageType(this.value);

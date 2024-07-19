@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// Base range value for Image Quality parameters
+/// Base range value for Image Quality parameters.
 class ImageQualityRange {
   /// Minimum range value.
   double get min => _min;

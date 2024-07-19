@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// [PersonDatabase] represents Regula Database layer and is the entry point for Person Database operations.
+/// Represents Regula Database layer and is the entry point for Person Database operations.
 class PersonDatabase {
   PersonDatabase._privateConstructor();
 

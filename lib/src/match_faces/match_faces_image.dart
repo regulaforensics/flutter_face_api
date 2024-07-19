@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-/// This class represents the input image and its attributes for `MatchFacesRequest`.
+/// This class represents the input image and its attributes for [MatchFacesRequest].
 class MatchFacesImage {
   /// The underlying image.
   Uint8List get image => _image;
