@@ -1,4 +1,4 @@
-## 6.2.551-nightly
+## 6.2.552-nightly
 # 6.2
 
 #### Plugin:
