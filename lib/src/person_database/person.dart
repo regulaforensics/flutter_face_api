@@ -33,7 +33,7 @@ class Person {
 
     result.name = jsonObject["name"];
     result._updatedAt = DateTime.parse(jsonObject["updatedAt"]);
-    result._groups = jsonObject["groups"];
+    result._groups = _stringListFrom((jsonObject["groups"]))!;
     result._id = jsonObject["id"];
     result.metadata = jsonObject["metadata"];
     result._createdAt = DateTime.parse(jsonObject["createdAt"]);

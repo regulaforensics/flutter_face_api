@@ -79,12 +79,13 @@
   <pre class="language-dart"><code class="language-dart">@visibleForTesting
 static FaceCaptureImage? fromJson(jsonObject) {
   if (jsonObject == null) return null;
+  var result = FaceCaptureImage._privateConstructor();
 
-  return FaceCaptureImage(
-    _bytesFromBase64(jsonObject[&quot;image&quot;])!,
-    ImageType.getByValue(jsonObject[&quot;imageType&quot;])!,
-    tag: jsonObject[&quot;tag&quot;],
-  );
+  result._image = _bytesFromBase64(jsonObject[&quot;image&quot;])!;
+  result._imageType = ImageType.getByValue(jsonObject[&quot;imageType&quot;])!;
+  result._tag = jsonObject[&quot;tag&quot;];
+
+  return result;
 }</code></pre>
 </section>
 
@@ -119,7 +120,7 @@ static FaceCaptureImage? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.3.574-rc
+      6.3.579-rc
   </span>
 
   

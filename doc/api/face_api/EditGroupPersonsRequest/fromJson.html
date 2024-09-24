@@ -80,8 +80,8 @@
 static EditGroupPersonsRequest? fromJson(jsonObject) {
   if (jsonObject == null) return null;
   return EditGroupPersonsRequest(
-    jsonObject[&quot;personIdsToAdd&quot;],
-    jsonObject[&quot;personIdsToRemove&quot;],
+    _stringListFrom(jsonObject[&quot;personIdsToAdd&quot;]),
+    _stringListFrom(jsonObject[&quot;personIdsToRemove&quot;]),
   );
 }</code></pre>
 </section>
@@ -117,7 +117,7 @@ static EditGroupPersonsRequest? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.3.574-rc
+      6.3.579-rc
   </span>
 
   
