@@ -83,6 +83,7 @@ static MatchFacesConfig? fromJson(jsonObject) {
 
   result.processingMode =
       ProcessingMode.getByValue(jsonObject[&quot;processingMode&quot;])!;
+  result.locationTrackingEnabled = jsonObject[&quot;locationTrackingEnabled&quot;];
 
   return result;
 }</code></pre>
@@ -119,7 +120,7 @@ static MatchFacesConfig? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.3.578-nightly
+      6.3.588-nightly
   </span>
 
   

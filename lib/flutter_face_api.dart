@@ -105,16 +105,21 @@ class FaceSDK {
   ///
   /// To see all the localization keys, look up the `RegulaSDK.strings` file at
   /// `ios/Pods/FaceSDK/FaceSDK.xcframework/ios-arm64/FaceSDK.framework/FaceSDK.bundle/en.lproj/FaceSDK.strings`.
+  ///
+  /// Unmodifiable property. Use setter instead of `.remove()`, `.addAll()`, etc.
   Map<String, String>? get localizationDictionary => _localizationDictionary;
   Map<String, String>? _localizationDictionary;
   set localizationDictionary(Map<String, String>? val) {
+    if (val != null) val = Map.unmodifiable(val);
     _localizationDictionary = val;
     _setLocalizationDictionary(val);
   }
 
+  /// Unmodifiable property. Use setter instead of `.remove()`, `.addAll()`, etc.
   Map<String, String>? get requestHeaders => _requestHeaders;
   Map<String, String>? _requestHeaders;
   set requestHeaders(Map<String, String>? val) {
+    if (val != null) val = Map.unmodifiable(val);
     _requestHeaders = val;
     _setRequestHeaders(val);
   }

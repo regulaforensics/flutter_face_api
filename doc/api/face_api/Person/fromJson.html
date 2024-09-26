@@ -83,7 +83,7 @@ static Person? fromJson(jsonObject) {
 
   result.name = jsonObject[&quot;name&quot;];
   result._updatedAt = DateTime.parse(jsonObject[&quot;updatedAt&quot;]);
-  result._groups = jsonObject[&quot;groups&quot;];
+  result._groups = _stringListFrom((jsonObject[&quot;groups&quot;]))!;
   result._id = jsonObject[&quot;id&quot;];
   result.metadata = jsonObject[&quot;metadata&quot;];
   result._createdAt = DateTime.parse(jsonObject[&quot;createdAt&quot;]);
@@ -123,7 +123,7 @@ static Person? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.3.578-nightly
+      6.3.588-nightly
   </span>
 
   
