@@ -78,7 +78,11 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static DetectFacesBackendErrorCode? getByValue(int? i) {
   if (i == null) return null;
-  return DetectFacesBackendErrorCode.values.firstWhere((x) =&gt; x.value == i);
+  try {
+    return DetectFacesBackendErrorCode.values.firstWhere((x) =&gt; x.value == i);
+  } catch (_) {
+    return DetectFacesBackendErrorCode.UNDEFINED;
+  }
 }</code></pre>
 </section>
 
@@ -113,7 +117,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.3.581-rc
+      6.3.587-rc
   </span>
 
   
