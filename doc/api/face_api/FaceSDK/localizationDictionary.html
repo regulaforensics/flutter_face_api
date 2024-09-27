@@ -78,6 +78,7 @@
 Allows to replace any string of FaceSDK with an arbitrary string.</p>
 <p>To see all the localization keys, look up the <code>RegulaSDK.strings</code> file at
 <code>ios/Pods/FaceSDK/FaceSDK.xcframework/ios-arm64/FaceSDK.framework/FaceSDK.bundle/en.lproj/FaceSDK.strings</code>.</p>
+<p>Unmodifiable property. Use setter instead of <code>.remove()</code>, <code>.addAll()</code>, etc.</p>
 </section>
 
     
@@ -106,6 +107,7 @@ Allows to replace any string of FaceSDK with an arbitrary string.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">set localizationDictionary(Map&lt;String, String&gt;? val) {
+  if (val != null) val = Map.unmodifiable(val);
   _localizationDictionary = val;
   _setLocalizationDictionary(val);
 }</code></pre>
@@ -143,7 +145,7 @@ Allows to replace any string of FaceSDK with an arbitrary string.</p>
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.2.3
+      6.3.591
   </span>
 
   

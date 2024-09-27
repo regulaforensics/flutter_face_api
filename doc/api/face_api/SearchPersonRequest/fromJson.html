@@ -64,7 +64,7 @@
       
 
 <span class="returntype"><a href="../../face_api/SearchPersonRequest-class.html">SearchPersonRequest</a>?</span>
-<span class="name ">fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-jsonObject"><span class="type-annotation">dynamic</span> <span class="parameter-name">jsonObject</span></span></li>
+<span class="name ">fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-jsonObject"><span class="type-annotation">dynamic</span> <span class="parameter-name">jsonObject</span></span></li>
 </ol>)
 
       
@@ -81,7 +81,7 @@ static SearchPersonRequest? fromJson(jsonObject) {
   if (jsonObject == null) return null;
   return SearchPersonRequest(
     ImageUpload.fromJson(jsonObject[&quot;imageUpload&quot;])!,
-    groupIdsForSearch: jsonObject[&quot;groupIdsForSearch&quot;],
+    groupIdsForSearch: _stringListFrom(jsonObject[&quot;groupIdsForSearch&quot;]),
     threshold: _toDouble(jsonObject[&quot;threshold&quot;]),
     limit: jsonObject[&quot;limit&quot;],
     detectAll: jsonObject[&quot;detectAll&quot;],
@@ -122,7 +122,7 @@ static SearchPersonRequest? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.2.3
+      6.3.591
   </span>
 
   

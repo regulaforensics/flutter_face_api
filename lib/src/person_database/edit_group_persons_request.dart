@@ -14,8 +14,8 @@ class EditGroupPersonsRequest {
   static EditGroupPersonsRequest? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     return EditGroupPersonsRequest(
-      jsonObject["personIdsToAdd"],
-      jsonObject["personIdsToRemove"],
+      _stringListFrom(jsonObject["personIdsToAdd"]),
+      _stringListFrom(jsonObject["personIdsToRemove"]),
     );
   }
 

@@ -64,7 +64,7 @@
       
 
 <span class="returntype"><a href="../../face_api/DetectFacesBackendErrorCode.html">DetectFacesBackendErrorCode</a>?</span>
-<span class="name ">getByValue</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getByValue-param-i"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">i</span></span></li>
+<span class="name ">getByValue</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getByValue-param-i"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">i</span></span></li>
 </ol>)
 
       
@@ -78,7 +78,11 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static DetectFacesBackendErrorCode? getByValue(int? i) {
   if (i == null) return null;
-  return DetectFacesBackendErrorCode.values.firstWhere((x) =&gt; x.value == i);
+  try {
+    return DetectFacesBackendErrorCode.values.firstWhere((x) =&gt; x.value == i);
+  } catch (_) {
+    return DetectFacesBackendErrorCode.UNDEFINED;
+  }
 }</code></pre>
 </section>
 
@@ -113,7 +117,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.2.3
+      6.3.591
   </span>
 
   

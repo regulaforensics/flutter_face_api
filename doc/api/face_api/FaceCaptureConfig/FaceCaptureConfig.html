@@ -62,17 +62,18 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">FaceCaptureConfig</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-copyright">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">copyright</span> = <span class="default-value">true</span>, </span></li>
+      <span class="name ">FaceCaptureConfig</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-copyright"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">copyright</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-cameraSwitchEnabled"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">cameraSwitchEnabled</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-closeButtonEnabled"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">closeButtonEnabled</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-torchButtonEnabled"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">torchButtonEnabled</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-vibrateOnSteps"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">vibrateOnSteps</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-detectOcclusion"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">detectOcclusion</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-cameraPositionAndroid"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">cameraPositionAndroid</span>, </span></li>
 <li><span class="parameter" id="-param-cameraPositionIOS"><span class="type-annotation"><a href="../../face_api/CameraPosition.html">CameraPosition</a></span> <span class="parameter-name">cameraPositionIOS</span> = <span class="default-value">CameraPosition.FRONT</span>, </span></li>
 <li><span class="parameter" id="-param-screenOrientation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../face_api/ScreenOrientation.html">ScreenOrientation</a></span>&gt;</span></span> <span class="parameter-name">screenOrientation</span> = <span class="default-value">const [ScreenOrientation.PORTRAIT]</span>, </span></li>
 <li><span class="parameter" id="-param-timeout"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">timeout</span>, </span></li>
-<li><span class="parameter" id="-param-holdStillDuration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">holdStillDuration</span>}</span></li>
-</ol>)
+<li><span class="parameter" id="-param-holdStillDuration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">holdStillDuration</span>, </span></li>
+</ol>})
     </section>
 
     
@@ -81,24 +82,26 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">FaceCaptureConfig(
-    {bool copyright = true,
-    bool cameraSwitchEnabled = false,
-    bool closeButtonEnabled = true,
-    bool torchButtonEnabled = true,
-    bool vibrateOnSteps = true,
-    int? cameraPositionAndroid,
-    CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-    List&lt;ScreenOrientation&gt; screenOrientation = const [
-      ScreenOrientation.PORTRAIT
-    ],
-    double? timeout,
-    double? holdStillDuration})
-    : copyright = copyright,
+  <pre class="language-dart"><code class="language-dart">FaceCaptureConfig({
+  bool copyright = true,
+  bool cameraSwitchEnabled = false,
+  bool closeButtonEnabled = true,
+  bool torchButtonEnabled = true,
+  bool vibrateOnSteps = true,
+  bool detectOcclusion = true,
+  int? cameraPositionAndroid,
+  CameraPosition cameraPositionIOS = CameraPosition.FRONT,
+  List&lt;ScreenOrientation&gt; screenOrientation = const [
+    ScreenOrientation.PORTRAIT
+  ],
+  double? timeout,
+  double? holdStillDuration,
+})  : copyright = copyright,
       cameraSwitchEnabled = cameraSwitchEnabled,
       closeButtonEnabled = closeButtonEnabled,
       torchButtonEnabled = torchButtonEnabled,
       vibrateOnSteps = vibrateOnSteps,
+      detectOcclusion = detectOcclusion,
       cameraPositionAndroid = cameraPositionAndroid,
       cameraPositionIOS = cameraPositionIOS,
       screenOrientation = screenOrientation,
@@ -137,7 +140,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.2.3
+      6.3.591
   </span>
 
   

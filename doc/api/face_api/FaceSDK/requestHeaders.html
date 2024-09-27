@@ -73,6 +73,9 @@
     </section>
 
     
+<section class="desc markdown">
+  <p>Unmodifiable property. Use setter instead of <code>.remove()</code>, <code>.addAll()</code>, etc.</p>
+</section>
 
     
 <section class="summary source-code" id="source">
@@ -100,6 +103,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">set requestHeaders(Map&lt;String, String&gt;? val) {
+  if (val != null) val = Map.unmodifiable(val);
   _requestHeaders = val;
   _setRequestHeaders(val);
 }</code></pre>
@@ -137,7 +141,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.2.3
+      6.3.591
   </span>
 
   

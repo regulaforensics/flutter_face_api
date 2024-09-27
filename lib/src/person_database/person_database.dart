@@ -216,7 +216,6 @@ class PersonDatabase {
     String jsonString,
     T? Function(Map<String, dynamic>?) fromJSON,
   ) {
-    print(jsonString);
     var jsonObject = _decode(jsonString);
     var data = fromJSON(jsonObject["data"]);
     var error = jsonObject["error"];

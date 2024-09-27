@@ -64,7 +64,7 @@
       
 
 <span class="returntype"><a href="../../face_api/ComparedFacesPair-class.html">ComparedFacesPair</a>?</span>
-<span class="name ">fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-jsonObject"><span class="type-annotation">dynamic</span> <span class="parameter-name">jsonObject</span></span></li>
+<span class="name ">fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-jsonObject"><span class="type-annotation">dynamic</span> <span class="parameter-name">jsonObject</span></span></li>
 </ol>)
 
       
@@ -84,7 +84,7 @@ static ComparedFacesPair? fromJson(jsonObject) {
   result._first = ComparedFace.fromJson(jsonObject[&quot;first&quot;])!;
   result._second = ComparedFace.fromJson(jsonObject[&quot;second&quot;])!;
   result._similarity = _toDouble(jsonObject[&quot;similarity&quot;])!;
-  result._score = _toDouble(jsonObject[&quot;score&quot;])!;
+  result._score = _toDouble(jsonObject[&quot;score&quot;]);
   result._error = MatchFacesException.fromJson(jsonObject[&quot;error&quot;]);
 
   return result;
@@ -122,7 +122,7 @@ static ComparedFacesPair? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.2.3
+      6.3.591
   </span>
 
   
