@@ -174,6 +174,7 @@ var faceCaptureConfig = {
   "closeButtonEnabled": true,
   "torchButtonEnabled": false,
   "vibrateOnSteps": true,
+  "detectOcclusion": false,
   "cameraPositionAndroid": 0,
   "cameraPositionIOS": 1,
   "screenOrientation": [0, 1],
@@ -254,6 +255,7 @@ var livenessNotification = {
 
 var matchFacesConfig = {
   "processingMode": 0,
+  "locationTrackingEnabled": false,
 };
 var matchFacesImage = {
   "image": img1,
