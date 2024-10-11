@@ -2,10 +2,13 @@ part of "../../flutter_face_api.dart";
 
 class MatchFacesConfig {
   ProcessingMode processingMode;
+  bool locationTrackingEnabled;
 
   MatchFacesConfig({
     ProcessingMode processingMode = ProcessingMode.ONLINE,
-  }) : processingMode = processingMode;
+    bool locationTrackingEnabled = true,
+  })  : processingMode = processingMode,
+        locationTrackingEnabled = locationTrackingEnabled;
 
   @visibleForTesting
   static MatchFacesConfig? fromJson(jsonObject) {
@@ -14,6 +17,7 @@ class MatchFacesConfig {
 
     result.processingMode =
         ProcessingMode.getByValue(jsonObject["processingMode"])!;
+    result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
 
     return result;
   }
@@ -21,6 +25,7 @@ class MatchFacesConfig {
   @visibleForTesting
   Map<String, dynamic> toJson() => {
         "processingMode": processingMode.value,
+        "locationTrackingEnabled": locationTrackingEnabled,
       }.clearNulls();
 }
 

@@ -17,8 +17,8 @@ class ComparedFacesPair {
   /// The raw value returned by the service without applying any thresholds or comparison rules.
   /// The value shows the degree of similarity of compared faces, the lower - the more similar, and vice versa less similar.
   /// The `score` is used in conjunction with the input image `imageType` to evaluate `similarity`.
-  double get score => _score;
-  late double _score;
+  double? get score => _score;
+  double? _score;
 
   /// The error describes a failed pair comparison and contains [MatchFacesErrorCode] codes.
   MatchFacesException? get error => _error;
@@ -34,7 +34,7 @@ class ComparedFacesPair {
     result._first = ComparedFace.fromJson(jsonObject["first"])!;
     result._second = ComparedFace.fromJson(jsonObject["second"])!;
     result._similarity = _toDouble(jsonObject["similarity"])!;
-    result._score = _toDouble(jsonObject["score"])!;
+    result._score = _toDouble(jsonObject["score"]);
     result._error = MatchFacesException.fromJson(jsonObject["error"]);
 
     return result;

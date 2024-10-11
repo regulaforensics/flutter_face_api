@@ -46,7 +46,7 @@ class SearchPersonRequest {
     if (jsonObject == null) return null;
     return SearchPersonRequest(
       ImageUpload.fromJson(jsonObject["imageUpload"])!,
-      groupIdsForSearch: jsonObject["groupIdsForSearch"],
+      groupIdsForSearch: _stringListFrom(jsonObject["groupIdsForSearch"]),
       threshold: _toDouble(jsonObject["threshold"]),
       limit: jsonObject["limit"],
       detectAll: jsonObject["detectAll"],

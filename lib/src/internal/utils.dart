@@ -20,6 +20,11 @@ Color? _intToColor(int? value) => value == null ? null : Color(value);
 
 int? _intFromColor(Color? value) => value?.value;
 
+List<String>? _stringListFrom(List<dynamic>? value) {
+  if (value == null) return null;
+  return List<String>.from(value);
+}
+
 extension _NullSafety on List {
   void addSafe<E>(E value) {
     if (value != null) add(value);

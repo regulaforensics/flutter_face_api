@@ -11,6 +11,9 @@ class FaceCaptureConfig {
 
   bool vibrateOnSteps;
 
+  /// Enables 'remove occlusion' animation & hint.
+  bool detectOcclusion;
+
   /// Android only.
   int? cameraPositionAndroid;
 
@@ -24,24 +27,26 @@ class FaceCaptureConfig {
 
   double? holdStillDuration;
 
-  FaceCaptureConfig(
-      {bool copyright = true,
-      bool cameraSwitchEnabled = false,
-      bool closeButtonEnabled = true,
-      bool torchButtonEnabled = true,
-      bool vibrateOnSteps = true,
-      int? cameraPositionAndroid,
-      CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-      List<ScreenOrientation> screenOrientation = const [
-        ScreenOrientation.PORTRAIT
-      ],
-      double? timeout,
-      double? holdStillDuration})
-      : copyright = copyright,
+  FaceCaptureConfig({
+    bool copyright = true,
+    bool cameraSwitchEnabled = false,
+    bool closeButtonEnabled = true,
+    bool torchButtonEnabled = true,
+    bool vibrateOnSteps = true,
+    bool detectOcclusion = true,
+    int? cameraPositionAndroid,
+    CameraPosition cameraPositionIOS = CameraPosition.FRONT,
+    List<ScreenOrientation> screenOrientation = const [
+      ScreenOrientation.PORTRAIT
+    ],
+    double? timeout,
+    double? holdStillDuration,
+  })  : copyright = copyright,
         cameraSwitchEnabled = cameraSwitchEnabled,
         closeButtonEnabled = closeButtonEnabled,
         torchButtonEnabled = torchButtonEnabled,
         vibrateOnSteps = vibrateOnSteps,
+        detectOcclusion = detectOcclusion,
         cameraPositionAndroid = cameraPositionAndroid,
         cameraPositionIOS = cameraPositionIOS,
         screenOrientation = screenOrientation,
@@ -58,6 +63,7 @@ class FaceCaptureConfig {
     result.closeButtonEnabled = jsonObject["closeButtonEnabled"];
     result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
+    result.detectOcclusion = jsonObject["detectOcclusion"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
     result.cameraPositionIOS =
         CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
@@ -76,6 +82,7 @@ class FaceCaptureConfig {
         "closeButtonEnabled": closeButtonEnabled,
         "torchButtonEnabled": torchButtonEnabled,
         "vibrateOnSteps": vibrateOnSteps,
+        "detectOcclusion": detectOcclusion,
         "cameraPositionAndroid": cameraPositionAndroid,
         "cameraPositionIOS": cameraPositionIOS.value,
         "screenOrientation": screenOrientation.map((e) => e.value).toList(),

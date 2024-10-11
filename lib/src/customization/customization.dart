@@ -20,9 +20,11 @@ class Customization {
     (_images = val)._apply(this);
   }
 
+  /// Unmodifiable property. Use setter instead of `.remove()`, `.addAll()`, etc.
   Map<String, dynamic>? get uiCustomizationLayer => _uiCustomizationLayer;
   Map<String, dynamic>? _uiCustomizationLayer;
   set uiCustomizationLayer(Map<String, dynamic>? val) {
+    if (val != null) val = Map.unmodifiable(val);
     _uiCustomizationLayer = val;
     _set({"uiCustomizationLayer": val});
   }

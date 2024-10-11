@@ -40,6 +40,10 @@ enum DetectFacesBackendErrorCode {
 
   static DetectFacesBackendErrorCode? getByValue(int? i) {
     if (i == null) return null;
-    return DetectFacesBackendErrorCode.values.firstWhere((x) => x.value == i);
+    try {
+      return DetectFacesBackendErrorCode.values.firstWhere((x) => x.value == i);
+    } catch (_) {
+      return DetectFacesBackendErrorCode.UNDEFINED;
+    }
   }
 }

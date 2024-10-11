@@ -2,31 +2,26 @@ part of "../../flutter_face_api.dart";
 
 class FaceCaptureImage {
   Uint8List get image => _image;
-  Uint8List _image;
+  late Uint8List _image;
 
   ImageType get imageType => _imageType;
-  ImageType _imageType;
+  late ImageType _imageType;
 
   String? get tag => _tag;
   String? _tag;
 
-  FaceCaptureImage(
-    Uint8List image,
-    ImageType imageType, {
-    String? tag,
-  })  : _image = image,
-        _imageType = imageType,
-        _tag = tag;
+  FaceCaptureImage._privateConstructor();
 
   @visibleForTesting
   static FaceCaptureImage? fromJson(jsonObject) {
     if (jsonObject == null) return null;
+    var result = FaceCaptureImage._privateConstructor();
 
-    return FaceCaptureImage(
-      _bytesFromBase64(jsonObject["image"])!,
-      ImageType.getByValue(jsonObject["imageType"])!,
-      tag: jsonObject["tag"],
-    );
+    result._image = _bytesFromBase64(jsonObject["image"])!;
+    result._imageType = ImageType.getByValue(jsonObject["imageType"])!;
+    result._tag = jsonObject["tag"];
+
+    return result;
   }
 
   @visibleForTesting
