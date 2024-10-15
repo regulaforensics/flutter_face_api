@@ -19,10 +19,10 @@ typedef void (^RFSWEventSender)(NSString* _Nonnull event, id _Nullable data);
 @end
 
 
-NSString* _Nonnull RFSWCameraSwitchEvent;
-NSString* _Nonnull RFSWLivenessNotificationEvent;
-NSString* _Nonnull RFSWVideoEncoderCompletionEvent;
-NSString* _Nonnull RFSWOnCustomButtonTappedEvent;
+static NSString* _Nonnull RFSWCameraSwitchEvent = @"cameraSwitchEvent";
+static NSString* _Nonnull RFSWLivenessNotificationEvent = @"livenessNotificationEvent";
+static NSString* _Nonnull RFSWVideoEncoderCompletionEvent = @"video_encoder_completion";
+static NSString* _Nonnull RFSWOnCustomButtonTappedEvent = @"onCustomButtonTappedEvent";
 
 @interface RFSWCameraSwitchStreamHandler : NSObject <FlutterStreamHandler>
 @end

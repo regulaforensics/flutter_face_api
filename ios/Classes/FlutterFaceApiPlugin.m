@@ -125,11 +125,6 @@ static RFSWEventSender sendEvent = ^(NSString* event, id data) {
     ((void(^)(void))Switch[method])();
 }
 
-NSString* RFSWCameraSwitchEvent = @"cameraSwitchEvent";
-NSString* RFSWLivenessNotificationEvent = @"livenessNotificationEvent";
-NSString* RFSWVideoEncoderCompletionEvent = @"video_encoder_completion";
-NSString* RFSWOnCustomButtonTappedEvent = @"onCustomButtonTappedEvent";
-
 - (void) getVersion:(RFSWCallback)callback {
     callback([RFSWJSONConstructor generateFaceSDKVersion:RFSFaceSDK.service.version]);
 }
