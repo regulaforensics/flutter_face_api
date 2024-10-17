@@ -2,11 +2,6 @@
 
 @implementation RFSWMain
 
-static RFSWMain* this;
-static RFSWEventSender sendEvent;
-
-static NSDictionary* headers;
-
 +(void)methodCall:(NSString*)method :(NSArray*)args :(RFSWCallback)callback :(RFSWEventSender)eventSender {
     if(!this) this = [RFSWMain new];
     sendEvent = eventSender;
@@ -51,6 +46,18 @@ static NSDictionary* headers;
     };
     ((void(^)(void))Switch[method])();
 }
+
+static RFSWMain* this;
+static RFSWEventSender sendEvent;
+
+static NSDictionary* headers;
+
+static UIViewController*(^rootViewController)(void) = ^UIViewController*(){
+    for (UIWindow *window in UIApplication.sharedApplication.windows)
+        if (window.isKeyWindow)
+            return window.rootViewController;
+    return nil;
+};
 
 +(void)getVersion:(RFSWCallback)callback {
     callback([RFSWJSONConstructor generateFaceSDKVersion:RFSFaceSDK.service.version]);
@@ -103,7 +110,7 @@ static NSDictionary* headers;
 
 +(void)startFaceCapture:(NSDictionary*)config :(RFSWCallback)callback {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [RFSFaceSDK.service presentFaceCaptureViewControllerFrom:[UIApplication sharedApplication].windows.lastObject.rootViewController
+        [RFSFaceSDK.service presentFaceCaptureViewControllerFrom:rootViewController()
                                                             animated:true
                                                        configuration:[RFSWConfig faceCaptureConfigFromJSON:config]
                                                            onCapture:[self faceCaptureCompletion:callback]
@@ -117,7 +124,7 @@ static NSDictionary* headers;
 
 +(void)startLiveness:(NSDictionary*)config :(RFSWCallback)callback {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [RFSFaceSDK.service startLivenessFrom:[UIApplication sharedApplication].windows.lastObject.rootViewController
+        [RFSFaceSDK.service startLivenessFrom:rootViewController()
                                                 animated:true
                                            configuration:[RFSWConfig livenessConfigFromJSON:config]
                                               onLiveness:[self livenessCompletion:callback]
