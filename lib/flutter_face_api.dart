@@ -153,11 +153,13 @@ class FaceSDK {
     InitConfig? config,
   }) async {
     var response = await _bridge.invokeMethod("initialize", [config?.toJson()]);
-    await _onInit();
 
     var jsonObject = _decode(response);
     bool success = jsonObject["success"];
     var error = jsonObject["error"];
+
+    if (success) await _onInit();
+
     return (success, InitException.fromJson(error));
   }
 
