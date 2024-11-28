@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package io.flutter.plugins.regula.faceapi.flutter_face_api
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
