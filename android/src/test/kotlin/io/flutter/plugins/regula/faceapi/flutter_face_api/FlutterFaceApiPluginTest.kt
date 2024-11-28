@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package io.flutter.plugins.regula.faceapi.flutter_face_api
 
 import org.junit.Test
 import org.junit.runner.RunWith
