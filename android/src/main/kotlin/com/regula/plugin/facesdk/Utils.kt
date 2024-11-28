@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package io.flutter.plugins.regula.faceapi.flutter_face_api
+package com.regula.plugin.facesdk
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,7 +17,7 @@ import com.regula.facesdk.enums.CustomizationImage
 import com.regula.facesdk.enums.ImageType
 import com.regula.facesdk.enums.InitErrorCode
 import com.regula.facesdk.enums.OutputImageCropAspectRatio
-import io.flutter.plugins.regula.faceapi.flutter_face_api.Convert.toDrawable
+import com.regula.plugin.facesdk.Convert.toDrawable
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -248,7 +248,12 @@ fun <T : Any> T.setPrivateProperty(clazz: Class<T>, varName: String, data: Any?)
 //}
 
 internal object Convert {
-    fun String?.toByteArray() = this?.let { Base64.decode(it, Base64.NO_WRAP) }
+    fun String?.toByteArray(): ByteArray? {
+        var str = this ?: return null
+        if (str.startsWith("data")) str = str.substring(str.indexOf(",") + 1)
+        return Base64.decode(str, Base64.NO_WRAP)
+    }
+
     fun ByteArray?.toBase64() = this?.let { Base64.encodeToString(it, Base64.NO_WRAP) }
 
     fun String?.toBitmap() = this?.let {
