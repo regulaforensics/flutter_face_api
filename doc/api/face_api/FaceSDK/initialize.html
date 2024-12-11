@@ -86,11 +86,13 @@ and a nullable <a href="../../face_api/InitException-class.html">InitException</
   InitConfig? config,
 }) async {
   var response = await _bridge.invokeMethod(&quot;initialize&quot;, [config?.toJson()]);
-  await _onInit();
 
   var jsonObject = _decode(response);
   bool success = jsonObject[&quot;success&quot;];
   var error = jsonObject[&quot;error&quot;];
+
+  if (success) await _onInit();
+
   return (success, InitException.fromJson(error));
 }</code></pre>
 </section>
@@ -126,7 +128,7 @@ and a nullable <a href="../../face_api/InitException-class.html">InitException</
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.3.663
+      6.4.858
   </span>
 
   
