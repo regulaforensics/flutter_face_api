@@ -18,6 +18,7 @@ String? _bytesToBase64(Uint8List? value) =>
 
 Color? _intToColor(int? value) => value == null ? null : Color(value);
 
+// ignore: deprecated_member_use
 int? _intFromColor(Color? value) => value?.value;
 
 List<String>? _stringListFrom(List<dynamic>? value) {
