@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package io.flutter.plugins.regula.faceapi.flutter_face_api
 
 import com.regula.facesdk.configuration.Customization
 import com.regula.facesdk.configuration.FaceCaptureConfiguration
