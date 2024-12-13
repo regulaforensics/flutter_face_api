@@ -1,4 +1,4 @@
-## 6.3.779-nightly
+## 6.4.864-nightly
 # 6.2.0
 
 * BREAKING CHANGE: whole FaceSDK plugin rewritten from scratch with focus on user experience and convenience. Migration instructions can be found [here](https://docs.regulaforensics.com/develop/face-sdk/migration-guides/v6.1-to-v6.2/flutter/).
