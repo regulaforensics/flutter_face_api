@@ -1,0 +1,15 @@
+ .DS_Store
+
+test/json
+.dart_tool/
+.packages
+.pub/
+build/
+
+.github
+.git
+.gitignore
+.pubignore
+
+Jenkinsfile
+update.sh
