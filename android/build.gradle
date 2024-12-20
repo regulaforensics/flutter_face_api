@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
-        namespace 'io.flutter.plugins.regula.faceapi.flutter_face_api'
+        namespace 'com.regula.plugin.facesdk'
     }
 
     compileOptions {
@@ -20,7 +20,7 @@ android {
 
     dependencies {
         //noinspection GradleDependency
-        implementation('com.regula.face:api:6.4.3430'){
+        implementation('com.regula.face:api:6.4.3452'){
             transitive = true
         }
 
