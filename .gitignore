@@ -6,3 +6,5 @@ test/json
 .packages
 .pub/
 build/
+
+doc/
