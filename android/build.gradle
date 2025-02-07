@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android'
 android {
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
-        namespace 'io.flutter.plugins.regula.faceapi.flutter_face_api'
+        namespace 'com.regula.plugin.facesdk'
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     compileSdk 34
@@ -20,7 +20,7 @@ android {
 
     dependencies {
         //noinspection GradleDependency
-        implementation('com.regula.face:api:6.4.3470'){
+        implementation('com.regula.face:api:6.3.3356'){
             transitive = true
         }
 
@@ -50,7 +50,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url "https://maven.regulaforensics.com/RegulaDocumentReader/Nightly"
+            url "https://maven.regulaforensics.com/RegulaDocumentReader"
         }
     }
 }
