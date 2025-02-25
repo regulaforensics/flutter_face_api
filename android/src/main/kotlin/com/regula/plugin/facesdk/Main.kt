@@ -1,7 +1,5 @@
 package com.regula.plugin.facesdk
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import com.regula.plugin.facesdk.Convert.toBase64
 import com.regula.common.LocalizationCallbacks
 import com.regula.facesdk.FaceSDK.Instance
@@ -67,11 +65,6 @@ fun methodCall(method: String, callback: (Any?) -> Unit): Any = when (method) {
 
 inline fun <reified T> args(index: Int) = argsNullable<T>(index)!!
 typealias Callback = (Any?) -> Unit
-
-@SuppressLint("StaticFieldLeak")
-lateinit var activity: Activity
-val context
-    get() = activity
 
 const val cameraSwitchEvent = "cameraSwitchEvent"
 const val livenessNotificationEvent = "livenessNotificationEvent"

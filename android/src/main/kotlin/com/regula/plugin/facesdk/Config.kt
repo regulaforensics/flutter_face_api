@@ -1,3 +1,5 @@
+@file:Suppress("EnumValuesSoftDeprecate")
+
 package com.regula.plugin.facesdk
 
 import com.regula.facesdk.configuration.Customization
