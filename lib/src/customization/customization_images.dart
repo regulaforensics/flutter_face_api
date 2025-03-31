@@ -102,7 +102,8 @@ class CustomizationImages {
   }
 
   /// Allows you to serialize object.
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "100": _dataToBase64(_onboardingScreenCloseButton),
         "101": _dataToBase64(_onboardingScreenIllumination),
         "102": _dataToBase64(_onboardingScreenAccessories),

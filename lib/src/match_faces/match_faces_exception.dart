@@ -19,17 +19,19 @@ class MatchFacesException {
 
     result._code = MatchFacesErrorCode.getByValue(jsonObject["code"])!;
     result._message = jsonObject["message"] ?? "";
-    result._underlyingError =
-        MatchFacesBackendException.fromJson(jsonObject["underlyingError"]);
+    result._underlyingError = MatchFacesBackendException.fromJson(
+      jsonObject["underlyingError"],
+    );
 
     return result;
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "code": code.value,
         "message": message,
-        "underlyingError": underlyingError?.toJson()
+        "underlyingError": underlyingError?.toJson(),
       }.clearNulls();
 }
 

@@ -36,7 +36,8 @@ class MatchFacesResponse {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "results": results.map((e) => e.toJson()).toList(),
         "detections": detections.map((e) => e.toJson()).toList(),
         "tag": tag,

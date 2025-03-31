@@ -81,7 +81,8 @@ class CustomizationFonts {
   }
 
   /// Allows you to serialize object.
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "100": _onboardingScreenStartButton?.toJson(),
         "101": _onboardingScreenTitleLabel?.toJson(),
         "102": _onboardingScreenSubtitleLabel?.toJson(),

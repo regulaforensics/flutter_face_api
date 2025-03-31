@@ -32,7 +32,8 @@ class PersonGroup {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "name": name,
         "id": id,
         "metadata": metadata,

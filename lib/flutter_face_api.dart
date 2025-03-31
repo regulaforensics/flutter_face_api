@@ -174,10 +174,9 @@ class FaceSDK {
     CameraSwitchCallback? cameraSwitchCallback,
   }) async {
     _setCameraSwitchCallback(cameraSwitchCallback);
-    var response = await _bridge.invokeMethod(
-      "startFaceCapture",
-      [config?.toJson()],
-    );
+    var response = await _bridge.invokeMethod("startFaceCapture", [
+      config?.toJson(),
+    ]);
     return FaceCaptureResponse.fromJson(_decode(response))!;
   }
 
@@ -192,10 +191,9 @@ class FaceSDK {
   }) async {
     _setLivenessNotificationCompletion(notificationCompletion);
     _setCameraSwitchCallback(cameraSwitchCallback);
-    var response = await _bridge.invokeMethod(
-      "startLiveness",
-      [config?.toJson()],
-    );
+    var response = await _bridge.invokeMethod("startLiveness", [
+      config?.toJson(),
+    ]);
     return LivenessResponse.fromJson(_decode(response))!;
   }
 
@@ -226,10 +224,9 @@ class FaceSDK {
   }
 
   Future<DetectFacesResponse> detectFaces(DetectFacesRequest request) async {
-    var response = await _bridge.invokeMethod(
-      "detectFaces",
-      [request.toJson()],
-    );
+    var response = await _bridge.invokeMethod("detectFaces", [
+      request.toJson(),
+    ]);
     return DetectFacesResponse.fromJson(_decode(response))!;
   }
 
@@ -260,9 +257,7 @@ class FaceSDK {
   }
 }
 
-typedef VideoEncoderCompletion = void Function(
-  String transactionId,
-  bool success,
-);
+typedef VideoEncoderCompletion =
+    void Function(String transactionId, bool success);
 
 typedef CameraSwitchCallback = void Function(int cameraId);

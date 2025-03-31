@@ -10,13 +10,9 @@ class ImageQualityRange {
   double get max => _max;
   double _max;
 
-  ImageQualityRange(double min, double max)
-      : _min = min,
-        _max = max;
+  ImageQualityRange(double min, double max) : _min = min, _max = max;
 
-  ImageQualityRange.withValue(double value)
-      : _min = value,
-        _max = value;
+  ImageQualityRange.withValue(double value) : _min = value, _max = value;
 
   @visibleForTesting
   static ImageQualityRange? fromJson(jsonObject) {
@@ -29,8 +25,5 @@ class ImageQualityRange {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
-        "min": min,
-        "max": max,
-      }.clearNulls();
+  Map<String, dynamic> toJson() => {"min": min, "max": max}.clearNulls();
 }

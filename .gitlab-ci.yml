@@ -1,0 +1,49 @@
+stages:
+  - test
+  - reports
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - local: .gitlab/report.yaml
+    rules:
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    inputs:
+      stage: reports
+      image: ubuntu:22.04
+      ignore_vulnerabilities: "false"
+      sast_report_file: gl-sast-report.json
+      secret_detection_report_file: gl-secret-detection-report.json
+      dependency_scanning_report_file: gl-dependency-scanning-report.json
+
+trivy scan:
+  stage: test
+  image: aquasec/trivy
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - trivy fs --severity CRITICAL,HIGH,MEDIUM,LOW --ignore-unfixed --db-repository container-registry.regula.local:80/aquasecurity/trivy-db:2 --exit-code 1 .
+
+semgrep-sast:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  artifacts:
+    paths:
+      - gl-sast-report.json
+
+secret_detection:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  artifacts:
+    paths:
+      - gl-secret-detection-report.json
+
+gemnasium-dependency_scanning:
+  variables:
+    DS_MAX_DEPTH: -1
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  artifacts:
+    paths:
+      - gl-dependency-scanning-report.json
