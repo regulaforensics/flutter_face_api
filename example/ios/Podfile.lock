@@ -1,20 +1,14 @@
 PODS:
-  - FaceCoreBasic (6.4.1111)
-  - FaceSDK (6.4.2321):
-    - RegulaCommon (= 7.5.935)
   - Flutter (1.0.0)
   - flutter_face_api (6.5.86):
-    - FaceSDK (= 6.4.2321)
     - Flutter
   - flutter_face_core_basic (6.4.242):
-    - FaceCoreBasic (= 6.4.1111)
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - RegulaCommon (7.5.935)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
