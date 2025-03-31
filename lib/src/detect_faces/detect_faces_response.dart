@@ -34,7 +34,8 @@ class DetectFacesResponse {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "detection": detection?.toJson(),
         "allDetections": allDetections?.map((e) => e.toJson()).toList(),
         "scenario": scenario?.value,

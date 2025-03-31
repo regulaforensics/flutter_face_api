@@ -1,4 +1,6 @@
-package io.flutter.plugins.regula.faceapi.flutter_face_api
+@file:Suppress("EnumValuesSoftDeprecate", "unused")
+
+package com.regula.plugin.facesdk
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -67,9 +69,9 @@ import com.regula.facesdk.request.MatchFacesRequest
 import com.regula.facesdk.request.person.EditGroupPersonsRequest
 import com.regula.facesdk.request.person.ImageUpload
 import com.regula.facesdk.request.person.SearchPersonRequest
-import io.flutter.plugins.regula.faceapi.flutter_face_api.Convert.toBase64
-import io.flutter.plugins.regula.faceapi.flutter_face_api.Convert.toBitmap
-import io.flutter.plugins.regula.faceapi.flutter_face_api.Convert.toByteArray
+import com.regula.plugin.facesdk.Convert.toBase64
+import com.regula.plugin.facesdk.Convert.toBitmap
+import com.regula.plugin.facesdk.Convert.toByteArray
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -635,7 +637,7 @@ fun generateDetectFacesConfig(input: DetectFacesConfiguration?) = input?.let {
 fun detectFacesRequestFromJSON(input: JSONObject) = input.let {
     val image = it.getString("image").toBitmap()!!
     it.getStringOrNull("scenario")?.let { scenario ->
-        DetectFacesRequest::class.constructor(Bitmap::class, String::class).instantiate(image, scenario)
+        DetectFacesRequest::class.java.getDeclaredConstructor(Bitmap::class.java, String::class.java).instantiate(image, scenario)
     } ?: DetectFacesRequest(
         image,
         detectFacesConfigFromJSON(it.getJSONObjectOrNull("configuration")),

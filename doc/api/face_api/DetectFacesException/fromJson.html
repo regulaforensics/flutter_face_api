@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">flutter_face_api</a></li>
-    <li><a href="../../face_api/face_api-library.html">flutter_face_api.dart</a></li>
+    <li><a href="../../face_api">flutter_face_api.dart</a></li>
     <li><a href="../../face_api/DetectFacesException-class.html">DetectFacesException</a></li>
     <li class="self-crumb">fromJson static method</li>
   </ol>
@@ -77,8 +77,9 @@ static DetectFacesException? fromJson(jsonObject) {
 
   result._code = DetectFacesErrorCode.getByValue(jsonObject[&quot;code&quot;])!;
   result._message = jsonObject[&quot;message&quot;] ?? &quot;&quot;;
-  result._underlyingError =
-      DetectFacesBackendException.fromJson(jsonObject[&quot;underlyingError&quot;]);
+  result._underlyingError = DetectFacesBackendException.fromJson(
+    jsonObject[&quot;underlyingError&quot;],
+  );
 
   return result;
 }</code></pre>
@@ -95,7 +96,7 @@ static DetectFacesException? fromJson(jsonObject) {
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">flutter_face_api</a></li>
-    <li><a href="../../face_api/face_api-library.html">face_api</a></li>
+    <li><a href="../../face_api">face_api</a></li>
     <li><a href="../../face_api/DetectFacesException-class.html">DetectFacesException</a></li>
     <li class="self-crumb">fromJson static method</li>
 </ol>
@@ -109,7 +110,7 @@ static DetectFacesException? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.875
+      6.4.96
   </span>
   
 </footer>

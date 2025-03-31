@@ -42,7 +42,8 @@ class Person {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "name": name,
         "updatedAt": updatedAt.toString(),
         "groups": groups,

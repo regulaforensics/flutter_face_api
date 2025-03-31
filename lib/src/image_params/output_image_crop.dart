@@ -28,23 +28,25 @@ class OutputImageCrop {
     Size? size,
     Color? padColor,
     bool? returnOriginalRect,
-  })  : _type = type,
-        _size = size,
-        _padColor = padColor,
-        _returnOriginalRect = returnOriginalRect ?? false;
+  }) : _type = type,
+       _size = size,
+       _padColor = padColor,
+       _returnOriginalRect = returnOriginalRect ?? false;
 
   @visibleForTesting
   static OutputImageCrop? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     return OutputImageCrop(
-        OutputImageCropAspectRatio.getByValue(jsonObject["type"])!,
-        size: Size.fromJson(jsonObject["size"]),
-        padColor: _intToColor(jsonObject["padColor"]),
-        returnOriginalRect: jsonObject["returnOriginalRect"]);
+      OutputImageCropAspectRatio.getByValue(jsonObject["type"])!,
+      size: Size.fromJson(jsonObject["size"]),
+      padColor: _intToColor(jsonObject["padColor"]),
+      returnOriginalRect: jsonObject["returnOriginalRect"],
+    );
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "type": type.value,
         "size": size?.toJson(),
         "padColor": _intFromColor(padColor),

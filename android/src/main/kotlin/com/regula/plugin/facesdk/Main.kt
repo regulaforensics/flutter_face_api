@@ -1,9 +1,6 @@
-package io.flutter.plugins.regula.faceapi.flutter_face_api
+package com.regula.plugin.facesdk
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.os.Handler
-import android.os.Looper
+import com.regula.plugin.facesdk.Convert.toBase64
 import com.regula.common.LocalizationCallbacks
 import com.regula.facesdk.FaceSDK.Instance
 import com.regula.facesdk.callback.DetectFacesCompletion
@@ -22,111 +19,52 @@ import com.regula.facesdk.model.results.person.PageableItemList
 import com.regula.facesdk.model.results.person.Person
 import com.regula.facesdk.model.results.person.PersonGroup
 import com.regula.facesdk.model.results.person.SearchPerson
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.BinaryMessenger
-import io.flutter.plugin.common.EventChannel
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugins.regula.faceapi.flutter_face_api.Convert.toBase64
 import org.json.JSONArray
 import org.json.JSONObject
 
-class FlutterFaceApiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
-    override fun onAttachedToActivity(binding: ActivityPluginBinding) = attachedToActivity(binding)
-    override fun onDetachedFromActivityForConfigChanges() = Unit
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) = Unit
-    override fun onDetachedFromActivity() = Unit
-    override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) = attachedToEngine(binding, this)
-    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) = Unit
-    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) = methodCall(call, result)
-}
-
-fun attachedToActivity(binding: ActivityPluginBinding) = binding.activity.let { activity = it }
-fun attachedToEngine(binding: FlutterPlugin.FlutterPluginBinding, plugin: FlutterFaceApiPlugin) {
-    binaryMessenger = binding.binaryMessenger
-    for (event in arrayOf(
-        cameraSwitchEvent,
-        livenessNotificationEvent,
-        videoEncoderCompletionEvent,
-        onCustomButtonTappedEvent
-    )) setupEventChannel(event)
-    MethodChannel(binaryMessenger, "flutter_face_api/method").setMethodCallHandler(plugin)
-}
-
-fun sendEvent(id: String, data: Any? = "") {
-    eventSinks[id]?.let { Handler(Looper.getMainLooper()).post { it.success(data.toSendable()) } }
-}
-
-fun setupEventChannel(id: String) = EventChannel(binaryMessenger, "flutter_face_api/event/$id").setStreamHandler(object : EventChannel.StreamHandler {
-    override fun onListen(arguments: Any?, events: EventChannel.EventSink) = events.let { eventSinks[id] = it }
-    override fun onCancel(arguments: Any?) = Unit
-})
-
-inline fun <reified T> argsNullable(index: Int) = when (val v = args[index]) {
-    null -> null
-    is Map<*, *> -> v.toJson() as T
-    is List<*> -> v.toJson() as T
-    else -> v as T
-}
-
-lateinit var args: List<Any?>
-val eventSinks = mutableMapOf<String, EventChannel.EventSink?>()
-lateinit var binaryMessenger: BinaryMessenger
-
-fun methodCall(call: MethodCall, result: MethodChannel.Result) {
-    val method = call.method
-    args = call.arguments as List<*>
-    val callback = { data: Any? -> result.success(data.toSendable()) }
-    when (method) {
-        "getVersion" -> getVersion(callback)
-        "getServiceUrl" -> getServiceUrl(callback)
-        "setServiceUrl" -> setServiceUrl(argsNullable(0))
-        "setLocalizationDictionary" -> setLocalizationDictionary(args(0))
-        "setRequestHeaders" -> setRequestHeaders(args(0))
-        "setCustomization" -> setCustomization(args(0))
-        "isInitialized" -> isInitialized(callback)
-        "initialize" -> initialize(callback, argsNullable(0))
-        "deinitialize" -> deinitialize()
-        "startFaceCapture" -> startFaceCapture(callback, argsNullable(0))
-        "stopFaceCapture" -> stopFaceCapture()
-        "startLiveness" -> startLiveness(callback, argsNullable(0))
-        "stopLiveness" -> stopLiveness()
-        "matchFaces" -> matchFaces(callback, args(0), argsNullable(1))
-        "splitComparedFaces" -> splitComparedFaces(callback, args(0), args(1))
-        "detectFaces" -> detectFaces(callback, args(0))
-        "createPerson" -> createPerson(callback, args(0), argsNullable(1), argsNullable(2))
-        "updatePerson" -> updatePerson(callback, args(0))
-        "deletePerson" -> deletePerson(callback, args(0))
-        "getPerson" -> getPerson(callback, args(0))
-        "addPersonImage" -> addPersonImage(callback, args(0), args(1))
-        "deletePersonImage" -> deletePersonImage(callback, args(0), args(1))
-        "getPersonImage" -> getPersonImage(callback, args(0), args(1))
-        "getPersonImages" -> getPersonImages(callback, args(0))
-        "getPersonImagesForPage" -> getPersonImagesForPage(callback, args(0), args(1), args(2))
-        "createGroup" -> createGroup(callback, args(0), argsNullable(1))
-        "updateGroup" -> updateGroup(callback, args(0))
-        "editPersonsInGroup" -> editPersonsInGroup(callback, args(0), args(1))
-        "deleteGroup" -> deleteGroup(callback, args(0))
-        "getGroup" -> getGroup(callback, args(0))
-        "getGroups" -> getGroups(callback)
-        "getGroupsForPage" -> getGroupsForPage(callback, args(0), args(1))
-        "getPersonGroups" -> getPersonGroups(callback, args(0))
-        "getPersonGroupsForPage" -> getPersonGroupsForPage(callback, args(0), args(1), args(2))
-        "getPersonsInGroup" -> getPersonsInGroup(callback, args(0))
-        "getPersonsInGroupForPage" -> getPersonsInGroupForPage(callback, args(0), args(1), args(2))
-        "searchPerson" -> searchPerson(callback, args(0))
-    }
+fun methodCall(method: String, callback: (Any?) -> Unit): Any = when (method) {
+    "getVersion" -> getVersion(callback)
+    "getServiceUrl" -> getServiceUrl(callback)
+    "setServiceUrl" -> setServiceUrl(argsNullable(0))
+    "setLocalizationDictionary" -> setLocalizationDictionary(args(0))
+    "setRequestHeaders" -> setRequestHeaders(args(0))
+    "setCustomization" -> setCustomization(args(0))
+    "isInitialized" -> isInitialized(callback)
+    "initialize" -> initialize(callback, argsNullable(0))
+    "deinitialize" -> deinitialize()
+    "startFaceCapture" -> startFaceCapture(callback, argsNullable(0))
+    "stopFaceCapture" -> stopFaceCapture()
+    "startLiveness" -> startLiveness(callback, argsNullable(0))
+    "stopLiveness" -> stopLiveness()
+    "matchFaces" -> matchFaces(callback, args(0), argsNullable(1))
+    "splitComparedFaces" -> splitComparedFaces(callback, args(0), args(1))
+    "detectFaces" -> detectFaces(callback, args(0))
+    "createPerson" -> createPerson(callback, args(0), argsNullable(1), argsNullable(2))
+    "updatePerson" -> updatePerson(callback, args(0))
+    "deletePerson" -> deletePerson(callback, args(0))
+    "getPerson" -> getPerson(callback, args(0))
+    "addPersonImage" -> addPersonImage(callback, args(0), args(1))
+    "deletePersonImage" -> deletePersonImage(callback, args(0), args(1))
+    "getPersonImage" -> getPersonImage(callback, args(0), args(1))
+    "getPersonImages" -> getPersonImages(callback, args(0))
+    "getPersonImagesForPage" -> getPersonImagesForPage(callback, args(0), args(1), args(2))
+    "createGroup" -> createGroup(callback, args(0), argsNullable(1))
+    "updateGroup" -> updateGroup(callback, args(0))
+    "editPersonsInGroup" -> editPersonsInGroup(callback, args(0), args(1))
+    "deleteGroup" -> deleteGroup(callback, args(0))
+    "getGroup" -> getGroup(callback, args(0))
+    "getGroups" -> getGroups(callback)
+    "getGroupsForPage" -> getGroupsForPage(callback, args(0), args(1))
+    "getPersonGroups" -> getPersonGroups(callback, args(0))
+    "getPersonGroupsForPage" -> getPersonGroupsForPage(callback, args(0), args(1), args(2))
+    "getPersonsInGroup" -> getPersonsInGroup(callback, args(0))
+    "getPersonsInGroupForPage" -> getPersonsInGroupForPage(callback, args(0), args(1), args(2))
+    "searchPerson" -> searchPerson(callback, args(0))
+    else -> Unit
 }
 
 inline fun <reified T> args(index: Int) = argsNullable<T>(index)!!
 typealias Callback = (Any?) -> Unit
-
-@SuppressLint("StaticFieldLeak")
-lateinit var activity: Activity
-val context
-    get() = activity
 
 const val cameraSwitchEvent = "cameraSwitchEvent"
 const val livenessNotificationEvent = "livenessNotificationEvent"
@@ -191,11 +129,13 @@ fun stopLiveness() = Instance().stopLivenessProcessing(context)
 
 fun matchFaces(callback: Callback, request: JSONObject, config: JSONObject?) = config?.let {
     Instance().matchFaces(
+        context,
         matchFacesRequestFromJSON(request),
         matchFacesConfigFromJSON(it),
         matchFacesCompletion(callback)
     )
 } ?: Instance().matchFaces(
+    context,
     matchFacesRequestFromJSON(request),
     matchFacesCompletion(callback)
 )

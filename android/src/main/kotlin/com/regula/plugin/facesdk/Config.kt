@@ -1,4 +1,6 @@
-package io.flutter.plugins.regula.faceapi.flutter_face_api
+@file:Suppress("EnumValuesSoftDeprecate")
+
+package com.regula.plugin.facesdk
 
 import com.regula.facesdk.configuration.Customization
 import com.regula.facesdk.configuration.FaceCaptureConfiguration
