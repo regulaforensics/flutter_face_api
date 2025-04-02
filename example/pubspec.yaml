@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   flutter_face_api:
     path: ../
-  flutter_face_core_basic: 6.5.45-beta
+  flutter_face_core_basic: 6.5.63-nightly
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
