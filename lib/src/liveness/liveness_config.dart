@@ -64,7 +64,7 @@ class LivenessConfig {
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
     List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT
+      ScreenOrientation.PORTRAIT,
     ],
     bool locationTrackingEnabled = true,
     int attemptsCount = 0,
@@ -73,21 +73,21 @@ class LivenessConfig {
     String? tag,
     List<LivenessSkipStep> skipStep = const [],
     dynamic metadata,
-  })  : copyright = copyright,
-        cameraSwitchEnabled = cameraSwitchEnabled,
-        closeButtonEnabled = closeButtonEnabled,
-        torchButtonEnabled = torchButtonEnabled,
-        vibrateOnSteps = vibrateOnSteps,
-        cameraPositionAndroid = cameraPositionAndroid,
-        cameraPositionIOS = cameraPositionIOS,
-        screenOrientation = screenOrientation,
-        locationTrackingEnabled = locationTrackingEnabled,
-        attemptsCount = attemptsCount,
-        recordingProcess = recordingProcess,
-        livenessType = livenessType,
-        tag = tag,
-        skipStep = skipStep,
-        metadata = metadata;
+  }) : copyright = copyright,
+       cameraSwitchEnabled = cameraSwitchEnabled,
+       closeButtonEnabled = closeButtonEnabled,
+       torchButtonEnabled = torchButtonEnabled,
+       vibrateOnSteps = vibrateOnSteps,
+       cameraPositionAndroid = cameraPositionAndroid,
+       cameraPositionIOS = cameraPositionIOS,
+       screenOrientation = screenOrientation,
+       locationTrackingEnabled = locationTrackingEnabled,
+       attemptsCount = attemptsCount,
+       recordingProcess = recordingProcess,
+       livenessType = livenessType,
+       tag = tag,
+       skipStep = skipStep,
+       metadata = metadata;
 
   @visibleForTesting
   static LivenessConfig? fromJson(jsonObject) {
@@ -118,7 +118,8 @@ class LivenessConfig {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "copyright": copyright,
         "cameraSwitchEnabled": cameraSwitchEnabled,
         "closeButtonEnabled": closeButtonEnabled,

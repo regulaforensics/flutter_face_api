@@ -16,11 +16,9 @@ class OutputImageParams {
   Color? get backgroundColor => _backgroundColor;
   Color? _backgroundColor;
 
-  OutputImageParams({
-    OutputImageCrop? crop,
-    Color? backgroundColor,
-  })  : _crop = crop,
-        _backgroundColor = backgroundColor;
+  OutputImageParams({OutputImageCrop? crop, Color? backgroundColor})
+    : _crop = crop,
+      _backgroundColor = backgroundColor;
 
   @visibleForTesting
   static OutputImageParams? fromJson(jsonObject) {
@@ -34,7 +32,8 @@ class OutputImageParams {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "crop": crop?.toJson(),
         "backgroundColor": _intFromColor(backgroundColor),
       }.clearNulls();

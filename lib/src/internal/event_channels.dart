@@ -4,7 +4,9 @@ late CustomButtonTappedCompletion _customButtonTappedCompletion;
 void _setCustomButtonTappedCompletion(CustomButtonTappedCompletion completion) {
   _customButtonTappedCompletion = completion;
   _eventChannel(
-      'onCustomButtonTappedEvent', (msg) => _customButtonTappedCompletion(msg));
+    'onCustomButtonTappedEvent',
+    (msg) => _customButtonTappedCompletion(msg),
+  );
 }
 
 late VideoEncoderCompletion _videoEncoderCompletion;
@@ -20,7 +22,8 @@ void _setVideoEncoderCompletion(VideoEncoderCompletion completion) {
 
 LivenessNotificationCompletion? _livenessNotificationCompletion;
 void _setLivenessNotificationCompletion(
-    LivenessNotificationCompletion? completion) {
+  LivenessNotificationCompletion? completion,
+) {
   _livenessNotificationCompletion = completion;
   _eventChannel('livenessNotificationEvent', (msg) {
     var livenessNotification = LivenessNotification.fromJson(json.decode(msg))!;

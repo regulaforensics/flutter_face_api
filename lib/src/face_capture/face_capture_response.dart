@@ -21,8 +21,6 @@ class FaceCaptureResponse {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
-        "image": image?.toJson(),
-        "error": error?.toJson(),
-      }.clearNulls();
+  Map<String, dynamic> toJson() =>
+      {"image": image?.toJson(), "error": error?.toJson()}.clearNulls();
 }

@@ -31,7 +31,8 @@ class SearchPersonDetection {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "landmarks": landmarks.map((e) => e.toJson()),
         "rect": rect.toJson(),
         "crop": _bytesToBase64(crop),

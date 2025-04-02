@@ -7,8 +7,8 @@ class MatchFacesConfig {
   MatchFacesConfig({
     ProcessingMode processingMode = ProcessingMode.ONLINE,
     bool locationTrackingEnabled = true,
-  })  : processingMode = processingMode,
-        locationTrackingEnabled = locationTrackingEnabled;
+  }) : processingMode = processingMode,
+       locationTrackingEnabled = locationTrackingEnabled;
 
   @visibleForTesting
   static MatchFacesConfig? fromJson(jsonObject) {
@@ -23,7 +23,8 @@ class MatchFacesConfig {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "processingMode": processingMode.value,
         "locationTrackingEnabled": locationTrackingEnabled,
       }.clearNulls();
