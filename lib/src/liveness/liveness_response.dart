@@ -41,7 +41,8 @@ class LivenessResponse {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "image": _bytesToBase64(image),
         "liveness": liveness.value,
         "tag": tag,

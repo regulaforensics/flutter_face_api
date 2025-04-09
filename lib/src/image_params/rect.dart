@@ -29,10 +29,6 @@ class Rect {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
-        "left": left,
-        "top": top,
-        "right": right,
-        "bottom": bottom,
-      }.clearNulls();
+  Map<String, dynamic> toJson() =>
+      {"left": left, "top": top, "right": right, "bottom": bottom}.clearNulls();
 }

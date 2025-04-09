@@ -22,10 +22,10 @@ class DetectFacesConfig {
     List<ImageQualityCharacteristic>? customQuality,
     OutputImageParams? outputImageParams,
     bool onlyCentralFace = false,
-  })  : attributes = attributes,
-        customQuality = customQuality,
-        outputImageParams = outputImageParams,
-        onlyCentralFace = onlyCentralFace;
+  }) : attributes = attributes,
+       customQuality = customQuality,
+       outputImageParams = outputImageParams,
+       onlyCentralFace = onlyCentralFace;
 
   @visibleForTesting
   static DetectFacesConfig? fromJson(jsonObject) {
@@ -44,15 +44,17 @@ class DetectFacesConfig {
         result.customQuality!.add(ImageQualityCharacteristic.fromJson(item)!);
       }
     }
-    result.outputImageParams =
-        OutputImageParams.fromJson(jsonObject["outputImageParams"]);
+    result.outputImageParams = OutputImageParams.fromJson(
+      jsonObject["outputImageParams"],
+    );
     result.onlyCentralFace = jsonObject["onlyCentralFace"];
 
     return result;
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "attributes": attributes?.map((e) => e.value).toList(),
         "customQuality": customQuality?.map((e) => e.toJson()).toList(),
         "outputImageParams": outputImageParams?.toJson(),

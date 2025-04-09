@@ -226,12 +226,7 @@ class _FaceImage {
   /// All Group characteristics with default (recommended) values.
   /// Doesn't include characteristics without default values.
   List<ImageQualityCharacteristic> allRecommended() {
-    return [
-      blurLevel(),
-      noiseLevel(),
-      unnaturalSkinTone(),
-      faceDynamicRange(),
-    ];
+    return [blurLevel(), noiseLevel(), unnaturalSkinTone(), faceDynamicRange()];
   }
 }
 
@@ -356,12 +351,7 @@ class _ShadowsAndLightning {
   /// All Group characteristics with default (recommended) values.
   /// Doesn't include characteristics without default values.
   List<ImageQualityCharacteristic> allRecommended() {
-    return [
-      tooDark(),
-      tooLight(),
-      faceGlare(),
-      shadowsOnFace(),
-    ];
+    return [tooDark(), tooLight(), faceGlare(), shadowsOnFace()];
   }
 }
 
@@ -403,12 +393,7 @@ class _PoseAndExpression {
   /// All Group characteristics with default (recommended) values.
   /// Doesn't include characteristics without default values.
   List<ImageQualityCharacteristic> allRecommended() {
-    return [
-      shouldersPose(),
-      expressionLevel(),
-      mouthOpen(),
-      smile(),
-    ];
+    return [shouldersPose(), expressionLevel(), mouthOpen(), smile()];
   }
 }
 

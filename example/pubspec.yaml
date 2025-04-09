@@ -8,19 +8,19 @@ environment:
   flutter: '>=3.10.0'
 
 dependencies:
-  path_provider: ^2.1.2
-  image_picker: ^1.0.7
+  path_provider: ^2.1.5
+  image_picker: ^1.1.2
   flutter:
     sdk: flutter
   flutter_face_api:
     path: ../
-  flutter_face_core_basic: 6.3.149-rc
-  cupertino_icons: ^1.0.6
+  flutter_face_core_basic: 6.5.63-nightly
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lints: ^4.0.0
+  lints: ^5.0.0
 
 flutter:
   assets:

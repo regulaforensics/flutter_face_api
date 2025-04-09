@@ -7,9 +7,7 @@ class Size {
   int get height => _height;
   int _height;
 
-  Size(int width, int height)
-      : _width = width,
-        _height = height;
+  Size(int width, int height) : _width = width, _height = height;
 
   @visibleForTesting
   static Size? fromJson(jsonObject) {
@@ -18,8 +16,6 @@ class Size {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
-        "width": width,
-        "height": height,
-      }.clearNulls();
+  Map<String, dynamic> toJson() =>
+      {"width": width, "height": height}.clearNulls();
 }

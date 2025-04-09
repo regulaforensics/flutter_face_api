@@ -37,7 +37,8 @@ class PersonImage {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "path": path,
         "url": url,
         "contentType": contentType,

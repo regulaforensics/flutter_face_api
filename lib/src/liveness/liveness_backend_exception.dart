@@ -21,15 +21,16 @@ class LivenessBackendException {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
-        "code": code.value,
-        "message": message,
-      }.clearNulls();
+  Map<String, dynamic> toJson() =>
+      {"code": code.value, "message": message}.clearNulls();
 }
 
 enum LivenessBackendErrorCode {
   UNDEFINED(-1),
   NO_LICENSE(200),
+  NOT_INITIALIZED(201),
+  COMMAND_IS_NOT_SUPPORTED(202),
+  PARAMS_READ_ERROR(203),
   LOW_QUALITY(231),
   TRACK_BREAK(246),
   CLOSED_EYES_DETECTED(230),

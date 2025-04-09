@@ -25,10 +25,11 @@ class FaceCaptureImage {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "image": _bytesToBase64(image),
         "imageType": imageType.value,
-        "tag": tag
+        "tag": tag,
       }.clearNulls();
 }
 

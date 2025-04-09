@@ -1,0 +1,75 @@
+spec:
+  inputs:
+    stage:
+      default: reports
+    image:
+      default: ubuntu:22.04
+    ignore_vulnerabilities:
+      default: "false"
+    sast_report_file:
+      default: gl-sast-report.json
+    secret_detection_report_file:
+      default: gl-secret-detection-report.json
+    dependency_scanning_report_file:
+      default: gl-dependency-scanning-report.json
+---
+
+view reports:
+  image: $[[ inputs.image ]]
+  stage: $[[ inputs.stage ]]
+  variables:
+    IGNORE_VULNERABILITIES: $[[ inputs.ignore_vulnerabilities ]]
+    SAST_REPORT_FILE: $[[ inputs.sast_report_file ]]
+    SECRET_DETECTION_REPORT_FILE: $[[ inputs.secret_detection_report_file ]]
+    DEPENDENCY_SCANNING_REPORT_FILE: $[[ inputs.dependency_scanning_report_file ]]
+    RED: \033[0;31m
+    YELLOW: \033[1;33m
+    GREEN: \033[0;32m
+    NC: \033[0m
+  needs:
+    - job: semgrep-sast
+      artifacts: true
+    - job: secret_detection
+      artifacts: true
+    - job: gemnasium-dependency_scanning
+      artifacts: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - ls -la
+    - apt update && apt install -y jq
+    - |
+      for f in SAST_REPORT_FILE SECRET_DETECTION_REPORT_FILE DEPENDENCY_SCANNING_REPORT_FILE
+      do
+        if [[ -f "${!f}" ]]
+        then
+          echo -e "${GREEN}File ${!f} exists, adding report${NC}"
+          r=${f/%_FILE}
+          declare $r="$(cat ${!f} | jq 'select(.vulnerabilities != []).vulnerabilities')"
+          if [[ ! -z "${!r}" ]]
+          then
+            VULNERABILITIES_FOUND=true
+            echo -e "${RED}Found $r vulnerabilities${NC}"
+            echo "${!r}"
+            echo
+          fi
+        else
+          echo -e "${YELLOW}File ${!f} doesn't exist, skipping${NC}"
+        fi
+      done
+
+      if [[ "$VULNERABILITIES_FOUND" == true ]]
+      then
+        if [[ "$IGNORE_VULNERABILITIES" == true ]]
+        then
+          echo -e "${GREEN}All found vulnerabilities were ignored due to IGNORE_VULNERABILITIES=true${NC}"
+          exit 0
+        else
+          echo -e "${RED}Vulnerabilities found, please see reports above${NC}"
+          exit 1
+        fi
+      fi
+
+      echo -e "${GREEN}No vulnerabilities found${NC}"
+
+      exit 0
