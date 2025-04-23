@@ -12,9 +12,11 @@ class InitConfig {
   bool? get licenseUpdate => _licenseUpdate;
   bool? _licenseUpdate;
 
-  InitConfig(ByteData license, {bool? licenseUpdate})
-    : _license = license,
-      _licenseUpdate = licenseUpdate;
+  InitConfig(
+    ByteData license, {
+    bool? licenseUpdate,
+  })  : _license = license,
+        _licenseUpdate = licenseUpdate;
 
   @visibleForTesting
   static InitConfig? fromJson(jsonObject) {
@@ -27,8 +29,7 @@ class InitConfig {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "license": _dataToBase64(license),
         "licenseUpdate": licenseUpdate,
       }.clearNulls();

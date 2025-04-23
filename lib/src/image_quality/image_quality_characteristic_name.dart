@@ -64,8 +64,7 @@ enum ImageQualityCharacteristicName {
 
   static ImageQualityCharacteristicName? getByValue(String? i) {
     if (i == null) return null;
-    return ImageQualityCharacteristicName.values.firstWhere(
-      (x) => x.value == i,
-    );
+    return ImageQualityCharacteristicName.values
+        .firstWhere((x) => x.value == i);
   }
 }

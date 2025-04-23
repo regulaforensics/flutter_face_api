@@ -37,21 +37,21 @@ class FaceCaptureConfig {
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
     List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT,
+      ScreenOrientation.PORTRAIT
     ],
     double? timeout,
     double? holdStillDuration,
-  }) : copyright = copyright,
-       cameraSwitchEnabled = cameraSwitchEnabled,
-       closeButtonEnabled = closeButtonEnabled,
-       torchButtonEnabled = torchButtonEnabled,
-       vibrateOnSteps = vibrateOnSteps,
-       detectOcclusion = detectOcclusion,
-       cameraPositionAndroid = cameraPositionAndroid,
-       cameraPositionIOS = cameraPositionIOS,
-       screenOrientation = screenOrientation,
-       timeout = timeout,
-       holdStillDuration = holdStillDuration;
+  })  : copyright = copyright,
+        cameraSwitchEnabled = cameraSwitchEnabled,
+        closeButtonEnabled = closeButtonEnabled,
+        torchButtonEnabled = torchButtonEnabled,
+        vibrateOnSteps = vibrateOnSteps,
+        detectOcclusion = detectOcclusion,
+        cameraPositionAndroid = cameraPositionAndroid,
+        cameraPositionIOS = cameraPositionIOS,
+        screenOrientation = screenOrientation,
+        timeout = timeout,
+        holdStillDuration = holdStillDuration;
 
   @visibleForTesting
   static FaceCaptureConfig? fromJson(jsonObject) {
@@ -76,8 +76,7 @@ class FaceCaptureConfig {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "copyright": copyright,
         "cameraSwitchEnabled": cameraSwitchEnabled,
         "closeButtonEnabled": closeButtonEnabled,

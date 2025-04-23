@@ -1,17 +1,14 @@
 var useOldXcode = true;
 
-var img1 =
-    useOldXcode
-        ? "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAAD5Ip3+AAAADElEQVQIHWP4//8/AAX+Av6fyi0TAAAAAElFTkSuQmCC"
-        : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAGgAwAEAAAAAQAAAAEAAAAAChjw/QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxJREFUCB1j+P//PwAF/gL+n8otEwAAAABJRU5ErkJggg==";
-var img2 =
-    useOldXcode
-        ? "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAAD5Ip3+AAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="
-        : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAGgAwAEAAAAAQAAAAEAAAAAChjw/QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAtJREFUCB1jYAACAAAFAAGNu5vzAAAAAElFTkSuQmCC";
-var img3 =
-    useOldXcode
-        ? "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAAD5Ip3+AAAADUlEQVQIHWP4z8BQDwAEgAF/OENMJgAAAABJRU5ErkJggg=="
-        : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAGgAwAEAAAAAQAAAAEAAAAAChjw/QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAA1JREFUCB1j+M/AUA8ABIABfzhDTCYAAAAASUVORK5CYII=";
+var img1 = useOldXcode
+    ? "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAAD5Ip3+AAAADElEQVQIHWP4//8/AAX+Av6fyi0TAAAAAElFTkSuQmCC"
+    : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAGgAwAEAAAAAQAAAAEAAAAAChjw/QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxJREFUCB1j+P//PwAF/gL+n8otEwAAAABJRU5ErkJggg==";
+var img2 = useOldXcode
+    ? "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAAD5Ip3+AAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="
+    : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAGgAwAEAAAAAQAAAAEAAAAAChjw/QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAtJREFUCB1jYAACAAAFAAGNu5vzAAAAAElFTkSuQmCC";
+var img3 = useOldXcode
+    ? "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAAD5Ip3+AAAADUlEQVQIHWP4z8BQDwAEgAF/OENMJgAAAABJRU5ErkJggg=="
+    : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAGgAwAEAAAAAQAAAAEAAAAAChjw/QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAA1JREFUCB1j+M/AUA8ABIABfzhDTCYAAAAASUVORK5CYII=";
 
 var customJson = {"test1": true, "test2": 1, "test3": "test"};
 
@@ -76,24 +73,38 @@ var customization = {
   "colors": customizationColors,
   "fonts": customizationFonts,
   "images": customizationImages,
-  "uiCustomizationLayer": customJson,
+  "uiCustomizationLayer": customJson
 };
 
-var point = {"x": 0, "y": 1};
-var rect = {"left": 0, "top": 1, "right": 2, "bottom": 3};
-var size = {"width": 68, "height": 91};
+var point = {
+  "x": 0,
+  "y": 1,
+};
+var rect = {
+  "left": 0,
+  "top": 1,
+  "right": 2,
+  "bottom": 3,
+};
+var size = {
+  "width": 68,
+  "height": 91,
+};
 var outputImageCrop = {
   "type": 0,
   "size": size,
   "padColor": 0xff000000,
-  "returnOriginalRect": true,
+  "returnOriginalRect": true
 };
 var outputImageParams = {
   "crop": outputImageCrop,
   "backgroundColor": 0xff000000,
 };
 
-var imageQualityRange = {"min": 0.45, "max": 0.55};
+var imageQualityRange = {
+  "min": 0.45,
+  "max": 0.55,
+};
 var imageQualityResult = {
   "group": 1,
   "name": "ImageWidth",
@@ -118,7 +129,7 @@ var detectFaceResult = {
   "attributes": [
     detectFacesAttributeResult,
     detectFacesAttributeResult,
-    detectFacesAttributeResult,
+    detectFacesAttributeResult
   ],
   "landmarks": [point, point, point],
   "faceRect": rect,
@@ -130,7 +141,7 @@ var detectFacesConfig = {
   "customQuality": [
     imageQualityCharacteristic,
     imageQualityCharacteristic,
-    imageQualityCharacteristic,
+    imageQualityCharacteristic
   ],
   "outputImageParams": outputImageParams,
   "onlyCentralFace": true,
@@ -141,11 +152,14 @@ var detectFacesRequest = {
   "image": img1,
   "configuration": detectFacesConfig,
 };
-var detectFacesBackendException = {"code": 2, "message": "test"};
+var detectFacesBackendException = {
+  "code": 2,
+  "message": "test",
+};
 var detectFacesException = {
   "code": 0,
   "message": "In process already.",
-  "underlyingError": detectFacesBackendException,
+  "underlyingError": detectFacesBackendException
 };
 var detectFacesResponse = {
   "detection": detectFaceResult,
@@ -167,20 +181,37 @@ var faceCaptureConfig = {
   "timeout": 0.5,
   "holdStillDuration": 1.5,
 };
-var faceCaptureImage = {"image": img1, "imageType": 1, "tag": "test"};
-var faceCaptureException = {"code": 0, "message": "Cancelled by user."};
+var faceCaptureImage = {
+  "image": img1,
+  "imageType": 1,
+  "tag": "test",
+};
+var faceCaptureException = {
+  "code": 0,
+  "message": "Cancelled by user.",
+};
 var faceCaptureResponse = {
   "image": faceCaptureImage,
   "error": faceCaptureException,
 };
 
-var faceSDKVersion = {"api": "test1", "core": "test2", "coreMode": "test3"};
-var initConfig = {"license": img1, "licenseUpdate": true};
-var licenseException = {"code": 0, "message": ""};
+var faceSDKVersion = {
+  "api": "test1",
+  "core": "test2",
+  "coreMode": "test3",
+};
+var initConfig = {
+  "license": img1,
+  "licenseUpdate": true,
+};
+var licenseException = {
+  "code": 0,
+  "message": "",
+};
 var initException = {
   "code": 0,
   "message": "In process already.",
-  "underlyingError": licenseException,
+  "underlyingError": licenseException
 };
 
 var livenessConfig = {
@@ -200,11 +231,14 @@ var livenessConfig = {
   "skipStep": [0, 1],
   "metadata": customJson,
 };
-var livenessBackendException = {"code": 200, "message": "No license"};
+var livenessBackendException = {
+  "code": 200,
+  "message": "No license",
+};
 var livenessException = {
   "code": 0,
   "message": "FaceSDK Core is not initialized",
-  "underlyingError": livenessBackendException,
+  "underlyingError": livenessBackendException
 };
 var livenessResponse = {
   "image": img1,
@@ -214,14 +248,20 @@ var livenessResponse = {
   "estimatedAge": 1,
   "error": livenessException,
 };
-var livenessNotification = {"status": 0, "response": livenessResponse};
+var livenessNotification = {
+  "status": 0,
+  "response": livenessResponse,
+};
 
-var matchFacesConfig = {"processingMode": 0, "locationTrackingEnabled": false};
+var matchFacesConfig = {
+  "processingMode": 0,
+  "locationTrackingEnabled": false,
+};
 var matchFacesImage = {
   "image": img1,
   "imageType": 1,
   "detectAll": true,
-  "identifier": "test",
+  "identifier": "test"
 };
 var matchFacesRequest = {
   "images": [matchFacesImage, matchFacesImage, matchFacesImage],
@@ -249,7 +289,7 @@ var matchFacesDetection = {
   "faces": [
     matchFacesDetectionFace,
     matchFacesDetectionFace,
-    matchFacesDetectionFace,
+    matchFacesDetectionFace
   ],
   "error": matchFacesException,
 };

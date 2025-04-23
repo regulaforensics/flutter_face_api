@@ -22,5 +22,8 @@ class Point {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() => {"x": x, "y": y}.clearNulls();
+  Map<String, dynamic> toJson() => {
+        "x": x,
+        "y": y,
+      }.clearNulls();
 }

@@ -7,8 +7,8 @@ class EditGroupPersonsRequest {
   EditGroupPersonsRequest(
     List<String>? personIdsToAdd,
     List<String>? personIdsToRemove,
-  ) : _personIdsToAdd = personIdsToAdd,
-      _personIdsToRemove = personIdsToRemove;
+  )   : _personIdsToAdd = personIdsToAdd,
+        _personIdsToRemove = personIdsToRemove;
 
   @visibleForTesting
   static EditGroupPersonsRequest? fromJson(jsonObject) {
@@ -20,8 +20,7 @@ class EditGroupPersonsRequest {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "personIdsToAdd": _personIdsToAdd,
         "personIdsToRemove": _personIdsToRemove,
       }.clearNulls();

@@ -74,11 +74,10 @@
 static OutputImageCrop? fromJson(jsonObject) {
   if (jsonObject == null) return null;
   return OutputImageCrop(
-    OutputImageCropAspectRatio.getByValue(jsonObject[&quot;type&quot;])!,
-    size: Size.fromJson(jsonObject[&quot;size&quot;]),
-    padColor: _intToColor(jsonObject[&quot;padColor&quot;]),
-    returnOriginalRect: jsonObject[&quot;returnOriginalRect&quot;],
-  );
+      OutputImageCropAspectRatio.getByValue(jsonObject[&quot;type&quot;])!,
+      size: Size.fromJson(jsonObject[&quot;size&quot;]),
+      padColor: _intToColor(jsonObject[&quot;padColor&quot;]),
+      returnOriginalRect: jsonObject[&quot;returnOriginalRect&quot;]);
 }</code></pre>
 </section>
 
@@ -107,7 +106,7 @@ static OutputImageCrop? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.122-nightly
+      6.4.123-nightly
   </span>
   
 </footer>

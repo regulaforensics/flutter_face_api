@@ -34,8 +34,7 @@ class SearchPerson extends Person {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "images": images.map((e) => e.toJson()),
         "detection": detection?.toJson(),
         "name": name,

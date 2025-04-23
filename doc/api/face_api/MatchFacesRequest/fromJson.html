@@ -79,14 +79,11 @@ static MatchFacesRequest? fromJson(jsonObject) {
     images.add(MatchFacesImage.fromJson(item)!);
   }
 
-  return MatchFacesRequest(
-    images,
-    outputImageParams: OutputImageParams.fromJson(
-      jsonObject[&quot;outputImageParams&quot;],
-    ),
-    tag: jsonObject[&quot;tag&quot;],
-    metadata: jsonObject[&quot;metadata&quot;],
-  );
+  return MatchFacesRequest(images,
+      outputImageParams:
+          OutputImageParams.fromJson(jsonObject[&quot;outputImageParams&quot;]),
+      tag: jsonObject[&quot;tag&quot;],
+      metadata: jsonObject[&quot;metadata&quot;]);
 }</code></pre>
 </section>
 
@@ -115,7 +112,7 @@ static MatchFacesRequest? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.122-nightly
+      6.4.123-nightly
   </span>
   
 </footer>

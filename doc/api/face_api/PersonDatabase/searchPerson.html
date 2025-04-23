@@ -73,9 +73,10 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;(List&lt;SearchPerson&gt;?, String?)&gt; searchPerson(
   SearchPersonRequest request,
 ) async {
-  var response = await _bridge.invokeMethod(&quot;searchPerson&quot;, [
-    request.toJson(),
-  ]);
+  var response = await _bridge.invokeMethod(
+    &quot;searchPerson&quot;,
+    [request.toJson()],
+  );
 
   var jsonObject = _decode(response);
   List&lt;SearchPerson&gt;? data = null;
@@ -115,7 +116,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.122-nightly
+      6.4.123-nightly
   </span>
   
 </footer>

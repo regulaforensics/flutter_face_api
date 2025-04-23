@@ -18,9 +18,10 @@ class PersonDatabase {
   }
 
   Future<(bool, String?)> updatePerson(Person person) async {
-    var response = await _bridge.invokeMethod("updatePerson", [
-      person.toJson(),
-    ]);
+    var response = await _bridge.invokeMethod(
+      "updatePerson",
+      [person.toJson()],
+    );
     return _successResponseFromJson(response);
   }
 
@@ -91,12 +92,18 @@ class PersonDatabase {
     String name, {
     dynamic metadata,
   }) async {
-    var response = await _bridge.invokeMethod("createGroup", [name, metadata]);
+    var response = await _bridge.invokeMethod("createGroup", [
+      name,
+      metadata,
+    ]);
     return _itemResponseFromJson(response, PersonGroup.fromJson);
   }
 
   Future<(bool, String?)> updateGroup(PersonGroup group) async {
-    var response = await _bridge.invokeMethod("updateGroup", [group.toJson()]);
+    var response = await _bridge.invokeMethod(
+      "updateGroup",
+      [group.toJson()],
+    );
     return _successResponseFromJson(response);
   }
 
@@ -130,7 +137,10 @@ class PersonDatabase {
     int page,
     int size,
   ) async {
-    var response = await _bridge.invokeMethod("getGroupsForPage", [page, size]);
+    var response = await _bridge.invokeMethod("getGroupsForPage", [
+      page,
+      size,
+    ]);
     return _listResponseFromJson(response, PersonGroup.fromJson);
   }
 
@@ -177,9 +187,10 @@ class PersonDatabase {
   Future<(List<SearchPerson>?, String?)> searchPerson(
     SearchPersonRequest request,
   ) async {
-    var response = await _bridge.invokeMethod("searchPerson", [
-      request.toJson(),
-    ]);
+    var response = await _bridge.invokeMethod(
+      "searchPerson",
+      [request.toJson()],
+    );
 
     var jsonObject = _decode(response);
     List<SearchPerson>? data = null;

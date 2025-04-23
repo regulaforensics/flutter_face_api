@@ -196,8 +196,7 @@ class CustomizationColors {
   }
 
   /// Allows you to serialize object.
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "100": _intFromColor(_onboardingScreenStartButtonBackground),
         "101": _intFromColor(_onboardingScreenStartButtonTitle),
         "102": _intFromColor(_onboardingScreenBackground),

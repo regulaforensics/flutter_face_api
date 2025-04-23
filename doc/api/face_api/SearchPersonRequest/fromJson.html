@@ -79,9 +79,8 @@ static SearchPersonRequest? fromJson(jsonObject) {
     threshold: _toDouble(jsonObject[&quot;threshold&quot;]),
     limit: jsonObject[&quot;limit&quot;],
     detectAll: jsonObject[&quot;detectAll&quot;],
-    outputImageParams: OutputImageParams.fromJson(
-      jsonObject[&quot;outputImageParams&quot;],
-    ),
+    outputImageParams:
+        OutputImageParams.fromJson(jsonObject[&quot;outputImageParams&quot;]),
   );
 }</code></pre>
 </section>
@@ -111,7 +110,7 @@ static SearchPersonRequest? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.122-nightly
+      6.4.123-nightly
   </span>
   
 </footer>

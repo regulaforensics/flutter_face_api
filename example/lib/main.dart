@@ -127,35 +127,35 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget image(Image image, Function() onTap) => GestureDetector(
-    onTap: onTap,
-    child: Image(height: 150, width: 150, image: image.image),
-  );
+        onTap: onTap,
+        child: Image(height: 150, width: 150, image: image.image),
+      );
 
   Widget button(String text, Function() onPressed) {
     return Container(
-      child: textButton(
-        text,
-        onPressed,
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
-        ),
-      ),
+      child: textButton(text, onPressed,
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
+          )),
       width: 250,
     );
   }
 
   Widget text(String text) => Text(text, style: TextStyle(fontSize: 18));
   Widget textButton(String text, Function() onPressed, {ButtonStyle? style}) =>
-      TextButton(child: Text(text), onPressed: onPressed, style: style);
+      TextButton(
+        child: Text(text),
+        onPressed: onPressed,
+        style: style,
+      );
 
   setImageDialog(BuildContext context, int number) => showDialog(
-    context: context,
-    builder:
-        (BuildContext context) => AlertDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
           title: Text("Select option"),
           actions: [useGallery(number), useCamera(number)],
         ),
-  );
+      );
 
   @override
   Widget build(BuildContext bc) {
@@ -179,9 +179,9 @@ class _MyAppState extends State<MyApp> {
               children: [
                 text("Similarity: " + _similarityStatus),
                 Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
-                text("Liveness: " + _livenessStatus),
+                text("Liveness: " + _livenessStatus)
               ],
-            ),
+            )
           ],
         ),
       ),
