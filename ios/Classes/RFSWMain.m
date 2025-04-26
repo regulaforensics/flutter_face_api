@@ -153,7 +153,7 @@ static UIViewController*(^rootViewController)(void) = ^UIViewController*(){
                                   completion:[self detectFacesCompletion:callback]];
 }
 
-+(void)createPerson:(NSString*)name :(NSDictionary*)metadata :(NSArray<NSString*>*)groupIds :(RFSWCallback)callback {
++(void)createPerson:(NSString*)name :(NSArray<NSString*>*)groupIds :(NSDictionary*)metadata :(RFSWCallback)callback {
     [RFSFaceSDK.service.personDatabase createPersonWithName:name
                                                    metadata:metadata
                                                    groupIds:groupIds

@@ -57,7 +57,7 @@ class PersonDatabase {
     return _successResponseFromJson(response);
   }
 
-  Future<(PersonImage?, String?)> getPersonImage(
+  Future<(Uint8List?, String?)> getPersonImage(
     String personId,
     String imageId,
   ) async {
@@ -65,7 +65,10 @@ class PersonDatabase {
       personId,
       imageId,
     ]);
-    return _itemResponseFromJson(response, PersonImage.fromJson);
+    return _itemResponseFromJson(
+      response,
+      (data) => _bytesFromBase64(data as String?),
+    );
   }
 
   Future<(PageableItemList<PersonImage>, String?)> getPersonImages(
@@ -214,7 +217,7 @@ class PersonDatabase {
 
   (T?, String?) _itemResponseFromJson<T>(
     String jsonString,
-    T? Function(Map<String, dynamic>?) fromJSON,
+    T? Function(dynamic) fromJSON,
   ) {
     var jsonObject = _decode(jsonString);
     var data = fromJSON(jsonObject["data"]);
