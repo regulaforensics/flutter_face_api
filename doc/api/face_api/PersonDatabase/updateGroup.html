@@ -71,7 +71,10 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;(bool, String?)&gt; updateGroup(PersonGroup group) async {
-  var response = await _bridge.invokeMethod(&quot;updateGroup&quot;, [group.toJson()]);
+  var response = await _bridge.invokeMethod(
+    &quot;updateGroup&quot;,
+    [group.toJson()],
+  );
   return _successResponseFromJson(response);
 }</code></pre>
 </section>
@@ -101,7 +104,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.118-rc
+      7.1.133-rc
   </span>
   
 </footer>

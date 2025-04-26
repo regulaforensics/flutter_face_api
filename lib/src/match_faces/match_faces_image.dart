@@ -20,11 +20,14 @@ class MatchFacesImage {
   String get identifier => _identifier;
   String _identifier;
 
-  MatchFacesImage(Uint8List image, ImageType imageType, {bool? detectAll})
-    : _image = image,
-      _imageType = imageType,
-      _detectAll = detectAll ?? false,
-      _identifier = "";
+  MatchFacesImage(
+    Uint8List image,
+    ImageType imageType, {
+    bool? detectAll,
+  })  : _image = image,
+        _imageType = imageType,
+        _detectAll = detectAll ?? false,
+        _identifier = "";
 
   @visibleForTesting
   static MatchFacesImage? fromJson(jsonObject) {
@@ -40,11 +43,10 @@ class MatchFacesImage {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "image": _bytesToBase64(image),
         "imageType": imageType.value,
         "detectAll": detectAll,
-        "identifier": identifier,
+        "identifier": identifier
       }.clearNulls();
 }

@@ -3,6 +3,7 @@ package com.regula.plugin.facesdk
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.EventSink
@@ -40,7 +41,11 @@ class FlutterFaceApiPlugin : FlutterPlugin, MethodCallHandler {
     override fun onDetachedFromEngine(binding: FlutterPluginBinding) = Unit
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         args = call.arguments as List<*>
-        methodCall(call.method) { data -> result.success(data.toSendable()) }
+        try {
+            methodCall(call.method) { data -> result.success(data.toSendable()) }
+        } catch (error: Exception) {
+            Log.e("REGULA", "Caught exception in \"${call.method}\" function:", error)
+        }
     }
 
     override fun onAttachedToEngine(flutterBinding: FlutterPluginBinding) {

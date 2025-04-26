@@ -33,8 +33,7 @@ class SearchPersonImage extends PersonImage {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "similarity": similarity,
         "distance": distance,
         "path": path,

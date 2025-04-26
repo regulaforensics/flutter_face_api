@@ -23,10 +23,10 @@ class MatchFacesRequest {
     OutputImageParams? outputImageParams,
     String? tag,
     Map<String, dynamic>? metadata,
-  }) : _images = images,
-       _outputImageParams = outputImageParams,
-       _tag = tag,
-       _metadata = metadata;
+  })  : _images = images,
+        _outputImageParams = outputImageParams,
+        _tag = tag,
+        _metadata = metadata;
 
   @visibleForTesting
   static MatchFacesRequest? fromJson(jsonObject) {
@@ -37,19 +37,15 @@ class MatchFacesRequest {
       images.add(MatchFacesImage.fromJson(item)!);
     }
 
-    return MatchFacesRequest(
-      images,
-      outputImageParams: OutputImageParams.fromJson(
-        jsonObject["outputImageParams"],
-      ),
-      tag: jsonObject["tag"],
-      metadata: jsonObject["metadata"],
-    );
+    return MatchFacesRequest(images,
+        outputImageParams:
+            OutputImageParams.fromJson(jsonObject["outputImageParams"]),
+        tag: jsonObject["tag"],
+        metadata: jsonObject["metadata"]);
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "images": images.map((e) => e.toJson()).toList(),
         "outputImageParams": outputImageParams?.toJson(),
         "tag": tag,

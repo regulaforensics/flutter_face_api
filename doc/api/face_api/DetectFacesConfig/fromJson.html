@@ -87,9 +87,8 @@ static DetectFacesConfig? fromJson(jsonObject) {
       result.customQuality!.add(ImageQualityCharacteristic.fromJson(item)!);
     }
   }
-  result.outputImageParams = OutputImageParams.fromJson(
-    jsonObject[&quot;outputImageParams&quot;],
-  );
+  result.outputImageParams =
+      OutputImageParams.fromJson(jsonObject[&quot;outputImageParams&quot;]);
   result.onlyCentralFace = jsonObject[&quot;onlyCentralFace&quot;];
 
   return result;
@@ -121,7 +120,7 @@ static DetectFacesConfig? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.118-rc
+      7.1.133-rc
   </span>
   
 </footer>

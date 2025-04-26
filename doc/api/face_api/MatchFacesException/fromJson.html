@@ -77,9 +77,8 @@ static MatchFacesException? fromJson(jsonObject) {
 
   result._code = MatchFacesErrorCode.getByValue(jsonObject[&quot;code&quot;])!;
   result._message = jsonObject[&quot;message&quot;] ?? &quot;&quot;;
-  result._underlyingError = MatchFacesBackendException.fromJson(
-    jsonObject[&quot;underlyingError&quot;],
-  );
+  result._underlyingError =
+      MatchFacesBackendException.fromJson(jsonObject[&quot;underlyingError&quot;]);
 
   return result;
 }</code></pre>
@@ -110,7 +109,7 @@ static MatchFacesException? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.118-rc
+      7.1.133-rc
   </span>
   
 </footer>

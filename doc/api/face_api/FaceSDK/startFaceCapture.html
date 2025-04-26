@@ -76,9 +76,10 @@
   CameraSwitchCallback? cameraSwitchCallback,
 }) async {
   _setCameraSwitchCallback(cameraSwitchCallback);
-  var response = await _bridge.invokeMethod(&quot;startFaceCapture&quot;, [
-    config?.toJson(),
-  ]);
+  var response = await _bridge.invokeMethod(
+    &quot;startFaceCapture&quot;,
+    [config?.toJson()],
+  );
   return FaceCaptureResponse.fromJson(_decode(response))!;
 }</code></pre>
 </section>
@@ -108,7 +109,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.118-rc
+      7.1.133-rc
   </span>
   
 </footer>

@@ -34,8 +34,7 @@ class ComparedFace {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "imageIndex": imageIndex,
         "image": image.toJson(),
         "faceIndex": faceIndex,
