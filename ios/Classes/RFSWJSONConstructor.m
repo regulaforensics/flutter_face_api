@@ -80,6 +80,25 @@
     return @[];
 }
 
++(RFSScreenOrientation)screenOrienrationFromJSON:(NSArray<NSNumber*>*)input {
+    // same as input.contains(1)
+    bool portrait = CFArrayContainsValue((__bridge CFArrayRef)input, CFRangeMake(0, input.count), (CFNumberRef)@0);
+    bool landscape = CFArrayContainsValue((__bridge CFArrayRef)input, CFRangeMake(0, input.count), (CFNumberRef)@1);
+    
+    if (portrait && !landscape) return RFSScreenOrientationPortrait;
+    if (landscape && !portrait) return RFSScreenOrientationLandscape;
+    if (portrait && landscape) return RFSScreenOrientationPortrait | RFSScreenOrientationLandscape;
+    
+    return RFSScreenOrientationPortrait;
+}
+
++(NSArray<NSNumber*>*)generateScreenOrienration:(RFSScreenOrientation)input {
+    if(input == RFSScreenOrientationPortrait) return @[@0];
+    if(input == RFSScreenOrientationLandscape) return @[@1];
+    if(input == (RFSScreenOrientationPortrait | RFSScreenOrientationLandscape)) return @[@0, @1];
+    return @[@0];
+}
+
 +(id)colorWithInt:(NSNumber*)input {
     if (!input || [input isEqual:[NSNull null]])  return nil;
     // Convert hex int to hex string
