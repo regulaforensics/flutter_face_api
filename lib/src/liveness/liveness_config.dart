@@ -27,7 +27,7 @@ class LivenessConfig {
   /// IOS only.
   CameraPosition cameraPositionIOS;
 
-  /// Android only.
+  /// Allows you to specify an orientation of the camera view controller.
   List<ScreenOrientation> screenOrientation;
 
   /// Defines whether the liveness request sends a location of a device. Defaults to `true`.

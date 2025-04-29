@@ -1,4 +1,4 @@
-@file:Suppress("UNCHECKED_CAST", "EnumValuesSoftDeprecate")
+@file:Suppress("UNCHECKED_CAST", "EnumValuesSoftDeprecate", "UseKtx")
 
 package com.regula.plugin.facesdk
 
@@ -10,6 +10,8 @@ import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Base64
+import android.util.Log
+import com.regula.common.ble.BLEWrapper
 import com.regula.facesdk.configuration.Customization
 import com.regula.facesdk.enums.CustomizationColor
 import com.regula.facesdk.enums.CustomizationFont
@@ -283,5 +285,33 @@ internal object Convert {
         val width = (bitmap.width * density).toInt()
         val height = (bitmap.height * density).toInt()
         BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
+    }
+}
+
+fun getBleWrapper(): BLEWrapper? {
+    listOf(
+        "io.flutter.plugins.regula.documentreader.flutter_document_reader_api",
+        "cordova.plugin.documentreader",
+        "com.regula.documentreader"
+    ).forEach { packageName ->
+        getVarFromClass<BLEWrapper>(
+            packageName,
+            "BluetoothUtilKt",
+            "bluetooth"
+        )?.let { return it }
+    }
+    Log.e("REGULA", "Failed to get BLEWrapper from DocumentReader plugin")
+    return null
+}
+
+fun <T> getVarFromClass(packageName: String, className: String, varName: String): T? {
+    try {
+        val targetClass = Class.forName("$packageName.$className")
+        val field = targetClass.getDeclaredField(varName)
+        field.isAccessible = true
+        val result = field.get(null) as BLEWrapper?
+        return result as T?
+    } catch (_: Exception) {
+        return null
     }
 }

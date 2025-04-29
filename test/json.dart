@@ -175,6 +175,7 @@ var faceCaptureConfig = {
   "torchButtonEnabled": false,
   "vibrateOnSteps": true,
   "detectOcclusion": false,
+  "showFaceAnimation": true,
   "cameraPositionAndroid": 0,
   "cameraPositionIOS": 1,
   "screenOrientation": [0, 1],
@@ -203,6 +204,7 @@ var faceSDKVersion = {
 var initConfig = {
   "license": img1,
   "licenseUpdate": true,
+  "useBleDevice": false,
 };
 var licenseException = {
   "code": 0,

@@ -81,6 +81,7 @@ static FaceCaptureConfig? fromJson(jsonObject) {
   result.torchButtonEnabled = jsonObject[&quot;torchButtonEnabled&quot;];
   result.vibrateOnSteps = jsonObject[&quot;vibrateOnSteps&quot;];
   result.detectOcclusion = jsonObject[&quot;detectOcclusion&quot;];
+  result.showFaceAnimation = jsonObject[&quot;showFaceAnimation&quot;];
   result.cameraPositionAndroid = jsonObject[&quot;cameraPositionAndroid&quot;];
   result.cameraPositionIOS =
       CameraPosition.getByValue(jsonObject[&quot;cameraPositionIOS&quot;])!;
@@ -118,7 +119,7 @@ static FaceCaptureConfig? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.143-nightly
+      6.4.150-nightly
   </span>
   
 </footer>
