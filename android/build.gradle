@@ -20,7 +20,7 @@ android {
 
     dependencies {
         //noinspection GradleDependency
-        implementation('com.regula.face:api:6.4.3733'){
+        implementation('com.regula.face:api:6.4.3734'){
             transitive = true
         }
 
