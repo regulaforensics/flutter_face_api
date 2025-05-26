@@ -3,7 +3,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="FaceSDK"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="Flutter Face SDK"
