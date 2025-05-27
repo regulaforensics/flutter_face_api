@@ -133,21 +133,20 @@ class _MyAppState extends State<MyApp> {
 
   Widget button(String text, Function() onPressed) {
     return Container(
-      child: textButton(text, onPressed,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
-          )),
+      child: textButton(
+        text,
+        onPressed,
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all<Color>(Colors.black12),
+        ),
+      ),
       width: 250,
     );
   }
 
   Widget text(String text) => Text(text, style: TextStyle(fontSize: 18));
   Widget textButton(String text, Function() onPressed, {ButtonStyle? style}) =>
-      TextButton(
-        child: Text(text),
-        onPressed: onPressed,
-        style: style,
-      );
+      TextButton(child: Text(text), onPressed: onPressed, style: style);
 
   setImageDialog(BuildContext context, int number) => showDialog(
         context: context,
@@ -164,25 +163,27 @@ class _MyAppState extends State<MyApp> {
       body: Container(
         margin: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(bc).size.height / 8),
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            image(_uiImage1, () => setImageDialog(bc, 1)),
-            image(_uiImage2, () => setImageDialog(bc, 2)),
-            Container(margin: EdgeInsets.fromLTRB(0, 0, 0, 15)),
-            button("Match", () => matchFaces()),
-            button("Liveness", () => startLiveness()),
-            button("Clear", () => clearResults()),
-            Container(margin: EdgeInsets.fromLTRB(0, 15, 0, 0)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                text("Similarity: " + _similarityStatus),
-                Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
-                text("Liveness: " + _livenessStatus)
-              ],
-            )
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              image(_uiImage1, () => setImageDialog(bc, 1)),
+              image(_uiImage2, () => setImageDialog(bc, 2)),
+              SizedBox(height: 15),
+              button("Match", () => matchFaces()),
+              button("Liveness", () => startLiveness()),
+              button("Clear", () => clearResults()),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  text("Similarity: " + _similarityStatus),
+                  SizedBox(width: 20),
+                  text("Liveness: " + _livenessStatus),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
