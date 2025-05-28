@@ -12,7 +12,7 @@ $ flutter devices
 $ flutter run
 ```
 
-# How to use offine match
+# How to use offline match
 1. Place a license that supports offline match at `assets/regula.license`.
 2. Change core with the following commands:
 ```bash
