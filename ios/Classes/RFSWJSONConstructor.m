@@ -203,18 +203,8 @@
     return result;
 }
 
-+(id)faceSDKVersionFromJSON:(NSDictionary*)input {
-    if (!input || [input isEqual:[NSNull null]])  return nil;
-    RFSFaceSDKVersion* result = [RFSFaceSDKVersion new];
-    
-    [result setValue:input[@"api"] forKey:@"api"];
-    [result setValue:input[@"core"] forKey:@"core"];
-    [result setValue:input[@"coreMode"] forKey:@"coreMode"];
-    
-    return result;
-}
-
-+(id)generateFaceSDKVersion:(RFSFaceSDKVersion*)input {
+// No fromJSON and no tests for FaceSDKVersion because of its implementation.
++(id)generatec:(RFSFaceSDKVersion*)input {
     if (!input) return [NSNull null];
     NSMutableDictionary* result = @{}.mutableCopy;
     

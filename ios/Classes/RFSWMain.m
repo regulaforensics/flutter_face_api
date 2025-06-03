@@ -49,15 +49,7 @@
 
 static RFSWMain* this;
 static RFSWEventSender sendEvent;
-
 static NSDictionary* headers;
-
-static UIViewController*(^rootViewController)(void) = ^UIViewController*(){
-    for (UIWindow *window in UIApplication.sharedApplication.windows)
-        if (window.isKeyWindow)
-            return window.rootViewController;
-    return nil;
-};
 
 +(void)getVersion:(RFSWCallback)callback {
     callback([RFSWJSONConstructor generateFaceSDKVersion:RFSFaceSDK.service.version]);
