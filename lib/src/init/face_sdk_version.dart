@@ -28,6 +28,9 @@ class FaceSDKVersion {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {"api": api, "core": core, "coreMode": coreMode}.clearNulls();
+  Map<String, dynamic> toJson() => {
+        "api": api,
+        "core": core,
+        "coreMode": coreMode,
+      }.clearNulls();
 }

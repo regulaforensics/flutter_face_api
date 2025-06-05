@@ -19,16 +19,14 @@ class DetectFacesException {
 
     result._code = DetectFacesErrorCode.getByValue(jsonObject["code"])!;
     result._message = jsonObject["message"] ?? "";
-    result._underlyingError = DetectFacesBackendException.fromJson(
-      jsonObject["underlyingError"],
-    );
+    result._underlyingError =
+        DetectFacesBackendException.fromJson(jsonObject["underlyingError"]);
 
     return result;
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "code": code.value,
         "message": message,
         "underlyingError": underlyingError?.toJson(),

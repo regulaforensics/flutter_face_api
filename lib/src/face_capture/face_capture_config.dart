@@ -14,13 +14,16 @@ class FaceCaptureConfig {
   /// Enables 'remove occlusion' animation & hint.
   bool detectOcclusion;
 
+  /// Enables global face hint animation.
+  bool showFaceAnimation;
+
   /// Android only.
   int? cameraPositionAndroid;
 
   /// IOS only.
   CameraPosition cameraPositionIOS;
 
-  /// Android only.
+  /// Allows you to specify an orientation of the camera view controller.
   List<ScreenOrientation> screenOrientation;
 
   double? timeout;
@@ -34,24 +37,26 @@ class FaceCaptureConfig {
     bool torchButtonEnabled = true,
     bool vibrateOnSteps = true,
     bool detectOcclusion = true,
+    bool showFaceAnimation = true,
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
     List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT,
+      ScreenOrientation.PORTRAIT
     ],
     double? timeout,
     double? holdStillDuration,
-  }) : copyright = copyright,
-       cameraSwitchEnabled = cameraSwitchEnabled,
-       closeButtonEnabled = closeButtonEnabled,
-       torchButtonEnabled = torchButtonEnabled,
-       vibrateOnSteps = vibrateOnSteps,
-       detectOcclusion = detectOcclusion,
-       cameraPositionAndroid = cameraPositionAndroid,
-       cameraPositionIOS = cameraPositionIOS,
-       screenOrientation = screenOrientation,
-       timeout = timeout,
-       holdStillDuration = holdStillDuration;
+  })  : copyright = copyright,
+        cameraSwitchEnabled = cameraSwitchEnabled,
+        closeButtonEnabled = closeButtonEnabled,
+        torchButtonEnabled = torchButtonEnabled,
+        vibrateOnSteps = vibrateOnSteps,
+        detectOcclusion = detectOcclusion,
+        showFaceAnimation = showFaceAnimation,
+        cameraPositionAndroid = cameraPositionAndroid,
+        cameraPositionIOS = cameraPositionIOS,
+        screenOrientation = screenOrientation,
+        timeout = timeout,
+        holdStillDuration = holdStillDuration;
 
   @visibleForTesting
   static FaceCaptureConfig? fromJson(jsonObject) {
@@ -64,6 +69,7 @@ class FaceCaptureConfig {
     result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
     result.detectOcclusion = jsonObject["detectOcclusion"];
+    result.showFaceAnimation = jsonObject["showFaceAnimation"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
     result.cameraPositionIOS =
         CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
@@ -76,14 +82,14 @@ class FaceCaptureConfig {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "copyright": copyright,
         "cameraSwitchEnabled": cameraSwitchEnabled,
         "closeButtonEnabled": closeButtonEnabled,
         "torchButtonEnabled": torchButtonEnabled,
         "vibrateOnSteps": vibrateOnSteps,
         "detectOcclusion": detectOcclusion,
+        "showFaceAnimation": showFaceAnimation,
         "cameraPositionAndroid": cameraPositionAndroid,
         "cameraPositionIOS": cameraPositionIOS.value,
         "screenOrientation": screenOrientation.map((e) => e.value).toList(),

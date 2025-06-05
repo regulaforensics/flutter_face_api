@@ -2,6 +2,13 @@
 
 @implementation FlutterFaceApiPlugin
 
+UIViewController*(^RFSWRootViewController)(void) = ^UIViewController*(){
+    for (UIWindow *window in UIApplication.sharedApplication.windows)
+        if (window.isKeyWindow)
+            return window.rootViewController;
+    return nil;
+};
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     eventSinks = [NSMutableDictionary new];
     void(^setupEventChannel)(NSObject<FlutterPluginRegistrar>* registrar, NSString*eventId, NSObject<FlutterStreamHandler>*handler) = ^(NSObject<FlutterPluginRegistrar>* registrar, NSString*eventId, NSObject<FlutterStreamHandler>*handler) {

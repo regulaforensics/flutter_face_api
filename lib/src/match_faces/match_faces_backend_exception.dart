@@ -21,6 +21,8 @@ class MatchFacesBackendException {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {"code": code, "message": message}.clearNulls();
+  Map<String, dynamic> toJson() => {
+        "code": code,
+        "message": message,
+      }.clearNulls();
 }

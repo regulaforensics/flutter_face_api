@@ -25,8 +25,7 @@ class ComparedFacesSplit {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "matchedFaces": matchedFaces.map((e) => e.toJson()).toList(),
         "unmatchedFaces": unmatchedFaces.map((e) => e.toJson()).toList(),
       }.clearNulls();

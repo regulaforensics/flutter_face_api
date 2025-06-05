@@ -47,12 +47,11 @@ class Customization {
   }
 
   /// Allows you to serialize object.
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "colors": colors.toJson(),
         "fonts": fonts.toJson(),
         "images": images.toJson(),
-        "uiCustomizationLayer": uiCustomizationLayer,
+        "uiCustomizationLayer": uiCustomizationLayer
       }.clearNulls();
 
   void _set(Map<String, dynamic> json) {

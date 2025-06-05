@@ -35,8 +35,7 @@ class MatchFacesDetection {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "imageIndex": imageIndex,
         "image": image.toJson(),
         "faces": faces.map((e) => e.toJson()).toList(),

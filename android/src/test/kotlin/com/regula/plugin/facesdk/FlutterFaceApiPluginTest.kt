@@ -42,7 +42,7 @@ class FlutterFaceApiPluginTest {
     fun faceSDKVersion() = compare("faceSDKVersion", ::faceSDKVersionFromJSON, ::generateFaceSDKVersion)
 
     @Test
-    fun initConfig() = compare("initConfig", ::initConfigFromJSON, ::generateInitConfig)
+    fun initConfig() = compare("initConfig", ::initConfigFromJSON, ::generateInitConfig, "useBleDevice")
 
     @Test
     fun licenseException() = compare("licenseException", ::licenseExceptionFromJSON, ::generateLicenseException)
