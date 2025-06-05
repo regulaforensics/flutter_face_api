@@ -29,8 +29,7 @@ class ImageUpload {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "imageData": _bytesToBase64(_imageData),
         "imageUrl": _imageUrl,
       }.clearNulls();

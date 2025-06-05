@@ -127,9 +127,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget image(Image image, Function() onTap) => GestureDetector(
-    onTap: onTap,
-    child: Image(height: 150, width: 150, image: image.image),
-  );
+        onTap: onTap,
+        child: Image(height: 150, width: 150, image: image.image),
+      );
 
   Widget button(String text, Function() onPressed) {
     return Container(
@@ -149,13 +149,12 @@ class _MyAppState extends State<MyApp> {
       TextButton(child: Text(text), onPressed: onPressed, style: style);
 
   setImageDialog(BuildContext context, int number) => showDialog(
-    context: context,
-    builder:
-        (BuildContext context) => AlertDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
           title: Text("Select option"),
           actions: [useGallery(number), useCamera(number)],
         ),
-  );
+      );
 
   @override
   Widget build(BuildContext bc) {
@@ -164,25 +163,27 @@ class _MyAppState extends State<MyApp> {
       body: Container(
         margin: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.of(bc).size.height / 8),
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            image(_uiImage1, () => setImageDialog(bc, 1)),
-            image(_uiImage2, () => setImageDialog(bc, 2)),
-            Container(margin: EdgeInsets.fromLTRB(0, 0, 0, 15)),
-            button("Match", () => matchFaces()),
-            button("Liveness", () => startLiveness()),
-            button("Clear", () => clearResults()),
-            Container(margin: EdgeInsets.fromLTRB(0, 15, 0, 0)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                text("Similarity: " + _similarityStatus),
-                Container(margin: EdgeInsets.fromLTRB(20, 0, 0, 0)),
-                text("Liveness: " + _livenessStatus),
-              ],
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              image(_uiImage1, () => setImageDialog(bc, 1)),
+              image(_uiImage2, () => setImageDialog(bc, 2)),
+              SizedBox(height: 15),
+              button("Match", () => matchFaces()),
+              button("Liveness", () => startLiveness()),
+              button("Clear", () => clearResults()),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  text("Similarity: " + _similarityStatus),
+                  SizedBox(width: 20),
+                  text("Liveness: " + _livenessStatus),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

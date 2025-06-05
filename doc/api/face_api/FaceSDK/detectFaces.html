@@ -71,9 +71,10 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;DetectFacesResponse&gt; detectFaces(DetectFacesRequest request) async {
-  var response = await _bridge.invokeMethod(&quot;detectFaces&quot;, [
-    request.toJson(),
-  ]);
+  var response = await _bridge.invokeMethod(
+    &quot;detectFaces&quot;,
+    [request.toJson()],
+  );
   return DetectFacesResponse.fromJson(_decode(response))!;
 }</code></pre>
 </section>
@@ -103,7 +104,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

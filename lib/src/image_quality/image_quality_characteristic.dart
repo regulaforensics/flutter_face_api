@@ -12,10 +12,10 @@ class ImageQualityCharacteristic {
     ImageQualityRange? recommended,
     ImageQualityRange? custom,
     Color? color,
-  }) : _characteristicName = name,
-       _recommendedRange = recommended,
-       _customRange = custom,
-       _color = color;
+  })  : _characteristicName = name,
+        _recommendedRange = recommended,
+        _customRange = custom,
+        _color = color;
 
   ImageQualityCharacteristic withCustomRange(double min, double max) {
     _customRange = ImageQualityRange(min, max);
@@ -33,8 +33,7 @@ class ImageQualityCharacteristic {
 
     return ImageQualityCharacteristic._create(
       ImageQualityCharacteristicName.getByValue(
-        jsonObject["characteristicName"],
-      )!,
+          jsonObject["characteristicName"])!,
       recommended: ImageQualityRange.fromJson(jsonObject["recommendedRange"]),
       custom: ImageQualityRange.fromJson(jsonObject["customRange"]),
       color: _intToColor(jsonObject["color"]),
@@ -42,8 +41,7 @@ class ImageQualityCharacteristic {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "characteristicName": _characteristicName.value,
         "recommendedRange": _recommendedRange?.toJson(),
         "customRange": _customRange?.toJson(),

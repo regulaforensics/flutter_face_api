@@ -79,9 +79,10 @@
 }) async {
   _setLivenessNotificationCompletion(notificationCompletion);
   _setCameraSwitchCallback(cameraSwitchCallback);
-  var response = await _bridge.invokeMethod(&quot;startLiveness&quot;, [
-    config?.toJson(),
-  ]);
+  var response = await _bridge.invokeMethod(
+    &quot;startLiveness&quot;,
+    [config?.toJson()],
+  );
   return LivenessResponse.fromJson(_decode(response))!;
 }</code></pre>
 </section>
@@ -111,7 +112,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

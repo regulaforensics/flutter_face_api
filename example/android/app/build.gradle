@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.regula.faceapi"
+    namespace = "com.regula.documentreader.api.androidtest"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.regula.documentreader"
+        applicationId = "com.regula.documentreader.api.androidtest"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -26,6 +26,9 @@ android {
         release {
             signingConfig = signingConfigs.debug
         }
+    }
+    aaptOptions {
+        noCompress "Regula/faceSdkResource.dat"
     }
 }
 

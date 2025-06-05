@@ -14,7 +14,7 @@ Map<String, List<String>?> nullableMap = {
   "faceCaptureConfig": [
     "cameraPositionAndroid",
     "timeout",
-    "holdStillDuration",
+    "holdStillDuration"
   ],
   "faceCaptureResponse!": [],
   "faceSDKVersion!": [],

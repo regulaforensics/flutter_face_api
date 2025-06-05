@@ -76,8 +76,7 @@ static ImageQualityCharacteristic? fromJson(jsonObject) {
 
   return ImageQualityCharacteristic._create(
     ImageQualityCharacteristicName.getByValue(
-      jsonObject[&quot;characteristicName&quot;],
-    )!,
+        jsonObject[&quot;characteristicName&quot;])!,
     recommended: ImageQualityRange.fromJson(jsonObject[&quot;recommendedRange&quot;]),
     custom: ImageQualityRange.fromJson(jsonObject[&quot;customRange&quot;]),
     color: _intToColor(jsonObject[&quot;color&quot;]),
@@ -110,7 +109,7 @@ static ImageQualityCharacteristic? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

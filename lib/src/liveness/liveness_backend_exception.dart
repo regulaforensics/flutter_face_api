@@ -21,8 +21,10 @@ class LivenessBackendException {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {"code": code.value, "message": message}.clearNulls();
+  Map<String, dynamic> toJson() => {
+        "code": code.value,
+        "message": message,
+      }.clearNulls();
 }
 
 enum LivenessBackendErrorCode {
@@ -49,7 +51,15 @@ enum LivenessBackendErrorCode {
   ELECTRONIC_DEVICE_DETECTED(245),
   WRONG_GEO(247),
   WRONG_OF(248),
-  WRONG_VIEW(249);
+  WRONG_VIEW(249),
+  TIMEOUT_LIVENESS_TRANSACTION(250),
+  FAILED_LIVENESS_TRANSACTION(251),
+  ABORTED_LIVENESS_TRANSACTION(252),
+  GENERAL_CHECK_FAIL(253),
+  PASSIVE_LIVENESS_FAIL(254),
+  PRINTED_FACE_DETECTED(255),
+  BLOCKED_REQUEST(256),
+  CORRUPTED_REQUEST(257);
 
   const LivenessBackendErrorCode(this.value);
   final int value;

@@ -78,9 +78,8 @@ static DetectFacesRequest? fromJson(jsonObject) {
   result._tag = jsonObject[&quot;tag&quot;];
   result._scenario = DetectFacesScenario.getByValue(jsonObject[&quot;scenario&quot;]);
   result._image = _bytesFromBase64(jsonObject[&quot;image&quot;])!;
-  result._configuration = DetectFacesConfig.fromJson(
-    jsonObject[&quot;configuration&quot;],
-  );
+  result._configuration =
+      DetectFacesConfig.fromJson(jsonObject[&quot;configuration&quot;]);
 
   return result;
 }</code></pre>
@@ -111,7 +110,7 @@ static DetectFacesRequest? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

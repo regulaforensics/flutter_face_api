@@ -57,7 +57,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="../../face_api/PersonImage-class.html">PersonImage</a>?</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span></span>)</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation">dynamic</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span></span>)</span>&gt;</span></span>
 <span class="name ">getPersonImage</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getPersonImage-param-personId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">personId</span>, </span></li>
 <li><span class="parameter" id="getPersonImage-param-imageId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">imageId</span></span></li>
 </ol>)
@@ -71,7 +71,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;(PersonImage?, String?)&gt; getPersonImage(
+  <pre class="language-dart"><code class="language-dart">Future&lt;(Uint8List?, String?)&gt; getPersonImage(
   String personId,
   String imageId,
 ) async {
@@ -79,7 +79,10 @@
     personId,
     imageId,
   ]);
-  return _itemResponseFromJson(response, PersonImage.fromJson);
+  return _itemResponseFromJson(
+    response,
+    (data) =&gt; _bytesFromBase64(data as String?),
+  );
 }</code></pre>
 </section>
 
@@ -108,7 +111,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

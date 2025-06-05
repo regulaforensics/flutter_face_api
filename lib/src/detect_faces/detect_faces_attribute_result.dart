@@ -30,8 +30,7 @@ class DetectFacesAttributeResult {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "attribute": attribute.value,
         "confidence": confidence,
         "value": value,

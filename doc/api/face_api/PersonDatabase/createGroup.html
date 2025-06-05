@@ -75,7 +75,10 @@
   String name, {
   dynamic metadata,
 }) async {
-  var response = await _bridge.invokeMethod(&quot;createGroup&quot;, [name, metadata]);
+  var response = await _bridge.invokeMethod(&quot;createGroup&quot;, [
+    name,
+    metadata,
+  ]);
   return _itemResponseFromJson(response, PersonGroup.fromJson);
 }</code></pre>
 </section>
@@ -105,7 +108,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

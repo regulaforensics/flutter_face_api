@@ -56,8 +56,7 @@ class DetectFaceResult {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "quality": quality?.map((e) => e.toJson()).toList(),
         "crop": _bytesToBase64(crop),
         "attributes": attributes?.map((e) => e.toJson()).toList(),

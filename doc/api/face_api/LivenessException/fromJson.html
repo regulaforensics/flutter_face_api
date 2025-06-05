@@ -77,9 +77,8 @@ static LivenessException? fromJson(jsonObject) {
 
   result._code = LivenessErrorCode.getByValue(jsonObject[&quot;code&quot;])!;
   result._message = jsonObject[&quot;message&quot;] ?? &quot;&quot;;
-  result._underlyingError = LivenessBackendException.fromJson(
-    jsonObject[&quot;underlyingError&quot;],
-  );
+  result._underlyingError =
+      LivenessBackendException.fromJson(jsonObject[&quot;underlyingError&quot;]);
 
   return result;
 }</code></pre>
@@ -110,7 +109,7 @@ static LivenessException? fromJson(jsonObject) {
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

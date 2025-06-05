@@ -41,12 +41,8 @@ class Tests: XCTestCase {
     
     // init
     
-    func test_faceSDKVersion() {
-        compare(name: "faceSDKVersion", fromJson: RFSWJSONConstructor.faceSDKVersion, generate: RFSWJSONConstructor.generate)
-    }
-    
     func test_initConfig() {
-        compare(name: "initConfig", fromJson: RFSWJSONConstructor.initConfig, generate: RFSWJSONConstructor.generateInitConfig)
+        compare(name: "initConfig", fromJson: RFSWJSONConstructor.initConfig, generate: RFSWJSONConstructor.generateInitConfig, omit: ["useBleDevice"])
     }
     
     // detect_faces

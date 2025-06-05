@@ -41,8 +41,7 @@ class ComparedFacesPair {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "first": first.toJson(),
         "second": second.toJson(),
         "similarity": similarity,

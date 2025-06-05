@@ -12,24 +12,39 @@ class InitConfig {
   bool? get licenseUpdate => _licenseUpdate;
   bool? _licenseUpdate;
 
-  InitConfig(ByteData license, {bool? licenseUpdate})
-    : _license = license,
-      _licenseUpdate = licenseUpdate;
+  bool _useBleDevice = false;
+
+  /// Constructor for initialization using a ble device.
+  /// Doesn't need a license file, it will be fetched automatically from your ble device.
+  ///
+  /// Requires [DocumentReader](https://pub.dev/packages/flutter_document_reader_api) to be initialized with ble device.
+  InitConfig.withBleDevice() : _license = ByteData(0) {
+    _useBleDevice = true;
+  }
+
+  InitConfig(
+    ByteData license, {
+    bool? licenseUpdate,
+  })  : _license = license,
+        _licenseUpdate = licenseUpdate;
 
   @visibleForTesting
   static InitConfig? fromJson(jsonObject) {
     if (jsonObject == null) return null;
 
-    return InitConfig(
+    var result = InitConfig(
       _dataFromBase64(jsonObject["license"])!,
       licenseUpdate: jsonObject["licenseUpdate"],
     );
+    result._useBleDevice = jsonObject["useBleDevice"];
+
+    return result;
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "license": _dataToBase64(license),
         "licenseUpdate": licenseUpdate,
+        "useBleDevice": _useBleDevice,
       }.clearNulls();
 }

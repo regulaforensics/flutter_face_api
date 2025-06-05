@@ -72,9 +72,8 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static ImageQualityCharacteristicName? getByValue(String? i) {
   if (i == null) return null;
-  return ImageQualityCharacteristicName.values.firstWhere(
-    (x) =&gt; x.value == i,
-  );
+  return ImageQualityCharacteristicName.values
+      .firstWhere((x) =&gt; x.value == i);
 }</code></pre>
 </section>
 
@@ -103,7 +102,7 @@
 <footer>
   <span class="no-break">
     flutter_face_api
-      6.4.119
+      7.1.242
   </span>
   
 </footer>

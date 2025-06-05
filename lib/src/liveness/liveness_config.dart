@@ -27,7 +27,7 @@ class LivenessConfig {
   /// IOS only.
   CameraPosition cameraPositionIOS;
 
-  /// Android only.
+  /// Allows you to specify an orientation of the camera view controller.
   List<ScreenOrientation> screenOrientation;
 
   /// Defines whether the liveness request sends a location of a device. Defaults to `true`.
@@ -64,7 +64,7 @@ class LivenessConfig {
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
     List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT,
+      ScreenOrientation.PORTRAIT
     ],
     bool locationTrackingEnabled = true,
     int attemptsCount = 0,
@@ -73,21 +73,21 @@ class LivenessConfig {
     String? tag,
     List<LivenessSkipStep> skipStep = const [],
     dynamic metadata,
-  }) : copyright = copyright,
-       cameraSwitchEnabled = cameraSwitchEnabled,
-       closeButtonEnabled = closeButtonEnabled,
-       torchButtonEnabled = torchButtonEnabled,
-       vibrateOnSteps = vibrateOnSteps,
-       cameraPositionAndroid = cameraPositionAndroid,
-       cameraPositionIOS = cameraPositionIOS,
-       screenOrientation = screenOrientation,
-       locationTrackingEnabled = locationTrackingEnabled,
-       attemptsCount = attemptsCount,
-       recordingProcess = recordingProcess,
-       livenessType = livenessType,
-       tag = tag,
-       skipStep = skipStep,
-       metadata = metadata;
+  })  : copyright = copyright,
+        cameraSwitchEnabled = cameraSwitchEnabled,
+        closeButtonEnabled = closeButtonEnabled,
+        torchButtonEnabled = torchButtonEnabled,
+        vibrateOnSteps = vibrateOnSteps,
+        cameraPositionAndroid = cameraPositionAndroid,
+        cameraPositionIOS = cameraPositionIOS,
+        screenOrientation = screenOrientation,
+        locationTrackingEnabled = locationTrackingEnabled,
+        attemptsCount = attemptsCount,
+        recordingProcess = recordingProcess,
+        livenessType = livenessType,
+        tag = tag,
+        skipStep = skipStep,
+        metadata = metadata;
 
   @visibleForTesting
   static LivenessConfig? fromJson(jsonObject) {
@@ -118,8 +118,7 @@ class LivenessConfig {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "copyright": copyright,
         "cameraSwitchEnabled": cameraSwitchEnabled,
         "closeButtonEnabled": closeButtonEnabled,

@@ -21,8 +21,10 @@ class LivenessNotification {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {"status": status.value, "response": response?.toJson()}.clearNulls();
+  Map<String, dynamic> toJson() => {
+        "status": status.value,
+        "response": response?.toJson(),
+      }.clearNulls();
 }
 
 /// Liveness process statuses.

@@ -40,8 +40,7 @@ class ImageQualityResult {
   }
 
   @visibleForTesting
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "group": group.value,
         "name": name.value,
         "status": status.value,
