@@ -204,7 +204,7 @@
 }
 
 // No fromJSON and no tests for FaceSDKVersion because of its implementation.
-+(id)generatec:(RFSFaceSDKVersion*)input {
++(id)generateFaceSDKVersion:(RFSFaceSDKVersion*)input {
     if (!input) return [NSNull null];
     NSMutableDictionary* result = @{}.mutableCopy;
     
