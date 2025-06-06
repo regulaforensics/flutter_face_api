@@ -102,7 +102,7 @@ static NSDictionary* headers;
 
 +(void)startFaceCapture:(NSDictionary*)config :(RFSWCallback)callback {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [RFSFaceSDK.service presentFaceCaptureViewControllerFrom:rootViewController()
+        [RFSFaceSDK.service presentFaceCaptureViewControllerFrom:RFSWRootViewController()
                                                             animated:true
                                                        configuration:[RFSWConfig faceCaptureConfigFromJSON:config]
                                                            onCapture:[self faceCaptureCompletion:callback]
@@ -116,7 +116,7 @@ static NSDictionary* headers;
 
 +(void)startLiveness:(NSDictionary*)config :(RFSWCallback)callback {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [RFSFaceSDK.service startLivenessFrom:rootViewController()
+        [RFSFaceSDK.service startLivenessFrom:RFSWRootViewController()
                                                 animated:true
                                            configuration:[RFSWConfig livenessConfigFromJSON:config]
                                               onLiveness:[self livenessCompletion:callback]

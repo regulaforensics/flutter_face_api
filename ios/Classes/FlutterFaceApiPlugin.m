@@ -2,7 +2,7 @@
 
 @implementation FlutterFaceApiPlugin
 
-UIViewController*(^rootViewController)(void) = ^UIViewController*(){
+UIViewController*(^RFSWRootViewController)(void) = ^UIViewController*(){
     for (UIWindow *window in UIApplication.sharedApplication.windows)
         if (window.isKeyWindow)
             return window.rootViewController;
