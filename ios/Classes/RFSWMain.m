@@ -49,15 +49,7 @@
 
 static RFSWMain* this;
 static RFSWEventSender sendEvent;
-
 static NSDictionary* headers;
-
-static UIViewController*(^rootViewController)(void) = ^UIViewController*(){
-    for (UIWindow *window in UIApplication.sharedApplication.windows)
-        if (window.isKeyWindow)
-            return window.rootViewController;
-    return nil;
-};
 
 +(void)getVersion:(RFSWCallback)callback {
     callback([RFSWJSONConstructor generateFaceSDKVersion:RFSFaceSDK.service.version]);
@@ -110,7 +102,7 @@ static UIViewController*(^rootViewController)(void) = ^UIViewController*(){
 
 +(void)startFaceCapture:(NSDictionary*)config :(RFSWCallback)callback {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [RFSFaceSDK.service presentFaceCaptureViewControllerFrom:rootViewController()
+        [RFSFaceSDK.service presentFaceCaptureViewControllerFrom:RFSWRootViewController()
                                                             animated:true
                                                        configuration:[RFSWConfig faceCaptureConfigFromJSON:config]
                                                            onCapture:[self faceCaptureCompletion:callback]
@@ -124,7 +116,7 @@ static UIViewController*(^rootViewController)(void) = ^UIViewController*(){
 
 +(void)startLiveness:(NSDictionary*)config :(RFSWCallback)callback {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [RFSFaceSDK.service startLivenessFrom:rootViewController()
+        [RFSFaceSDK.service startLivenessFrom:RFSWRootViewController()
                                                 animated:true
                                            configuration:[RFSWConfig livenessConfigFromJSON:config]
                                               onLiveness:[self livenessCompletion:callback]
