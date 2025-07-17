@@ -4,7 +4,7 @@ description:
   It allows you to easily compaire faces using your phone's camera. Supports Android and iOS.
 repository: https://github.com/regulaforensics/flutter_face_api
 issue_tracker: https://github.com/regulaforensics/flutter_face_api/issues
-version: 7.1.309-rc
+version: 7.1.311-rc
 
 environment:
   sdk: '>=3.1.5 <4.0.0'
