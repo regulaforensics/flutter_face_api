@@ -100,6 +100,31 @@ class FaceSDK {
     _setServiceUrl(val);
   }
 
+  /// Customer name.
+  String? get tenant => _tenant;
+  String? _tenant;
+  set tenant(String? val) {
+    _tenant = val;
+    _setTenant(val);
+  }
+
+  /// Environment type.
+  String? get env => _env;
+  String? _env;
+  set env(String? val) {
+    _env = val;
+    _setEnv(val);
+  }
+
+  /// Custom language locale code of DocumentReaderSDK.
+  /// If empty or doesn't exist - app language is used. Format "en-US" or "en".
+  String? get locale => _locale;
+  String? _locale;
+  set locale(String? val) {
+    _locale = val;
+    _setLocale(val);
+  }
+
   /// A localization dictionary to override default localization logic.
   /// Allows to replace any string of FaceSDK with an arbitrary string.
   ///
@@ -236,6 +261,9 @@ class FaceSDK {
   Future<void> _onInit() async {
     _version = await _getVersion();
     _serviceUrl = await _getServiceUrl();
+    _tenant = await _getTenant();
+    _env = await _getEnv();
+    _locale = await _getLocale();
   }
 
   Future<FaceSDKVersion?> _getVersion() async {
@@ -249,6 +277,30 @@ class FaceSDK {
 
   void _setServiceUrl(String? url) {
     _bridge.invokeMethod("setServiceUrl", [url]);
+  }
+
+  Future<String?> _getTenant() async {
+    return await _bridge.invokeMethod("getTenant", []);
+  }
+
+  void _setTenant(String? tag) {
+    _bridge.invokeMethod("setTenant", [tag]);
+  }
+
+  Future<String?> _getEnv() async {
+    return await _bridge.invokeMethod("getEnv", []);
+  }
+
+  void _setEnv(String? tag) {
+    _bridge.invokeMethod("setEnv", [tag]);
+  }
+
+  Future<String?> _getLocale() async {
+    return await _bridge.invokeMethod("getLocale", []);
+  }
+
+  void _setLocale(String? locale) {
+    _bridge.invokeMethod("setLocale", [locale]);
   }
 
   void _setLocalizationDictionary(Map<String, String>? dictionary) {

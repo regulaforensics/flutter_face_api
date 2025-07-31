@@ -281,16 +281,15 @@
 
 +(id)livenessResponseFromJSON:(NSDictionary*)input {
     RFSLivenessResponse* result = [RFSLivenessResponse alloc];
-    SEL sel = NSSelectorFromString(@"initWithTag:transactionId:estimatedAge:status:normalImage:scaledImage:error:");
+    SEL sel = NSSelectorFromString(@"initWithTag:transactionId:estimatedAge:status:image:error:");
     IMP imp = [result methodForSelector:sel];
-    void (*func)(id, SEL, id, id, id, NSInteger, id, id, id) = (void *)imp;
+    void (*func)(id, SEL, id, id, id, NSInteger, id, id) = (void *)imp;
     func(result,
          sel,
          input[@"tag"],
          input[@"transactionId"],
          input[@"estimatedAge"],
          [input[@"liveness"] integerValue],
-         [self imageWithBase64:input[@"image"]],
          [self imageWithBase64:input[@"image"]],
          nil);
     return result;
