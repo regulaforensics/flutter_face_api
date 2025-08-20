@@ -6,6 +6,7 @@ class SearchPersonRequest {
   List<String>? _groupIdsForSearch;
   double? _threshold;
   int? _limit;
+  String? _tag;
   bool _detectAll;
   OutputImageParams? _outputImageParams;
 
@@ -23,6 +24,9 @@ class SearchPersonRequest {
   /// `limit` - The number of returned Persons limit.
   /// Default: 100.
   ///
+  /// `tag` - Defines tag that can be used in search request.
+  /// Default: null.
+  ///
   /// `detectAll` - Whether to process only the one face on the image or all the faces.
   /// Default: `false`.
   ///
@@ -32,12 +36,14 @@ class SearchPersonRequest {
     List<String>? groupIdsForSearch,
     double? threshold,
     int? limit,
+    String? tag,
     bool detectAll = false,
     OutputImageParams? outputImageParams,
   })  : _imageUpload = image,
         _groupIdsForSearch = groupIdsForSearch,
         _threshold = threshold,
         _limit = limit,
+        _tag = tag,
         _detectAll = detectAll,
         _outputImageParams = outputImageParams;
 
@@ -49,6 +55,7 @@ class SearchPersonRequest {
       groupIdsForSearch: _stringListFrom(jsonObject["groupIdsForSearch"]),
       threshold: _toDouble(jsonObject["threshold"]),
       limit: jsonObject["limit"],
+      tag: jsonObject["tag"],
       detectAll: jsonObject["detectAll"],
       outputImageParams:
           OutputImageParams.fromJson(jsonObject["outputImageParams"]),
@@ -61,6 +68,7 @@ class SearchPersonRequest {
         "groupIdsForSearch": _groupIdsForSearch,
         "threshold": _threshold,
         "limit": _limit,
+        "tag": _tag,
         "detectAll": _detectAll,
         "outputImageParams": _outputImageParams?.toJson(),
       }.clearNulls();

@@ -52,7 +52,6 @@
 +(RFSImageQualityCharacteristic* _Nonnull)imageQualityCharacteristicFromJSON:(id _Nonnull)input;
 +(NSDictionary<NSString*, id>* _Nonnull)generateImageQualityCharacteristic:(RFSImageQualityCharacteristic* _Nonnull)input;
 
-+(RFSFaceSDKVersion* _Nonnull)faceSDKVersionFromJSON:(id _Nonnull)input;
 +(NSDictionary<NSString*, id>* _Nonnull)generateFaceSDKVersion:(RFSFaceSDKVersion* _Nonnull)input;
 
 +(RFSInitializationConfiguration* _Nonnull)initConfigFromJSON:(id _Nonnull)input;

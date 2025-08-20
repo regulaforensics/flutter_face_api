@@ -283,16 +283,16 @@ class FaceSDK {
     return await _bridge.invokeMethod("getTenant", []);
   }
 
-  void _setTenant(String? tag) {
-    _bridge.invokeMethod("setTenant", [tag]);
+  void _setTenant(String? tenant) {
+    _bridge.invokeMethod("setTenant", [tenant]);
   }
 
   Future<String?> _getEnv() async {
     return await _bridge.invokeMethod("getEnv", []);
   }
 
-  void _setEnv(String? tag) {
-    _bridge.invokeMethod("setEnv", [tag]);
+  void _setEnv(String? env) {
+    _bridge.invokeMethod("setEnv", [env]);
   }
 
   Future<String?> _getLocale() async {
