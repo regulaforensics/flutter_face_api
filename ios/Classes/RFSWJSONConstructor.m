@@ -281,16 +281,15 @@
 
 +(id)livenessResponseFromJSON:(NSDictionary*)input {
     RFSLivenessResponse* result = [RFSLivenessResponse alloc];
-    SEL sel = NSSelectorFromString(@"initWithTag:transactionId:estimatedAge:status:normalImage:scaledImage:error:");
+    SEL sel = NSSelectorFromString(@"initWithTag:transactionId:estimatedAge:status:image:error:");
     IMP imp = [result methodForSelector:sel];
-    void (*func)(id, SEL, id, id, id, NSInteger, id, id, id) = (void *)imp;
+    void (*func)(id, SEL, id, id, id, NSInteger, id, id) = (void *)imp;
     func(result,
          sel,
          input[@"tag"],
          input[@"transactionId"],
          input[@"estimatedAge"],
          [input[@"liveness"] integerValue],
-         [self imageWithBase64:input[@"image"]],
          [self imageWithBase64:input[@"image"]],
          nil);
     return result;
@@ -883,6 +882,7 @@
                                                                           imageUpload:[self imageUploadFromJSON:input[@"imageUpload"]]];
     result.threshold = input[@"threshold"];
     result.limit = input[@"limit"];
+    result.tag = input[@"tag"];
     if (input[@"detectAll"] && ![input[@"detectAll"] isEqual:[NSNull null]]) result.detectAll = [input[@"detectAll"] boolValue];
     result.outputImageParams = [self outputImageParamsFromJSON:input[@"outputImageParams"]];
     return result;
@@ -896,6 +896,7 @@
     }.mutableCopy;
     if (input.threshold) result[@"threshold"] = input.threshold;
     if (input.limit) result[@"limit"] = input.limit;
+    if (input.tag) result[@"tag"] = input.tag;
     if (input.groupIdsForSearch) result[@"groupIdsForSearch"] = input.groupIdsForSearch;
     if (input.outputImageParams) result[@"outputImageParams"] = [self generateOutputImageParams:input.outputImageParams];
     return result;
