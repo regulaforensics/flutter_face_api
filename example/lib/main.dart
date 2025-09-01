@@ -248,7 +248,7 @@ class MyAppState extends State<MyApp> {
           ...customHeader(),
           Expanded(
             child: Padding(
-              padding: EdgeInsetsGeometry.fromLTRB(10, 0, 10, 35),
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 35),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: ui(),
