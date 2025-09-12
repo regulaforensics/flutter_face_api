@@ -9,6 +9,12 @@
         @"getVersion": ^{ [self getVersion :callback]; },
         @"getServiceUrl": ^{ [self getServiceUrl :callback]; },
         @"setServiceUrl": ^{ [self setServiceUrl :args[0] :callback]; },
+        @"getTenant": ^{ [self getTenant :callback]; },
+        @"setTenant": ^{ [self setTenant :args[0]]; },
+        @"getEnv": ^{ [self getEnv :callback]; },
+        @"setEnv": ^{ [self setEnv :args[0]]; },
+        @"getLocale": ^{ [self getLocale :callback]; },
+        @"setLocale": ^{ [self setLocale :args[0]]; },
         @"setLocalizationDictionary": ^{ [self setLocalizationDictionary :args[0]]; },
         @"setRequestHeaders": ^{ [self setRequestHeaders :args[0]]; },
         @"setCustomization": ^{ [self setCustomization :args[0]]; },
@@ -62,6 +68,30 @@ static NSDictionary* headers;
 +(void)setServiceUrl:(NSString*)url :(RFSWCallback)callback {
     [RFSFaceSDK.service setServiceURL:url];
     callback(@"");
+}
+
++(void)getTenant:(RFSWCallback)callback {
+    callback([RFSFaceSDK.service tenant]);
+}
+
++(void)setTenant:(NSString*)tag {
+    [RFSFaceSDK.service setTenant:tag];
+}
+
++(void)getEnv:(RFSWCallback)callback {
+    callback([RFSFaceSDK.service env]);
+}
+
++(void)setEnv:(NSString*)tag {
+    [RFSFaceSDK.service setEnv:tag];
+}
+
++(void)getLocale:(RFSWCallback)callback {
+    callback([RFSFaceSDK.service languageLocaleCode]);
+}
+
++(void)setLocale:(NSString*)locale {
+    [RFSFaceSDK.service setLanguageLocaleCode:locale];
 }
 
 +(void)setLocalizationDictionary:(NSDictionary*)dictionary {
