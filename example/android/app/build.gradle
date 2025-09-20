@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.regula.documentreader.api.androidtest"
+    namespace = "com.regula.example.face.flutter"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.regula.documentreader.api.androidtest"
+        applicationId = "com.regula.example.face.flutter"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
