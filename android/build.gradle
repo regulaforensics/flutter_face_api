@@ -13,10 +13,10 @@ apply plugin: 'kotlin-android'
 
 android {
     namespace 'com.regula.plugin.facesdk'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
-        minSdk 21
+        minSdk 24
     }
 
     compileOptions {
@@ -28,7 +28,7 @@ android {
     }
 
     dependencies {
-        implementation('com.regula.face:api:7.1.3999') {
+        implementation('com.regula.face:api:7.1.4006') {
             transitive = true
         }
 
