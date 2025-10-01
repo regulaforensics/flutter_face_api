@@ -30,6 +30,12 @@ fun methodCall(method: String, callback: (Any?) -> Unit): Any = when (method) {
     "getVersion" -> getVersion(callback)
     "getServiceUrl" -> getServiceUrl(callback)
     "setServiceUrl" -> setServiceUrl(argsNullable(0))
+    "getTenant" -> getTenant(callback)
+    "setTenant" -> setTenant(argsNullable(0))
+    "getEnv" -> getEnv(callback)
+    "setEnv" -> setEnv(argsNullable(0))
+    "getLocale" -> getLocale(callback)
+    "setLocale" -> setLocale(argsNullable(0))
     "setLocalizationDictionary" -> setLocalizationDictionary(args(0))
     "setRequestHeaders" -> setRequestHeaders(args(0))
     "setCustomization" -> setCustomization(args(0))
@@ -80,6 +86,18 @@ fun getVersion(callback: Callback) = callback(generateFaceSDKVersion(Instance().
 fun getServiceUrl(callback: Callback) = callback(Instance().serviceUrl)
 
 fun setServiceUrl(url: String?) = url.let { Instance().serviceUrl = it }
+
+fun getTenant(callback: Callback) = callback(Instance().tenant)
+
+fun setTenant(tag: String?) = tag.let { Instance().tenant = it }
+
+fun getEnv(callback: Callback) = callback(Instance().env)
+
+fun setEnv(tag: String?) = tag.let { Instance().env = it }
+
+fun getLocale(callback: Callback) = callback(Instance().locale)
+
+fun setLocale(locale: String?) = locale.let { Instance().locale = it }
 
 fun setLocalizationDictionary(dictionary: JSONObject) {
     localizationCallbacks = LocalizationCallbacks { if (dictionary.has(it)) dictionary.getString(it) else null }

@@ -377,6 +377,7 @@ var searchPersonRequest = {
   "groupIdsForSearch": ["test1", "test2", "test3"],
   "threshold": 0.5,
   "limit": 1,
+  "tag": "test",
   "detectAll": true,
   "outputImageParams": outputImageParams,
 };
