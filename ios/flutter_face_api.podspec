@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_face_api'
-  s.version          = '8.1.463-nightly'
+  s.version          = '7.2.464-nightly'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
