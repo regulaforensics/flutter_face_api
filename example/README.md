@@ -1,7 +1,7 @@
 # How to build the demo application
 
 1. Download or the clone current repository using the command `git clone https://github.com/regulaforensics/flutter_face_api.git.git`.
-2. Execute `flutter pub get` within this directory.
+2. Execute `flutter pub get && (cd ios && pod install || pod update)` within this directory.
 3. Run the app: `flutter run`.
 
 # How to use offline match
