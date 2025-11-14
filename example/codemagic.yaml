@@ -1,0 +1,32 @@
+workflows:
+  ios-build:
+    name: iOS Build
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install Flutter dependencies
+        script: flutter pub get
+
+      - name: Install pods
+        script: | 
+          find . -name "Podfile" -execdir pod install \;
+
+      - name: Build iOS app
+        script: flutter build ios --no-codesign
+
+      - name: Zip the Runner.app
+        script: |
+          cd build/ios/iphoneos
+          zip -r Runner.app.zip Runner.app
+
+    artifacts:
+      - build/ios/iphoneos/Runner.app.zip
+
+    publishing:
+      email:
+        recipients:
+          - andhikawahuy@gmail.com
