@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter_face_api/flutter_face_api.dart';
 import 'package:image_picker/image_picker.dart';
 
+void main() => runApp(new MaterialApp(home: new MyApp()));
 var faceSdk = FaceSDK.instance;
 MatchFacesImage? image1;
 MatchFacesImage? image2;
@@ -270,5 +271,3 @@ class MyApp extends StatefulWidget {
     return MyAppState();
   }
 }
-
-void main() => runApp(new MaterialApp(home: new MyApp()));

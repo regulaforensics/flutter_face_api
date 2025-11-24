@@ -2,14 +2,13 @@
 
 @implementation FlutterFaceApiPlugin
 
-UIViewController*(^RFSWRootViewController)(void) = ^UIViewController*(){
-    for (UIWindow *window in UIApplication.sharedApplication.windows)
-        if (window.isKeyWindow)
-            return window.rootViewController;
-    return nil;
+NSObject<FlutterPluginRegistrar>* rfswPluginRegistrar;
+UIViewController*(^RFSWRootViewController)(void) = ^UIViewController*() {
+    return [rfswPluginRegistrar viewController];
 };
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
+    rfswPluginRegistrar = registrar;
     eventSinks = [NSMutableDictionary new];
     void(^setupEventChannel)(NSObject<FlutterPluginRegistrar>* registrar, NSString*eventId, NSObject<FlutterStreamHandler>*handler) = ^(NSObject<FlutterPluginRegistrar>* registrar, NSString*eventId, NSObject<FlutterStreamHandler>*handler) {
         [[FlutterEventChannel eventChannelWithName:[NSString stringWithFormat:@"%@%@", @"flutter_face_api/event/", eventId] binaryMessenger:[registrar messenger]] setStreamHandler:handler];
