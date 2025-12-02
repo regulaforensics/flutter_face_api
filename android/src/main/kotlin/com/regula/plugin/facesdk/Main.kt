@@ -128,13 +128,13 @@ fun deinitialize() = Instance().deinitialize()
 
 fun startFaceCapture(callback: Callback, config: JSONObject?) = config?.let {
     Instance().presentFaceCaptureActivity(
-        context,
+        activity,
         faceCaptureConfigFromJSON(it),
         faceCaptureCompletion(callback),
         faceCaptureNotificationCompletion()
     )
 } ?: Instance().presentFaceCaptureActivity(
-    context,
+    activity,
     faceCaptureCompletion(callback),
     faceCaptureNotificationCompletion()
 )
@@ -143,13 +143,13 @@ fun stopFaceCapture() = Instance().stopFaceCaptureActivity(context)
 
 fun startLiveness(callback: Callback, config: JSONObject?) = config?.let {
     Instance().startLiveness(
-        context,
+        activity,
         livenessConfigFromJSON(it),
         livenessCompletion(callback),
         livenessNotificationCompletion()
     )
 } ?: Instance().startLiveness(
-    context,
+    activity,
     livenessCompletion(callback),
     livenessNotificationCompletion()
 )
