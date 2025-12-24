@@ -36,8 +36,8 @@ fun methodCall(method: String, callback: (Any?) -> Unit): Any = when (method) {
     "setEnv" -> setEnv(argsNullable(0))
     "getLocale" -> getLocale(callback)
     "setLocale" -> setLocale(argsNullable(0))
-    "setLocalizationDictionary" -> setLocalizationDictionary(args(0))
-    "setRequestHeaders" -> setRequestHeaders(args(0))
+    "setLocalizationDictionary" -> setLocalizationDictionary(argsNullable(0))
+    "setRequestHeaders" -> setRequestHeaders(argsNullable(0))
     "setCustomization" -> setCustomization(args(0))
     "isInitialized" -> isInitialized(callback)
     "initialize" -> initialize(callback, argsNullable(0))
@@ -99,13 +99,13 @@ fun getLocale(callback: Callback) = callback(Instance().locale)
 
 fun setLocale(locale: String?) = locale.let { Instance().locale = it }
 
-fun setLocalizationDictionary(dictionary: JSONObject) {
-    localizationCallbacks = LocalizationCallbacks { if (dictionary.has(it)) dictionary.getString(it) else null }
+fun setLocalizationDictionary(dictionary: JSONObject?) {
+    localizationCallbacks = LocalizationCallbacks { if (dictionary?.has(it) == true) dictionary.getString(it) else null }
     Instance().setLocalizationCallback(localizationCallbacks!!)
 }
 
-fun setRequestHeaders(headers: JSONObject) {
-    networkInterceptorListener = NetworkInterceptorListener { headers.forEach { k, v -> it.header(k, v as String) } }
+fun setRequestHeaders(headers: JSONObject?) {
+    networkInterceptorListener = NetworkInterceptorListener { headers?.forEach { k, v -> it.header(k, v as String) } }
     Instance().setNetworkInterceptorListener(networkInterceptorListener)
 }
 
