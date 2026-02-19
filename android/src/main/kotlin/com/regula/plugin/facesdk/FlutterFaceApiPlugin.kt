@@ -1,11 +1,14 @@
 package com.regula.plugin.facesdk
 
+import android.app.Activity
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.EventSink
 import io.flutter.plugin.common.EventChannel.StreamHandler
@@ -18,8 +21,11 @@ val eventSinks = mutableMapOf<String, EventSink?>()
 
 lateinit var args: List<Any?>
 lateinit var binding: FlutterPluginBinding
+lateinit var activityBinding: ActivityPluginBinding
 val context: Context
     get() = binding.applicationContext
+val activity: Activity
+    get() = activityBinding.activity
 
 fun sendEvent(id: String, data: Any? = "") {
     eventSinks[id]?.let { Handler(Looper.getMainLooper()).post { it.success(data.toSendable()) } }
@@ -37,7 +43,10 @@ fun setupEventChannel(id: String) = EventChannel(binding.binaryMessenger, "$chan
     override fun onCancel(arguments: Any?) = Unit
 })
 
-class FlutterFaceApiPlugin : FlutterPlugin, MethodCallHandler {
+class FlutterFaceApiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+    override fun onDetachedFromActivityForConfigChanges() = Unit
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) = Unit
+    override fun onDetachedFromActivity() = Unit
     override fun onDetachedFromEngine(binding: FlutterPluginBinding) = Unit
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         args = call.arguments as List<*>
@@ -46,6 +55,10 @@ class FlutterFaceApiPlugin : FlutterPlugin, MethodCallHandler {
         } catch (error: Exception) {
             Log.e("REGULA", "Caught exception in \"${call.method}\" function:", error)
         }
+    }
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        activityBinding = binding
     }
 
     override fun onAttachedToEngine(flutterBinding: FlutterPluginBinding) {
