@@ -148,9 +148,9 @@ var detectFacesConfig = {
 };
 var detectFacesRequest = {
   "tag": "test",
-  // "scenario": "CropCentralFace",
+  "scenario": "CropCentralFace",
   "image": img1,
-  "configuration": detectFacesConfig,
+  // "configuration": detectFacesConfig,
 };
 var detectFacesBackendException = {
   "code": 2,
