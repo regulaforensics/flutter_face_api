@@ -6,126 +6,126 @@ class Tests: XCTestCase {
     // image_params
     
     func test_point() {
-        compare(name: "point", decode: Point.decode, encode: Point.encode)
+        compare("point", Point.decode, Point.encode)
     }
     
     func test_rect() {
-        compare(name: "rect", decode: CGRect.decode, encode: CGRect.encode)
+        compare("rect", CGRect.decode, CGRect.encode)
     }
     
     func test_size() {
-        compare(name: "size", decode: CGSize.decode, encode: CGSize.encode)
+        compare("size", CGSize.decode, CGSize.encode)
     }
     
     func test_outputImageCrop() {
-        compare(name: "outputImageCrop", decode: OutputImageCrop.decode, encode: OutputImageCrop.encode)
+        compare("outputImageCrop", OutputImageCrop.decode, OutputImageCrop.encode)
     }
     
     func test_outputImageParams() {
-        compare(name: "outputImageParams", decode: OutputImageParams.decode, encode: OutputImageParams.encode)
+        compare("outputImageParams", OutputImageParams.decode, OutputImageParams.encode)
     }
     
     // image_quality
     
     func test_imageQualityRange() {
-        compare(name: "imageQualityRange", decode: ImageQualityRange.decode, encode: ImageQualityRange.encode)
+        compare("imageQualityRange", ImageQualityRange.decode, ImageQualityRange.encode)
     }
     
     func test_imageQualityResult() {
-        compare(name: "imageQualityResult", decode: ImageQualityResult.decode, encode: ImageQualityResult.encode)
+        compare("imageQualityResult", ImageQualityResult.decode, ImageQualityResult.encode)
     }
     
     func test_imageQualityCharacteristic() {
-        compare(name: "imageQualityCharacteristic", decode: ImageQualityCharacteristic.decode, encode: ImageQualityCharacteristic.encode)
+        compare("imageQualityCharacteristic", ImageQualityCharacteristic.decode, ImageQualityCharacteristic.encode)
     }
     
     // init
     
     func test_initConfig() {
-        compare(name: "initConfig", decode: InitializationConfiguration.decode, encode: InitializationConfiguration.encode, omit: ["useBleDevice"])
+        compare("initConfig", InitializationConfiguration.decode, InitializationConfiguration.encode, omit: ["useBleDevice"])
     }
     
     // detect_faces
     
     func test_detectFacesAttributeResult() {
-        compare(name: "detectFacesAttributeResult", decode: DetectFacesAttributeResult.decode, encode: DetectFacesAttributeResult.encode)
+        compare("detectFacesAttributeResult", DetectFacesAttributeResult.decode, DetectFacesAttributeResult.encode)
     }
     
     func test_detectFaceResult() {
-        compare(name: "detectFaceResult", decode: DetectFaceResult.decode, encode: DetectFaceResult.encode)
+        compare("detectFaceResult", DetectFaceResult.decode, DetectFaceResult.encode)
     }
     
     func test_detectFacesConfig() {
-        compare(name: "detectFacesConfig", decode: DetectFacesConfiguration.decode, encode: DetectFacesConfiguration.encode)
+        compare("detectFacesConfig", DetectFacesConfiguration.decode, DetectFacesConfiguration.encode)
     }
     
     func test_detectFacesRequest() {
-        compare(name: "detectFacesRequest", decode: DetectFacesRequest.decode, encode: DetectFacesRequest.encode)
+        compare("detectFacesRequest", DetectFacesRequest.decode, DetectFacesRequest.encode)
     }
     
     func test_detectFacesResponse() {
-        compare(name: "detectFacesResponse", decode: DetectFacesResponse.decode, encode: DetectFacesResponse.encode, omit: ["error"])
+        compare("detectFacesResponse", DetectFacesResponse.decode, DetectFacesResponse.encode, omit: ["error"])
     }
     
     // face_capture
     
     func test_faceCaptureConfig() {
-        compare(name: "faceCaptureConfig", decode: FaceCaptureConfiguration.decode, encode: FaceCaptureConfiguration.encode, omit: ["cameraPositionAndroid", "screenOrientation"])
+        compare("faceCaptureConfig", FaceCaptureConfiguration.decode, FaceCaptureConfiguration.encode, omit: ["cameraPositionAndroid", "screenOrientation"])
     }
     
     func test_faceCaptureImage() {
-        compare(name: "faceCaptureImage", decode: Image.decode, encode: Image.encode)
+        compare("faceCaptureImage", Image.decode, Image.encode)
     }
     
     func test_faceCaptureResponse() {
-        compare(name: "faceCaptureResponse", decode: FaceCaptureResponse.decode, encode: FaceCaptureResponse.encode, omit: ["error"])
+        compare("faceCaptureResponse", FaceCaptureResponse.decode, FaceCaptureResponse.encode, omit: ["error"])
     }
     
     // liveness
     
     func test_livenessConfig() {
-        compare(name: "livenessConfig", decode: LivenessConfiguration.decode, encode: LivenessConfiguration.encode, omit: [
+        compare("livenessConfig", LivenessConfiguration.decode, LivenessConfiguration.encode, omit: [
             "cameraPositionAndroid",
             "screenOrientation",
         ])
     }
     
     func test_livenessResponse() {
-        compare(name: "livenessResponse", decode: LivenessResponse.decode, encode: LivenessResponse.encode, omit: ["error"])
+        compare("livenessResponse", LivenessResponse.decode, LivenessResponse.encode, omit: ["error"])
     }
     
     // match_faces
     
     func test_matchFacesConfig() {
-        compare(name: "matchFacesConfig", decode: MatchFacesConfiguration.decode, encode: MatchFacesConfiguration.encode)
+        compare("matchFacesConfig", MatchFacesConfiguration.decode, MatchFacesConfiguration.encode)
     }
     
     func test_matchFacesImage() {
-        compare(name: "matchFacesImage", decode: MatchFacesImage.decode, encode: MatchFacesImage.encode)
+        compare("matchFacesImage", MatchFacesImage.decode, MatchFacesImage.encode)
     }
     
     func test_matchFacesRequest() {
-        compare(name: "matchFacesRequest", decode: MatchFacesRequest.decode, encode: MatchFacesRequest.encode)
+        compare("matchFacesRequest", MatchFacesRequest.decode, MatchFacesRequest.encode)
     }
     
     func test_matchFacesDetectionFace() {
-        compare(name: "matchFacesDetectionFace", decode: MatchFacesDetectionFace.decode, encode: MatchFacesDetectionFace.encode)
+        compare("matchFacesDetectionFace", MatchFacesDetectionFace.decode, MatchFacesDetectionFace.encode)
     }
     
     func test_matchFacesDetection() {
-        compare(name: "matchFacesDetection", decode: MatchFacesDetection.decode, encode: MatchFacesDetection.encode, omit: ["error"])
+        compare("matchFacesDetection", MatchFacesDetection.decode, MatchFacesDetection.encode, omit: ["error"])
     }
     
     func test_comparedFace() {
-        compare(name: "comparedFace", decode: MatchFacesComparedFace.decode, encode: MatchFacesComparedFace.encode)
+        compare("comparedFace", MatchFacesComparedFace.decode, MatchFacesComparedFace.encode)
     }
     
     func test_comparedFacesPair() {
-        compare(name: "comparedFacesPair", decode: MatchFacesComparedFacesPair.decode, encode: MatchFacesComparedFacesPair.encode, omit: ["error"])
+        compare("comparedFacesPair", MatchFacesComparedFacesPair.decode, MatchFacesComparedFacesPair.encode, omit: ["error"])
     }
     
     func test_matchFacesResponse() {
-        compare(name: "matchFacesResponse", decode: MatchFacesResponse.decode, encode: MatchFacesResponse.encode, omit: [
+        compare("matchFacesResponse", MatchFacesResponse.decode, MatchFacesResponse.encode, omit: [
             "error",
             "results.error",
             "detections.error",
@@ -135,38 +135,38 @@ class Tests: XCTestCase {
     // person_database
     
     func test_editGroupPersonsRequest() {
-        compare(name: "editGroupPersonsRequest", decode: PersonDatabase.EditGroupPersonsRequest.decode, encode: PersonDatabase.EditGroupPersonsRequest.encode)
+        compare("editGroupPersonsRequest", PersonDatabase.EditGroupPersonsRequest.decode, PersonDatabase.EditGroupPersonsRequest.encode)
     }
     
     func test_imageUpload() {
-        compare(name: "imageUpload", decode: PersonDatabase.ImageUpload.decode, encode: PersonDatabase.ImageUpload.encode)
+        compare("imageUpload", PersonDatabase.ImageUpload.decode, PersonDatabase.ImageUpload.encode)
     }
     
     func test_person() {
-        compare(name: "person", decode: PersonDatabase.Person.decode, encode: PersonDatabase.Person.encode)
+        compare("person", PersonDatabase.Person.decode, PersonDatabase.Person.encode)
     }
     
     func test_personGroup() {
-        compare(name: "personGroup", decode: PersonDatabase.PersonGroup.decode, encode: PersonDatabase.PersonGroup.encode)
+        compare("personGroup", PersonDatabase.PersonGroup.decode, PersonDatabase.PersonGroup.encode)
     }
     
     func test_personImage() {
-        compare(name: "personImage", decode: PersonDatabase.PersonImage.decode, encode: PersonDatabase.PersonImage.encode)
+        compare("personImage", PersonDatabase.PersonImage.decode, PersonDatabase.PersonImage.encode)
     }
     
     func test_searchPersonDetection() {
-        compare(name: "searchPersonDetection", decode: PersonDatabase.SearchPersonDetection.decode, encode: PersonDatabase.SearchPersonDetection.encode)
+        compare("searchPersonDetection", PersonDatabase.SearchPersonDetection.decode, PersonDatabase.SearchPersonDetection.encode)
     }
     
     func test_searchPersonImage() {
-        compare(name: "searchPersonImage", decode: PersonDatabase.SearchPersonImage.decode2, encode: PersonDatabase.SearchPersonImage.encode2)
+        compare("searchPersonImage", PersonDatabase.SearchPersonImage.decode2, PersonDatabase.SearchPersonImage.encode2)
     }
     
     func test_searchPerson() {
-        compare(name: "searchPerson", decode: PersonDatabase.SearchPerson.decode2, encode: PersonDatabase.SearchPerson.encode2)
+        compare("searchPerson", PersonDatabase.SearchPerson.decode2, PersonDatabase.SearchPerson.encode2)
     }
     
     func test_searchPersonRequest() {
-        compare(name: "searchPersonRequest", decode: PersonDatabase.SearchPersonRequest.decode, encode: PersonDatabase.SearchPersonRequest.encode)
+        compare("searchPersonRequest", PersonDatabase.SearchPersonRequest.decode, PersonDatabase.SearchPersonRequest.encode)
     }
 }
