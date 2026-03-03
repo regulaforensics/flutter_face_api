@@ -160,7 +160,7 @@ fun Any.setImage(customization: Customization, value: Any) {
     private.isAccessible = true
     val images = private.get(uiConfig) as HashMap<CustomizationImage, Drawable>
 
-    val field = CustomizationImage.values().find { it.value == this.toInt() }!!
+    val field = CustomizationImage.values().find { it.value == this.toString() }!!
     images[field] = (value as String?).toDrawable(context)!!
 }
 
