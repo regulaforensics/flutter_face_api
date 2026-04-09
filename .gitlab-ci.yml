@@ -19,7 +19,7 @@ include:
 
 trivy scan:
   stage: test
-  image: aquasec/trivy
+  image: aquasec/trivy:0.69.3
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:
@@ -38,12 +38,3 @@ secret_detection:
   artifacts:
     paths:
       - gl-secret-detection-report.json
-
-gemnasium-dependency_scanning:
-  variables:
-    DS_MAX_DEPTH: -1
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-  artifacts:
-    paths:
-      - gl-dependency-scanning-report.json

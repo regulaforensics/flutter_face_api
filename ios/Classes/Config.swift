@@ -9,10 +9,9 @@ func setCustomization(_ it: [String: [String: Any]]) {
         }
         let dict = (face.customization.configuration!.value(forKey: key) as! NSMutableDictionary)
         for (k, v) in value {
-            let k = Int(k)!
             switch key {
-            case("colors"): dict[k] = UIColor.decode(v)
-            case("fonts"): dict[k] = UIFont.decode(v)
+            case("colors"): dict[Int(k)!] = UIColor.decode(v)
+            case("fonts"): dict[Int(k)!] = UIFont.decode(v)
             case("images"): dict[k] = UIImage.decode(v)
             default: break
             }
@@ -33,6 +32,7 @@ public extension FaceCaptureConfiguration {
                 case("vibrateOnSteps"): builder.vibrateOnSteps = v as! Bool
                 case("detectOcclusion"): builder.detectOcclusion = v as! Bool
                 case("showFaceAnimation"): builder.showFaceAnimation = v as! Bool
+                case("preventScreenRecording"): builder.isPreventScreenRecordingEnable = v as! Bool
                 case("cameraPositionIOS"): builder.cameraPosition = CameraPosition(rawValue: v as! Int)!
                 case("screenOrientation"): builder.screenOrientation = RFSScreenOrientation.decode(v)
                 case("timeout"): builder.timeoutInterval = v as? NSNumber
@@ -51,6 +51,7 @@ public extension FaceCaptureConfiguration {
             "vibrateOnSteps": self.vibrateOnSteps,
             "detectOcclusion": self.detectOcclusion,
             "showFaceAnimation": self.showFaceAnimation,
+            "preventScreenRecording": self.isPreventScreenRecordingEnable,
             "cameraPositionIOS": self.cameraPosition.rawValue,
             "screenOrientation": self.screenOrientation.encode(),
             "timeout": self.timeoutInterval,
@@ -73,6 +74,7 @@ public extension LivenessConfiguration {
                 case("cameraPositionIOS"): builder.cameraPosition = CameraPosition(rawValue: v as! Int)!
                 case("attemptsCount"): builder.attemptsCount = v as! Int
                 case("locationTrackingEnabled"): builder.isLocationTrackingEnabled = v as! Bool
+                case("preventScreenRecording"): builder.isPreventScreenRecordingEnable = v as! Bool
                 case("recordingProcess"): builder.recordingProcess = RecordingProcess(rawValue: v as! Int)!
                 case("livenessType"): builder.livenessType = LivenessType(rawValue: v as! Int)!
                 case("screenOrientation"): builder.screenOrientation = RFSScreenOrientation.decode(v)
@@ -94,6 +96,7 @@ public extension LivenessConfiguration {
             "cameraPositionIOS": self.cameraPosition.rawValue,
             "attemptsCount": self.attemptsCount,
             "locationTrackingEnabled": self.isLocationTrackingEnabled,
+            "preventScreenRecording": self.isPreventScreenRecordingEnable,
             "recordingProcess": self.recordingProcess.rawValue,
             "livenessType": self.livenessType.rawValue,
             "screenOrientation": self.screenOrientation.encode(),

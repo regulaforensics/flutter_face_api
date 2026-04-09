@@ -158,10 +158,9 @@ fun Any.setImage(customization: Customization, value: Any) {
     val uiConfig = customization.uiConfigurationLive.value!!
     val private = uiConfig.javaClass.getDeclaredField("d")
     private.isAccessible = true
-    val images = private.get(uiConfig) as HashMap<CustomizationImage, Drawable>
+    val images = private.get(uiConfig) as HashMap<String, Drawable>
 
-    val field = CustomizationImage.values().find { it.value == this.toString() }!!
-    images[field] = (value as String?).toDrawable(context)!!
+    images[this as String] = (value as String?).toDrawable(context)!!
 }
 
 fun Int.toOutputImageCropAspectRatio(): OutputImageCropAspectRatio {

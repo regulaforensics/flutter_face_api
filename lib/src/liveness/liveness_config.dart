@@ -36,6 +36,9 @@ class LivenessConfig {
   /// The location is used only when permissions are granted and the location is available.
   bool locationTrackingEnabled;
 
+  /// Prevents screenshots and screen recording while FaceCapture camera screen is displayed. Defaults to `false`.
+  bool preventScreenRecording;
+
   /// The number of attempts to pass the Liveness before completing with error. Defaults to `0`.
   /// When set to `0`  the Liveness will always ask to retry on error.
   int attemptsCount;
@@ -67,6 +70,7 @@ class LivenessConfig {
       ScreenOrientation.PORTRAIT
     ],
     bool locationTrackingEnabled = true,
+    bool preventScreenRecording = false,
     int attemptsCount = 0,
     RecordingProcess recordingProcess = RecordingProcess.ASYNCHRONOUS_UPLOAD,
     LivenessType livenessType = LivenessType.ACTIVE,
@@ -82,6 +86,7 @@ class LivenessConfig {
         cameraPositionIOS = cameraPositionIOS,
         screenOrientation = screenOrientation,
         locationTrackingEnabled = locationTrackingEnabled,
+        preventScreenRecording = preventScreenRecording,
         attemptsCount = attemptsCount,
         recordingProcess = recordingProcess,
         livenessType = livenessType,
@@ -105,6 +110,7 @@ class LivenessConfig {
     result.screenOrientation =
         ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
     result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
+    result.preventScreenRecording = jsonObject["preventScreenRecording"];
     result.attemptsCount = jsonObject["attemptsCount"];
     result.recordingProcess =
         RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
@@ -128,6 +134,7 @@ class LivenessConfig {
         "cameraPositionIOS": cameraPositionIOS.value,
         "screenOrientation": screenOrientation.map((e) => e.value).toList(),
         "locationTrackingEnabled": locationTrackingEnabled,
+        "preventScreenRecording": preventScreenRecording,
         "attemptsCount": attemptsCount,
         "recordingProcess": recordingProcess.value,
         "livenessType": livenessType.value,
