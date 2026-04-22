@@ -17,6 +17,9 @@ class FaceCaptureConfig {
   /// Enables global face hint animation.
   bool showFaceAnimation;
 
+  /// Prevents screenshots and screen recording while FaceCapture camera screen is displayed. Defaults to `false`.
+  bool preventScreenRecording;
+
   /// Android only.
   int? cameraPositionAndroid;
 
@@ -38,6 +41,7 @@ class FaceCaptureConfig {
     bool vibrateOnSteps = true,
     bool detectOcclusion = true,
     bool showFaceAnimation = true,
+    bool preventScreenRecording = false,
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
     List<ScreenOrientation> screenOrientation = const [
@@ -52,6 +56,7 @@ class FaceCaptureConfig {
         vibrateOnSteps = vibrateOnSteps,
         detectOcclusion = detectOcclusion,
         showFaceAnimation = showFaceAnimation,
+        preventScreenRecording = preventScreenRecording,
         cameraPositionAndroid = cameraPositionAndroid,
         cameraPositionIOS = cameraPositionIOS,
         screenOrientation = screenOrientation,
@@ -70,6 +75,7 @@ class FaceCaptureConfig {
     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
     result.detectOcclusion = jsonObject["detectOcclusion"];
     result.showFaceAnimation = jsonObject["showFaceAnimation"];
+    result.preventScreenRecording = jsonObject["preventScreenRecording"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
     result.cameraPositionIOS =
         CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
@@ -90,6 +96,7 @@ class FaceCaptureConfig {
         "vibrateOnSteps": vibrateOnSteps,
         "detectOcclusion": detectOcclusion,
         "showFaceAnimation": showFaceAnimation,
+        "preventScreenRecording": preventScreenRecording,
         "cameraPositionAndroid": cameraPositionAndroid,
         "cameraPositionIOS": cameraPositionIOS.value,
         "screenOrientation": screenOrientation.map((e) => e.value).toList(),

@@ -24,6 +24,7 @@ fun setFaceCaptureConfig(builder: FaceCaptureConfiguration.Builder, config: JSON
         "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
         "detectOcclusion" -> builder.setDetectOcclusion(v as Boolean)
         "showFaceAnimation" -> builder.setShowFaceAnimation(v as Boolean)
+        "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
         "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
         "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
         "timeout" -> builder.setTimeout(v.toFloat())
@@ -39,6 +40,7 @@ fun getFaceCaptureConfig(input: FaceCaptureConfiguration) = mapOf(
     "vibrateOnSteps" to input.isVibrateOnSteps,
     "detectOcclusion" to input.isDetectOcclusion,
     "showFaceAnimation" to input.isShowFaceAnimation,
+    "preventScreenRecording" to input.doPreventScreenRecording(),
     "cameraPositionAndroid" to input.cameraId,
     "screenOrientation" to generateScreenOrientationArray(input.screenOrientation),
     "timeout" to input.timeout,
@@ -55,6 +57,7 @@ fun setLivenessConfig(builder: LivenessConfiguration.Builder, config: JSONObject
         "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
         "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
         "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
+        "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
         "attemptsCount" -> builder.setAttemptsCount(v.toInt())
         "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
         "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
@@ -73,6 +76,7 @@ fun getLivenessConfig(input: LivenessConfiguration) = mapOf(
     "cameraPositionAndroid" to input.cameraId,
     "screenOrientation" to generateScreenOrientationArray(input.screenOrientation),
     "locationTrackingEnabled" to input.isLocationTrackingEnabled,
+    "preventScreenRecording" to input.doPreventScreenRecording(),
     "attemptsCount" to input.attemptsCount,
     "recordingProcess" to input.recordingProcess.ordinal,
     "livenessType" to input.type.ordinal,
