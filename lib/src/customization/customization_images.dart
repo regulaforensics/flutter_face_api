@@ -90,39 +90,60 @@ class CustomizationImages {
     var result = CustomizationImages();
     result.testSetters = {};
 
-    result._onboardingScreenCloseButton = _dataFromBase64(jsonObject["onboardingScreenCloseButton"])!;
-    result._onboardingScreenIllumination = _dataFromBase64(jsonObject["onboardingScreenIllumination"])!;
-    result._onboardingScreenAccessories = _dataFromBase64(jsonObject["onboardingScreenAccessories"])!;
-    result._onboardingScreenCameraLevel = _dataFromBase64(jsonObject["onboardingScreenCameraLevel"])!;
-    result._cameraScreenCloseButton = _dataFromBase64(jsonObject["cameraScreenCloseButton"])!;
-    result._cameraScreenLightOnButton = _dataFromBase64(jsonObject["cameraScreenLightOnButton"])!;
-    result._cameraScreenLightOffButton = _dataFromBase64(jsonObject["cameraScreenLightOffButton"])!;
-    result._cameraScreenSwitchButton = _dataFromBase64(jsonObject["cameraScreenSwitchButton"])!;
-    result._retryScreenCloseButton = _dataFromBase64(jsonObject["retryScreenCloseButton"])!;
-    result._retryScreenHintEnvironment = _dataFromBase64(jsonObject["retryScreenHintEnvironment"])!;
-    result._retryScreenHintSubject = _dataFromBase64(jsonObject["retryScreenHintSubject"])!;
-    result._retryScreenHintGeo = _dataFromBase64(jsonObject["retryScreenHintGeo"])!;
-    result._processingScreenCloseButton = _dataFromBase64(jsonObject["processingScreenCloseButton"])!;
-    result._successScreenImage = _dataFromBase64(jsonObject["successScreenImage"])!;
+    result._onboardingScreenCloseButton =
+        _dataFromBase64(jsonObject["onboardingScreenCloseButton"])!;
+    result._onboardingScreenIllumination =
+        _dataFromBase64(jsonObject["onboardingScreenIllumination"])!;
+    result._onboardingScreenAccessories =
+        _dataFromBase64(jsonObject["onboardingScreenAccessories"])!;
+    result._onboardingScreenCameraLevel =
+        _dataFromBase64(jsonObject["onboardingScreenCameraLevel"])!;
+    result._cameraScreenCloseButton =
+        _dataFromBase64(jsonObject["cameraScreenCloseButton"])!;
+    result._cameraScreenLightOnButton =
+        _dataFromBase64(jsonObject["cameraScreenLightOnButton"])!;
+    result._cameraScreenLightOffButton =
+        _dataFromBase64(jsonObject["cameraScreenLightOffButton"])!;
+    result._cameraScreenSwitchButton =
+        _dataFromBase64(jsonObject["cameraScreenSwitchButton"])!;
+    result._retryScreenCloseButton =
+        _dataFromBase64(jsonObject["retryScreenCloseButton"])!;
+    result._retryScreenHintEnvironment =
+        _dataFromBase64(jsonObject["retryScreenHintEnvironment"])!;
+    result._retryScreenHintSubject =
+        _dataFromBase64(jsonObject["retryScreenHintSubject"])!;
+    result._retryScreenHintGeo =
+        _dataFromBase64(jsonObject["retryScreenHintGeo"])!;
+    result._processingScreenCloseButton =
+        _dataFromBase64(jsonObject["processingScreenCloseButton"])!;
+    result._successScreenImage =
+        _dataFromBase64(jsonObject["successScreenImage"])!;
 
     return result;
   }
 
   /// Allows you to serialize object.
   Map<String, dynamic> toJson() => {
-        "onboardingScreenCloseButton": _dataToBase64(_onboardingScreenCloseButton),
-        "onboardingScreenIllumination": _dataToBase64(_onboardingScreenIllumination),
-        "onboardingScreenAccessories": _dataToBase64(_onboardingScreenAccessories),
-        "onboardingScreenCameraLevel": _dataToBase64(_onboardingScreenCameraLevel),
+        "onboardingScreenCloseButton":
+            _dataToBase64(_onboardingScreenCloseButton),
+        "onboardingScreenIllumination":
+            _dataToBase64(_onboardingScreenIllumination),
+        "onboardingScreenAccessories":
+            _dataToBase64(_onboardingScreenAccessories),
+        "onboardingScreenCameraLevel":
+            _dataToBase64(_onboardingScreenCameraLevel),
         "cameraScreenCloseButton": _dataToBase64(_cameraScreenCloseButton),
         "cameraScreenLightOnButton": _dataToBase64(_cameraScreenLightOnButton),
-        "cameraScreenLightOffButton": _dataToBase64(_cameraScreenLightOffButton),
+        "cameraScreenLightOffButton":
+            _dataToBase64(_cameraScreenLightOffButton),
         "cameraScreenSwitchButton": _dataToBase64(_cameraScreenSwitchButton),
         "retryScreenCloseButton": _dataToBase64(_retryScreenCloseButton),
-        "retryScreenHintEnvironment": _dataToBase64(_retryScreenHintEnvironment),
+        "retryScreenHintEnvironment":
+            _dataToBase64(_retryScreenHintEnvironment),
         "retryScreenHintSubject": _dataToBase64(_retryScreenHintSubject),
         "retryScreenHintGeo": _dataToBase64(_retryScreenHintGeo),
-        "processingScreenCloseButton": _dataToBase64(_processingScreenCloseButton),
+        "processingScreenCloseButton":
+            _dataToBase64(_processingScreenCloseButton),
         "successScreenImage": _dataToBase64(_successScreenImage),
       }.clearNulls();
 
