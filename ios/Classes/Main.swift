@@ -19,10 +19,9 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
     case("setEnv"): face.env = argsNullable(0)
     case("getLocale"): callback(face.languageLocaleCode)
     case("setLocale"): face.languageLocaleCode = argsNullable(0)
-    case("setLocalizationDictionary"):
-        face.localizationHandler = { (argsNullable(0) as [String : String?]?)?[$0] ?? nil }
-    case("setRequestHeaders"):
-        headers = argsNullable(0)
+    case("setLocalizationDictionary"): let localization = argsNullable(0) as [String : String?]?
+        face.localizationHandler = { localization?[$0] ?? nil }
+    case("setRequestHeaders"): headers = argsNullable(0)
         face.requestInterceptingDelegate = headersDelegate
     case("setCustomization"): setCustomization(args(0))
     case("isInitialized"): callback(face.isInitialized)
@@ -39,23 +38,25 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
             callback(generateInitCompletion(success, error))
         })
     case("deinitialize"): face.deinitialize()
-    case("startFaceCapture"): DispatchQueue.main.async {
-        face.presentFaceCaptureViewController(
-            from: rootViewController()!,
-            animated: true,
-            configuration: FaceCaptureConfiguration.decode(argsNullable(0)),
-            onCapture: { callback($0.encode()) },
-            completion: nil)
-    }
+    case("startFaceCapture"): let config = FaceCaptureConfiguration.decode(argsNullable(0))
+        DispatchQueue.main.async {
+            face.presentFaceCaptureViewController(
+                from: rootViewController()!,
+                animated: true,
+                configuration: config,
+                onCapture: { callback($0.encode()) },
+                completion: nil)
+        }
     case("stopFaceCapture"): face.stopFaceCaptureViewController()
-    case("startLiveness"): DispatchQueue.main.async {
-        face.startLiveness(
-            from: rootViewController()!,
-            animated: true,
-            configuration: LivenessConfiguration.decode(argsNullable(0)),
-            onLiveness: { callback($0.encode()) },
-            completion: nil)
-    }
+    case("startLiveness"): let config = LivenessConfiguration.decode(argsNullable(0))
+        DispatchQueue.main.async {
+            face.startLiveness(
+                from: rootViewController()!,
+                animated: true,
+                configuration: config,
+                onLiveness: { callback($0.encode()) },
+                completion: nil)
+        }
     case("stopLiveness"): face.stopLivenessProcessing()
     case("matchFaces"): face.matchFaces(
         MatchFacesRequest.decode(args(0)),
@@ -72,8 +73,8 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
         
     case("createPerson"): db.createPerson(
         name: args(0),
-        metadata: argsNullable(1),
-        groupIds: argsNullable(2),
+        metadata: argsNullable(2),
+        groupIds: argsNullable(1),
         completion: { callback($0.encode()) }
     )
     case("updatePerson"): let json = args(0) as [String: Any]
@@ -116,7 +117,7 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
             })
     case("editPersonsInGroup"): db.editGroupPersons(
         groupId: args(0),
-        request: PersonDatabase.EditGroupPersonsRequest.decode(args(0)),
+        request: PersonDatabase.EditGroupPersonsRequest.decode(args(1)),
         completion: { callback($0.encode()) })
     case("deleteGroup"): db.deleteGroup(groupId: args(0), completion: { callback($0.encode()) })
     case("getGroup"): db.getGroups(groupId: args(0), completion: { callback($0.encode()) })
