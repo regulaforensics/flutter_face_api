@@ -1,4 +1,5 @@
-source "https://github.com/CocoaPods/Specs.git"
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/regulaforensics/podspecs.git'
 
 platform :ios, '13.0'
 
