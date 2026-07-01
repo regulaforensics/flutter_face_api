@@ -28,7 +28,7 @@ android {
     }
 
     dependencies {
-        implementation('com.regula.face:api:8.3.5054') {
+        implementation('com.regula.face:api:8.2.5058') {
             transitive = true
         }
 
