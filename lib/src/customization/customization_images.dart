@@ -73,6 +73,42 @@ class CustomizationImages {
     _set({"retryScreenHintGeo": _dataToBase64(val)});
   }
 
+  ByteData? _retryScreenHintBadSelfieQuality;
+  set retryScreenHintBadSelfieQuality(ByteData val) {
+    _retryScreenHintBadSelfieQuality = val;
+    _set({"retryScreenHintBadSelfieQuality": _dataToBase64(val)});
+  }
+
+  ByteData? _retryScreenHintCleanLens;
+  set retryScreenHintCleanLens(ByteData val) {
+    _retryScreenHintCleanLens = val;
+    _set({"retryScreenHintCleanLens": _dataToBase64(val)});
+  }
+
+  ByteData? _retryScreenHintAddIllumination;
+  set retryScreenHintAddIllumination(ByteData val) {
+    _retryScreenHintAddIllumination = val;
+    _set({"retryScreenHintAddIllumination": _dataToBase64(val)});
+  }
+
+  ByteData? _retryScreenHintChangeBackground;
+  set retryScreenHintChangeBackground(ByteData val) {
+    _retryScreenHintChangeBackground = val;
+    _set({"retryScreenHintChangeBackground": _dataToBase64(val)});
+  }
+
+  ByteData? _retryScreenHintFaceOcclusions;
+  set retryScreenHintFaceOcclusions(ByteData val) {
+    _retryScreenHintFaceOcclusions = val;
+    _set({"retryScreenHintFaceOcclusions": _dataToBase64(val)});
+  }
+
+  ByteData? _retryScreenHintCovering;
+  set retryScreenHintCovering(ByteData val) {
+    _retryScreenHintCovering = val;
+    _set({"retryScreenHintCovering": _dataToBase64(val)});
+  }
+
   ByteData? _processingScreenCloseButton;
   set processingScreenCloseButton(ByteData val) {
     _processingScreenCloseButton = val;
@@ -114,6 +150,18 @@ class CustomizationImages {
         _dataFromBase64(jsonObject["retryScreenHintSubject"])!;
     result._retryScreenHintGeo =
         _dataFromBase64(jsonObject["retryScreenHintGeo"])!;
+    result._retryScreenHintBadSelfieQuality =
+        _dataFromBase64(jsonObject["retryScreenHintBadSelfieQuality"])!;
+    result._retryScreenHintCleanLens =
+        _dataFromBase64(jsonObject["retryScreenHintCleanLens"])!;
+    result._retryScreenHintAddIllumination =
+        _dataFromBase64(jsonObject["retryScreenHintAddIllumination"])!;
+    result._retryScreenHintChangeBackground =
+        _dataFromBase64(jsonObject["retryScreenHintChangeBackground"])!;
+    result._retryScreenHintFaceOcclusions =
+        _dataFromBase64(jsonObject["retryScreenHintFaceOcclusions"])!;
+    result._retryScreenHintCovering =
+        _dataFromBase64(jsonObject["retryScreenHintCovering"])!;
     result._processingScreenCloseButton =
         _dataFromBase64(jsonObject["processingScreenCloseButton"])!;
     result._successScreenImage =
@@ -142,6 +190,16 @@ class CustomizationImages {
             _dataToBase64(_retryScreenHintEnvironment),
         "retryScreenHintSubject": _dataToBase64(_retryScreenHintSubject),
         "retryScreenHintGeo": _dataToBase64(_retryScreenHintGeo),
+        "retryScreenHintBadSelfieQuality":
+            _dataToBase64(_retryScreenHintBadSelfieQuality),
+        "retryScreenHintCleanLens": _dataToBase64(_retryScreenHintCleanLens),
+        "retryScreenHintAddIllumination":
+            _dataToBase64(_retryScreenHintAddIllumination),
+        "retryScreenHintChangeBackground":
+            _dataToBase64(_retryScreenHintChangeBackground),
+        "retryScreenHintFaceOcclusions":
+            _dataToBase64(_retryScreenHintFaceOcclusions),
+        "retryScreenHintCovering": _dataToBase64(_retryScreenHintCovering),
         "processingScreenCloseButton":
             _dataToBase64(_processingScreenCloseButton),
         "successScreenImage": _dataToBase64(_successScreenImage),

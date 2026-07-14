@@ -67,6 +67,12 @@ var customizationImages = {
   "retryScreenHintEnvironment": img1,
   "retryScreenHintSubject": img2,
   "retryScreenHintGeo": img3,
+  "retryScreenHintBadSelfieQuality": img1,
+  "retryScreenHintCleanLens": img2,
+  "retryScreenHintAddIllumination": img3,
+  "retryScreenHintChangeBackground": img1,
+  "retryScreenHintFaceOcclusions": img2,
+  "retryScreenHintCovering": img3,
   "processingScreenCloseButton": img1,
   "successScreenImage": img2,
 };
@@ -236,6 +242,59 @@ var livenessConfig = {
   "skipStep": [0, 1],
   "metadata": customJson,
 };
+var enrollmentConfig = {
+  "copyright": true,
+  "cameraSwitchEnabled": false,
+  "closeButtonEnabled": true,
+  "torchButtonEnabled": false,
+  "vibrateOnSteps": true,
+  "cameraPositionAndroid": -1,
+  "cameraPositionIOS": 1,
+  "screenOrientation": [0, 1],
+  "locationTrackingEnabled": true,
+  "preventScreenRecording": false,
+  "attemptsCount": 2,
+  "recordingProcess": 0,
+  "livenessType": 1,
+  "tag": "test",
+  "skipStep": [0, 1],
+  "metadata": customJson,
+  "externalId": "test0",
+  "groupId": "test1",
+  "checkDuplicatesEnabled": true,
+  "duplicatesThreshold": 0.5,
+};
+var verificationConfig = {
+  "copyright": true,
+  "cameraSwitchEnabled": false,
+  "closeButtonEnabled": true,
+  "torchButtonEnabled": false,
+  "vibrateOnSteps": true,
+  "cameraPositionAndroid": -1,
+  "cameraPositionIOS": 1,
+  "screenOrientation": [0, 1],
+  "locationTrackingEnabled": true,
+  "preventScreenRecording": false,
+  "attemptsCount": 2,
+  "recordingProcess": 0,
+  "livenessType": 1,
+  "tag": "test",
+  "skipStep": [0, 1],
+  "metadata": customJson,
+  "personId": "test0",
+  "groupId": "test1",
+  "threshold": 0.5,
+};
+var enrollmentRequest = {
+  "externalId": "test0",
+  "groupId": "test1",
+  "trustedImage": img1,
+};
+var enrollmentRequest2 = {
+  "externalId": "test0",
+  "groupId": "test1",
+  "trustedImageUrl": "test2",
+};
 var livenessBackendException = {
   "code": 200,
   "message": "No license",
@@ -256,6 +315,24 @@ var livenessResponse = {
 var livenessNotification = {
   "status": 0,
   "response": livenessResponse,
+};
+var errorResponse = {
+  "code": 0,
+  "message": "test0",
+};
+var enrollmentResponse = {
+  "personId": "test0",
+  "externalId": "test1",
+  "error": errorResponse,
+};
+var verifyMatchResponse = {
+  "passed": true,
+  "similarity": 0.5,
+};
+var verificationResponse = {
+  "passed": true,
+  "match": verifyMatchResponse,
+  "error": errorResponse,
 };
 
 var matchFacesConfig = {
