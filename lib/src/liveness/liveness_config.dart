@@ -163,7 +163,9 @@ enum RecordingProcess {
 enum LivenessType {
   ACTIVE(0),
 
-  PASSIVE(1);
+  PASSIVE(1),
+
+  PASSIVE_WITH_BLINK(2);
 
   const LivenessType(this.value);
   final int value;

@@ -44,7 +44,9 @@ enum LivenessProcessStatus {
   FAILED(12),
   RETRY(13),
   SUCCESS(14),
-  REMOVE_OCCLUSION(15);
+  REMOVE_OCCLUSION(15),
+  BLINK(16),
+  BAD_FACE_QUALITY(17);
 
   const LivenessProcessStatus(this.value);
   final int value;
