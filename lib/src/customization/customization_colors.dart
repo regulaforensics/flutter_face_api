@@ -162,8 +162,7 @@ class CustomizationColors {
     var result = CustomizationColors();
     result.testSetters = {};
 
-    result._onboardingScreenStartButtonBackground =
-        _intToColor(jsonObject["100"])!;
+    result._onboardingScreenStartButtonBackground = _intToColor(jsonObject["100"])!;
     result._onboardingScreenStartButtonTitle = _intToColor(jsonObject["101"])!;
     result._onboardingScreenBackground = _intToColor(jsonObject["102"])!;
     result._onboardingScreenTitleLabelText = _intToColor(jsonObject["103"])!;
@@ -173,11 +172,9 @@ class CustomizationColors {
     result._cameraScreenStrokeActive = _intToColor(jsonObject["201"])!;
     result._cameraScreenSectorTarget = _intToColor(jsonObject["202"])!;
     result._cameraScreenSectorActive = _intToColor(jsonObject["203"])!;
-    result._cameraScreenFrontHintLabelBackground =
-        _intToColor(jsonObject["204"])!;
+    result._cameraScreenFrontHintLabelBackground = _intToColor(jsonObject["204"])!;
     result._cameraScreenFrontHintLabelText = _intToColor(jsonObject["205"])!;
-    result._cameraScreenBackHintLabelBackground =
-        _intToColor(jsonObject["206"])!;
+    result._cameraScreenBackHintLabelBackground = _intToColor(jsonObject["206"])!;
     result._cameraScreenBackHintLabelText = _intToColor(jsonObject["207"])!;
     result._cameraScreenLightToolbarTint = _intToColor(jsonObject["208"])!;
     result._cameraScreenDarkToolbarTint = _intToColor(jsonObject["209"])!;

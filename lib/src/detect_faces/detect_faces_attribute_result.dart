@@ -20,8 +20,7 @@ class DetectFacesAttributeResult {
     if (jsonObject == null) return null;
     var result = DetectFacesAttributeResult._privateConstructor();
 
-    result._attribute =
-        DetectFacesAttribute.getByValue(jsonObject["attribute"])!;
+    result._attribute = DetectFacesAttribute.getByValue(jsonObject["attribute"])!;
     result._confidence = _toDouble(jsonObject["confidence"]);
     result._value = jsonObject["value"];
     result._range = ImageQualityRange.fromJson(jsonObject["range"]);

@@ -4,24 +4,13 @@ part of "../../flutter_face_api.dart";
 class PersonDatabase {
   PersonDatabase._privateConstructor();
 
-  Future<(Person?, String?)> createPerson(
-    String name, {
-    List<String> groupIds = const [],
-    dynamic metadata,
-  }) async {
-    var response = await _bridge.invokeMethod("createPerson", [
-      name,
-      groupIds,
-      metadata,
-    ]);
+  Future<(Person?, String?)> createPerson(String name, {List<String> groupIds = const [], dynamic metadata}) async {
+    var response = await _bridge.invokeMethod("createPerson", [name, groupIds, metadata]);
     return _itemResponseFromJson(response, Person.fromJson);
   }
 
   Future<(bool, String?)> updatePerson(Person person) async {
-    var response = await _bridge.invokeMethod(
-      "updatePerson",
-      [person.toJson()],
-    );
+    var response = await _bridge.invokeMethod("updatePerson", [person.toJson()]);
     return _successResponseFromJson(response);
   }
 
@@ -35,89 +24,43 @@ class PersonDatabase {
     return _itemResponseFromJson(response, Person.fromJson);
   }
 
-  Future<(PersonImage?, String?)> addPersonImage(
-    String personId,
-    ImageUpload image,
-  ) async {
-    var response = await _bridge.invokeMethod("addPersonImage", [
-      personId,
-      image.toJson(),
-    ]);
+  Future<(PersonImage?, String?)> addPersonImage(String personId, ImageUpload image) async {
+    var response = await _bridge.invokeMethod("addPersonImage", [personId, image.toJson()]);
     return _itemResponseFromJson(response, PersonImage.fromJson);
   }
 
-  Future<(bool, String?)> deletePersonImage(
-    String personId,
-    String imageId,
-  ) async {
-    var response = await _bridge.invokeMethod("deletePersonImage", [
-      personId,
-      imageId,
-    ]);
+  Future<(bool, String?)> deletePersonImage(String personId, String imageId) async {
+    var response = await _bridge.invokeMethod("deletePersonImage", [personId, imageId]);
     return _successResponseFromJson(response);
   }
 
-  Future<(Uint8List?, String?)> getPersonImage(
-    String personId,
-    String imageId,
-  ) async {
-    var response = await _bridge.invokeMethod("getPersonImage", [
-      personId,
-      imageId,
-    ]);
-    return _itemResponseFromJson(
-      response,
-      (data) => _bytesFromBase64(data as String?),
-    );
+  Future<(Uint8List?, String?)> getPersonImage(String personId, String imageId) async {
+    var response = await _bridge.invokeMethod("getPersonImage", [personId, imageId]);
+    return _itemResponseFromJson(response, (data) => _bytesFromBase64(data as String?));
   }
 
-  Future<(PageableItemList<PersonImage>, String?)> getPersonImages(
-    String personId,
-  ) async {
+  Future<(PageableItemList<PersonImage>, String?)> getPersonImages(String personId) async {
     var response = await _bridge.invokeMethod("getPersonImages", [personId]);
     return _listResponseFromJson(response, PersonImage.fromJson);
   }
 
-  Future<(PageableItemList<PersonImage>, String?)> getPersonImagesForPage(
-    String personId,
-    int page,
-    int size,
-  ) async {
-    var response = await _bridge.invokeMethod("getPersonImagesForPage", [
-      personId,
-      page,
-      size,
-    ]);
+  Future<(PageableItemList<PersonImage>, String?)> getPersonImagesForPage(String personId, int page, int size) async {
+    var response = await _bridge.invokeMethod("getPersonImagesForPage", [personId, page, size]);
     return _listResponseFromJson(response, PersonImage.fromJson);
   }
 
-  Future<(PersonGroup?, String?)> createGroup(
-    String name, {
-    dynamic metadata,
-  }) async {
-    var response = await _bridge.invokeMethod("createGroup", [
-      name,
-      metadata,
-    ]);
+  Future<(PersonGroup?, String?)> createGroup(String name, {dynamic metadata}) async {
+    var response = await _bridge.invokeMethod("createGroup", [name, metadata]);
     return _itemResponseFromJson(response, PersonGroup.fromJson);
   }
 
   Future<(bool, String?)> updateGroup(PersonGroup group) async {
-    var response = await _bridge.invokeMethod(
-      "updateGroup",
-      [group.toJson()],
-    );
+    var response = await _bridge.invokeMethod("updateGroup", [group.toJson()]);
     return _successResponseFromJson(response);
   }
 
-  Future<(bool, String?)> editPersonsInGroup(
-    String groupId,
-    EditGroupPersonsRequest request,
-  ) async {
-    var response = await _bridge.invokeMethod("editPersonsInGroup", [
-      groupId,
-      request.toJson(),
-    ]);
+  Future<(bool, String?)> editPersonsInGroup(String groupId, EditGroupPersonsRequest request) async {
+    var response = await _bridge.invokeMethod("editPersonsInGroup", [groupId, request.toJson()]);
     return _successResponseFromJson(response);
   }
 
@@ -136,64 +79,33 @@ class PersonDatabase {
     return _listResponseFromJson(response, PersonGroup.fromJson);
   }
 
-  Future<(PageableItemList<PersonGroup>, String?)> getGroupsForPage(
-    int page,
-    int size,
-  ) async {
-    var response = await _bridge.invokeMethod("getGroupsForPage", [
-      page,
-      size,
-    ]);
+  Future<(PageableItemList<PersonGroup>, String?)> getGroupsForPage(int page, int size) async {
+    var response = await _bridge.invokeMethod("getGroupsForPage", [page, size]);
     return _listResponseFromJson(response, PersonGroup.fromJson);
   }
 
-  Future<(PageableItemList<PersonGroup>, String?)> getPersonGroups(
-    String personId,
-  ) async {
+  Future<(PageableItemList<PersonGroup>, String?)> getPersonGroups(String personId) async {
     var response = await _bridge.invokeMethod("getPersonGroups", [personId]);
     return _listResponseFromJson(response, PersonGroup.fromJson);
   }
 
-  Future<(PageableItemList<PersonGroup>, String?)> getPersonGroupsForPage(
-    String personId,
-    int page,
-    int size,
-  ) async {
-    var response = await _bridge.invokeMethod("getPersonGroupsForPage", [
-      personId,
-      page,
-      size,
-    ]);
+  Future<(PageableItemList<PersonGroup>, String?)> getPersonGroupsForPage(String personId, int page, int size) async {
+    var response = await _bridge.invokeMethod("getPersonGroupsForPage", [personId, page, size]);
     return _listResponseFromJson(response, PersonGroup.fromJson);
   }
 
-  Future<(PageableItemList<Person>, String?)> getPersonsInGroup(
-    String groupId,
-  ) async {
+  Future<(PageableItemList<Person>, String?)> getPersonsInGroup(String groupId) async {
     var response = await _bridge.invokeMethod("getPersonsInGroup", [groupId]);
     return _listResponseFromJson(response, Person.fromJson);
   }
 
-  Future<(PageableItemList<Person>, String?)> getPersonsInGroupForPage(
-    String groupId,
-    int page,
-    int size,
-  ) async {
-    var response = await _bridge.invokeMethod("getPersonsInGroupForPage", [
-      groupId,
-      page,
-      size,
-    ]);
+  Future<(PageableItemList<Person>, String?)> getPersonsInGroupForPage(String groupId, int page, int size) async {
+    var response = await _bridge.invokeMethod("getPersonsInGroupForPage", [groupId, page, size]);
     return _listResponseFromJson(response, Person.fromJson);
   }
 
-  Future<(List<SearchPerson>?, String?)> searchPerson(
-    SearchPersonRequest request,
-  ) async {
-    var response = await _bridge.invokeMethod(
-      "searchPerson",
-      [request.toJson()],
-    );
+  Future<(List<SearchPerson>?, String?)> searchPerson(SearchPersonRequest request) async {
+    var response = await _bridge.invokeMethod("searchPerson", [request.toJson()]);
 
     var jsonObject = _decode(response);
     List<SearchPerson>? data = null;
@@ -215,20 +127,14 @@ class PersonDatabase {
     return (success, error);
   }
 
-  (T?, String?) _itemResponseFromJson<T>(
-    String jsonString,
-    T? Function(dynamic) fromJSON,
-  ) {
+  (T?, String?) _itemResponseFromJson<T>(String jsonString, T? Function(dynamic) fromJSON) {
     var jsonObject = _decode(jsonString);
     var data = fromJSON(jsonObject["data"]);
     var error = jsonObject["error"];
     return (data, error);
   }
 
-  (PageableItemList<T>, String?) _listResponseFromJson<T>(
-    String jsonString,
-    T? Function(dynamic) fromJSON,
-  ) {
+  (PageableItemList<T>, String?) _listResponseFromJson<T>(String jsonString, T? Function(dynamic) fromJSON) {
     var jsonObject = _decode(jsonString);
     var data = PageableItemList.fromJson(jsonObject["data"], fromJSON)!;
     var error = jsonObject["error"];

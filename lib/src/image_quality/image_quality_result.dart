@@ -30,8 +30,7 @@ class ImageQualityResult {
     var result = ImageQualityResult._privateConstructor();
 
     result._group = ImageQualityGroupName.getByValue(jsonObject["group"])!;
-    result._name =
-        ImageQualityCharacteristicName.getByValue(jsonObject["name"])!;
+    result._name = ImageQualityCharacteristicName.getByValue(jsonObject["name"])!;
     result._status = ImageQualityResultStatus.getByValue(jsonObject["status"])!;
     result._value = _toDouble(jsonObject["value"])!;
     result._range = ImageQualityRange.fromJson(jsonObject["range"])!;

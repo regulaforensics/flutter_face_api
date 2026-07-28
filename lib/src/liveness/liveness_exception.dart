@@ -19,8 +19,7 @@ class LivenessException {
 
     result._code = LivenessErrorCode.getByValue(jsonObject["code"])!;
     result._message = jsonObject["message"] ?? "";
-    result._underlyingError =
-        LivenessBackendException.fromJson(jsonObject["underlyingError"]);
+    result._underlyingError = LivenessBackendException.fromJson(jsonObject["underlyingError"]);
 
     return result;
   }

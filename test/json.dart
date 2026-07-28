@@ -101,7 +101,7 @@ var outputImageCrop = {
   "type": 0,
   "size": size,
   "padColor": 0xff000000,
-  "returnOriginalRect": true
+  "returnOriginalRect": true,
 };
 var outputImageParams = {
   "crop": outputImageCrop,
@@ -133,11 +133,7 @@ var detectFacesAttributeResult = {
 var detectFaceResult = {
   "quality": [imageQualityResult, imageQualityResult, imageQualityResult],
   "crop": img1,
-  "attributes": [
-    detectFacesAttributeResult,
-    detectFacesAttributeResult,
-    detectFacesAttributeResult
-  ],
+  "attributes": [detectFacesAttributeResult, detectFacesAttributeResult, detectFacesAttributeResult],
   "landmarks": [point, point, point],
   "faceRect": rect,
   "originalRect": rect,
@@ -145,11 +141,7 @@ var detectFaceResult = {
 };
 var detectFacesConfig = {
   "attributes": ["Age", "EyeRight", "EyeLeft"],
-  "customQuality": [
-    imageQualityCharacteristic,
-    imageQualityCharacteristic,
-    imageQualityCharacteristic
-  ],
+  "customQuality": [imageQualityCharacteristic, imageQualityCharacteristic, imageQualityCharacteristic],
   "outputImageParams": outputImageParams,
   "onlyCentralFace": true,
 };
@@ -221,7 +213,7 @@ var licenseException = {
 var initException = {
   "code": 0,
   "message": "In process already.",
-  "underlyingError": licenseException
+  "underlyingError": licenseException,
 };
 
 var livenessConfig = {
@@ -343,7 +335,7 @@ var matchFacesImage = {
   "image": img1,
   "imageType": 1,
   "detectAll": true,
-  "identifier": "test"
+  "identifier": "test",
 };
 var matchFacesRequest = {
   "images": [matchFacesImage, matchFacesImage, matchFacesImage],
@@ -359,7 +351,10 @@ var matchFacesDetectionFace = {
   "originalRect": rect,
   "crop": img1,
 };
-var matchFacesBackendException = {"code": 0, "message": "Image is empty."};
+var matchFacesBackendException = {
+  "code": 0,
+  "message": "Image is empty.",
+};
 var matchFacesException = {
   "code": 0,
   "message": "Image is empty.",
@@ -368,11 +363,7 @@ var matchFacesException = {
 var matchFacesDetection = {
   "imageIndex": 0,
   "image": matchFacesImage,
-  "faces": [
-    matchFacesDetectionFace,
-    matchFacesDetectionFace,
-    matchFacesDetectionFace
-  ],
+  "faces": [matchFacesDetectionFace, matchFacesDetectionFace, matchFacesDetectionFace],
   "error": matchFacesException,
 };
 var comparedFace = {
@@ -403,7 +394,9 @@ var editGroupPersonsRequest = {
   "personIdsToAdd": ["test1", "test2", "test3"],
   "personIdsToRemove": ["test4", "test5", "test6"],
 };
-var imageUpload = {"imageData": img1};
+var imageUpload = {
+  "imageData": img1,
+};
 var person = {
   "name": "test1",
   "updatedAt": "1969-07-20 20:18:04.000",

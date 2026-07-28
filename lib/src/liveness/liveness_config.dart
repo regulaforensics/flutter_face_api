@@ -66,9 +66,7 @@ class LivenessConfig {
     bool vibrateOnSteps = true,
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-    List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT
-    ],
+    List<ScreenOrientation> screenOrientation = const [ScreenOrientation.PORTRAIT],
     bool locationTrackingEnabled = true,
     bool preventScreenRecording = false,
     int attemptsCount = 0,
@@ -105,19 +103,15 @@ class LivenessConfig {
     result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
-    result.cameraPositionIOS =
-        CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
-    result.screenOrientation =
-        ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
+    result.cameraPositionIOS = CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
+    result.screenOrientation = ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
     result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
     result.preventScreenRecording = jsonObject["preventScreenRecording"];
     result.attemptsCount = jsonObject["attemptsCount"];
-    result.recordingProcess =
-        RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
+    result.recordingProcess = RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
     result.livenessType = LivenessType.getByValue(jsonObject["livenessType"])!;
     result.tag = jsonObject["tag"];
-    result.skipStep =
-        LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
+    result.skipStep = LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
     result.metadata = jsonObject["metadata"];
 
     return result;
