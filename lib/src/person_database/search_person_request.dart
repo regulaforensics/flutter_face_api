@@ -57,8 +57,7 @@ class SearchPersonRequest {
       limit: jsonObject["limit"],
       tag: jsonObject["tag"],
       detectAll: jsonObject["detectAll"],
-      outputImageParams:
-          OutputImageParams.fromJson(jsonObject["outputImageParams"]),
+      outputImageParams: OutputImageParams.fromJson(jsonObject["outputImageParams"]),
     );
   }
 

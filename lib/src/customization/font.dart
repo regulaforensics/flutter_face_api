@@ -18,11 +18,8 @@ class Font {
   FontStyle? get style => _style;
   FontStyle? _style;
 
-  Font(
-    String name, {
-    int? size,
-    FontStyle? style,
-  })  : _name = name,
+  Font(String name, {int? size, FontStyle? style})
+      : _name = name,
         _size = size,
         _style = style;
 

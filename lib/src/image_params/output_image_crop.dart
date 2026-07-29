@@ -37,10 +37,11 @@ class OutputImageCrop {
   static OutputImageCrop? fromJson(jsonObject) {
     if (jsonObject == null) return null;
     return OutputImageCrop(
-        OutputImageCropAspectRatio.getByValue(jsonObject["type"])!,
-        size: Size.fromJson(jsonObject["size"]),
-        padColor: _intToColor(jsonObject["padColor"]),
-        returnOriginalRect: jsonObject["returnOriginalRect"]);
+      OutputImageCropAspectRatio.getByValue(jsonObject["type"])!,
+      size: Size.fromJson(jsonObject["size"]),
+      padColor: _intToColor(jsonObject["padColor"]),
+      returnOriginalRect: jsonObject["returnOriginalRect"],
+    );
   }
 
   @visibleForTesting

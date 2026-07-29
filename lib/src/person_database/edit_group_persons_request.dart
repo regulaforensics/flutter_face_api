@@ -4,10 +4,8 @@ class EditGroupPersonsRequest {
   List<String>? _personIdsToAdd;
   List<String>? _personIdsToRemove;
 
-  EditGroupPersonsRequest(
-    List<String>? personIdsToAdd,
-    List<String>? personIdsToRemove,
-  )   : _personIdsToAdd = personIdsToAdd,
+  EditGroupPersonsRequest(List<String>? personIdsToAdd, List<String>? personIdsToRemove)
+      : _personIdsToAdd = personIdsToAdd,
         _personIdsToRemove = personIdsToRemove;
 
   @visibleForTesting

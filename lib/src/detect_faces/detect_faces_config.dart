@@ -44,8 +44,7 @@ class DetectFacesConfig {
         result.customQuality!.add(ImageQualityCharacteristic.fromJson(item)!);
       }
     }
-    result.outputImageParams =
-        OutputImageParams.fromJson(jsonObject["outputImageParams"]);
+    result.outputImageParams = OutputImageParams.fromJson(jsonObject["outputImageParams"]);
     result.onlyCentralFace = jsonObject["onlyCentralFace"];
 
     return result;

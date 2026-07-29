@@ -18,11 +18,8 @@ class DetectFacesRequest {
   /// `config` - Custom Request configuration to specify  image, quality, attributes parameters.
   ///
   /// `tag` - Defines tag that can be used in detect faces processing. Defaults to `null`.
-  DetectFacesRequest(
-    Uint8List image,
-    DetectFacesConfig config, {
-    String? tag,
-  })  : _image = image,
+  DetectFacesRequest(Uint8List image, DetectFacesConfig config, {String? tag})
+      : _image = image,
         _configuration = config,
         _tag = tag;
 
@@ -90,8 +87,7 @@ class DetectFacesRequest {
     result._tag = jsonObject["tag"];
     result._scenario = DetectFacesScenario.getByValue(jsonObject["scenario"]);
     result._image = _bytesFromBase64(jsonObject["image"])!;
-    result._configuration =
-        DetectFacesConfig.fromJson(jsonObject["configuration"]);
+    result._configuration = DetectFacesConfig.fromJson(jsonObject["configuration"]);
 
     return result;
   }

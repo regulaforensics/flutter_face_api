@@ -32,8 +32,7 @@ class ImageQualityCharacteristic {
     if (jsonObject == null) return null;
 
     return ImageQualityCharacteristic._create(
-      ImageQualityCharacteristicName.getByValue(
-          jsonObject["characteristicName"])!,
+      ImageQualityCharacteristicName.getByValue(jsonObject["characteristicName"])!,
       recommended: ImageQualityRange.fromJson(jsonObject["recommendedRange"]),
       custom: ImageQualityRange.fromJson(jsonObject["customRange"]),
       color: _intToColor(jsonObject["color"]),
