@@ -37,11 +37,12 @@ class MatchFacesRequest {
       images.add(MatchFacesImage.fromJson(item)!);
     }
 
-    return MatchFacesRequest(images,
-        outputImageParams:
-            OutputImageParams.fromJson(jsonObject["outputImageParams"]),
-        tag: jsonObject["tag"],
-        metadata: jsonObject["metadata"]);
+    return MatchFacesRequest(
+      images,
+      outputImageParams: OutputImageParams.fromJson(jsonObject["outputImageParams"]),
+      tag: jsonObject["tag"],
+      metadata: jsonObject["metadata"],
+    );
   }
 
   @visibleForTesting

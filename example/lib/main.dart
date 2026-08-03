@@ -22,12 +22,8 @@ void startFaceCapture(int position) async {
 
 void startLiveness() async {
   var result = await faceSdk.startLiveness(
-    config: LivenessConfig(
-      skipStep: [LivenessSkipStep.ONBOARDING_STEP],
-    ),
-    notificationCompletion: (notification) {
-      print(notification.status);
-    },
+    config: LivenessConfig(skipStep: [LivenessSkipStep.ONBOARDING_STEP]),
+    notificationCompletion: (notification) => print(notification.status),
   );
   if (result.image == null) return;
   setImage(result.image!, ImageType.LIVE, 1);
@@ -45,9 +41,7 @@ void matchFaces() async {
   var split = await faceSdk.splitComparedFaces(response.results, 0.75);
   var match = split.matchedFaces;
   setSimilarityStatus("failed");
-  if (match.isNotEmpty) {
-    setSimilarityStatus((match[0].similarity * 100).toStringAsFixed(2) + "%");
-  }
+  if (match.isNotEmpty) setSimilarityStatus((match[0].similarity * 100).toStringAsFixed(2) + "%");
   setStatus("Ready");
 }
 
@@ -174,7 +168,10 @@ List<Widget> ui() => [
 
 Widget image(Image image, VoidCallback onTap) => Container(
     padding: EdgeInsets.all(5),
-    child: GestureDetector(onTap: onTap, child: Image(image: image.image)));
+    child: GestureDetector(
+      onTap: onTap,
+      child: Image(image: image.image),
+    ));
 
 Widget button(String text, VoidCallback onPressed) => Padding(
     padding: EdgeInsets.all(5),
@@ -219,14 +216,8 @@ Future<bool?> chooseOption() async {
     builder: (context) => Theme(
       data: ThemeData(colorScheme: MyAppState.theme),
       child: AlertDialog(title: Text("Select option"), actions: [
-        TextButton(
-          child: Text("Use gallery"),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-        TextButton(
-          child: Text("Use camera"),
-          onPressed: () => Navigator.pop(context, true),
-        )
+        TextButton(child: Text("Use gallery"), onPressed: () => Navigator.pop(context, false)),
+        TextButton(child: Text("Use camera"), onPressed: () => Navigator.pop(context, true))
       ]),
     ),
   );
@@ -237,7 +228,6 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     instance = this;
-
     init();
   }
 

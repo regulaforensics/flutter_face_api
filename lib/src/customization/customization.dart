@@ -30,8 +30,7 @@ class Customization {
   }
 
   /// Set onClick listener for buttons from [uiCustomizationLayer].
-  set onCustomButtonTapped(CustomButtonTappedCompletion completion) =>
-      _setCustomButtonTappedCompletion(completion);
+  set onCustomButtonTapped(CustomButtonTappedCompletion completion) => _setCustomButtonTappedCompletion(completion);
 
   /// Allows you to deserialize object.
   static Customization fromJson(jsonObject) {

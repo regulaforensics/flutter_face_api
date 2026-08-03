@@ -16,10 +16,8 @@ class OutputImageParams {
   Color? get backgroundColor => _backgroundColor;
   Color? _backgroundColor;
 
-  OutputImageParams({
-    OutputImageCrop? crop,
-    Color? backgroundColor,
-  })  : _crop = crop,
+  OutputImageParams({OutputImageCrop? crop, Color? backgroundColor})
+      : _crop = crop,
         _backgroundColor = backgroundColor;
 
   @visibleForTesting

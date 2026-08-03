@@ -13,10 +13,7 @@ class PageableItemList<T> {
   PageableItemList._privateConstructor();
 
   @visibleForTesting
-  static PageableItemList<T>? fromJson<T>(
-    jsonObject,
-    T? Function(dynamic) fromJSON,
-  ) {
+  static PageableItemList<T>? fromJson<T>(jsonObject, T? Function(dynamic) fromJSON) {
     if (jsonObject == null) return null;
     var result = PageableItemList<T>._privateConstructor();
 

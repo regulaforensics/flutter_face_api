@@ -2,3 +2,6 @@ include: package:lints/core.yaml
 analyzer:
   errors:
     deprecated_member_use_from_same_package: ignore
+formatter:
+  page_width: 120
+  trailing_commas: preserve

@@ -44,8 +44,7 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
                 from: rootViewController()!,
                 animated: true,
                 configuration: config,
-                onCapture: { callback($0.encode()) },
-                completion: nil)
+                onCapture: { callback($0.encode()) })
         }
     case("stopFaceCapture"): face.stopFaceCaptureViewController()
     case("startLiveness"): let config = LivenessConfiguration.decode(argsNullable(0))
@@ -54,9 +53,30 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
                 from: rootViewController()!,
                 animated: true,
                 configuration: config,
-                onLiveness: { callback($0.encode()) },
-                completion: nil)
+                onLiveness: { callback($0.encode()) })
         }
+//    case("startEnrollment"): let config = EnrollmentConfiguration.decode2(args(0))
+//        DispatchQueue.main.async {
+//            face.startEnrollment(
+//                from: rootViewController()!,
+//                animated: true,
+//                configuration: config,
+//                onEnrollment: { callback([
+//                    "livenessResponse": $0.encode(),
+//                    "enrollmentResponse": $1?.encode()
+//                ]) })
+//        }
+//    case("startVerification"): let config = VerificationConfiguration.decode2(args(0))
+//        DispatchQueue.main.async {
+//            face.startVerification(
+//                from: rootViewController()!,
+//                animated: true,
+//                configuration: config,
+//                onVerification: { callback([
+//                    "livenessResponse": $0.encode(),
+//                    "verificationResponse": $1?.encode()
+//                ]) })
+//        }
     case("stopLiveness"): face.stopLivenessProcessing()
     case("matchFaces"): face.matchFaces(
         MatchFacesRequest.decode(args(0)),

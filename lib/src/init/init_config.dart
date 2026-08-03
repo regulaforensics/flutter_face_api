@@ -22,10 +22,8 @@ class InitConfig {
     _useBleDevice = true;
   }
 
-  InitConfig(
-    ByteData license, {
-    bool? licenseUpdate,
-  })  : _license = license,
+  InitConfig(ByteData license, {bool? licenseUpdate})
+      : _license = license,
         _licenseUpdate = licenseUpdate;
 
   @visibleForTesting

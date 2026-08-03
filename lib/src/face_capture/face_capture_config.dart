@@ -44,9 +44,7 @@ class FaceCaptureConfig {
     bool preventScreenRecording = false,
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-    List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT
-    ],
+    List<ScreenOrientation> screenOrientation = const [ScreenOrientation.PORTRAIT],
     double? timeout,
     double? holdStillDuration,
   })  : copyright = copyright,
@@ -77,10 +75,8 @@ class FaceCaptureConfig {
     result.showFaceAnimation = jsonObject["showFaceAnimation"];
     result.preventScreenRecording = jsonObject["preventScreenRecording"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
-    result.cameraPositionIOS =
-        CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
-    result.screenOrientation =
-        ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
+    result.cameraPositionIOS = CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
+    result.screenOrientation = ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
     result.timeout = _toDouble(jsonObject["timeout"]);
     result.holdStillDuration = _toDouble(jsonObject["holdStillDuration"]);
 

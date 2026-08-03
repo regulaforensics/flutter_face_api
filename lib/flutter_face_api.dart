@@ -30,10 +30,17 @@ part 'src/face_capture/face_capture_exception.dart';
 part 'src/face_capture/face_capture_response.dart';
 
 part 'src/liveness/liveness_config.dart';
+// part 'src/liveness/enrollment_config.dart';
+// part 'src/liveness/enrollment_request.dart';
+// part 'src/liveness/verification_config.dart';
 part 'src/liveness/liveness_backend_exception.dart';
 part 'src/liveness/liveness_exception.dart';
 part 'src/liveness/liveness_response.dart';
 part 'src/liveness/liveness_notification.dart';
+// part 'src/liveness/error_response.dart';
+// part 'src/liveness/enrollment_response.dart';
+// part 'src/liveness/verify_match_response.dart';
+// part 'src/liveness/verification_response.dart';
 
 part 'src/image_params/point.dart';
 part 'src/image_params/rect.dart';
@@ -157,8 +164,7 @@ class FaceSDK {
   }
 
   /// Allows user to receive a video file of current session
-  set videoEncoderCompletion(VideoEncoderCompletion completion) =>
-      _setVideoEncoderCompletion(completion);
+  set videoEncoderCompletion(VideoEncoderCompletion completion) => _setVideoEncoderCompletion(completion);
 
   PersonDatabase get personDatabase => _personDatabase;
   PersonDatabase _personDatabase = PersonDatabase._privateConstructor();
@@ -174,9 +180,7 @@ class FaceSDK {
   ///
   /// Returns [bool] indicating success of initialization
   /// and a nullable [InitException].
-  Future<(bool success, InitException? error)> initialize({
-    InitConfig? config,
-  }) async {
+  Future<(bool success, InitException? error)> initialize({InitConfig? config}) async {
     var response = await _bridge.invokeMethod("initialize", [config?.toJson()]);
 
     var jsonObject = _decode(response);
@@ -199,10 +203,7 @@ class FaceSDK {
     CameraSwitchCallback? cameraSwitchCallback,
   }) async {
     _setCameraSwitchCallback(cameraSwitchCallback);
-    var response = await _bridge.invokeMethod(
-      "startFaceCapture",
-      [config?.toJson()],
-    );
+    var response = await _bridge.invokeMethod("startFaceCapture", [config?.toJson()]);
     return FaceCaptureResponse.fromJson(_decode(response))!;
   }
 
@@ -217,32 +218,62 @@ class FaceSDK {
   }) async {
     _setLivenessNotificationCompletion(notificationCompletion);
     _setCameraSwitchCallback(cameraSwitchCallback);
-    var response = await _bridge.invokeMethod(
-      "startLiveness",
-      [config?.toJson()],
-    );
+    var response = await _bridge.invokeMethod("startLiveness", [config?.toJson()]);
     return LivenessResponse.fromJson(_decode(response))!;
   }
+
+  // Future<(LivenessResponse, EnrollmentResponse?)> startEnrollment(
+  //   EnrollmentConfig config, {
+  //   LivenessNotificationCompletion? notificationCompletion,
+  //   CameraSwitchCallback? cameraSwitchCallback,
+  // }) async {
+  //   _setLivenessNotificationCompletion(notificationCompletion);
+  //   _setCameraSwitchCallback(cameraSwitchCallback);
+  //   var response = _decode(await _bridge.invokeMethod(
+  //     "startEnrollment",
+  //     [config.toJson()],
+  //   ));
+  //   var lr = LivenessResponse.fromJson(response["livenessResponse"])!;
+  //   var er = EnrollmentResponse.fromJson(response["enrollmentResponse"]);
+  //   return (lr, er);
+  // }
+
+  // Future<(LivenessResponse, VerificationResponse?)> startVerification(
+  //   VerificationConfig config, {
+  //   LivenessNotificationCompletion? notificationCompletion,
+  //   CameraSwitchCallback? cameraSwitchCallback,
+  // }) async {
+  //   _setLivenessNotificationCompletion(notificationCompletion);
+  //   _setCameraSwitchCallback(cameraSwitchCallback);
+  //   var response = _decode(await _bridge.invokeMethod(
+  //     "startVerification",
+  //     [config.toJson()],
+  //   ));
+  //   var lr = LivenessResponse.fromJson(response["livenessResponse"])!;
+  //   var vr = VerificationResponse.fromJson(response["verificationResponse"]);
+  //   return (lr, vr);
+  // }
+
+  // Future<EnrollmentResponse> enrollWithTrustedPhoto(
+  //   EnrollmentRequest request,
+  // ) async {
+  //   var response = await _bridge.invokeMethod(
+  //     "enrollWithTrustedPhoto",
+  //     [request.toJson()],
+  //   );
+  //   return EnrollmentResponse.fromJson(_decode(response))!;
+  // }
 
   void stopLiveness() {
     _bridge.invokeMethod("stopLiveness", []);
   }
 
-  Future<MatchFacesResponse> matchFaces(
-    MatchFacesRequest request, {
-    MatchFacesConfig? config,
-  }) async {
-    var response = await _bridge.invokeMethod("matchFaces", [
-      request.toJson(),
-      config?.toJson(),
-    ]);
+  Future<MatchFacesResponse> matchFaces(MatchFacesRequest request, {MatchFacesConfig? config}) async {
+    var response = await _bridge.invokeMethod("matchFaces", [request.toJson(), config?.toJson()]);
     return MatchFacesResponse.fromJson(_decode(response))!;
   }
 
-  Future<ComparedFacesSplit> splitComparedFaces(
-    List<ComparedFacesPair> facesPairs,
-    double similarityThreshold,
-  ) async {
+  Future<ComparedFacesSplit> splitComparedFaces(List<ComparedFacesPair> facesPairs, double similarityThreshold) async {
     var response = await _bridge.invokeMethod("splitComparedFaces", [
       facesPairs.map((e) => e.toJson()).toList(),
       similarityThreshold,
@@ -251,10 +282,7 @@ class FaceSDK {
   }
 
   Future<DetectFacesResponse> detectFaces(DetectFacesRequest request) async {
-    var response = await _bridge.invokeMethod(
-      "detectFaces",
-      [request.toJson()],
-    );
+    var response = await _bridge.invokeMethod("detectFaces", [request.toJson()]);
     return DetectFacesResponse.fromJson(_decode(response))!;
   }
 
@@ -312,9 +340,5 @@ class FaceSDK {
   }
 }
 
-typedef VideoEncoderCompletion = void Function(
-  String transactionId,
-  bool success,
-);
-
+typedef VideoEncoderCompletion = void Function(String transactionId, bool success);
 typedef CameraSwitchCallback = void Function(int cameraId);
