@@ -56,7 +56,7 @@ extensions.configure<KotlinAndroidProjectExtension> {
 }
 
 dependencies {
-    implementation("com.regula.face:api:8.3.5194") {
+    implementation("com.regula.face:api:8.3.5195") {
         isTransitive = true
     }
 
