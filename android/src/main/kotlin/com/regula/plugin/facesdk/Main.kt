@@ -1,7 +1,6 @@
 package com.regula.plugin.facesdk
 
 import android.annotation.SuppressLint
-import com.regula.plugin.facesdk.Convert.toBase64
 import com.regula.common.LocalizationCallbacks
 import com.regula.facesdk.FaceSDK.Instance
 import com.regula.facesdk.callback.DetectFacesCompletion
@@ -17,12 +16,16 @@ import com.regula.facesdk.enums.InitErrorCode
 import com.regula.facesdk.exception.InitException
 import com.regula.facesdk.listener.NetworkInterceptorListener
 import com.regula.facesdk.model.LivenessNotification
+//import com.regula.facesdk.model.results.EnrollmentResponse
+import com.regula.facesdk.model.results.LivenessResponse
+//import com.regula.facesdk.model.results.VerificationResponse
 import com.regula.facesdk.model.results.matchfaces.MatchFacesSimilarityThresholdSplit
 import com.regula.facesdk.model.results.person.DbBaseItem
 import com.regula.facesdk.model.results.person.PageableItemList
 import com.regula.facesdk.model.results.person.Person
 import com.regula.facesdk.model.results.person.PersonGroup
 import com.regula.facesdk.model.results.person.SearchPerson
+import com.regula.plugin.facesdk.Convert.toBase64
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -45,6 +48,9 @@ fun methodCall(method: String, callback: (Any?) -> Unit): Any = when (method) {
     "startFaceCapture" -> startFaceCapture(callback, argsNullable(0))
     "stopFaceCapture" -> stopFaceCapture()
     "startLiveness" -> startLiveness(callback, argsNullable(0))
+//    "startEnrollment" -> startEnrollment(callback, args(0))
+//    "startVerification" -> startVerification(callback, args(0))
+//    "enrollWithTrustedPhoto" -> enrollWithTrustedPhoto(callback, args(0))
     "stopLiveness" -> stopLiveness()
     "matchFaces" -> matchFaces(callback, args(0), argsNullable(1))
     "splitComparedFaces" -> splitComparedFaces(callback, args(0), args(1))
@@ -153,6 +159,24 @@ fun startLiveness(callback: Callback, config: JSONObject?) = config?.let {
     livenessCompletion(callback),
     livenessNotificationCompletion()
 )
+
+//fun startEnrollment(callback: Callback, config: JSONObject) = Instance().startEnrollment(
+//    context,
+//    enrollmentConfigFromJSON(config),
+//    enrollmentCompletion(callback),
+//    livenessNotificationCompletion(),
+//)
+//
+//fun startVerification(callback: Callback, config: JSONObject) = Instance().startVerification(
+//    context,
+//    verificationConfigFromJSON(config),
+//    verificationCompletion(callback),
+//    livenessNotificationCompletion(),
+//)
+//
+//fun enrollWithTrustedPhoto(callback: Callback, config: JSONObject) = Instance().enrollWithTrustedPhoto(
+//    enrollmentRequestFromJSON(config),
+//) { callback(generateEnrollmentResponse(it)) }
 
 fun stopLiveness() = Instance().stopLivenessProcessing(context)
 
@@ -370,6 +394,20 @@ fun matchFacesCompletion(callback: Callback) = MatchFaceCallback {
 fun detectFacesCompletion(callback: Callback) = DetectFacesCompletion {
     callback(generateDetectFacesResponse(it))
 }
+
+//fun verificationCompletion(callback: Callback) = { livenessResponse: LivenessResponse, verificationResponse: VerificationResponse? ->
+//    callback(mapOf(
+//        "livenessResponse" to generateLivenessResponse(livenessResponse),
+//        "verificationResponse" to generateVerificationResponse(verificationResponse),
+//    ).toJson())
+//}
+//
+//fun enrollmentCompletion(callback: Callback) = { livenessResponse: LivenessResponse, enrollmentResponse: EnrollmentResponse? ->
+//    callback(mapOf(
+//        "livenessResponse" to generateLivenessResponse(livenessResponse),
+//        "enrollmentResponse" to generateEnrollmentResponse(enrollmentResponse),
+//    ).toJson())
+//}
 
 fun <T> databaseItemCompletion(callback: Callback, toJson: ((T?) -> JSONObject?)?) = object : PersonDBCallback<T> {
     override fun onSuccess(data: T?) = callback(generatePersonDBResponse(toJson?.let { it(data) } ?: true, null))

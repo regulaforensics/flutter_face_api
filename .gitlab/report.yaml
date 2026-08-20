@@ -31,8 +31,6 @@ view reports:
       artifacts: true
     - job: secret_detection
       artifacts: true
-    - job: gemnasium-dependency_scanning
-      artifacts: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:

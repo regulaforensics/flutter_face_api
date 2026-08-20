@@ -55,19 +55,26 @@ var customizationFonts = {
   "400": font2,
 };
 var customizationImages = {
-  "100": img1,
-  "101": img2,
-  "102": img3,
-  "103": img1,
-  "200": img2,
-  "201": img3,
-  "202": img1,
-  "203": img2,
-  "300": img3,
-  "301": img1,
-  "302": img2,
-  "400": img3,
-  "500": img1,
+  "onboardingScreenCloseButton": img1,
+  "onboardingScreenIllumination": img2,
+  "onboardingScreenAccessories": img3,
+  "onboardingScreenCameraLevel": img1,
+  "cameraScreenCloseButton": img2,
+  "cameraScreenLightOnButton": img3,
+  "cameraScreenLightOffButton": img1,
+  "cameraScreenSwitchButton": img2,
+  "retryScreenCloseButton": img3,
+  "retryScreenHintEnvironment": img1,
+  "retryScreenHintSubject": img2,
+  "retryScreenHintGeo": img3,
+  "retryScreenHintBadSelfieQuality": img1,
+  "retryScreenHintCleanLens": img2,
+  "retryScreenHintAddIllumination": img3,
+  "retryScreenHintChangeBackground": img1,
+  "retryScreenHintFaceOcclusions": img2,
+  "retryScreenHintCovering": img3,
+  "processingScreenCloseButton": img1,
+  "successScreenImage": img2,
 };
 var customization = {
   "colors": customizationColors,
@@ -94,7 +101,7 @@ var outputImageCrop = {
   "type": 0,
   "size": size,
   "padColor": 0xff000000,
-  "returnOriginalRect": true
+  "returnOriginalRect": true,
 };
 var outputImageParams = {
   "crop": outputImageCrop,
@@ -126,11 +133,7 @@ var detectFacesAttributeResult = {
 var detectFaceResult = {
   "quality": [imageQualityResult, imageQualityResult, imageQualityResult],
   "crop": img1,
-  "attributes": [
-    detectFacesAttributeResult,
-    detectFacesAttributeResult,
-    detectFacesAttributeResult
-  ],
+  "attributes": [detectFacesAttributeResult, detectFacesAttributeResult, detectFacesAttributeResult],
   "landmarks": [point, point, point],
   "faceRect": rect,
   "originalRect": rect,
@@ -138,19 +141,15 @@ var detectFaceResult = {
 };
 var detectFacesConfig = {
   "attributes": ["Age", "EyeRight", "EyeLeft"],
-  "customQuality": [
-    imageQualityCharacteristic,
-    imageQualityCharacteristic,
-    imageQualityCharacteristic
-  ],
+  "customQuality": [imageQualityCharacteristic, imageQualityCharacteristic, imageQualityCharacteristic],
   "outputImageParams": outputImageParams,
   "onlyCentralFace": true,
 };
 var detectFacesRequest = {
   "tag": "test",
-  // "scenario": "CropCentralFace",
+  "scenario": "CropCentralFace",
   "image": img1,
-  "configuration": detectFacesConfig,
+  // "configuration": detectFacesConfig,
 };
 var detectFacesBackendException = {
   "code": 2,
@@ -176,6 +175,7 @@ var faceCaptureConfig = {
   "vibrateOnSteps": true,
   "detectOcclusion": false,
   "showFaceAnimation": true,
+  "preventScreenRecording": false,
   "cameraPositionAndroid": 0,
   "cameraPositionIOS": 1,
   "screenOrientation": [0, 1],
@@ -213,7 +213,7 @@ var licenseException = {
 var initException = {
   "code": 0,
   "message": "In process already.",
-  "underlyingError": licenseException
+  "underlyingError": licenseException,
 };
 
 var livenessConfig = {
@@ -226,12 +226,66 @@ var livenessConfig = {
   "cameraPositionIOS": 1,
   "screenOrientation": [0, 1],
   "locationTrackingEnabled": true,
+  "preventScreenRecording": false,
   "attemptsCount": 2,
   "recordingProcess": 0,
   "livenessType": 1,
   "tag": "test",
   "skipStep": [0, 1],
   "metadata": customJson,
+};
+var enrollmentConfig = {
+  "copyright": true,
+  "cameraSwitchEnabled": false,
+  "closeButtonEnabled": true,
+  "torchButtonEnabled": false,
+  "vibrateOnSteps": true,
+  "cameraPositionAndroid": -1,
+  "cameraPositionIOS": 1,
+  "screenOrientation": [0, 1],
+  "locationTrackingEnabled": true,
+  "preventScreenRecording": false,
+  "attemptsCount": 2,
+  "recordingProcess": 0,
+  "livenessType": 1,
+  "tag": "test",
+  "skipStep": [0, 1],
+  "metadata": customJson,
+  "externalId": "test0",
+  "groupId": "test1",
+  "checkDuplicatesEnabled": true,
+  "duplicatesThreshold": 0.5,
+};
+var verificationConfig = {
+  "copyright": true,
+  "cameraSwitchEnabled": false,
+  "closeButtonEnabled": true,
+  "torchButtonEnabled": false,
+  "vibrateOnSteps": true,
+  "cameraPositionAndroid": -1,
+  "cameraPositionIOS": 1,
+  "screenOrientation": [0, 1],
+  "locationTrackingEnabled": true,
+  "preventScreenRecording": false,
+  "attemptsCount": 2,
+  "recordingProcess": 0,
+  "livenessType": 1,
+  "tag": "test",
+  "skipStep": [0, 1],
+  "metadata": customJson,
+  "personId": "test0",
+  "groupId": "test1",
+  "threshold": 0.5,
+};
+var enrollmentRequest = {
+  "externalId": "test0",
+  "groupId": "test1",
+  "trustedImage": img1,
+};
+var enrollmentRequest2 = {
+  "externalId": "test0",
+  "groupId": "test1",
+  "trustedImageUrl": "test2",
 };
 var livenessBackendException = {
   "code": 200,
@@ -254,6 +308,24 @@ var livenessNotification = {
   "status": 0,
   "response": livenessResponse,
 };
+var errorResponse = {
+  "code": 0,
+  "message": "test0",
+};
+var enrollmentResponse = {
+  "personId": "test0",
+  "externalId": "test1",
+  "error": errorResponse,
+};
+var verifyMatchResponse = {
+  "passed": true,
+  "similarity": 0.5,
+};
+var verificationResponse = {
+  "passed": true,
+  "match": verifyMatchResponse,
+  "error": errorResponse,
+};
 
 var matchFacesConfig = {
   "processingMode": 0,
@@ -263,7 +335,7 @@ var matchFacesImage = {
   "image": img1,
   "imageType": 1,
   "detectAll": true,
-  "identifier": "test"
+  "identifier": "test",
 };
 var matchFacesRequest = {
   "images": [matchFacesImage, matchFacesImage, matchFacesImage],
@@ -279,7 +351,10 @@ var matchFacesDetectionFace = {
   "originalRect": rect,
   "crop": img1,
 };
-var matchFacesBackendException = {"code": 0, "message": "Image is empty."};
+var matchFacesBackendException = {
+  "code": 0,
+  "message": "Image is empty.",
+};
 var matchFacesException = {
   "code": 0,
   "message": "Image is empty.",
@@ -288,11 +363,7 @@ var matchFacesException = {
 var matchFacesDetection = {
   "imageIndex": 0,
   "image": matchFacesImage,
-  "faces": [
-    matchFacesDetectionFace,
-    matchFacesDetectionFace,
-    matchFacesDetectionFace
-  ],
+  "faces": [matchFacesDetectionFace, matchFacesDetectionFace, matchFacesDetectionFace],
   "error": matchFacesException,
 };
 var comparedFace = {
@@ -323,7 +394,9 @@ var editGroupPersonsRequest = {
   "personIdsToAdd": ["test1", "test2", "test3"],
   "personIdsToRemove": ["test4", "test5", "test6"],
 };
-var imageUpload = {"imageData": img1};
+var imageUpload = {
+  "imageData": img1,
+};
 var person = {
   "name": "test1",
   "updatedAt": "1969-07-20 20:18:04.000",

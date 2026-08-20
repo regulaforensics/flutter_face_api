@@ -4,10 +4,8 @@ class MatchFacesConfig {
   ProcessingMode processingMode;
   bool locationTrackingEnabled;
 
-  MatchFacesConfig({
-    ProcessingMode processingMode = ProcessingMode.ONLINE,
-    bool locationTrackingEnabled = true,
-  })  : processingMode = processingMode,
+  MatchFacesConfig({ProcessingMode processingMode = ProcessingMode.ONLINE, bool locationTrackingEnabled = true})
+      : processingMode = processingMode,
         locationTrackingEnabled = locationTrackingEnabled;
 
   @visibleForTesting
@@ -15,8 +13,7 @@ class MatchFacesConfig {
     if (jsonObject == null) return null;
     var result = MatchFacesConfig();
 
-    result.processingMode =
-        ProcessingMode.getByValue(jsonObject["processingMode"])!;
+    result.processingMode = ProcessingMode.getByValue(jsonObject["processingMode"])!;
     result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
 
     return result;

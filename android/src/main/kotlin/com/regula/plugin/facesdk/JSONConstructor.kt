@@ -9,10 +9,12 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.util.Pair
 import android.util.Size
+//import com.regula.facesdk.configuration.EnrollmentConfiguration
 import com.regula.facesdk.configuration.FaceCaptureConfiguration
 import com.regula.facesdk.configuration.InitializationConfiguration
 import com.regula.facesdk.configuration.LivenessConfiguration
 import com.regula.facesdk.configuration.MatchFacesConfiguration
+//import com.regula.facesdk.configuration.VerificationConfiguration
 import com.regula.facesdk.detection.request.DetectFacesConfiguration
 import com.regula.facesdk.detection.request.DetectFacesRequest
 import com.regula.facesdk.detection.request.ImageQualityCharacteristic
@@ -50,9 +52,13 @@ import com.regula.facesdk.exception.UnderlineException
 import com.regula.facesdk.model.Image
 import com.regula.facesdk.model.LivenessNotification
 import com.regula.facesdk.model.MatchFacesImage
+//import com.regula.facesdk.model.results.EnrollmentResponse
+//import com.regula.facesdk.model.results.ErrorResponse
 import com.regula.facesdk.model.results.FaceCaptureResponse
 import com.regula.facesdk.model.results.FaceSDKVersion
 import com.regula.facesdk.model.results.LivenessResponse
+//import com.regula.facesdk.model.results.VerificationResponse
+//import com.regula.facesdk.model.results.VerificationMatchResponse
 import com.regula.facesdk.model.results.matchfaces.MatchFacesComparedFace
 import com.regula.facesdk.model.results.matchfaces.MatchFacesComparedFacesPair
 import com.regula.facesdk.model.results.matchfaces.MatchFacesDetection
@@ -65,6 +71,7 @@ import com.regula.facesdk.model.results.person.PersonImage
 import com.regula.facesdk.model.results.person.SearchPerson
 import com.regula.facesdk.model.results.person.SearchPerson.Detection
 import com.regula.facesdk.model.results.person.SearchPersonImage
+//import com.regula.facesdk.request.EnrollmentRequest
 import com.regula.facesdk.request.MatchFacesRequest
 import com.regula.facesdk.request.person.EditGroupPersonsRequest
 import com.regula.facesdk.request.person.ImageUpload
@@ -74,6 +81,8 @@ import com.regula.plugin.facesdk.Convert.toBitmap
 import com.regula.plugin.facesdk.Convert.toByteArray
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Double
+import java.lang.Float
 
 // Config ------------------------------
 
@@ -100,6 +109,22 @@ fun livenessConfigFromJSON(input: JSONObject) = input.let {
 }!!
 
 fun generateLivenessConfig(input: LivenessConfiguration) = getLivenessConfig(input)
+
+//fun enrollmentConfigFromJSON(input: JSONObject) = input.let {
+//    val result = EnrollmentConfiguration.Builder("")
+//    setEnrollmentConfig(result, it)
+//    result.build()
+//}!!
+//
+//fun generateEnrollmentConfig(input: EnrollmentConfiguration) = getEnrollmentConfig(input)
+//
+//fun verificationConfigFromJSON(input: JSONObject) = input.let {
+//    val result = VerificationConfiguration.Builder("")
+//    setVerificationConfig(result, it)
+//    result.build()
+//}!!
+//
+//fun generateVerificationConfig(input: VerificationConfiguration) = getVerificationConfig(input)
 
 fun matchFacesConfigFromJSON(input: JSONObject) = input.let {
     val result = MatchFacesConfiguration.Builder()
@@ -340,6 +365,24 @@ fun generateFaceCaptureResponse(it: FaceCaptureResponse) = mapOf(
 
 // Liveness ------------------------------
 
+//fun enrollmentRequestFromJSON(input: JSONObject): EnrollmentRequest = input.let {
+//    val externalId = it.getString("externalId")
+//    val builder = if (it.has("trustedImage")) EnrollmentRequest.Builder(externalId, it.getString("trustedImage").toBitmap()!!)
+//    else EnrollmentRequest.Builder(externalId, it.getString("trustedImageUrl"))
+//
+//    if (it.has("groupId")) builder.setGroupId(it.getString("groupId"))
+//    builder.build()
+//}
+//
+//fun generateEnrollmentRequest(input: EnrollmentRequest) = input.let {
+//    mapOf(
+//        "externalId" to it.externalId,
+//        "groupId" to it.groupId,
+//        "trustedImage" to it.trustedImage.toBase64(),
+//        "trustedImageUrl" to it.trustedImageUrl,
+//    ).toJson()
+//}
+
 fun livenessResponseFromJSON(input: JSONObject?) = input?.let {
     val result = LivenessResponse()
     it.getStringOrNull("image").toBitmap()?.let { bitmap ->
@@ -373,6 +416,66 @@ fun generateLivenessNotification(it: LivenessNotification) = mapOf(
     "status" to it.status.ordinal,
     "response" to generateLivenessResponse(it.response)
 ).toJson()
+
+//fun errorResponseFromJSON(input: JSONObject?) = input?.let {
+//    ErrorResponse(
+//        it.getInt("code"),
+//        it.getString("message")
+//    )
+//}
+//
+//fun generateErrorResponse(input: ErrorResponse?) = input?.let {
+//    mapOf(
+//        "code" to it.code,
+//        "message" to it.message
+//    ).toJson()
+//}
+//
+//fun enrollmentResponseFromJSON(input: JSONObject?) = input?.let {
+//    EnrollmentResponse(
+//        it.getStringOrNull("personId"),
+//        it.getStringOrNull("externalId"),
+//        errorResponseFromJSON(it.getJSONObjectOrNull("error"))
+//    )
+//}
+//
+//fun generateEnrollmentResponse(input: EnrollmentResponse?) = input?.let {
+//    mapOf(
+//        "personId" to it.personId,
+//        "externalId" to it.externalId,
+//        "error" to generateErrorResponse(it.errorResponse),
+//    ).toJson()
+//}
+//
+//fun verifyMatchResponseFromJSON(input: JSONObject?) = input?.let {
+//    VerificationMatchResponse(
+//        it.getBoolean("passed"),
+//        it.get("similarity").toFloat()
+//    )
+//}
+//
+//fun generateVerifyMatchResponse(input: VerificationMatchResponse?) = input?.let {
+//    mapOf(
+//        "passed" to it.isPassed,
+//        "similarity" to it.similarity
+//    ).toJson()
+//}
+//
+//fun verificationResponseFromJSON(input: JSONObject?) = input?.let {
+//    VerificationResponse(
+//        it.getBoolean("passed"),
+//        verifyMatchResponseFromJSON(it.getJSONObjectOrNull("match")),
+//        errorResponseFromJSON(it.getJSONObjectOrNull("error"))
+//    )
+//}
+//
+//fun generateVerificationResponse(input: VerificationResponse?) = input?.let {
+//    mapOf(
+//        "passed" to it.isPassed,
+//        "match" to generateVerifyMatchResponse(it.match),
+//        "error" to generateErrorResponse(it.error),
+//    ).toJson()
+//}
 
 // MatchFaces ------------------------------
 
@@ -485,7 +588,7 @@ fun generateRect(input: Rect?) = input?.let {
 }
 
 fun matchFacesDetectionFaceFromJSON(input: JSONObject?) = input?.let {
-    val result = MatchFacesDetectionFace::class.constructor(Int::class, java.lang.Double::class, ArrayList::class, Rect::class, Rect::class).instantiate(
+    val result = MatchFacesDetectionFace::class.constructor(Int::class, Double::class, ArrayList::class, Rect::class, Rect::class).instantiate(
         it.getIntOrNull("faceIndex"),
         it.getDoubleOrNull("rotationAngle"),
         it.getJSONArrayOrNull("landmarks").toList(::pointFromJSON).toArrayList(),
@@ -541,7 +644,7 @@ fun generateComparedFace(it: MatchFacesComparedFace) = mapOf(
 ).toJson()
 
 fun comparedFacesPairFromJSON(input: JSONObject): MatchFacesComparedFacesPair = input.let {
-    MatchFacesComparedFacesPair::class.constructor(MatchFacesComparedFace::class, MatchFacesComparedFace::class, MatchFacesException::class, java.lang.Float::class, java.lang.Float::class).instantiate(
+    MatchFacesComparedFacesPair::class.constructor(MatchFacesComparedFace::class, MatchFacesComparedFace::class, MatchFacesException::class, Float::class, Float::class).instantiate(
         comparedFaceFromJSON(it.getJSONObject("first")),
         comparedFaceFromJSON(it.getJSONObject("second")),
         matchFacesExceptionFromJSON(it.getJSONObjectOrNull("error")),
@@ -636,13 +739,18 @@ fun generateDetectFacesConfig(input: DetectFacesConfiguration?) = input?.let {
 
 fun detectFacesRequestFromJSON(input: JSONObject) = input.let {
     val image = it.getString("image").toBitmap()!!
-    it.getStringOrNull("scenario")?.let { scenario ->
-        DetectFacesRequest::class.java.getDeclaredConstructor(Bitmap::class.java, String::class.java).instantiate(image, scenario)
-    } ?: DetectFacesRequest(
-        image,
-        detectFacesConfigFromJSON(it.getJSONObjectOrNull("configuration")),
-        it.getStringOrNull("tag")
-    )
+    val scenario = it.getStringOrNull("scenario")
+    val config = detectFacesConfigFromJSON(it.getJSONObjectOrNull("configuration"))
+    val tag = it.getStringOrNull("tag")
+
+    scenario?.let { scenario ->
+        DetectFacesRequest::class.java.getDeclaredConstructor(
+            Bitmap::class.java,
+            String::class.java,
+            DetectFacesConfiguration::class.java,
+            String::class.java
+        ).instantiate(image, scenario, null, tag)
+    } ?: DetectFacesRequest(image, config, tag)
 }
 
 fun generateDetectFacesRequest(it: DetectFacesRequest) = mapOf(

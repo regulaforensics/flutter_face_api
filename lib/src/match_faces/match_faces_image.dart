@@ -20,11 +20,8 @@ class MatchFacesImage {
   String get identifier => _identifier;
   String _identifier;
 
-  MatchFacesImage(
-    Uint8List image,
-    ImageType imageType, {
-    bool? detectAll,
-  })  : _image = image,
+  MatchFacesImage(Uint8List image, ImageType imageType, {bool? detectAll})
+      : _image = image,
         _imageType = imageType,
         _detectAll = detectAll ?? false,
         _identifier = "";

@@ -15,7 +15,6 @@ import com.regula.common.ble.BLEWrapper
 import com.regula.facesdk.configuration.Customization
 import com.regula.facesdk.enums.CustomizationColor
 import com.regula.facesdk.enums.CustomizationFont
-import com.regula.facesdk.enums.CustomizationImage
 import com.regula.facesdk.enums.ImageType
 import com.regula.facesdk.enums.InitErrorCode
 import com.regula.facesdk.enums.OutputImageCropAspectRatio
@@ -158,10 +157,9 @@ fun Any.setImage(customization: Customization, value: Any) {
     val uiConfig = customization.uiConfigurationLive.value!!
     val private = uiConfig.javaClass.getDeclaredField("d")
     private.isAccessible = true
-    val images = private.get(uiConfig) as HashMap<CustomizationImage, Drawable>
+    val images = private.get(uiConfig) as HashMap<String, Drawable>
 
-    val field = CustomizationImage.values().find { it.value == this.toInt() }!!
-    images[field] = (value as String?).toDrawable(context)!!
+    images[this as String] = (value as String?).toDrawable(context)!!
 }
 
 fun Int.toOutputImageCropAspectRatio(): OutputImageCropAspectRatio {
