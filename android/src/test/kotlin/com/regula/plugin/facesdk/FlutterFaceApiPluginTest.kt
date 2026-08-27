@@ -92,6 +92,18 @@ class FlutterFaceApiPluginTest {
     @Test
     fun livenessConfig() = compare("livenessConfig", ::livenessConfigFromJSON, ::generateLivenessConfig, "cameraPositionIOS")
 
+    @Test
+    fun enrollmentConfig() = compare("enrollmentConfig", ::enrollmentConfigFromJSON, ::generateEnrollmentConfig, "cameraPositionIOS")
+
+    @Test
+    fun verificationConfig() = compare("verificationConfig", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
+
+    @Test
+    fun enrollmentRequest() = compare("enrollmentRequest", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
+
+    @Test
+    fun enrollmentRequest2() = compare("enrollmentRequest2", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
+
 //    @Test
 //    fun enrollmentConfig() = compare("enrollmentConfig", ::enrollmentConfigFromJSON, ::generateEnrollmentConfig, "cameraPositionIOS")
 //
@@ -116,17 +128,17 @@ class FlutterFaceApiPluginTest {
     @Test
     fun livenessNotification() = compare("livenessNotification", ::livenessNotificationFromJSON, ::generateLivenessNotification)
 
-//    @Test
-//    fun errorResponse() = compare("errorResponse", ::errorResponseFromJSON, ::generateErrorResponse)
-//
-//    @Test
-//    fun enrollmentResponse() = compare("enrollmentResponse", ::enrollmentResponseFromJSON, ::generateEnrollmentResponse)
-//
-//    @Test
-//    fun verifyMatchResponse() = compare("verifyMatchResponse", ::verifyMatchResponseFromJSON, ::generateVerifyMatchResponse)
-//
-//    @Test
-//    fun verificationResponse() = compare("verificationResponse", ::verificationResponseFromJSON, ::generateVerificationResponse)
+    @Test
+    fun errorResponse() = compare("errorResponse", ::errorResponseFromJSON, ::generateErrorResponse)
+
+    @Test
+    fun enrollmentResponse() = compare("enrollmentResponse", ::enrollmentResponseFromJSON, ::generateEnrollmentResponse)
+
+    @Test
+    fun verifyMatchResponse() = compare("verifyMatchResponse", ::verifyMatchResponseFromJSON, ::generateVerifyMatchResponse)
+
+    @Test
+    fun verificationResponse() = compare("verificationResponse", ::verificationResponseFromJSON, ::generateVerificationResponse)
 
     // match_faces
 

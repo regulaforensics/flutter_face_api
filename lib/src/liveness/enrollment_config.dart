@@ -1,166 +1,166 @@
-// part of "../../flutter_face_api.dart";
+part of "../../flutter_face_api.dart";
 
-// class EnrollmentConfig {
-//   /// Defines, whether the logo is visible on the bottom of Liveness UI screens. Defaults to `true`.
-//   bool copyright;
+class EnrollmentConfig {
+  /// Defines, whether the logo is visible on the bottom of Liveness UI screens. Defaults to `true`.
+  bool copyright;
 
-//   /// Defines, whether the camera's toolbar switch camera button is available on the Liveness UI. Defaults to `false`.
-//   /// When set to `true` the CameraToolbarView will contain a button to change current `cameraPosition`.
-//   /// Only for livenessType = [LivenessType.PASSIVE].
-//   bool cameraSwitchEnabled;
+  /// Defines, whether the camera's toolbar switch camera button is available on the Liveness UI. Defaults to `false`.
+  /// When set to `true` the CameraToolbarView will contain a button to change current `cameraPosition`.
+  /// Only for livenessType = [LivenessType.PASSIVE].
+  bool cameraSwitchEnabled;
 
-//   bool closeButtonEnabled;
+  bool closeButtonEnabled;
 
-//   /// Defines, whether the camera's toolbar torch button is available on the Liveness UI. Defaults to `true`.
-//   /// When set to `false` the CameraToolbarView won't contain a button to toggle camera's flashlight.
-//   /// Only for livenessType = [LivenessType.PASSIVE].
-//   bool torchButtonEnabled;
+  /// Defines, whether the camera's toolbar torch button is available on the Liveness UI. Defaults to `true`.
+  /// When set to `false` the CameraToolbarView won't contain a button to toggle camera's flashlight.
+  /// Only for livenessType = [LivenessType.PASSIVE].
+  bool torchButtonEnabled;
 
-//   /// Enables vibration during Liveness processing. Defaults to `true`.
-//   bool vibrateOnSteps;
+  /// Enables vibration during Liveness processing. Defaults to `true`.
+  bool vibrateOnSteps;
 
-//   /// Android only.
-//   int? cameraPositionAndroid;
+  /// Android only.
+  int? cameraPositionAndroid;
 
-//   /// IOS only.
-//   CameraPosition cameraPositionIOS;
+  /// IOS only.
+  CameraPosition cameraPositionIOS;
 
-//   /// Allows you to specify an orientation of the camera view controller.
-//   List<ScreenOrientation> screenOrientation;
+  /// Allows you to specify an orientation of the camera view controller.
+  List<ScreenOrientation> screenOrientation;
 
-//   /// Defines whether the liveness request sends a location of a device. Defaults to `true`.
-//   /// When set to `true` the liveness request to web service will contain the `location`
-//   /// object within the json `metadata` object.
-//   /// The location is used only when permissions are granted and the location is available.
-//   bool locationTrackingEnabled;
+  /// Defines whether the liveness request sends a location of a device. Defaults to `true`.
+  /// When set to `true` the liveness request to web service will contain the `location`
+  /// object within the json `metadata` object.
+  /// The location is used only when permissions are granted and the location is available.
+  bool locationTrackingEnabled;
 
-//   /// Prevents screenshots and screen recording while FaceCapture camera screen is displayed. Defaults to `false`.
-//   bool preventScreenRecording;
+  /// Prevents screenshots and screen recording while FaceCapture camera screen is displayed. Defaults to `false`.
+  bool preventScreenRecording;
 
-//   /// The number of attempts to pass the Liveness before completing with error. Defaults to `0`.
-//   /// When set to `0`  the Liveness will always ask to retry on error.
-//   int attemptsCount;
+  /// The number of attempts to pass the Liveness before completing with error. Defaults to `0`.
+  /// When set to `0`  the Liveness will always ask to retry on error.
+  int attemptsCount;
 
-//   /// Defines whether the liveness recording video of processing.
-//   /// Defaults to [RecordingProcess.ASYNCHRONOUS_UPLOAD].
-//   RecordingProcess recordingProcess;
+  /// Defines whether the liveness recording video of processing.
+  /// Defaults to [RecordingProcess.ASYNCHRONOUS_UPLOAD].
+  RecordingProcess recordingProcess;
 
-//   /// Defines whether the liveness processing type. Defaults to [LivenessType.ACTIVE].
-//   LivenessType livenessType;
+  /// Defines whether the liveness processing type. Defaults to [LivenessType.ACTIVE].
+  LivenessType livenessType;
 
-//   /// Defines tag that can be used in Liveness processing. Defaults to `null`.
-//   String? tag;
+  /// Defines tag that can be used in Liveness processing. Defaults to `null`.
+  String? tag;
 
-//   /// Defines which steps of the user interface can be omitted. See [LivenessSkipStep] enum for details.
-//   List<LivenessSkipStep> skipStep;
+  /// Defines which steps of the user interface can be omitted. See [LivenessSkipStep] enum for details.
+  List<LivenessSkipStep> skipStep;
 
-//   dynamic metadata;
+  dynamic metadata;
 
-//   String externalId;
+  String externalId;
 
-//   String? groupId;
+  String? groupId;
 
-//   bool? checkDuplicatesEnabled;
+  bool? checkDuplicatesEnabled;
 
-//   double? duplicatesThreshold;
+  double? duplicatesThreshold;
 
-//   EnrollmentConfig(
-//     String externalId, {
-//     bool copyright = true,
-//     bool cameraSwitchEnabled = false,
-//     bool closeButtonEnabled = true,
-//     bool torchButtonEnabled = true,
-//     bool vibrateOnSteps = true,
-//     int? cameraPositionAndroid,
-//     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-//     List<ScreenOrientation> screenOrientation = const [
-//       ScreenOrientation.PORTRAIT
-//     ],
-//     bool locationTrackingEnabled = true,
-//     bool preventScreenRecording = false,
-//     int attemptsCount = 0,
-//     RecordingProcess recordingProcess = RecordingProcess.ASYNCHRONOUS_UPLOAD,
-//     LivenessType livenessType = LivenessType.ACTIVE,
-//     String? tag,
-//     List<LivenessSkipStep> skipStep = const [],
-//     dynamic metadata,
-//     String? groupId,
-//     bool? checkDuplicatesEnabled,
-//     double? duplicatesThreshold,
-//   })  : copyright = copyright,
-//         cameraSwitchEnabled = cameraSwitchEnabled,
-//         closeButtonEnabled = closeButtonEnabled,
-//         torchButtonEnabled = torchButtonEnabled,
-//         vibrateOnSteps = vibrateOnSteps,
-//         cameraPositionAndroid = cameraPositionAndroid,
-//         cameraPositionIOS = cameraPositionIOS,
-//         screenOrientation = screenOrientation,
-//         locationTrackingEnabled = locationTrackingEnabled,
-//         preventScreenRecording = preventScreenRecording,
-//         attemptsCount = attemptsCount,
-//         recordingProcess = recordingProcess,
-//         livenessType = livenessType,
-//         tag = tag,
-//         skipStep = skipStep,
-//         metadata = metadata,
-//         externalId = externalId,
-//         groupId = groupId,
-//         checkDuplicatesEnabled = checkDuplicatesEnabled,
-//         duplicatesThreshold = duplicatesThreshold;
+  EnrollmentConfig(
+    String externalId, {
+    bool copyright = true,
+    bool cameraSwitchEnabled = false,
+    bool closeButtonEnabled = true,
+    bool torchButtonEnabled = true,
+    bool vibrateOnSteps = true,
+    int? cameraPositionAndroid,
+    CameraPosition cameraPositionIOS = CameraPosition.FRONT,
+    List<ScreenOrientation> screenOrientation = const [
+      ScreenOrientation.PORTRAIT
+    ],
+    bool locationTrackingEnabled = true,
+    bool preventScreenRecording = false,
+    int attemptsCount = 0,
+    RecordingProcess recordingProcess = RecordingProcess.ASYNCHRONOUS_UPLOAD,
+    LivenessType livenessType = LivenessType.ACTIVE,
+    String? tag,
+    List<LivenessSkipStep> skipStep = const [],
+    dynamic metadata,
+    String? groupId,
+    bool? checkDuplicatesEnabled,
+    double? duplicatesThreshold,
+  })  : copyright = copyright,
+        cameraSwitchEnabled = cameraSwitchEnabled,
+        closeButtonEnabled = closeButtonEnabled,
+        torchButtonEnabled = torchButtonEnabled,
+        vibrateOnSteps = vibrateOnSteps,
+        cameraPositionAndroid = cameraPositionAndroid,
+        cameraPositionIOS = cameraPositionIOS,
+        screenOrientation = screenOrientation,
+        locationTrackingEnabled = locationTrackingEnabled,
+        preventScreenRecording = preventScreenRecording,
+        attemptsCount = attemptsCount,
+        recordingProcess = recordingProcess,
+        livenessType = livenessType,
+        tag = tag,
+        skipStep = skipStep,
+        metadata = metadata,
+        externalId = externalId,
+        groupId = groupId,
+        checkDuplicatesEnabled = checkDuplicatesEnabled,
+        duplicatesThreshold = duplicatesThreshold;
 
-//   @visibleForTesting
-//   static EnrollmentConfig? fromJson(jsonObject) {
-//     if (jsonObject == null) return null;
-//     var result = EnrollmentConfig(jsonObject["externalId"]);
+  @visibleForTesting
+  static EnrollmentConfig? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = EnrollmentConfig(jsonObject["externalId"]);
 
-//     result.copyright = jsonObject["copyright"];
-//     result.cameraSwitchEnabled = jsonObject["cameraSwitchEnabled"];
-//     result.closeButtonEnabled = jsonObject["closeButtonEnabled"];
-//     result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
-//     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
-//     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
-//     result.cameraPositionIOS =
-//         CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
-//     result.screenOrientation =
-//         ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
-//     result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
-//     result.preventScreenRecording = jsonObject["preventScreenRecording"];
-//     result.attemptsCount = jsonObject["attemptsCount"];
-//     result.recordingProcess =
-//         RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
-//     result.livenessType = LivenessType.getByValue(jsonObject["livenessType"])!;
-//     result.tag = jsonObject["tag"];
-//     result.skipStep =
-//         LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
-//     result.metadata = jsonObject["metadata"];
-//     result.groupId = jsonObject["groupId"];
-//     result.checkDuplicatesEnabled = jsonObject["checkDuplicatesEnabled"];
-//     result.duplicatesThreshold = _toDouble(jsonObject["duplicatesThreshold"]);
+    result.copyright = jsonObject["copyright"];
+    result.cameraSwitchEnabled = jsonObject["cameraSwitchEnabled"];
+    result.closeButtonEnabled = jsonObject["closeButtonEnabled"];
+    result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
+    result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
+    result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
+    result.cameraPositionIOS =
+        CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
+    result.screenOrientation =
+        ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
+    result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
+    result.preventScreenRecording = jsonObject["preventScreenRecording"];
+    result.attemptsCount = jsonObject["attemptsCount"];
+    result.recordingProcess =
+        RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
+    result.livenessType = LivenessType.getByValue(jsonObject["livenessType"])!;
+    result.tag = jsonObject["tag"];
+    result.skipStep =
+        LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
+    result.metadata = jsonObject["metadata"];
+    result.groupId = jsonObject["groupId"];
+    result.checkDuplicatesEnabled = jsonObject["checkDuplicatesEnabled"];
+    result.duplicatesThreshold = _toDouble(jsonObject["duplicatesThreshold"]);
 
-//     return result;
-//   }
+    return result;
+  }
 
-//   @visibleForTesting
-//   Map<String, dynamic> toJson() => {
-//         "copyright": copyright,
-//         "cameraSwitchEnabled": cameraSwitchEnabled,
-//         "closeButtonEnabled": closeButtonEnabled,
-//         "torchButtonEnabled": torchButtonEnabled,
-//         "vibrateOnSteps": vibrateOnSteps,
-//         "cameraPositionAndroid": cameraPositionAndroid,
-//         "cameraPositionIOS": cameraPositionIOS.value,
-//         "screenOrientation": screenOrientation.map((e) => e.value).toList(),
-//         "locationTrackingEnabled": locationTrackingEnabled,
-//         "preventScreenRecording": preventScreenRecording,
-//         "attemptsCount": attemptsCount,
-//         "recordingProcess": recordingProcess.value,
-//         "livenessType": livenessType.value,
-//         "tag": tag,
-//         "skipStep": skipStep.map((e) => e.value).toList(),
-//         "metadata": metadata,
-//         "externalId": externalId,
-//         "groupId": groupId,
-//         "checkDuplicatesEnabled": checkDuplicatesEnabled,
-//         "duplicatesThreshold": duplicatesThreshold,
-//       }.clearNulls();
-// }
+  @visibleForTesting
+  Map<String, dynamic> toJson() => {
+        "copyright": copyright,
+        "cameraSwitchEnabled": cameraSwitchEnabled,
+        "closeButtonEnabled": closeButtonEnabled,
+        "torchButtonEnabled": torchButtonEnabled,
+        "vibrateOnSteps": vibrateOnSteps,
+        "cameraPositionAndroid": cameraPositionAndroid,
+        "cameraPositionIOS": cameraPositionIOS.value,
+        "screenOrientation": screenOrientation.map((e) => e.value).toList(),
+        "locationTrackingEnabled": locationTrackingEnabled,
+        "preventScreenRecording": preventScreenRecording,
+        "attemptsCount": attemptsCount,
+        "recordingProcess": recordingProcess.value,
+        "livenessType": livenessType.value,
+        "tag": tag,
+        "skipStep": skipStep.map((e) => e.value).toList(),
+        "metadata": metadata,
+        "externalId": externalId,
+        "groupId": groupId,
+        "checkDuplicatesEnabled": checkDuplicatesEnabled,
+        "duplicatesThreshold": duplicatesThreshold,
+      }.clearNulls();
+}

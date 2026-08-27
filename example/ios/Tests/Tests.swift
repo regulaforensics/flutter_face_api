@@ -90,39 +90,39 @@ class Tests: XCTestCase {
         ])
     }
     
-//    func test_enrollmentConfig() {
-//        compare("enrollmentConfig", EnrollmentConfiguration.decode2, EnrollmentConfiguration.encode2, omit: [
-//            "cameraPositionAndroid",
-//            "screenOrientation",
-//        ])
-//    }
-//    
-//    func test_verificationConfig() {
-//        compare("verificationConfig", VerificationConfiguration.decode2, VerificationConfiguration.encode2, omit: [
-//            "cameraPositionAndroid",
-//            "screenOrientation",
-//        ])
-//    }
+    func test_enrollmentConfig() {
+        compare("enrollmentConfig", EnrollmentConfiguration.decode2, EnrollmentConfiguration.encode2, omit: [
+            "cameraPositionAndroid",
+            "screenOrientation",
+        ])
+    }
+    
+    func test_verificationConfig() {
+        compare("verificationConfig", VerificationConfiguration.decode2, VerificationConfiguration.encode2, omit: [
+            "cameraPositionAndroid",
+            "screenOrientation",
+        ])
+    }
     
     func test_livenessResponse() {
         compare("livenessResponse", LivenessResponse.decode, LivenessResponse.encode, omit: ["error"])
     }
     
-//    func test_errorResponse() {
-//        compare("errorResponse", ErrorResponse.decode, ErrorResponse.encode)
-//    }
-//    
-//    func test_enrollmentResponse() {
-//        compare("enrollmentResponse", EnrollmentResponse.decode, EnrollmentResponse.encode)
-//    }
-//    
-//    func test_verifyMatchResponse() {
-//        compare("verifyMatchResponse", VerifyMatchResponse.decode, VerifyMatchResponse.encode)
-//    }
-//    
-//    func test_verificationResponse() {
-//        compare("verificationResponse", VerificationResponse.decode, VerificationResponse.encode)
-//    }
+    func test_errorResponse() {
+        compare("errorResponse", ErrorResponse.decode, ErrorResponse.encode)
+    }
+    
+    func test_enrollmentResponse() {
+        compare("enrollmentResponse", EnrollmentResponse.decode, EnrollmentResponse.encode)
+    }
+    
+    func test_verifyMatchResponse() {
+        compare("verifyMatchResponse", VerifyMatchResponse.decode, VerifyMatchResponse.encode)
+    }
+    
+    func test_verificationResponse() {
+        compare("verificationResponse", VerificationResponse.decode, VerificationResponse.encode)
+    }
     
     // match_faces
     
