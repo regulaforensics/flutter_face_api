@@ -6,7 +6,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url = uri("https://maven.regulaforensics.com/RegulaDocumentReader/Nightly")
+            url = uri("https://maven.regulaforensics.com/RegulaDocumentReader/Stage")
             isAllowInsecureProtocol = true
         }
     }
@@ -56,7 +56,7 @@ extensions.configure<KotlinAndroidProjectExtension> {
 }
 
 dependencies {
-    implementation("com.regula.face:api:8.4.5302") {
+    implementation("com.regula.face:api:8.4.5306") {
         isTransitive = true
     }
 

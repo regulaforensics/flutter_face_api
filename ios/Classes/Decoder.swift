@@ -144,73 +144,73 @@ func generateLivenessNotification(_ status: LivenessProcessStatus, _ result: Liv
     ]
 }
 
-public extension ErrorResponse {
-    static func decode(_ it: Any?) -> ErrorResponse? {
-        guard let it = it as? [String: Any] else { return nil }
-        let result = ErrorResponse.emptyInit() as ErrorResponse
-        result.setValue(it["code"] as Any?, forKey: "code")
-        result.setValue(it["message"] as Any?, forKey: "message")
-        return result
-    }
-    func encode() -> [String: Any?] {
-        return [
-            "code": self.code,
-            "message": self.message,
-        ]
-    }
-}
-
-public extension EnrollmentResponse {
-    static func decode(_ it: Any?) -> EnrollmentResponse? {
-        guard let it = it as? [String: Any] else { return nil }
-        let result = EnrollmentResponse.emptyInit() as EnrollmentResponse
-        result.setValue(ErrorResponse.decode(it["error"]), forKey: "error")
-        result.setValue(it["personId"] as Any?, forKey: "personId")
-        result.setValue(it["externalId"] as Any?, forKey: "externalId")
-        return result
-    }
-    func encode() -> [String: Any?] {
-        return [
-            "error": self.error?.encode(),
-            "personId": self.personId,
-            "externalId": self.externalId,
-        ]
-    }
-}
-
-public extension VerifyMatchResponse {
-    static func decode(_ it: Any?) -> VerifyMatchResponse? {
-        guard let it = it as? [String: Any] else { return nil }
-        let result = VerifyMatchResponse.emptyInit() as VerifyMatchResponse
-        result.setValue(it["passed"] as Any?, forKey: "passed")
-        result.setValue(it["similarity"] as Any?, forKey: "similarity")
-        return result
-    }
-    func encode() -> [String: Any?] {
-        return [
-            "passed": self.passed,
-            "similarity": self.similarity,
-        ]
-    }
-}
-
-public extension VerificationResponse {
-    static func decode(_ it: Any?) -> VerificationResponse? {
-        guard let it = it as? [String: Any] else { return nil }
-        let result = VerificationResponse.emptyInit() as VerificationResponse
-        result.setValue(VerifyMatchResponse.decode(it["match"]), forKey: "match")
-        result.setValue(ErrorResponse.decode(it["error"]), forKey: "error")
-        result.setValue(it["passed"] as Any?, forKey: "passed")
-        return result
-    }
-    func encode() -> [String: Any?] {
-        return [
-            "match": self.match?.encode(),
-            "error": self.error?.encode(),
-            "passed": self.passed,
-        ]
-    }
-}
+//public extension ErrorResponse {
+//    static func decode(_ it: Any?) -> ErrorResponse? {
+//        guard let it = it as? [String: Any] else { return nil }
+//        let result = ErrorResponse.emptyInit() as ErrorResponse
+//        result.setValue(it["code"] as Any?, forKey: "code")
+//        result.setValue(it["message"] as Any?, forKey: "message")
+//        return result
+//    }
+//    func encode() -> [String: Any?] {
+//        return [
+//            "code": self.code,
+//            "message": self.message,
+//        ]
+//    }
+//}
+//
+//public extension EnrollmentResponse {
+//    static func decode(_ it: Any?) -> EnrollmentResponse? {
+//        guard let it = it as? [String: Any] else { return nil }
+//        let result = EnrollmentResponse.emptyInit() as EnrollmentResponse
+//        result.setValue(ErrorResponse.decode(it["error"]), forKey: "error")
+//        result.setValue(it["personId"] as Any?, forKey: "personId")
+//        result.setValue(it["externalId"] as Any?, forKey: "externalId")
+//        return result
+//    }
+//    func encode() -> [String: Any?] {
+//        return [
+//            "error": self.error?.encode(),
+//            "personId": self.personId,
+//            "externalId": self.externalId,
+//        ]
+//    }
+//}
+//
+//public extension VerifyMatchResponse {
+//    static func decode(_ it: Any?) -> VerifyMatchResponse? {
+//        guard let it = it as? [String: Any] else { return nil }
+//        let result = VerifyMatchResponse.emptyInit() as VerifyMatchResponse
+//        result.setValue(it["passed"] as Any?, forKey: "passed")
+//        result.setValue(it["similarity"] as Any?, forKey: "similarity")
+//        return result
+//    }
+//    func encode() -> [String: Any?] {
+//        return [
+//            "passed": self.passed,
+//            "similarity": self.similarity,
+//        ]
+//    }
+//}
+//
+//public extension VerificationResponse {
+//    static func decode(_ it: Any?) -> VerificationResponse? {
+//        guard let it = it as? [String: Any] else { return nil }
+//        let result = VerificationResponse.emptyInit() as VerificationResponse
+//        result.setValue(VerifyMatchResponse.decode(it["match"]), forKey: "match")
+//        result.setValue(ErrorResponse.decode(it["error"]), forKey: "error")
+//        result.setValue(it["passed"] as Any?, forKey: "passed")
+//        return result
+//    }
+//    func encode() -> [String: Any?] {
+//        return [
+//            "match": self.match?.encode(),
+//            "error": self.error?.encode(),
+//            "passed": self.passed,
+//        ]
+//    }
+//}
 
 // MARK: - MatchFacesRequest
 

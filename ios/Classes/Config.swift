@@ -107,111 +107,111 @@ public extension LivenessConfiguration {
     }
 }
 
-public extension EnrollmentConfiguration {
-    static func decode2(_ it: [String: Any]) -> Self {
-        return Self.init({ builder in
-            for (k, v) in it {
-                switch k {
-                case("copyright"): builder.isCopyright = v as! Bool
-                case("cameraSwitchEnabled"): builder.isCameraSwitchButtonEnabled = v as! Bool
-                case("closeButtonEnabled"): builder.isCloseButtonEnabled = v as! Bool
-                case("torchButtonEnabled"): builder.isTorchButtonEnabled = v as! Bool
-                case("vibrateOnSteps"): builder.vibrateOnSteps = v as! Bool
-                case("cameraPositionIOS"): builder.cameraPosition = CameraPosition(rawValue: v as! Int)!
-                case("attemptsCount"): builder.attemptsCount = v as! Int
-                case("locationTrackingEnabled"): builder.isLocationTrackingEnabled = v as! Bool
-                case("preventScreenRecording"): builder.isPreventScreenRecordingEnable = v as! Bool
-                case("recordingProcess"): builder.recordingProcess = RecordingProcess(rawValue: v as! Int)!
-                case("livenessType"): builder.livenessType = LivenessType(rawValue: v as! Int)!
-                case("screenOrientation"): builder.screenOrientation = RFSScreenOrientation.decode(v)
-                case("tag"): builder.tag = v as? String
-                case("externalId"): builder.externalId = v as! String
-                case("groupId"): builder.groupId = v as? String
-                case("checkDuplicatesEnabled"): builder.checkDuplicatesEnabled = v as? NSNumber
-                case("duplicatesThreshold"): builder.duplicatesThreshold = v as? NSNumber
-                case("skipStep"): builder.stepSkippingMask = RFSLivenessStepSkip.decode(v)
-                case("metadata"): builder.metadata = v as! [String: Any]
-                default: break
-                }
-            }
-        })
-    }
-    func encode2() -> [String: Any?] {
-        return [
-            "copyright": self.isCopyright,
-            "cameraSwitchEnabled": self.isCameraSwitchButtonEnabled,
-            "closeButtonEnabled": self.isCloseButtonEnabled,
-            "torchButtonEnabled": self.isTorchButtonEnabled,
-            "vibrateOnSteps": self.vibrateOnSteps,
-            "cameraPositionIOS": self.cameraPosition.rawValue,
-            "attemptsCount": self.attemptsCount,
-            "locationTrackingEnabled": self.isLocationTrackingEnabled,
-            "preventScreenRecording": self.isPreventScreenRecordingEnable,
-            "recordingProcess": self.recordingProcess.rawValue,
-            "livenessType": self.livenessType.rawValue,
-            "screenOrientation": self.screenOrientation.encode(),
-            "tag": self.tag,
-            "externalId": self.externalId,
-            "groupId": self.groupId,
-            "checkDuplicatesEnabled": self.checkDuplicatesEnabled,
-            "duplicatesThreshold": self.duplicatesThreshold,
-            "skipStep": self.stepSkippingMask.encode(),
-            "metadata": self.metadata,
-        ]
-    }
-}
-
-public extension VerificationConfiguration {
-    static func decode2(_ it: [String: Any]) -> Self {
-        return Self.init({ builder in
-            for (k, v) in it {
-                switch k {
-                case("copyright"): builder.isCopyright = v as! Bool
-                case("cameraSwitchEnabled"): builder.isCameraSwitchButtonEnabled = v as! Bool
-                case("closeButtonEnabled"): builder.isCloseButtonEnabled = v as! Bool
-                case("torchButtonEnabled"): builder.isTorchButtonEnabled = v as! Bool
-                case("vibrateOnSteps"): builder.vibrateOnSteps = v as! Bool
-                case("cameraPositionIOS"): builder.cameraPosition = CameraPosition(rawValue: v as! Int)!
-                case("attemptsCount"): builder.attemptsCount = v as! Int
-                case("locationTrackingEnabled"): builder.isLocationTrackingEnabled = v as! Bool
-                case("preventScreenRecording"): builder.isPreventScreenRecordingEnable = v as! Bool
-                case("recordingProcess"): builder.recordingProcess = RecordingProcess(rawValue: v as! Int)!
-                case("livenessType"): builder.livenessType = LivenessType(rawValue: v as! Int)!
-                case("screenOrientation"): builder.screenOrientation = RFSScreenOrientation.decode(v)
-                case("tag"): builder.tag = v as? String
-                case("personId"): builder.personId = v as! String
-                case("groupId"): builder.groupId = v as? String
-                case("threshold"): builder.threshold = v as? NSNumber
-                case("skipStep"): builder.stepSkippingMask = RFSLivenessStepSkip.decode(v)
-                case("metadata"): builder.metadata = v as! [String: Any]
-                default: break
-                }
-            }
-        })
-    }
-    func encode2() -> [String: Any?] {
-        return [
-            "copyright": self.isCopyright,
-            "cameraSwitchEnabled": self.isCameraSwitchButtonEnabled,
-            "closeButtonEnabled": self.isCloseButtonEnabled,
-            "torchButtonEnabled": self.isTorchButtonEnabled,
-            "vibrateOnSteps": self.vibrateOnSteps,
-            "cameraPositionIOS": self.cameraPosition.rawValue,
-            "attemptsCount": self.attemptsCount,
-            "locationTrackingEnabled": self.isLocationTrackingEnabled,
-            "preventScreenRecording": self.isPreventScreenRecordingEnable,
-            "recordingProcess": self.recordingProcess.rawValue,
-            "livenessType": self.livenessType.rawValue,
-            "screenOrientation": self.screenOrientation.encode(),
-            "tag": self.tag,
-            "personId": self.personId,
-            "groupId": self.groupId,
-            "threshold": self.threshold,
-            "skipStep": self.stepSkippingMask.encode(),
-            "metadata": self.metadata,
-        ]
-    }
-}
+//public extension EnrollmentConfiguration {
+//    static func decode2(_ it: [String: Any]) -> Self {
+//        return Self.init({ builder in
+//            for (k, v) in it {
+//                switch k {
+//                case("copyright"): builder.isCopyright = v as! Bool
+//                case("cameraSwitchEnabled"): builder.isCameraSwitchButtonEnabled = v as! Bool
+//                case("closeButtonEnabled"): builder.isCloseButtonEnabled = v as! Bool
+//                case("torchButtonEnabled"): builder.isTorchButtonEnabled = v as! Bool
+//                case("vibrateOnSteps"): builder.vibrateOnSteps = v as! Bool
+//                case("cameraPositionIOS"): builder.cameraPosition = CameraPosition(rawValue: v as! Int)!
+//                case("attemptsCount"): builder.attemptsCount = v as! Int
+//                case("locationTrackingEnabled"): builder.isLocationTrackingEnabled = v as! Bool
+//                case("preventScreenRecording"): builder.isPreventScreenRecordingEnable = v as! Bool
+//                case("recordingProcess"): builder.recordingProcess = RecordingProcess(rawValue: v as! Int)!
+//                case("livenessType"): builder.livenessType = LivenessType(rawValue: v as! Int)!
+//                case("screenOrientation"): builder.screenOrientation = RFSScreenOrientation.decode(v)
+//                case("tag"): builder.tag = v as? String
+//                case("externalId"): builder.externalId = v as! String
+//                case("groupId"): builder.groupId = v as? String
+//                case("checkDuplicatesEnabled"): builder.checkDuplicatesEnabled = v as? NSNumber
+//                case("duplicatesThreshold"): builder.duplicatesThreshold = v as? NSNumber
+//                case("skipStep"): builder.stepSkippingMask = RFSLivenessStepSkip.decode(v)
+//                case("metadata"): builder.metadata = v as! [String: Any]
+//                default: break
+//                }
+//            }
+//        })
+//    }
+//    func encode2() -> [String: Any?] {
+//        return [
+//            "copyright": self.isCopyright,
+//            "cameraSwitchEnabled": self.isCameraSwitchButtonEnabled,
+//            "closeButtonEnabled": self.isCloseButtonEnabled,
+//            "torchButtonEnabled": self.isTorchButtonEnabled,
+//            "vibrateOnSteps": self.vibrateOnSteps,
+//            "cameraPositionIOS": self.cameraPosition.rawValue,
+//            "attemptsCount": self.attemptsCount,
+//            "locationTrackingEnabled": self.isLocationTrackingEnabled,
+//            "preventScreenRecording": self.isPreventScreenRecordingEnable,
+//            "recordingProcess": self.recordingProcess.rawValue,
+//            "livenessType": self.livenessType.rawValue,
+//            "screenOrientation": self.screenOrientation.encode(),
+//            "tag": self.tag,
+//            "externalId": self.externalId,
+//            "groupId": self.groupId,
+//            "checkDuplicatesEnabled": self.checkDuplicatesEnabled,
+//            "duplicatesThreshold": self.duplicatesThreshold,
+//            "skipStep": self.stepSkippingMask.encode(),
+//            "metadata": self.metadata,
+//        ]
+//    }
+//}
+//
+//public extension VerificationConfiguration {
+//    static func decode2(_ it: [String: Any]) -> Self {
+//        return Self.init({ builder in
+//            for (k, v) in it {
+//                switch k {
+//                case("copyright"): builder.isCopyright = v as! Bool
+//                case("cameraSwitchEnabled"): builder.isCameraSwitchButtonEnabled = v as! Bool
+//                case("closeButtonEnabled"): builder.isCloseButtonEnabled = v as! Bool
+//                case("torchButtonEnabled"): builder.isTorchButtonEnabled = v as! Bool
+//                case("vibrateOnSteps"): builder.vibrateOnSteps = v as! Bool
+//                case("cameraPositionIOS"): builder.cameraPosition = CameraPosition(rawValue: v as! Int)!
+//                case("attemptsCount"): builder.attemptsCount = v as! Int
+//                case("locationTrackingEnabled"): builder.isLocationTrackingEnabled = v as! Bool
+//                case("preventScreenRecording"): builder.isPreventScreenRecordingEnable = v as! Bool
+//                case("recordingProcess"): builder.recordingProcess = RecordingProcess(rawValue: v as! Int)!
+//                case("livenessType"): builder.livenessType = LivenessType(rawValue: v as! Int)!
+//                case("screenOrientation"): builder.screenOrientation = RFSScreenOrientation.decode(v)
+//                case("tag"): builder.tag = v as? String
+//                case("personId"): builder.personId = v as! String
+//                case("groupId"): builder.groupId = v as? String
+//                case("threshold"): builder.threshold = v as? NSNumber
+//                case("skipStep"): builder.stepSkippingMask = RFSLivenessStepSkip.decode(v)
+//                case("metadata"): builder.metadata = v as! [String: Any]
+//                default: break
+//                }
+//            }
+//        })
+//    }
+//    func encode2() -> [String: Any?] {
+//        return [
+//            "copyright": self.isCopyright,
+//            "cameraSwitchEnabled": self.isCameraSwitchButtonEnabled,
+//            "closeButtonEnabled": self.isCloseButtonEnabled,
+//            "torchButtonEnabled": self.isTorchButtonEnabled,
+//            "vibrateOnSteps": self.vibrateOnSteps,
+//            "cameraPositionIOS": self.cameraPosition.rawValue,
+//            "attemptsCount": self.attemptsCount,
+//            "locationTrackingEnabled": self.isLocationTrackingEnabled,
+//            "preventScreenRecording": self.isPreventScreenRecordingEnable,
+//            "recordingProcess": self.recordingProcess.rawValue,
+//            "livenessType": self.livenessType.rawValue,
+//            "screenOrientation": self.screenOrientation.encode(),
+//            "tag": self.tag,
+//            "personId": self.personId,
+//            "groupId": self.groupId,
+//            "threshold": self.threshold,
+//            "skipStep": self.stepSkippingMask.encode(),
+//            "metadata": self.metadata,
+//        ]
+//    }
+//}
 
 public extension MatchFacesConfiguration {
     static func decode(_ it: Any?) -> Self? {
