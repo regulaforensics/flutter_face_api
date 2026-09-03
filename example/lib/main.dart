@@ -251,7 +251,7 @@ class MyAppState extends State<MyApp> {
 
   static final theme = ColorScheme.fromSwatch(accentColor: Color(0xFF4285F4));
   static late MyAppState instance;
-  static update(VoidCallback state) => {instance.setState(state)};
+  static void update(VoidCallback state) => {instance.setState(state)};
 }
 
 class MyApp extends StatefulWidget {
