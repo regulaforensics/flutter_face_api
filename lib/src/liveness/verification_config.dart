@@ -56,13 +56,13 @@ class VerificationConfig {
 
   dynamic metadata;
 
-  String personId;
+  String? _personId;
 
-  String? groupId;
+  String? _externalId;
 
   double? threshold;
 
-  VerificationConfig(
+  VerificationConfig.withPersonId(
     String personId, {
     bool copyright = true,
     bool cameraSwitchEnabled = false,
@@ -71,9 +71,7 @@ class VerificationConfig {
     bool vibrateOnSteps = true,
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-    List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT
-    ],
+    List<ScreenOrientation> screenOrientation = const [ScreenOrientation.PORTRAIT],
     bool locationTrackingEnabled = true,
     bool preventScreenRecording = false,
     int attemptsCount = 0,
@@ -82,7 +80,6 @@ class VerificationConfig {
     String? tag,
     List<LivenessSkipStep> skipStep = const [],
     dynamic metadata,
-    String? groupId,
     double? threshold,
   })  : copyright = copyright,
         cameraSwitchEnabled = cameraSwitchEnabled,
@@ -100,14 +97,54 @@ class VerificationConfig {
         tag = tag,
         skipStep = skipStep,
         metadata = metadata,
-        personId = personId,
-        groupId = groupId,
+        _personId = personId,
+        threshold = threshold;
+
+  VerificationConfig.withExternalId(
+    String externalId, {
+    bool copyright = true,
+    bool cameraSwitchEnabled = false,
+    bool closeButtonEnabled = true,
+    bool torchButtonEnabled = true,
+    bool vibrateOnSteps = true,
+    int? cameraPositionAndroid,
+    CameraPosition cameraPositionIOS = CameraPosition.FRONT,
+    List<ScreenOrientation> screenOrientation = const [ScreenOrientation.PORTRAIT],
+    bool locationTrackingEnabled = true,
+    bool preventScreenRecording = false,
+    int attemptsCount = 0,
+    RecordingProcess recordingProcess = RecordingProcess.ASYNCHRONOUS_UPLOAD,
+    LivenessType livenessType = LivenessType.ACTIVE,
+    String? tag,
+    List<LivenessSkipStep> skipStep = const [],
+    dynamic metadata,
+    double? threshold,
+  })  : copyright = copyright,
+        cameraSwitchEnabled = cameraSwitchEnabled,
+        closeButtonEnabled = closeButtonEnabled,
+        torchButtonEnabled = torchButtonEnabled,
+        vibrateOnSteps = vibrateOnSteps,
+        cameraPositionAndroid = cameraPositionAndroid,
+        cameraPositionIOS = cameraPositionIOS,
+        screenOrientation = screenOrientation,
+        locationTrackingEnabled = locationTrackingEnabled,
+        preventScreenRecording = preventScreenRecording,
+        attemptsCount = attemptsCount,
+        recordingProcess = recordingProcess,
+        livenessType = livenessType,
+        tag = tag,
+        skipStep = skipStep,
+        metadata = metadata,
+        _externalId = externalId,
         threshold = threshold;
 
   @visibleForTesting
   static VerificationConfig? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = VerificationConfig(jsonObject["personId"]);
+    VerificationConfig? result;
+    if (jsonObject["personId"] != null) result = VerificationConfig.withPersonId(jsonObject["personId"]);
+    if (jsonObject["externalId"] != null) result = VerificationConfig.withExternalId(jsonObject["externalId"]);
+    if (result == null) return null;
 
     result.copyright = jsonObject["copyright"];
     result.cameraSwitchEnabled = jsonObject["cameraSwitchEnabled"];
@@ -115,21 +152,16 @@ class VerificationConfig {
     result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
-    result.cameraPositionIOS =
-        CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
-    result.screenOrientation =
-        ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
+    result.cameraPositionIOS = CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
+    result.screenOrientation = ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
     result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
     result.preventScreenRecording = jsonObject["preventScreenRecording"];
     result.attemptsCount = jsonObject["attemptsCount"];
-    result.recordingProcess =
-        RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
+    result.recordingProcess = RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
     result.livenessType = LivenessType.getByValue(jsonObject["livenessType"])!;
     result.tag = jsonObject["tag"];
-    result.skipStep =
-        LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
+    result.skipStep = LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
     result.metadata = jsonObject["metadata"];
-    result.groupId = jsonObject["groupId"];
     result.threshold = _toDouble(jsonObject["threshold"]);
 
     return result;
@@ -153,8 +185,8 @@ class VerificationConfig {
         "tag": tag,
         "skipStep": skipStep.map((e) => e.value).toList(),
         "metadata": metadata,
-        "personId": personId,
-        "groupId": groupId,
+        "personId": _personId,
+        "externalId": _externalId,
         "threshold": threshold,
       }.clearNulls();
 }

@@ -139,58 +139,73 @@ void clearResults() {
 }
 
 List<Widget> customHeader() => [
-      header([label(status)]),
-      header(top: false, [
-        Row(children: [
-          Expanded(child: label("Similarity: $similarity", small: true)),
-          Expanded(child: label("Liveness: $liveness", small: true))
-        ])
-      ])
-    ];
+  header([label(status)]),
+  header(top: false, [
+    Row(
+      children: [
+        Expanded(child: label("Similarity: $similarity", small: true)),
+        Expanded(child: label("Liveness: $liveness", small: true)),
+      ],
+    ),
+  ]),
+];
 
 List<Widget> ui() => [
-      Expanded(
-        child: Row(children: [
-          Expanded(child: image(uiImage1, () => getImage(1))),
-          Expanded(child: image(uiImage2, () => getImage(2))),
-        ]),
-      ),
-      Column(children: [
-        Row(children: [
+  Expanded(
+    child: Row(
+      children: [
+        Expanded(child: image(uiImage1, () => getImage(1))),
+        Expanded(child: image(uiImage2, () => getImage(2))),
+      ],
+    ),
+  ),
+  Column(
+    children: [
+      Row(
+        children: [
           Expanded(child: button("Match", () => matchFaces())),
           Expanded(child: button("Liveness", () => startLiveness())),
-        ]),
-        Row(children: [
+        ],
+      ),
+      Row(
+        children: [
           Expanded(child: button("Clear", () => clearResults())),
-        ])
-      ]),
-    ];
+        ],
+      ),
+    ],
+  ),
+];
 
 Widget image(Image image, VoidCallback onTap) => Container(
-    padding: EdgeInsets.all(5),
-    child: GestureDetector(
-      onTap: onTap,
-      child: Image(image: image.image),
-    ));
+  padding: EdgeInsets.all(5),
+  child: GestureDetector(
+    onTap: onTap,
+    child: Image(image: image.image),
+  ),
+);
 
 Widget button(String text, VoidCallback onPressed) => Padding(
-    padding: EdgeInsets.all(5),
-    child: SizedBox(
-      height: 40,
-      child: FilledButton(onPressed: onPressed, child: Text(text)),
-    ));
+  padding: EdgeInsets.all(5),
+  child: SizedBox(
+    height: 40,
+    child: FilledButton(onPressed: onPressed, child: Text(text)),
+  ),
+);
 
-Widget label(String text, {bool small = false}) => Text(text,
-    textAlign: TextAlign.center,
-    style: TextStyle(
-      fontSize: small ? 15 : 18,
-      fontWeight: FontWeight.w600,
-    ));
+Widget label(String text, {bool small = false}) => Text(
+  text,
+  textAlign: TextAlign.center,
+  style: TextStyle(
+    fontSize: small ? 15 : 18,
+    fontWeight: FontWeight.w600,
+  ),
+);
 
 Widget header(List<Widget> children, {bool top = true}) => Container(
-    padding: EdgeInsets.only(top: top ? 70 : 13),
-    color: Colors.black.withValues(alpha: 0.03),
-    child: Column(children: [
+  padding: EdgeInsets.only(top: top ? 70 : 13),
+  color: Colors.black.withValues(alpha: 0.03),
+  child: Column(
+    children: [
       ...children,
       Container(
         margin: EdgeInsets.only(top: 13),
@@ -200,7 +215,9 @@ Widget header(List<Widget> children, {bool top = true}) => Container(
           color: Color.fromRGBO(0, 0, 0, 0.075),
         ),
       ),
-    ]));
+    ],
+  ),
+);
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -215,10 +232,13 @@ Future<bool?> chooseOption() async {
     context: MyAppState.instance.context,
     builder: (context) => Theme(
       data: ThemeData(colorScheme: MyAppState.theme),
-      child: AlertDialog(title: Text("Select option"), actions: [
-        TextButton(child: Text("Use gallery"), onPressed: () => Navigator.pop(context, false)),
-        TextButton(child: Text("Use camera"), onPressed: () => Navigator.pop(context, true))
-      ]),
+      child: AlertDialog(
+        title: Text("Select option"),
+        actions: [
+          TextButton(child: Text("Use gallery"), onPressed: () => Navigator.pop(context, false)),
+          TextButton(child: Text("Use camera"), onPressed: () => Navigator.pop(context, true)),
+        ],
+      ),
     ),
   );
 }
@@ -233,9 +253,10 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(_) => MaterialApp(
-      theme: ThemeData(colorScheme: theme),
-      home: Scaffold(
-        body: Column(children: [
+    theme: ThemeData(colorScheme: theme),
+    home: Scaffold(
+      body: Column(
+        children: [
           ...customHeader(),
           Expanded(
             child: Padding(
@@ -245,9 +266,11 @@ class MyAppState extends State<MyApp> {
                 children: ui(),
               ),
             ),
-          )
-        ]),
-      ));
+          ),
+        ],
+      ),
+    ),
+  );
 
   static final theme = ColorScheme.fromSwatch(accentColor: Color(0xFF4285F4));
   static late MyAppState instance;

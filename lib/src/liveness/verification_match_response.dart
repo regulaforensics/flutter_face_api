@@ -1,22 +1,22 @@
 part of "../../flutter_face_api.dart";
 
-class VerifyMatchResponse {
-  bool get passed => _passed;
-  bool _passed;
+class VerificationMatchResponse {
+  bool get verified => _verified;
+  bool _verified;
 
   double get similarity => _similarity;
   double _similarity;
 
-  VerifyMatchResponse._privateConstructor()
-      : _passed = false,
+  VerificationMatchResponse._privateConstructor()
+      : _verified = false,
         _similarity = 0;
 
   @visibleForTesting
-  static VerifyMatchResponse? fromJson(jsonObject) {
+  static VerificationMatchResponse? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = new VerifyMatchResponse._privateConstructor();
+    var result = new VerificationMatchResponse._privateConstructor();
 
-    result._passed = jsonObject["passed"];
+    result._verified = jsonObject["verified"];
     result._similarity = _toDouble(jsonObject["similarity"])!;
 
     return result;
@@ -24,7 +24,7 @@ class VerifyMatchResponse {
 
   @visibleForTesting
   Map<String, dynamic> toJson() => {
-        "passed": passed,
+        "verified": verified,
         "similarity": similarity,
       }.clearNulls();
 }

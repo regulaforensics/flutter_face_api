@@ -56,16 +56,11 @@ class EnrollmentConfig {
 
   dynamic metadata;
 
-  String externalId;
+  Person? person;
 
-  String? groupId;
+  SearchPersonFilter? searchFilter;
 
-  bool? checkDuplicatesEnabled;
-
-  double? duplicatesThreshold;
-
-  EnrollmentConfig(
-    String externalId, {
+  EnrollmentConfig({
     bool copyright = true,
     bool cameraSwitchEnabled = false,
     bool closeButtonEnabled = true,
@@ -73,9 +68,7 @@ class EnrollmentConfig {
     bool vibrateOnSteps = true,
     int? cameraPositionAndroid,
     CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-    List<ScreenOrientation> screenOrientation = const [
-      ScreenOrientation.PORTRAIT
-    ],
+    List<ScreenOrientation> screenOrientation = const [ScreenOrientation.PORTRAIT],
     bool locationTrackingEnabled = true,
     bool preventScreenRecording = false,
     int attemptsCount = 0,
@@ -84,9 +77,8 @@ class EnrollmentConfig {
     String? tag,
     List<LivenessSkipStep> skipStep = const [],
     dynamic metadata,
-    String? groupId,
-    bool? checkDuplicatesEnabled,
-    double? duplicatesThreshold,
+    Person? person,
+    SearchPersonFilter? searchFilter,
   })  : copyright = copyright,
         cameraSwitchEnabled = cameraSwitchEnabled,
         closeButtonEnabled = closeButtonEnabled,
@@ -103,15 +95,13 @@ class EnrollmentConfig {
         tag = tag,
         skipStep = skipStep,
         metadata = metadata,
-        externalId = externalId,
-        groupId = groupId,
-        checkDuplicatesEnabled = checkDuplicatesEnabled,
-        duplicatesThreshold = duplicatesThreshold;
+        person = person,
+        searchFilter = searchFilter;
 
   @visibleForTesting
   static EnrollmentConfig? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = EnrollmentConfig(jsonObject["externalId"]);
+    var result = EnrollmentConfig();
 
     result.copyright = jsonObject["copyright"];
     result.cameraSwitchEnabled = jsonObject["cameraSwitchEnabled"];
@@ -119,23 +109,18 @@ class EnrollmentConfig {
     result.torchButtonEnabled = jsonObject["torchButtonEnabled"];
     result.vibrateOnSteps = jsonObject["vibrateOnSteps"];
     result.cameraPositionAndroid = jsonObject["cameraPositionAndroid"];
-    result.cameraPositionIOS =
-        CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
-    result.screenOrientation =
-        ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
+    result.cameraPositionIOS = CameraPosition.getByValue(jsonObject["cameraPositionIOS"])!;
+    result.screenOrientation = ScreenOrientation.fromIntList(jsonObject["screenOrientation"])!;
     result.locationTrackingEnabled = jsonObject["locationTrackingEnabled"];
     result.preventScreenRecording = jsonObject["preventScreenRecording"];
     result.attemptsCount = jsonObject["attemptsCount"];
-    result.recordingProcess =
-        RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
+    result.recordingProcess = RecordingProcess.getByValue(jsonObject["recordingProcess"])!;
     result.livenessType = LivenessType.getByValue(jsonObject["livenessType"])!;
     result.tag = jsonObject["tag"];
-    result.skipStep =
-        LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
+    result.skipStep = LivenessSkipStep.fromIntList(jsonObject["screenOrientation"])!;
     result.metadata = jsonObject["metadata"];
-    result.groupId = jsonObject["groupId"];
-    result.checkDuplicatesEnabled = jsonObject["checkDuplicatesEnabled"];
-    result.duplicatesThreshold = _toDouble(jsonObject["duplicatesThreshold"]);
+    result.person = Person.fromJson(jsonObject["person"]);
+    result.searchFilter = SearchPersonFilter.fromJson(jsonObject["searchFilter"]);
 
     return result;
   }
@@ -158,9 +143,7 @@ class EnrollmentConfig {
         "tag": tag,
         "skipStep": skipStep.map((e) => e.value).toList(),
         "metadata": metadata,
-        "externalId": externalId,
-        "groupId": groupId,
-        "checkDuplicatesEnabled": checkDuplicatesEnabled,
-        "duplicatesThreshold": duplicatesThreshold,
+        "person": person?.toJson(),
+        "searchFilter": searchFilter?.toJson(),
       }.clearNulls();
 }

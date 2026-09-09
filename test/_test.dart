@@ -39,15 +39,13 @@ void main() {
     compare('livenessConfig', livenessConfig, LivenessConfig.fromJson);
     compare('enrollmentConfig', enrollmentConfig, EnrollmentConfig.fromJson);
     compare('verificationConfig', verificationConfig, VerificationConfig.fromJson);
-    compare('enrollmentRequest', enrollmentRequest, EnrollmentRequest.fromJson);
-    compare('enrollmentRequest2', enrollmentRequest2, EnrollmentRequest.fromJson);
+    compare('verificationConfig2', verificationConfig2, VerificationConfig.fromJson);
     compare('livenessBackendException', livenessBackendException, LivenessBackendException.fromJson);
     compare('livenessException', livenessException, LivenessException.fromJson);
     compare('livenessResponse', livenessResponse, LivenessResponse.fromJson);
     compare('livenessNotification', livenessNotification, LivenessNotification.fromJson);
-    compare('errorResponse', errorResponse, ErrorResponse.fromJson);
     compare('enrollmentResponse', enrollmentResponse, EnrollmentResponse.fromJson);
-    compare('verifyMatchResponse', verifyMatchResponse, VerifyMatchResponse.fromJson);
+    compare('verificationMatchResponse', verificationMatchResponse, VerificationMatchResponse.fromJson);
     compare('verificationResponse', verificationResponse, VerificationResponse.fromJson);
 
     compare('matchFacesConfig', matchFacesConfig, MatchFacesConfig.fromJson);
@@ -71,5 +69,6 @@ void main() {
     compare('searchPersonImage', searchPersonImage, SearchPersonImage.fromJson);
     compare('searchPerson', searchPerson, SearchPerson.fromJson);
     compare('searchPersonRequest', searchPersonRequest, SearchPersonRequest.fromJson);
+    compare('searchPersonFilter', searchPersonFilter, SearchPersonFilter.fromJson);
   });
 }

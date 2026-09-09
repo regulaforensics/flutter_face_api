@@ -3,11 +3,11 @@
 package com.regula.plugin.facesdk
 
 import com.regula.facesdk.configuration.Customization
-// import com.regula.facesdk.configuration.EnrollmentConfiguration
+import com.regula.facesdk.configuration.EnrollmentConfiguration
 import com.regula.facesdk.configuration.FaceCaptureConfiguration
 import com.regula.facesdk.configuration.LivenessConfiguration
 import com.regula.facesdk.configuration.MatchFacesConfiguration
-// import com.regula.facesdk.configuration.VerificationConfiguration
+import com.regula.facesdk.configuration.VerificationConfiguration
 import com.regula.facesdk.detection.request.ImageQualityCharacteristic
 import com.regula.facesdk.detection.request.ImageQualityGroup
 import com.regula.facesdk.detection.request.ImageQualityRange
@@ -17,22 +17,23 @@ import com.regula.facesdk.enums.RecordingProcess
 import org.json.JSONArray
 import org.json.JSONObject
 
-fun setFaceCaptureConfig(builder: FaceCaptureConfiguration.Builder, config: JSONObject) = config.forEach { k, v ->
-    when (k) {
-        "copyright" -> builder.setCopyright(v as Boolean)
-        "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
-        "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
-        "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
-        "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
-        "detectOcclusion" -> builder.setDetectOcclusion(v as Boolean)
-        "showFaceAnimation" -> builder.setShowFaceAnimation(v as Boolean)
-        "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
-        "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
-        "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
-        "timeout" -> builder.setTimeout(v.toFloat())
-        "holdStillDuration" -> builder.setHoldStillDuration(v.toFloat())
+fun setFaceCaptureConfig(builder: FaceCaptureConfiguration.Builder, config: JSONObject) =
+    config.forEach { k, v ->
+        when (k) {
+            "copyright" -> builder.setCopyright(v as Boolean)
+            "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
+            "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
+            "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
+            "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
+            "detectOcclusion" -> builder.setDetectOcclusion(v as Boolean)
+            "showFaceAnimation" -> builder.setShowFaceAnimation(v as Boolean)
+            "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
+            "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
+            "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
+            "timeout" -> builder.setTimeout(v.toFloat())
+            "holdStillDuration" -> builder.setHoldStillDuration(v.toFloat())
+        }
     }
-}
 
 fun getFaceCaptureConfig(input: FaceCaptureConfiguration) = mapOf(
     "copyright" to input.hasCopyright(),
@@ -49,25 +50,26 @@ fun getFaceCaptureConfig(input: FaceCaptureConfiguration) = mapOf(
     "holdStillDuration" to input.holdStillDuration,
 ).toJson()
 
-fun setLivenessConfig(builder: LivenessConfiguration.Builder, config: JSONObject) = config.forEach { k, v ->
-    when (k) {
-        "copyright" -> builder.setCopyright(v as Boolean)
-        "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
-        "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
-        "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
-        "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
-        "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
-        "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
-        "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
-        "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
-        "attemptsCount" -> builder.setAttemptsCount(v.toInt())
-        "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
-        "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
-        "tag" -> builder.setTag(v as String)
-        "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
-        "metadata" -> builder.setMetadata(v as JSONObject)
+fun setLivenessConfig(builder: LivenessConfiguration.Builder, config: JSONObject) =
+    config.forEach { k, v ->
+        when (k) {
+            "copyright" -> builder.setCopyright(v as Boolean)
+            "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
+            "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
+            "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
+            "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
+            "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
+            "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
+            "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
+            "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
+            "attemptsCount" -> builder.setAttemptsCount(v.toInt())
+            "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
+            "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
+            "tag" -> builder.setTag(v as String)
+            "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
+            "metadata" -> builder.setMetadata(v as JSONObject)
+        }
     }
-}
 
 fun getLivenessConfig(input: LivenessConfiguration) = mapOf(
     "copyright" to input.hasCopyright(),
@@ -87,101 +89,101 @@ fun getLivenessConfig(input: LivenessConfiguration) = mapOf(
     "metadata" to input.metadata,
 ).toJson()
 
-// fun setEnrollmentConfig(builder: EnrollmentConfiguration.Builder, config: JSONObject) = config.forEach { k, v ->
-//     when (k) {
-//         "copyright" -> builder.setCopyright(v as Boolean)
-//         "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
-//         "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
-//         "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
-//         "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
-//         "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
-//         "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
-//         "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
-//         "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
-//         "attemptsCount" -> builder.setAttemptsCount(v.toInt())
-//         "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
-//         "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
-//         "tag" -> builder.setTag(v as String)
-//         "externalId" -> builder.setExternalId(v as String)
-//         "groupId" -> builder.setGroupId(v as String)
-//         "duplicatesThreshold" -> if (config.getBooleanOrNull("checkDuplicatesEnabled") == true) builder.enableCheckDuplicates(v.toFloat())
-//         "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
-//         "metadata" -> builder.setMetadata(v as JSONObject)
-//     }
-// }
-
-// fun getEnrollmentConfig(input: EnrollmentConfiguration) = mapOf(
-//     "copyright" to input.hasCopyright(),
-//     "cameraSwitchEnabled" to input.isCameraSwitchEnabled,
-//     "closeButtonEnabled" to input.isCloseButtonEnabled,
-//     "torchButtonEnabled" to input.isTorchButtonEnabled,
-//     "vibrateOnSteps" to input.isVibrateOnSteps,
-//     "cameraPositionAndroid" to input.cameraId,
-//     "screenOrientation" to generateScreenOrientationArray(input.screenOrientation),
-//     "locationTrackingEnabled" to input.isLocationTrackingEnabled,
-//     "preventScreenRecording" to input.doPreventScreenRecording(),
-//     "attemptsCount" to input.attemptsCount,
-//     "recordingProcess" to input.recordingProcess.ordinal,
-//     "livenessType" to input.type.ordinal,
-//     "tag" to input.tag,
-//     "externalId" to input.externalId,
-//     "groupId" to input.groupId,
-//     "checkDuplicatesEnabled" to input.isCheckDuplicatesEnabled,
-//     "duplicatesThreshold" to input.duplicatesThreshold,
-//     "skipStep" to generateLivenessSkipStepArray(input.skipStep),
-//     "metadata" to input.metadata,
-// ).toJson()
-
-// fun setVerificationConfig(builder: VerificationConfiguration.Builder, config: JSONObject) = config.forEach { k, v ->
-//     when (k) {
-//         "copyright" -> builder.setCopyright(v as Boolean)
-//         "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
-//         "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
-//         "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
-//         "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
-//         "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
-//         "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
-//         "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
-//         "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
-//         "attemptsCount" -> builder.setAttemptsCount(v.toInt())
-//         "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
-//         "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
-//         "tag" -> builder.setTag(v as String)
-//         "personId" -> builder.setPrivateProperty("u", v as String)
-//         "groupId" -> builder.setGroupId(v as String)
-//         "threshold" -> builder.setThreshold(v.toFloat())
-//         "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
-//         "metadata" -> builder.setMetadata(v as JSONObject)
-//     }
-// }
-
-// fun getVerificationConfig(input: VerificationConfiguration) = mapOf(
-//     "copyright" to input.hasCopyright(),
-//     "cameraSwitchEnabled" to input.isCameraSwitchEnabled,
-//     "closeButtonEnabled" to input.isCloseButtonEnabled,
-//     "torchButtonEnabled" to input.isTorchButtonEnabled,
-//     "vibrateOnSteps" to input.isVibrateOnSteps,
-//     "cameraPositionAndroid" to input.cameraId,
-//     "screenOrientation" to generateScreenOrientationArray(input.screenOrientation),
-//     "locationTrackingEnabled" to input.isLocationTrackingEnabled,
-//     "preventScreenRecording" to input.doPreventScreenRecording(),
-//     "attemptsCount" to input.attemptsCount,
-//     "recordingProcess" to input.recordingProcess.ordinal,
-//     "livenessType" to input.type.ordinal,
-//     "tag" to input.tag,
-//     "personId" to input.personId,
-//     "groupId" to input.groupId,
-//     "threshold" to input.threshold,
-//     "skipStep" to generateLivenessSkipStepArray(input.skipStep),
-//     "metadata" to input.metadata,
-// ).toJson()
-
-fun setMatchFacesConfig(builder: MatchFacesConfiguration.Builder, config: JSONObject) = config.forEach { k, v ->
-    when (k) {
-        "processingMode" -> builder.setProcessingMode(ProcessingMode.values()[v.toInt()])
-        "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
+fun setEnrollmentConfig(builder: EnrollmentConfiguration.Builder, config: JSONObject) =
+    config.forEach { k, v ->
+        when (k) {
+            "copyright" -> builder.setCopyright(v as Boolean)
+            "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
+            "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
+            "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
+            "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
+            "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
+            "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
+            "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
+            "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
+            "attemptsCount" -> builder.setAttemptsCount(v.toInt())
+            "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
+            "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
+            "tag" -> builder.setTag(v as String)
+            "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
+            "metadata" -> builder.setMetadata(v as JSONObject)
+            "person" -> builder.setPerson(personFromJSON(v as JSONObject))
+            "searchFilter" -> builder.setSearchFilter(searchPersonFilterFromJSON(v as JSONObject))
+        }
     }
-}
+
+fun getEnrollmentConfig(input: EnrollmentConfiguration) = mapOf(
+    "copyright" to input.hasCopyright(),
+    "cameraSwitchEnabled" to input.isCameraSwitchEnabled,
+    "closeButtonEnabled" to input.isCloseButtonEnabled,
+    "torchButtonEnabled" to input.isTorchButtonEnabled,
+    "vibrateOnSteps" to input.isVibrateOnSteps,
+    "cameraPositionAndroid" to input.cameraId,
+    "screenOrientation" to generateScreenOrientationArray(input.screenOrientation),
+    "locationTrackingEnabled" to input.isLocationTrackingEnabled,
+    "preventScreenRecording" to input.doPreventScreenRecording(),
+    "attemptsCount" to input.attemptsCount,
+    "recordingProcess" to input.recordingProcess.ordinal,
+    "livenessType" to input.type.ordinal,
+    "tag" to input.tag,
+    "skipStep" to generateLivenessSkipStepArray(input.skipStep),
+    "metadata" to input.metadata,
+    "person" to generatePerson(input.person),
+    "searchFilter" to generateSearchPersonFilter(input.searchFilter),
+).toJson()
+
+fun setVerificationConfig(builder: VerificationConfiguration.Builder, config: JSONObject) =
+    config.forEach { k, v ->
+        when (k) {
+            "copyright" -> builder.setCopyright(v as Boolean)
+            "cameraSwitchEnabled" -> builder.setCameraSwitchEnabled(v as Boolean)
+            "closeButtonEnabled" -> builder.setCloseButtonEnabled(v as Boolean)
+            "torchButtonEnabled" -> builder.setTorchButtonEnabled(v as Boolean)
+            "vibrateOnSteps" -> builder.setVibrateOnStep(v as Boolean)
+            "cameraPositionAndroid" -> builder.setCameraId(v.toInt())
+            "screenOrientation" -> builder.setScreenOrientation(*screenOrientationArrayFromJSON(v as JSONArray))
+            "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
+            "preventScreenRecording" -> builder.setPreventScreenRecording(v as Boolean)
+            "attemptsCount" -> builder.setAttemptsCount(v.toInt())
+            "recordingProcess" -> builder.setRecordingProcess(RecordingProcess.values()[v.toInt()])
+            "livenessType" -> builder.setType(LivenessType.values()[v.toInt()])
+            "tag" -> builder.setTag(v as String)
+            "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
+            "metadata" -> builder.setMetadata(v as JSONObject)
+            "personId" -> builder.setPrivateProperty("u", v as String)
+            "externalId" -> builder.setPrivateProperty("v", v as String)
+            "threshold" -> builder.setThreshold(v.toFloat())
+        }
+    }
+
+fun getVerificationConfig(input: VerificationConfiguration) = mapOf(
+    "copyright" to input.hasCopyright(),
+    "cameraSwitchEnabled" to input.isCameraSwitchEnabled,
+    "closeButtonEnabled" to input.isCloseButtonEnabled,
+    "torchButtonEnabled" to input.isTorchButtonEnabled,
+    "vibrateOnSteps" to input.isVibrateOnSteps,
+    "cameraPositionAndroid" to input.cameraId,
+    "screenOrientation" to generateScreenOrientationArray(input.screenOrientation),
+    "locationTrackingEnabled" to input.isLocationTrackingEnabled,
+    "preventScreenRecording" to input.doPreventScreenRecording(),
+    "attemptsCount" to input.attemptsCount,
+    "recordingProcess" to input.recordingProcess.ordinal,
+    "livenessType" to input.type.ordinal,
+    "tag" to input.tag,
+    "skipStep" to generateLivenessSkipStepArray(input.skipStep),
+    "metadata" to input.metadata,
+    "personId" to input.personId,
+    "externalId" to input.externalId,
+    "threshold" to input.threshold,
+).toJson()
+
+fun setMatchFacesConfig(builder: MatchFacesConfiguration.Builder, config: JSONObject) =
+    config.forEach { k, v ->
+        when (k) {
+            "processingMode" -> builder.setProcessingMode(ProcessingMode.values()[v.toInt()])
+            "locationTrackingEnabled" -> builder.setLocationTrackingEnabled(v as Boolean)
+        }
+    }
 
 fun getMatchFacesConfig(input: MatchFacesConfiguration) = mapOf(
     "processingMode" to input.processingMode.ordinal,
@@ -209,7 +211,9 @@ fun getImageQualityCharacteristic(
         "ImageWidth" -> ImageQualityGroup.ImageCharacteristic.imageWidthWithRange(min, max)
         "ImageHeight" -> ImageQualityGroup.ImageCharacteristic.imageHeightWithRange(min, max)
         "ImageWidthToHeight" -> ImageQualityGroup.ImageCharacteristic.imageWidthToHeightWithRange(min, max)
+
         "ImageChannelsNumber" -> ImageQualityGroup.ImageCharacteristic.imageChannelsNumberWithValue(min)
+
         "PaddingRatio" -> ImageQualityGroup.ImageCharacteristic.paddingRatio(min, max)
         "ArtFace" -> ImageQualityGroup.ImageCharacteristic.artFace()
 
@@ -259,9 +263,9 @@ fun getImageQualityCharacteristic(
         "BackgroundUniformity" -> ImageQualityGroup.QualityBackground.backgroundUniformity()
         "ShadowsOnBackground" -> ImageQualityGroup.QualityBackground.shadowsOnBackground()
         "OtherFaces" -> ImageQualityGroup.QualityBackground.otherFaces()
-        "BackgroundColorMatch" -> color?.let { ImageQualityGroup.QualityBackground.backgroundColorMatchWithColor(it) }
-            ?: ImageQualityGroup.QualityBackground.backgroundColorMatch()
-
+        "BackgroundColorMatch" -> color?.let {
+            ImageQualityGroup.QualityBackground.backgroundColorMatchWithColor(it)
+        } ?: ImageQualityGroup.QualityBackground.backgroundColorMatch()
         else -> throw Exception("ImageQualityCharacteristicName not found")
     }
     return customRange?.let { result.withCustomRange(it.min, it.max) } ?: result

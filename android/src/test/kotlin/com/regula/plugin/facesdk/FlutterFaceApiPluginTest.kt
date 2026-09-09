@@ -99,22 +99,7 @@ class FlutterFaceApiPluginTest {
     fun verificationConfig() = compare("verificationConfig", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
 
     @Test
-    fun enrollmentRequest() = compare("enrollmentRequest", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
-
-    @Test
-    fun enrollmentRequest2() = compare("enrollmentRequest2", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
-
-//    @Test
-//    fun enrollmentConfig() = compare("enrollmentConfig", ::enrollmentConfigFromJSON, ::generateEnrollmentConfig, "cameraPositionIOS")
-//
-//    @Test
-//    fun verificationConfig() = compare("verificationConfig", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
-//
-//    @Test
-//    fun enrollmentRequest() = compare("enrollmentRequest", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
-//
-//    @Test
-//    fun enrollmentRequest2() = compare("enrollmentRequest2", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
+    fun verificationConfig2() = compare("verificationConfig2", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
 
     @Test
     fun livenessBackendException() = compare("livenessBackendException", ::livenessBackendExceptionFromJSON, ::generateLivenessBackendException)
@@ -127,9 +112,6 @@ class FlutterFaceApiPluginTest {
 
     @Test
     fun livenessNotification() = compare("livenessNotification", ::livenessNotificationFromJSON, ::generateLivenessNotification)
-
-    @Test
-    fun errorResponse() = compare("errorResponse", ::errorResponseFromJSON, ::generateErrorResponse)
 
     @Test
     fun enrollmentResponse() = compare("enrollmentResponse", ::enrollmentResponseFromJSON, ::generateEnrollmentResponse)

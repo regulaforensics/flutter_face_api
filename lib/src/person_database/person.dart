@@ -4,39 +4,46 @@ part of "../../flutter_face_api.dart";
 class Person {
   /// Person name.
   /// Updatable field.
-  late String name;
+  String? name;
 
   /// Person update date.
-  DateTime get updatedAt => _updatedAt;
-  late DateTime _updatedAt;
+  DateTime? updatedAt;
 
   /// Array if Group IDs Person belongs to.
-  List<String> get groups => _groups;
-  late List<String> _groups;
+  List<String>? groups;
 
-  String get id => _id;
-  late String _id;
+  String? id;
 
   /// A free-form object containing Person extended attributes.
   /// Updatable field.
   dynamic metadata;
 
-  DateTime get createdAt => _createdAt;
-  late DateTime _createdAt;
+  DateTime? get createdAt => _createdAt;
+  DateTime? _createdAt;
 
-  Person._privateConstructor();
+  String? externalId;
+
+  DateTime? expireAt;
+
+  int? ttl;
 
   @visibleForTesting
   static Person? fromJson(jsonObject) {
     if (jsonObject == null) return null;
-    var result = Person._privateConstructor();
+    var result = new Person();
 
     result.name = jsonObject["name"];
-    result._updatedAt = DateTime.parse(jsonObject["updatedAt"]);
-    result._groups = _stringListFrom((jsonObject["groups"]))!;
-    result._id = jsonObject["id"];
+    result.updatedAt = DateTime.parse(jsonObject["updatedAt"]);
+    result.groups = _stringListFrom((jsonObject["groups"]))!;
+    result.id = jsonObject["id"];
     result.metadata = jsonObject["metadata"];
     result._createdAt = DateTime.parse(jsonObject["createdAt"]);
+    result.externalId = jsonObject["externalId"];
+    result.expireAt = switch (jsonObject['expireAt']) {
+      String s => DateTime.parse(s),
+      _ => null,
+    };
+    result.ttl = jsonObject["ttl"];
 
     return result;
   }
@@ -49,5 +56,8 @@ class Person {
         "id": id,
         "metadata": metadata,
         "createdAt": createdAt.toString(),
+        "externalId": externalId,
+        "expireAt": expireAt?.toString(),
+        "ttl": ttl,
       }.clearNulls();
 }
