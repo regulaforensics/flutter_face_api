@@ -1,19 +1,19 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
+plugins {
+    id("com.android.library")
+}
+
 rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
         maven {
-            url = uri("https://maven.regulaforensics.com/RegulaDocumentReader")
+            url = uri("https://maven.regulaforensics.com/RegulaDocumentReader/Stage")
             isAllowInsecureProtocol = true
         }
     }
-}
-
-plugins {
-    id("com.android.library")
 }
 
 val agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.substringBefore('.').toInt()
@@ -24,7 +24,7 @@ if (agpMajor < 9 || !builtInKotlinEnabled) {
 
 android {
     namespace = "com.regula.plugin.facesdk"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
@@ -56,7 +56,7 @@ extensions.configure<KotlinAndroidProjectExtension> {
 }
 
 dependencies {
-    implementation("com.regula.face:api:8.3.5200") {
+    implementation("com.regula.face:api:8.4.5336") {
         isTransitive = true
     }
 

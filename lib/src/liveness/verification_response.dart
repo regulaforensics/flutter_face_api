@@ -1,33 +1,33 @@
-// part of "../../flutter_face_api.dart";
+part of "../../flutter_face_api.dart";
 
-// class VerificationResponse {
-//   bool get passed => _passed;
-//   bool _passed;
+class VerificationResponse {
+  bool get verified => _verified;
+  bool _verified;
 
-//   VerifyMatchResponse? get match => _match;
-//   VerifyMatchResponse? _match;
+  Person? get person => _person;
+  Person? _person;
 
-//   ErrorResponse? get error => _error;
-//   ErrorResponse? _error;
+  VerificationMatchResponse? get match => _match;
+  VerificationMatchResponse? _match;
 
-//   VerificationResponse._privateConstructor() : _passed = false;
+  VerificationResponse._privateConstructor() : _verified = false;
 
-//   @visibleForTesting
-//   static VerificationResponse? fromJson(jsonObject) {
-//     if (jsonObject == null) return null;
-//     var result = new VerificationResponse._privateConstructor();
+  @visibleForTesting
+  static VerificationResponse? fromJson(jsonObject) {
+    if (jsonObject == null) return null;
+    var result = new VerificationResponse._privateConstructor();
 
-//     result._passed = jsonObject["passed"];
-//     result._match = VerifyMatchResponse.fromJson(jsonObject["match"]);
-//     result._error = ErrorResponse.fromJson(jsonObject["error"]);
+    result._verified = jsonObject["verified"];
+    result._person = Person.fromJson(jsonObject["person"]);
+    result._match = VerificationMatchResponse.fromJson(jsonObject["match"]);
 
-//     return result;
-//   }
+    return result;
+  }
 
-//   @visibleForTesting
-//   Map<String, dynamic> toJson() => {
-//         "passed": passed,
-//         "match": match?.toJson(),
-//         "error": error?.toJson(),
-//       }.clearNulls();
-// }
+  @visibleForTesting
+  Map<String, dynamic> toJson() => {
+        "verified": verified,
+        "person": person?.toJson(),
+        "match": match?.toJson(),
+      }.clearNulls();
+}
