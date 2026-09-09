@@ -9,12 +9,12 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.util.Pair
 import android.util.Size
-//import com.regula.facesdk.configuration.EnrollmentConfiguration
+import com.regula.facesdk.configuration.EnrollmentConfiguration
 import com.regula.facesdk.configuration.FaceCaptureConfiguration
 import com.regula.facesdk.configuration.InitializationConfiguration
 import com.regula.facesdk.configuration.LivenessConfiguration
 import com.regula.facesdk.configuration.MatchFacesConfiguration
-//import com.regula.facesdk.configuration.VerificationConfiguration
+import com.regula.facesdk.configuration.VerificationConfiguration
 import com.regula.facesdk.detection.request.DetectFacesConfiguration
 import com.regula.facesdk.detection.request.DetectFacesRequest
 import com.regula.facesdk.detection.request.ImageQualityCharacteristic
@@ -52,13 +52,12 @@ import com.regula.facesdk.exception.UnderlineException
 import com.regula.facesdk.model.Image
 import com.regula.facesdk.model.LivenessNotification
 import com.regula.facesdk.model.MatchFacesImage
-//import com.regula.facesdk.model.results.EnrollmentResponse
-//import com.regula.facesdk.model.results.ErrorResponse
+import com.regula.facesdk.model.results.EnrollmentResponse
 import com.regula.facesdk.model.results.FaceCaptureResponse
 import com.regula.facesdk.model.results.FaceSDKVersion
 import com.regula.facesdk.model.results.LivenessResponse
-//import com.regula.facesdk.model.results.VerificationResponse
-//import com.regula.facesdk.model.results.VerificationMatchResponse
+import com.regula.facesdk.model.results.VerificationResponse
+import com.regula.facesdk.model.results.VerificationMatchResponse
 import com.regula.facesdk.model.results.matchfaces.MatchFacesComparedFace
 import com.regula.facesdk.model.results.matchfaces.MatchFacesComparedFacesPair
 import com.regula.facesdk.model.results.matchfaces.MatchFacesDetection
@@ -70,8 +69,8 @@ import com.regula.facesdk.model.results.person.PersonGroup
 import com.regula.facesdk.model.results.person.PersonImage
 import com.regula.facesdk.model.results.person.SearchPerson
 import com.regula.facesdk.model.results.person.SearchPerson.Detection
+import com.regula.facesdk.model.results.person.SearchPersonFilter
 import com.regula.facesdk.model.results.person.SearchPersonImage
-//import com.regula.facesdk.request.EnrollmentRequest
 import com.regula.facesdk.request.MatchFacesRequest
 import com.regula.facesdk.request.person.EditGroupPersonsRequest
 import com.regula.facesdk.request.person.ImageUpload
@@ -110,21 +109,21 @@ fun livenessConfigFromJSON(input: JSONObject) = input.let {
 
 fun generateLivenessConfig(input: LivenessConfiguration) = getLivenessConfig(input)
 
-//fun enrollmentConfigFromJSON(input: JSONObject) = input.let {
-//    val result = EnrollmentConfiguration.Builder("")
-//    setEnrollmentConfig(result, it)
-//    result.build()
-//}!!
-//
-//fun generateEnrollmentConfig(input: EnrollmentConfiguration) = getEnrollmentConfig(input)
-//
-//fun verificationConfigFromJSON(input: JSONObject) = input.let {
-//    val result = VerificationConfiguration.Builder("")
-//    setVerificationConfig(result, it)
-//    result.build()
-//}!!
-//
-//fun generateVerificationConfig(input: VerificationConfiguration) = getVerificationConfig(input)
+fun enrollmentConfigFromJSON(input: JSONObject) = input.let {
+    val result = EnrollmentConfiguration.Builder()
+    setEnrollmentConfig(result, it)
+    result.build()
+}!!
+
+fun generateEnrollmentConfig(input: EnrollmentConfiguration) = getEnrollmentConfig(input)
+
+fun verificationConfigFromJSON(input: JSONObject) = input.let {
+    val result = VerificationConfiguration.Builder::class.constructor().instantiate()
+    setVerificationConfig(result, it)
+    result.build()
+}!!
+
+fun generateVerificationConfig(input: VerificationConfiguration) = getVerificationConfig(input)
 
 fun matchFacesConfigFromJSON(input: JSONObject) = input.let {
     val result = MatchFacesConfiguration.Builder()
@@ -354,7 +353,10 @@ fun generateFaceCaptureImage(input: Image?) = input?.let {
 fun faceCaptureResponseFromJSON(input: JSONObject) = input.let {
     val result = FaceCaptureResponse::class.constructor().instantiate()
     result.setPrivateProperty("image", faceCaptureImageFromJSON(it.getJSONObjectOrNull("image")))
-    result.setPrivateProperty("exception", faceCaptureExceptionFromJSON(it.getJSONObjectOrNull("error")))
+    result.setPrivateProperty(
+        "exception",
+        faceCaptureExceptionFromJSON(it.getJSONObjectOrNull("error"))
+    )
     result
 }
 
@@ -365,31 +367,16 @@ fun generateFaceCaptureResponse(it: FaceCaptureResponse) = mapOf(
 
 // Liveness ------------------------------
 
-//fun enrollmentRequestFromJSON(input: JSONObject): EnrollmentRequest = input.let {
-//    val externalId = it.getString("externalId")
-//    val builder = if (it.has("trustedImage")) EnrollmentRequest.Builder(externalId, it.getString("trustedImage").toBitmap()!!)
-//    else EnrollmentRequest.Builder(externalId, it.getString("trustedImageUrl"))
-//
-//    if (it.has("groupId")) builder.setGroupId(it.getString("groupId"))
-//    builder.build()
-//}
-//
-//fun generateEnrollmentRequest(input: EnrollmentRequest) = input.let {
-//    mapOf(
-//        "externalId" to it.externalId,
-//        "groupId" to it.groupId,
-//        "trustedImage" to it.trustedImage.toBase64(),
-//        "trustedImageUrl" to it.trustedImageUrl,
-//    ).toJson()
-//}
-
 fun livenessResponseFromJSON(input: JSONObject?) = input?.let {
     val result = LivenessResponse()
     it.getStringOrNull("image").toBitmap()?.let { bitmap ->
         result.setPrivateProperty("bitmaps", arrayOf(bitmap))
     }
     result.setPrivateProperty("liveness", LivenessStatus.values()[it.getInt("liveness")])
-    result.setPrivateProperty("exception", livenessExceptionFromJSON(it.getJSONObjectOrNull("error")))
+    result.setPrivateProperty(
+        "exception",
+        livenessExceptionFromJSON(it.getJSONObjectOrNull("error"))
+    )
     result.setPrivateProperty("tag", it.getStringOrNull("tag"))
     result.setPrivateProperty("transactionId", it.getStringOrNull("transactionId"))
     result.setPrivateProperty("estimatedAge", it.getIntOrNull("estimatedAge"))
@@ -407,75 +394,62 @@ fun generateLivenessResponse(input: LivenessResponse?) = input?.let {
     ).toJson()
 }
 
-fun livenessNotificationFromJSON(it: JSONObject): LivenessNotification = LivenessNotification.Builder().create(
-    LivenessProcessStatus.values()[it.getInt("status")],
-    livenessResponseFromJSON(it.getJSONObjectOrNull("response"))
-).build()
+fun livenessNotificationFromJSON(it: JSONObject): LivenessNotification =
+    LivenessNotification.Builder().create(
+        LivenessProcessStatus.values()[it.getInt("status")],
+        livenessResponseFromJSON(it.getJSONObjectOrNull("response"))
+    ).build()
 
 fun generateLivenessNotification(it: LivenessNotification) = mapOf(
     "status" to it.status.ordinal,
     "response" to generateLivenessResponse(it.response)
 ).toJson()
 
-//fun errorResponseFromJSON(input: JSONObject?) = input?.let {
-//    ErrorResponse(
-//        it.getInt("code"),
-//        it.getString("message")
-//    )
-//}
-//
-//fun generateErrorResponse(input: ErrorResponse?) = input?.let {
-//    mapOf(
-//        "code" to it.code,
-//        "message" to it.message
-//    ).toJson()
-//}
-//
-//fun enrollmentResponseFromJSON(input: JSONObject?) = input?.let {
-//    EnrollmentResponse(
-//        it.getStringOrNull("personId"),
-//        it.getStringOrNull("externalId"),
-//        errorResponseFromJSON(it.getJSONObjectOrNull("error"))
-//    )
-//}
-//
-//fun generateEnrollmentResponse(input: EnrollmentResponse?) = input?.let {
-//    mapOf(
-//        "personId" to it.personId,
-//        "externalId" to it.externalId,
-//        "error" to generateErrorResponse(it.errorResponse),
-//    ).toJson()
-//}
-//
-//fun verifyMatchResponseFromJSON(input: JSONObject?) = input?.let {
-//    VerificationMatchResponse(
-//        it.getBoolean("passed"),
-//        it.get("similarity").toFloat()
-//    )
-//}
-//
-//fun generateVerifyMatchResponse(input: VerificationMatchResponse?) = input?.let {
-//    mapOf(
-//        "passed" to it.isPassed,
-//        "similarity" to it.similarity
-//    ).toJson()
-//}
-//
-//fun verificationResponseFromJSON(input: JSONObject?) = input?.let {
-//    VerificationResponse(
-//        it.getBoolean("passed"),
-//        verifyMatchResponseFromJSON(it.getJSONObjectOrNull("match")),
-//        errorResponseFromJSON(it.getJSONObjectOrNull("error"))
-//    )
-//}
-//
-//fun generateVerificationResponse(input: VerificationResponse?) = input?.let {
-//    mapOf(
-//        "passed" to it.isPassed,
-//        "match" to generateVerifyMatchResponse(it.match),
-//        "error" to generateErrorResponse(it.error),
-//    ).toJson()
-//}
+fun enrollmentResponseFromJSON(input: JSONObject?) = input?.let {
+    EnrollmentResponse(
+        it.getBoolean("enrolled"),
+        personFromJSON(it.getJSONObjectOrNull("person")),
+        it.getJSONArrayOrNull("searchPersons").toArray<SearchPerson>(::searchPersonFromJSON)
+    )
+}
+
+fun generateEnrollmentResponse(input: EnrollmentResponse?) = input?.let {
+    mapOf(
+        "enrolled" to it.isEnrolled,
+        "person" to generatePerson(it.person),
+        "searchPersons" to it.searchPersons.toJson(::generateSearchPerson),
+    ).toJson()
+}
+
+fun verifyMatchResponseFromJSON(input: JSONObject?) = input?.let {
+    VerificationMatchResponse(
+        it.getBoolean("verified"),
+        it.get("similarity").toFloat()
+    )
+}
+
+fun generateVerifyMatchResponse(input: VerificationMatchResponse?) = input?.let {
+    mapOf(
+        "verified" to it.isVerified,
+        "similarity" to it.similarity
+    ).toJson()
+}
+
+fun verificationResponseFromJSON(input: JSONObject?) = input?.let {
+    VerificationResponse(
+        it.getBoolean("verified"),
+        personFromJSON(it.getJSONObjectOrNull("person")),
+        verifyMatchResponseFromJSON(it.getJSONObjectOrNull("match"))
+    )
+}
+
+fun generateVerificationResponse(input: VerificationResponse?) = input?.let {
+    mapOf(
+        "verified" to it.isVerified,
+         "person" to generatePerson(it.person),
+        "match" to generateVerifyMatchResponse(it.match),
+    ).toJson()
+}
 
 // MatchFaces ------------------------------
 
@@ -548,7 +522,8 @@ fun matchFacesRequestFromJSON(input: JSONObject) = input.let {
     val result = MatchFacesRequest(it.getJSONArray("images").toList(::matchFacesImageFromJSON)!!)
     result.customMetadata = it.getJSONObjectOrNull("metadata")
     result.tag = it.getStringOrNull("tag")
-    result.outputImageParams = outputImageParamsFromJSON(it.getJSONObjectOrNull("outputImageParams"))
+    result.outputImageParams =
+        outputImageParamsFromJSON(it.getJSONObjectOrNull("outputImageParams"))
     result
 }
 
@@ -588,7 +563,13 @@ fun generateRect(input: Rect?) = input?.let {
 }
 
 fun matchFacesDetectionFaceFromJSON(input: JSONObject?) = input?.let {
-    val result = MatchFacesDetectionFace::class.constructor(Int::class, Double::class, ArrayList::class, Rect::class, Rect::class).instantiate(
+    val result = MatchFacesDetectionFace::class.constructor(
+        Int::class,
+        Double::class,
+        ArrayList::class,
+        Rect::class,
+        Rect::class
+    ).instantiate(
         it.getIntOrNull("faceIndex"),
         it.getDoubleOrNull("rotationAngle"),
         it.getJSONArrayOrNull("landmarks").toList(::pointFromJSON).toArrayList(),
@@ -611,12 +592,19 @@ fun generateMatchFacesDetectionFace(input: MatchFacesDetectionFace?) = input?.le
 }
 
 fun matchFacesDetectionFromJSON(input: JSONObject): MatchFacesDetection = input.let {
-    val result = MatchFacesDetection::class.constructor(Int::class, MatchFacesImage::class).instantiate(
-        it.getIntOrNull("imageIndex"),
-        matchFacesImageFromJSON(it.getJSONObjectOrNull("image"))
+    val result =
+        MatchFacesDetection::class.constructor(Int::class, MatchFacesImage::class).instantiate(
+            it.getIntOrNull("imageIndex"),
+            matchFacesImageFromJSON(it.getJSONObjectOrNull("image"))
+        )
+    result.setPrivateProperty(
+        "faces",
+        it.getJSONArrayOrNull("faces").toList(::matchFacesDetectionFaceFromJSON)
     )
-    result.setPrivateProperty("faces", it.getJSONArrayOrNull("faces").toList(::matchFacesDetectionFaceFromJSON))
-    result.setPrivateProperty("exception", matchFacesExceptionFromJSON(it.getJSONObjectOrNull("error")))
+    result.setPrivateProperty(
+        "exception",
+        matchFacesExceptionFromJSON(it.getJSONObjectOrNull("error"))
+    )
     result
 }
 
@@ -628,7 +616,12 @@ fun generateMatchFacesDetection(it: MatchFacesDetection) = mapOf(
 ).toJson()
 
 fun comparedFaceFromJSON(input: JSONObject): MatchFacesComparedFace = input.let {
-    MatchFacesComparedFace::class.constructor(Int::class, MatchFacesImage::class, Integer::class, MatchFacesDetectionFace::class).instantiate(
+    MatchFacesComparedFace::class.constructor(
+        Int::class,
+        MatchFacesImage::class,
+        Integer::class,
+        MatchFacesDetectionFace::class
+    ).instantiate(
         it.getInt("imageIndex"),
         matchFacesImageFromJSON(it.getJSONObject("image")),
         it.getIntOrNull("faceIndex"),
@@ -644,7 +637,13 @@ fun generateComparedFace(it: MatchFacesComparedFace) = mapOf(
 ).toJson()
 
 fun comparedFacesPairFromJSON(input: JSONObject): MatchFacesComparedFacesPair = input.let {
-    MatchFacesComparedFacesPair::class.constructor(MatchFacesComparedFace::class, MatchFacesComparedFace::class, MatchFacesException::class, Float::class, Float::class).instantiate(
+    MatchFacesComparedFacesPair::class.constructor(
+        MatchFacesComparedFace::class,
+        MatchFacesComparedFace::class,
+        MatchFacesException::class,
+        Float::class,
+        Float::class
+    ).instantiate(
         comparedFaceFromJSON(it.getJSONObject("first")),
         comparedFaceFromJSON(it.getJSONObject("second")),
         matchFacesExceptionFromJSON(it.getJSONObjectOrNull("error")),
@@ -662,7 +661,12 @@ fun generateComparedFacesPair(it: MatchFacesComparedFacesPair) = mapOf(
 ).toJson()
 
 fun matchFacesResponseFromJSON(input: JSONObject) = input.let {
-    MatchFacesResponse::class.constructor(ArrayList::class, ArrayList::class, String::class, MatchFacesException::class).instantiate(
+    MatchFacesResponse::class.constructor(
+        ArrayList::class,
+        ArrayList::class,
+        String::class,
+        MatchFacesException::class
+    ).instantiate(
         it.getJSONArrayOrNull("detections").toList(::matchFacesDetectionFromJSON).toArrayList(),
         it.getJSONArrayOrNull("results").toList(::comparedFacesPairFromJSON).toArrayList(),
         it.getStringOrNull("tag"),
@@ -716,7 +720,8 @@ fun generateImageQualityCharacteristic(it: ImageQualityCharacteristic) = mapOf(
 
 fun detectFacesConfigFromJSON(input: JSONObject?): DetectFacesConfiguration? = input?.let {
     object : DetectFacesConfiguration() {init {
-        customQuality = it.getJSONArrayOrNull("customQuality").toList(::imageQualityCharacteristicFromJSON)
+        customQuality =
+            it.getJSONArrayOrNull("customQuality").toList(::imageQualityCharacteristicFromJSON)
         outputImageParams = outputImageParamsFromJSON(it.getJSONObjectOrNull("outputImageParams"))
         onlyCentralFace = it.getBooleanOrNull("onlyCentralFace")
         attributes = it.getJSONArrayOrNull("attributes")?.let { attrs ->
@@ -814,7 +819,11 @@ fun generateDetectFaceResult(input: DetectFaceResult?) = input?.let {
 }
 
 fun detectFacesResponseFromJSON(input: JSONObject): DetectFacesResponse = input.let {
-    DetectFacesResponse::class.constructor(String::class, List::class, DetectFacesErrorException::class).instantiate(
+    DetectFacesResponse::class.constructor(
+        String::class,
+        List::class,
+        DetectFacesErrorException::class
+    ).instantiate(
         it.getStringOrNull("scenario"),
         it.getJSONArrayOrNull("allDetections").toList(::detectFaceResultFromJSON),
         detectFacesExceptionFromJSON(it.getJSONObjectOrNull("error")),
@@ -838,11 +847,14 @@ fun generatePersonDBResponse(data: Any?, error: String?) = mapOf(
 fun personFromJSON(input: JSONObject?) = input?.let {
     val result = Person::class.constructor().instantiate()
     result.name = it.getString("name")
-    result.setPrivateProperty("f", it.getJSONArray("groups").toArray<String>())
-    result.setPrivateProperty("e", it.getString("updatedAt").toDate())
+    result.setPrivateProperty("g", it.getJSONArray("groups").toArray<String>())
+    result.setPrivateProperty("f", it.getString("updatedAt").toDate())
     result.setPrivateProperty("a", it.getString("id"))
     result.setPrivateProperty("b", it.getJSONObjectOrNull("metadata") ?: JSONObject())
     result.setPrivateProperty("c", it.getString("createdAt").toDate())
+    result.expireAt = it.getStringOrNull("expireAt").toDate()
+    result.externalId = it.getStringOrNull("externalId")
+    result.timeToLive = it.getIntOrNull("ttl")
     result
 }
 
@@ -853,7 +865,10 @@ fun generatePerson(input: Person?) = input?.let {
         "updatedAt" to it.updatedAt.toStr(),
         "id" to it.id,
         "metadata" to it.metadata,
-        "createdAt" to it.createdAt.toStr()
+        "createdAt" to it.createdAt.toStr(),
+        "expireAt" to it.expireAt.toStr(),
+        "externalId" to it.externalId,
+        "ttl" to it.timeToLive,
     ).toJson()
 }
 
@@ -960,7 +975,10 @@ fun generateSearchPersonRequest(it: SearchPersonRequest) = mapOf(
 
 fun searchPersonDetectionFromJSON(input: JSONObject?) = input?.let {
     val result = Detection::class.constructor().instantiate()
-    result.setPrivateProperty("landmarks", it.getJSONArrayOrNull("landmarks").toList(::pointFromJSON))
+    result.setPrivateProperty(
+        "landmarks",
+        it.getJSONArrayOrNull("landmarks").toList(::pointFromJSON)
+    )
     result.setPrivateProperty("rect", rectFromJSON(it.getJSONObject("rect")))
     result.setPrivateProperty("cropImage", it.getStringOrNull("crop"))
     result.setPrivateProperty("rotationAngle", it.getDouble("rotationAngle"))
@@ -979,7 +997,8 @@ fun generateSearchPersonDetection(input: Detection?) = input?.let {
 }
 
 fun searchPersonImageFromJSON(input: JSONObject): SearchPersonImage = input.let {
-    val result = SearchPersonImage::class.constructor(PersonImage::class).instantiate(personImageFromJSON(it))
+    val result = SearchPersonImage::class.constructor(PersonImage::class)
+        .instantiate(personImageFromJSON(it))
     result.similarity = it.getDouble("similarity")
     result.distance = it.getDouble("distance")
     result
@@ -999,8 +1018,11 @@ fun generateSearchPersonImage(it: SearchPersonImage) = mapOf(
 fun searchPersonFromJSON(input: JSONObject?) = input?.let {
     val result = SearchPerson::class.constructor(Person::class).instantiate(personFromJSON(it))
     result.images = it.getJSONArray("images").toList(::searchPersonImageFromJSON)
-    result.setPrivateProperty("detection", searchPersonDetectionFromJSON(it.getJSONObjectOrNull("detection")))
-    result.setPrivateProperty("f", it.getJSONArray("groups").toArray<String>())
+    result.setPrivateProperty(
+        "detection",
+        searchPersonDetectionFromJSON(it.getJSONObjectOrNull("detection"))
+    )
+    result.setPrivateProperty("g", it.getJSONArray("groups").toArray<String>())
     result
 }
 
@@ -1013,6 +1035,32 @@ fun generateSearchPerson(input: SearchPerson?) = input?.let {
         "updatedAt" to it.updatedAt.toStr(),
         "id" to it.id,
         "metadata" to it.metadata,
-        "createdAt" to it.createdAt.toStr()
+        "createdAt" to it.createdAt.toStr(),
+        "expireAt" to it.expireAt.toStr(),
+        "externalId" to it.externalId,
+        "ttl" to it.timeToLive,
+    ).toJson()
+}
+
+fun searchPersonFilterFromJSON(input: JSONObject?) = input?.let {
+    val result = SearchPersonFilter()
+    result.groups = it.getJSONArray("groups").toArray<String>()
+    result.threshold = it.get("threshold").toFloat()
+    result.limit = it.getInt("limit")
+    val fieldName = it.getStringOrNull("fieldName")
+    val fieldValues = it.getJSONArrayOrNull("fieldValues").toArray<String>()
+    val exclude = it.getBoolean("exclude")
+    result.filterField(fieldName, fieldValues, exclude)
+    result
+}
+
+fun generateSearchPersonFilter(input: SearchPersonFilter?) = input?.let {
+    mapOf(
+        "groups" to it.groups.toJson(),
+        "threshold" to it.threshold,
+        "limit" to it.limit,
+        "fieldName" to it.fieldName,
+        "fieldValues" to it.fieldValues.toJson(),
+        "exclude" to it.isExclude,
     ).toJson()
 }

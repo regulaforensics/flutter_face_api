@@ -63,14 +63,14 @@ enum LivenessErrorCode {
   /// Processing finished by bad face quality.
   BAD_FACE_QUALITY(9),
 
-  /// Processing finished by bad frame size.
-  BAD_FRAME_SIZE(10),
-
   /// Device has no available camera.
-  CAMERA_NOT_AVAILABLE(11),
+  CAMERA_NOT_AVAILABLE(10),
 
   /// Application does not have camera permission.
-  CAMERA_NO_PERMISSION(12),
+  CAMERA_NO_PERMISSION(11),
+
+  /// Processing finished by bad frame size.
+  BAD_FRAME_SIZE(12),
 
   /// Application context is null.
   ///

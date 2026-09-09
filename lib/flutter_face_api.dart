@@ -30,17 +30,15 @@ part 'src/face_capture/face_capture_exception.dart';
 part 'src/face_capture/face_capture_response.dart';
 
 part 'src/liveness/liveness_config.dart';
-// part 'src/liveness/enrollment_config.dart';
-// part 'src/liveness/enrollment_request.dart';
-// part 'src/liveness/verification_config.dart';
+part 'src/liveness/enrollment_config.dart';
+part 'src/liveness/verification_config.dart';
 part 'src/liveness/liveness_backend_exception.dart';
 part 'src/liveness/liveness_exception.dart';
 part 'src/liveness/liveness_response.dart';
 part 'src/liveness/liveness_notification.dart';
-// part 'src/liveness/error_response.dart';
-// part 'src/liveness/enrollment_response.dart';
-// part 'src/liveness/verify_match_response.dart';
-// part 'src/liveness/verification_response.dart';
+part 'src/liveness/enrollment_response.dart';
+part 'src/liveness/verification_match_response.dart';
+part 'src/liveness/verification_response.dart';
 
 part 'src/image_params/point.dart';
 part 'src/image_params/rect.dart';
@@ -84,6 +82,7 @@ part 'src/person_database/image_upload.dart';
 part 'src/person_database/person_group.dart';
 part 'src/person_database/edit_group_persons_request.dart';
 part 'src/person_database/search_person_request.dart';
+part 'src/person_database/search_person_filter.dart';
 part 'src/person_database/search_person_detection.dart';
 part 'src/person_database/search_person_image.dart';
 part 'src/person_database/search_person.dart';
@@ -222,47 +221,37 @@ class FaceSDK {
     return LivenessResponse.fromJson(_decode(response))!;
   }
 
-  // Future<(LivenessResponse, EnrollmentResponse?)> startEnrollment(
-  //   EnrollmentConfig config, {
-  //   LivenessNotificationCompletion? notificationCompletion,
-  //   CameraSwitchCallback? cameraSwitchCallback,
-  // }) async {
-  //   _setLivenessNotificationCompletion(notificationCompletion);
-  //   _setCameraSwitchCallback(cameraSwitchCallback);
-  //   var response = _decode(await _bridge.invokeMethod(
-  //     "startEnrollment",
-  //     [config.toJson()],
-  //   ));
-  //   var lr = LivenessResponse.fromJson(response["livenessResponse"])!;
-  //   var er = EnrollmentResponse.fromJson(response["enrollmentResponse"]);
-  //   return (lr, er);
-  // }
+  Future<(LivenessResponse, EnrollmentResponse?)> startEnrollment(
+    EnrollmentConfig config, {
+    LivenessNotificationCompletion? notificationCompletion,
+    CameraSwitchCallback? cameraSwitchCallback,
+  }) async {
+    _setLivenessNotificationCompletion(notificationCompletion);
+    _setCameraSwitchCallback(cameraSwitchCallback);
+    var response = _decode(await _bridge.invokeMethod(
+      "startEnrollment",
+      [config.toJson()],
+    ));
+    var lr = LivenessResponse.fromJson(response["livenessResponse"])!;
+    var er = EnrollmentResponse.fromJson(response["enrollmentResponse"]);
+    return (lr, er);
+  }
 
-  // Future<(LivenessResponse, VerificationResponse?)> startVerification(
-  //   VerificationConfig config, {
-  //   LivenessNotificationCompletion? notificationCompletion,
-  //   CameraSwitchCallback? cameraSwitchCallback,
-  // }) async {
-  //   _setLivenessNotificationCompletion(notificationCompletion);
-  //   _setCameraSwitchCallback(cameraSwitchCallback);
-  //   var response = _decode(await _bridge.invokeMethod(
-  //     "startVerification",
-  //     [config.toJson()],
-  //   ));
-  //   var lr = LivenessResponse.fromJson(response["livenessResponse"])!;
-  //   var vr = VerificationResponse.fromJson(response["verificationResponse"]);
-  //   return (lr, vr);
-  // }
-
-  // Future<EnrollmentResponse> enrollWithTrustedPhoto(
-  //   EnrollmentRequest request,
-  // ) async {
-  //   var response = await _bridge.invokeMethod(
-  //     "enrollWithTrustedPhoto",
-  //     [request.toJson()],
-  //   );
-  //   return EnrollmentResponse.fromJson(_decode(response))!;
-  // }
+  Future<(LivenessResponse, VerificationResponse?)> startVerification(
+    VerificationConfig config, {
+    LivenessNotificationCompletion? notificationCompletion,
+    CameraSwitchCallback? cameraSwitchCallback,
+  }) async {
+    _setLivenessNotificationCompletion(notificationCompletion);
+    _setCameraSwitchCallback(cameraSwitchCallback);
+    var response = _decode(await _bridge.invokeMethod(
+      "startVerification",
+      [config.toJson()],
+    ));
+    var lr = LivenessResponse.fromJson(response["livenessResponse"])!;
+    var vr = VerificationResponse.fromJson(response["verificationResponse"]);
+    return (lr, vr);
+  }
 
   void stopLiveness() {
     _bridge.invokeMethod("stopLiveness", []);
