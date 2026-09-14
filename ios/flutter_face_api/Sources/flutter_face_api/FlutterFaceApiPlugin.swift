@@ -45,12 +45,12 @@ func sendEvent(_ event: String, _ data: Any? = nil) {
     runAsync { _ in eventSinks[event]?(data.toSendable()) }
 }
 
-func runAsync (_ action: @escaping (UIViewController) -> Void) {
+func runAsync(_ action: @escaping (UIViewController) -> Void) {
     DispatchQueue.main.async {
-        for case let scene as UIWindowScene in UIApplication.shared.connectedScenes
-            where scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive {
-            let window = scene.windows.first { $0.isKeyWindow } ?? scene.windows.first { !$0.isHidden && $0.alpha > 0 && $0.windowLevel == .normal }
-            guard var presenter = window?.rootViewController else { continue }
+        let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.filter { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }.flatMap { $0.windows }
+        let candidates = windows.filter { $0.isKeyWindow } + windows.filter { !$0.isKeyWindow && !$0.isHidden && $0.alpha > 0 && $0.windowLevel == .normal }
+        for window in candidates {
+            guard var presenter = window.rootViewController else { continue }
             while let next = presenter.presentedViewController
                 ?? (presenter as? UINavigationController)?.visibleViewController
                 ?? (presenter as? UINavigationController)?.topViewController
@@ -61,6 +61,6 @@ func runAsync (_ action: @escaping (UIViewController) -> Void) {
             action(presenter)
             return
         }
-        NSLog("REGULA: Cannot present the UI: no presenter available.")
+        print("REGULA: Cannot present the UI: no presenter available.")
     }
 }
