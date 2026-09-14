@@ -42,17 +42,25 @@ class GenericStreamHandler: NSObject, FlutterStreamHandler {
 
 var eventSinks: [String: FlutterEventSink] = [:]
 func sendEvent(_ event: String, _ data: Any? = nil) {
-    DispatchQueue.main.async {
-        if let sink = eventSinks[event] {
-            sink(data.toSendable())
-        }
-    }
+    runAsync { _ in eventSinks[event]?(data.toSendable()) }
 }
 
-let rootViewController: () -> UIViewController? = {
-    return UIApplication.shared.connectedScenes
-        .compactMap { $0 as? UIWindowScene }
-        .flatMap { $0.windows }
-        .first { $0.isKeyWindow }?
-        .rootViewController
+func runAsync (_ action: @escaping (UIViewController) -> Void) {
+    DispatchQueue.main.async {
+        for case let scene as UIWindowScene in UIApplication.shared.connectedScenes
+            where scene.activationState == .foregroundActive || scene.activationState == .foregroundInactive {
+            let window = scene.windows.first { $0.isKeyWindow } ?? scene.windows.first { !$0.isHidden && $0.alpha > 0 && $0.windowLevel == .normal }
+            guard var presenter = window?.rootViewController else { continue }
+            while let next = presenter.presentedViewController
+                ?? (presenter as? UINavigationController)?.visibleViewController
+                ?? (presenter as? UINavigationController)?.topViewController
+                ?? (presenter as? UITabBarController)?.selectedViewController {
+                presenter = next
+            }
+            guard presenter.viewIfLoaded?.window != nil else { continue }
+            action(presenter)
+            return
+        }
+        NSLog("REGULA: Cannot present the UI: no presenter available.")
+    }
 }
