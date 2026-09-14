@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   flutter_face_api:
     path: ../
-  flutter_face_core_basic: 8.4.709-nightly
+  flutter_face_core_basic: 8.4.712-nightly
 
 dev_dependencies:
   flutter_test:
