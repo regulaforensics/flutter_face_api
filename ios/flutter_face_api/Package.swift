@@ -9,7 +9,7 @@ let package = Package(
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/regulaforensics/FaceSDK-Swift-Package",
-            exact: "8.4.4893-nightly"
+            exact: "8.4.4897-nightly"
         ),
     ],
     targets: [
