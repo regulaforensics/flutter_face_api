@@ -1,6 +1,3 @@
-import Foundation
-import UIKit
-
 public typealias Callback = (Any?) -> Void
 
 var args: [Any?] = []

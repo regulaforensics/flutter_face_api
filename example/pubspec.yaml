@@ -4,7 +4,8 @@ publish_to: none
 version: 1.0.0
 
 environment:
-  sdk: ^3.10.0
+  sdk: '>=3.1.5 <4.0.0'
+  flutter: '>=3.10.0'
 
 dependencies:
   path_provider: ^2.1.5
@@ -14,11 +15,12 @@ dependencies:
   flutter_face_api:
     path: ../
   flutter_face_core_basic: 8.3.703
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
+  lints: ^5.0.0
 
 flutter:
   assets:

@@ -1,11 +1,7 @@
 include: package:lints/core.yaml
-formatter:
-  page_width: 120
-  trailing_commas: preserve
 analyzer:
   errors:
     deprecated_member_use_from_same_package: ignore
-  exclude:
-    - build/**
-    - android/**
-    - ios/**
+formatter:
+  page_width: 120
+  trailing_commas: preserve

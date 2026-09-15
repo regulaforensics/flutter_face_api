@@ -16,9 +16,9 @@ import com.regula.facesdk.enums.InitErrorCode
 import com.regula.facesdk.exception.InitException
 import com.regula.facesdk.listener.NetworkInterceptorListener
 import com.regula.facesdk.model.LivenessNotification
-import com.regula.facesdk.model.results.EnrollmentResponse
+//import com.regula.facesdk.model.results.EnrollmentResponse
 import com.regula.facesdk.model.results.LivenessResponse
-import com.regula.facesdk.model.results.VerificationResponse
+//import com.regula.facesdk.model.results.VerificationResponse
 import com.regula.facesdk.model.results.matchfaces.MatchFacesSimilarityThresholdSplit
 import com.regula.facesdk.model.results.person.DbBaseItem
 import com.regula.facesdk.model.results.person.PageableItemList
@@ -48,8 +48,9 @@ fun methodCall(method: String, callback: (Any?) -> Unit): Any = when (method) {
     "startFaceCapture" -> startFaceCapture(callback, argsNullable(0))
     "stopFaceCapture" -> stopFaceCapture()
     "startLiveness" -> startLiveness(callback, argsNullable(0))
-    "startEnrollment" -> startEnrollment(callback, args(0))
-    "startVerification" -> startVerification(callback, args(0))
+//    "startEnrollment" -> startEnrollment(callback, args(0))
+//    "startVerification" -> startVerification(callback, args(0))
+//    "enrollWithTrustedPhoto" -> enrollWithTrustedPhoto(callback, args(0))
     "stopLiveness" -> stopLiveness()
     "matchFaces" -> matchFaces(callback, args(0), argsNullable(1))
     "splitComparedFaces" -> splitComparedFaces(callback, args(0), args(1))
@@ -105,14 +106,12 @@ fun getLocale(callback: Callback) = callback(Instance().locale)
 fun setLocale(locale: String?) = locale.let { Instance().locale = it }
 
 fun setLocalizationDictionary(dictionary: JSONObject?) {
-    localizationCallbacks =
-        LocalizationCallbacks { if (dictionary?.has(it) == true) dictionary.getString(it) else null }
+    localizationCallbacks = LocalizationCallbacks { if (dictionary?.has(it) == true) dictionary.getString(it) else null }
     Instance().setLocalizationCallback(localizationCallbacks!!)
 }
 
 fun setRequestHeaders(headers: JSONObject?) {
-    networkInterceptorListener =
-        NetworkInterceptorListener { headers?.forEach { k, v -> it.header(k, v as String) } }
+    networkInterceptorListener = NetworkInterceptorListener { headers?.forEach { k, v -> it.header(k, v as String) } }
     Instance().setNetworkInterceptorListener(networkInterceptorListener)
 }
 
@@ -128,11 +127,7 @@ fun initialize(callback: Callback, config: JSONObject?) =
         Instance().initialize(context, initConfigFromJSON(config), initCompletion(callback))
     else
         getBleWrapper()?.let {
-            Instance().initialize(
-                context,
-                InitializationBleDeviceConfiguration(it),
-                initCompletion(callback)
-            )
+            Instance().initialize(context, InitializationBleDeviceConfiguration(it), initCompletion(callback))
         } ?: callback(generateInitCompletion(false, InitException(InitErrorCode.LICENSE_IS_NULL)))
 
 fun deinitialize() = Instance().deinitialize()
@@ -165,19 +160,23 @@ fun startLiveness(callback: Callback, config: JSONObject?) = config?.let {
     livenessNotificationCompletion()
 )
 
-fun startEnrollment(callback: Callback, config: JSONObject) = Instance().startEnrollment(
-    context,
-    enrollmentConfigFromJSON(config),
-    enrollmentCompletion(callback),
-    livenessNotificationCompletion(),
-)
-
-fun startVerification(callback: Callback, config: JSONObject) = Instance().startVerification(
-    context,
-    verificationConfigFromJSON(config),
-    verificationCompletion(callback),
-    livenessNotificationCompletion(),
-)
+//fun startEnrollment(callback: Callback, config: JSONObject) = Instance().startEnrollment(
+//    context,
+//    enrollmentConfigFromJSON(config),
+//    enrollmentCompletion(callback),
+//    livenessNotificationCompletion(),
+//)
+//
+//fun startVerification(callback: Callback, config: JSONObject) = Instance().startVerification(
+//    context,
+//    verificationConfigFromJSON(config),
+//    verificationCompletion(callback),
+//    livenessNotificationCompletion(),
+//)
+//
+//fun enrollWithTrustedPhoto(callback: Callback, config: JSONObject) = Instance().enrollWithTrustedPhoto(
+//    enrollmentRequestFromJSON(config),
+//) { callback(generateEnrollmentResponse(it)) }
 
 fun stopLiveness() = Instance().stopLivenessProcessing(context)
 
@@ -256,9 +255,7 @@ fun getPersonImage(callback: Callback, personId: String, imageId: String) = db.g
     personId,
     imageId,
     object : PersonDBCallback<ByteArray> {
-        override fun onSuccess(data: ByteArray?) =
-            callback(generatePersonDBResponse(data.toBase64()!!, null))
-
+        override fun onSuccess(data: ByteArray?) = callback(generatePersonDBResponse(data.toBase64()!!, null))
         override fun onFailure(error: String) = callback(generatePersonDBResponse(null, error))
     }
 )
@@ -313,8 +310,7 @@ fun getGroup(callback: Callback, groupId: String) = db.getGroup(
     databaseItemCompletion(callback, ::generatePersonGroup)
 )
 
-fun getGroups(callback: Callback) =
-    db.getGroups(databasePageCompletion(callback, ::generatePersonGroup))
+fun getGroups(callback: Callback) = db.getGroups(databasePageCompletion(callback, ::generatePersonGroup))
 
 fun getGroupsForPage(callback: Callback, page: Int, size: Int) = db.getGroupsForPage(
     page,
@@ -359,9 +355,7 @@ fun getPersonsInGroupForPage(
 fun searchPerson(callback: Callback, searchPersonRequest: JSONObject) = db.searchPerson(
     searchPersonRequestFromJSON(searchPersonRequest),
     object : PersonDBCallback<List<SearchPerson>> {
-        override fun onSuccess(data: List<SearchPerson>?) =
-            callback(generatePersonDBResponse(data.toJsonNullable(::generateSearchPerson)!!, null))
-
+        override fun onSuccess(data: List<SearchPerson>?) = callback(generatePersonDBResponse(data.toJsonNullable(::generateSearchPerson)!!, null))
         override fun onFailure(error: String) = callback(generatePersonDBResponse(null, error))
     }
 )
@@ -370,12 +364,7 @@ fun initCompletion(callback: Callback) = FaceInitializationCompletion { success,
     if (success) {
         // initializes MutableLiveData
         Instance().customization.uiConfigurationLive
-        Instance().setVideoEncoderCompletion { id, s ->
-            sendEvent(
-                videoEncoderCompletionEvent,
-                generateVideoEncoderCompletion(id, s)
-            )
-        }
+        Instance().setVideoEncoderCompletion { id, s -> sendEvent(videoEncoderCompletionEvent, generateVideoEncoderCompletion(id, s)) }
         Instance().setOnClickListener { sendEvent(onCustomButtonTappedEvent, it.tag.toInt()) }
     }
     callback(generateInitCompletion(success, error))
@@ -395,8 +384,7 @@ fun livenessCompletion(callback: Callback) = LivenessCallback {
 
 fun livenessNotificationCompletion() = object : LivenessNotificationCallback() {
     override fun onCameraSwitched(cameraId: Int) = sendEvent(cameraSwitchEvent, cameraId)
-    override fun onLivenessNotification(ln: LivenessNotification) =
-        sendEvent(livenessNotificationEvent, generateLivenessNotification(ln))
+    override fun onLivenessNotification(ln: LivenessNotification) = sendEvent(livenessNotificationEvent, generateLivenessNotification(ln))
 }
 
 fun matchFacesCompletion(callback: Callback) = MatchFaceCallback {
@@ -407,49 +395,39 @@ fun detectFacesCompletion(callback: Callback) = DetectFacesCompletion {
     callback(generateDetectFacesResponse(it))
 }
 
-fun verificationCompletion(callback: Callback) =
-    { livenessResponse: LivenessResponse, verificationResponse: VerificationResponse? ->
-        callback(
+//fun verificationCompletion(callback: Callback) = { livenessResponse: LivenessResponse, verificationResponse: VerificationResponse? ->
+//    callback(mapOf(
+//        "livenessResponse" to generateLivenessResponse(livenessResponse),
+//        "verificationResponse" to generateVerificationResponse(verificationResponse),
+//    ).toJson())
+//}
+//
+//fun enrollmentCompletion(callback: Callback) = { livenessResponse: LivenessResponse, enrollmentResponse: EnrollmentResponse? ->
+//    callback(mapOf(
+//        "livenessResponse" to generateLivenessResponse(livenessResponse),
+//        "enrollmentResponse" to generateEnrollmentResponse(enrollmentResponse),
+//    ).toJson())
+//}
+
+fun <T> databaseItemCompletion(callback: Callback, toJson: ((T?) -> JSONObject?)?) = object : PersonDBCallback<T> {
+    override fun onSuccess(data: T?) = callback(generatePersonDBResponse(toJson?.let { it(data) } ?: true, null))
+    override fun onFailure(error: String) = callback(generatePersonDBResponse(null, error))
+}
+
+fun <T : DbBaseItem?> databasePageCompletion(callback: Callback, toJson: (T?) -> JSONObject?) = object : PersonDBCallback<PageableItemList<List<T>?, T>> {
+    override fun onSuccess(data: PageableItemList<List<T>?, T>?) = callback(
+        generatePersonDBResponse(
             mapOf(
-                "livenessResponse" to generateLivenessResponse(livenessResponse),
-                "verificationResponse" to generateVerificationResponse(verificationResponse),
-            ).toJson()
+                "items" to data!!.itemsList.toJsonNullable(toJson),
+                "page" to data.page,
+                "totalPages" to data.totalPages,
+            ).toJson(),
+            null
         )
-    }
+    )
 
-fun enrollmentCompletion(callback: Callback) =
-    { livenessResponse: LivenessResponse, enrollmentResponse: EnrollmentResponse? ->
-        callback(
-            mapOf(
-                "livenessResponse" to generateLivenessResponse(livenessResponse),
-                "enrollmentResponse" to generateEnrollmentResponse(enrollmentResponse),
-            ).toJson()
-        )
-    }
-
-fun <T> databaseItemCompletion(callback: Callback, toJson: ((T?) -> JSONObject?)?) =
-    object : PersonDBCallback<T> {
-        override fun onSuccess(data: T?) =
-            callback(generatePersonDBResponse(toJson?.let { it(data) } ?: true, null))
-
-        override fun onFailure(error: String) = callback(generatePersonDBResponse(null, error))
-    }
-
-fun <T : DbBaseItem?> databasePageCompletion(callback: Callback, toJson: (T?) -> JSONObject?) =
-    object : PersonDBCallback<PageableItemList<List<T>?, T>> {
-        override fun onSuccess(data: PageableItemList<List<T>?, T>?) = callback(
-            generatePersonDBResponse(
-                mapOf(
-                    "items" to data!!.itemsList.toJsonNullable(toJson),
-                    "page" to data.page,
-                    "totalPages" to data.totalPages,
-                ).toJson(),
-                null
-            )
-        )
-
-        override fun onFailure(error: String) = callback(generatePersonDBResponse(null, error))
-    }
+    override fun onFailure(error: String) = callback(generatePersonDBResponse(null, error))
+}
 
 // Weak references
 var localizationCallbacks: LocalizationCallbacks? = null
