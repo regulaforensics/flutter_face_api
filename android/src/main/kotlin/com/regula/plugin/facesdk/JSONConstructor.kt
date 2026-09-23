@@ -846,12 +846,12 @@ fun generatePersonDBResponse(data: Any?, error: String?) = mapOf(
 
 fun personFromJSON(input: JSONObject?) = input?.let {
     val result = Person::class.constructor().instantiate()
-    result.name = it.getString("name")
-    result.setPrivateProperty("g", it.getJSONArray("groups").toArray<String>())
-    result.setPrivateProperty("f", it.getString("updatedAt").toDate())
-    result.setPrivateProperty("a", it.getString("id"))
+    result.name = it.getStringOrNull("name")
+    result.setPrivateProperty("g", it.getJSONArrayOrNull("groups").toArray<String>())
+    result.setPrivateProperty("f", it.getStringOrNull("updatedAt").toDate())
+    result.setPrivateProperty("a", it.getStringOrNull("id"))
     result.setPrivateProperty("b", it.getJSONObjectOrNull("metadata") ?: JSONObject())
-    result.setPrivateProperty("c", it.getString("createdAt").toDate())
+    result.setPrivateProperty("c", it.getStringOrNull("createdAt").toDate())
     result.expireAt = it.getStringOrNull("expireAt").toDate()
     result.externalId = it.getStringOrNull("externalId")
     result.timeToLive = it.getIntOrNull("ttl")
