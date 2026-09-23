@@ -30,7 +30,7 @@ Map<String, List<String>?> nullableMap = {
   "comparedFacesPair": ["error"],
   "matchFacesResponse": ["tag", "error"],
   "editGroupPersonsRequest!": [],
-  "person": ["metadata", "externalId", "expireAt", "ttl"],
+  "person!": [],
   "personGroup": ["metadata"],
   "searchPersonRequest!": ["imageUpload", "detectAll"],
   "searchPersonFilter": ["fieldName", "fieldValues"],

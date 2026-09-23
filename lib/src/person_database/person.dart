@@ -33,11 +33,17 @@ class Person {
     var result = new Person();
 
     result.name = jsonObject["name"];
-    result.updatedAt = DateTime.parse(jsonObject["updatedAt"]);
-    result.groups = _stringListFrom((jsonObject["groups"]))!;
+    result.updatedAt = switch (jsonObject['updatedAt']) {
+      String s => DateTime.parse(s),
+      _ => null,
+    };
+    result.groups = _stringListFrom((jsonObject["groups"]));
     result.id = jsonObject["id"];
     result.metadata = jsonObject["metadata"];
-    result._createdAt = DateTime.parse(jsonObject["createdAt"]);
+    result._createdAt = switch (jsonObject['createdAt']) {
+      String s => DateTime.parse(s),
+      _ => null,
+    };
     result.externalId = jsonObject["externalId"];
     result.expireAt = switch (jsonObject['expireAt']) {
       String s => DateTime.parse(s),
@@ -51,11 +57,11 @@ class Person {
   @visibleForTesting
   Map<String, dynamic> toJson() => {
         "name": name,
-        "updatedAt": updatedAt.toString(),
+        "updatedAt": updatedAt?.toString(),
         "groups": groups,
         "id": id,
         "metadata": metadata,
-        "createdAt": createdAt.toString(),
+        "createdAt": createdAt?.toString(),
         "externalId": externalId,
         "expireAt": expireAt?.toString(),
         "ttl": ttl,

@@ -52,8 +52,9 @@ class FlutterFaceApiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         args = call.arguments as List<*>
         try {
             methodCall(call.method) { data -> result.success(data.toSendable()) }
-        } catch (error: Exception) {
-            Log.e("REGULA", "Caught exception in \"${call.method}\" function:", error)
+        } catch (error: Throwable) {
+            Log.e("REGULA", "Caught an exception in \"${call.method}\" function:", error)
+            result.error("-1", "Unexpected error, check logs for details", null)
         }
     }
 
