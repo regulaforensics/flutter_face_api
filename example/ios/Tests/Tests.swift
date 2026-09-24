@@ -204,4 +204,8 @@ class Tests: XCTestCase {
     func test_searchPersonRequest() {
         compare("searchPersonRequest", PersonDatabase.SearchPersonRequest.decode, PersonDatabase.SearchPersonRequest.encode)
     }
+    
+    func test_searchPersonFilter() {
+        compare("searchPersonFilter", SearchPersonFilter.decode, SearchPersonFilter.encode)
+    }
 }
