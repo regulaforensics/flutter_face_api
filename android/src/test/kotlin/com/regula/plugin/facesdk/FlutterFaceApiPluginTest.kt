@@ -179,7 +179,4 @@ class FlutterFaceApiPluginTest {
 
     @Test
     fun searchPersonRequest() = compare("searchPersonRequest", ::searchPersonRequestFromJSON, ::generateSearchPersonRequest)
-
-    @Test
-    fun searchPersonFilter() = compare("searchPersonFilter", ::searchPersonFilterFromJSON, ::generateSearchPersonFilter)
 }

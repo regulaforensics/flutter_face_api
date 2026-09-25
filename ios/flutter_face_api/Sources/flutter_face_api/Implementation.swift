@@ -39,7 +39,7 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
         })
     case("deinitialize"): face.deinitialize()
     case("startFaceCapture"): let config = FaceCaptureConfiguration.decode(argsNullable(0))
-        withPresenter { presenter in
+        runAsync { presenter in
             face.presentFaceCaptureViewController(
                 from: presenter,
                 animated: true,
@@ -48,7 +48,7 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
         }
     case("stopFaceCapture"): face.stopFaceCaptureViewController()
     case("startLiveness"): let config = LivenessConfiguration.decode(argsNullable(0))
-        withPresenter { presenter in
+        runAsync { presenter in
             face.startLiveness(
                 from: presenter,
                 animated: true,
@@ -56,7 +56,7 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
                 onLiveness: { callback($0.encode()) })
         }
     case("startEnrollment"): let config = EnrollmentConfiguration.decode2(args(0))
-        withPresenter { presenter in
+        runAsync { presenter in
             face.startEnrollment(
                 from: presenter,
                 animated: true,
@@ -67,7 +67,7 @@ func methodCall(_ method: String, _ callback: @escaping Callback) {
                 ]) })
         }
     case("startVerification"): let config = VerificationConfiguration.decode2(args(0))
-        withPresenter { presenter in
+        runAsync { presenter in
             face.startVerification(
                 from: presenter,
                 animated: true,

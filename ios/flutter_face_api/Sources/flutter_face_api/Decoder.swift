@@ -1002,7 +1002,7 @@ public extension SearchPersonFilter {
         let it = it as! [String: Any]
         let result = Self()
         result.groups = it["groups"] as! [String]
-        result.threshold = CGFloat(truncating: it["threshold"] as! NSNumber)
+        result.threshold = CGFloat(it["threshold"] as! Float)
         result.limit = it["limit"] as! Int
         result.setValue(it["fieldName"] as Any?, forKey: "fieldName")
         result.setValue(it["fieldValues"] as Any?, forKey: "fieldValues")
