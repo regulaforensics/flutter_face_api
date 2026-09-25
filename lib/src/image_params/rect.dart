@@ -16,7 +16,7 @@ class Rect {
   Rect._privateConstructor();
 
   @visibleForTesting
-  static Rect? fromJson(jsonObject) {
+  static Rect? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = Rect._privateConstructor();
 

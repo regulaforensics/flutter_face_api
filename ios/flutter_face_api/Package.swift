@@ -3,13 +3,13 @@ import PackageDescription
 
 let package = Package(
     name: "flutter_face_api",
-    platforms: [.iOS("13.0")],
+    platforms: [.iOS(.v15)],
     products: [.library(name: "flutter-face-api", targets: ["flutter_face_api"])],
     dependencies: [
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/regulaforensics/FaceSDK-Swift-Package",
-            exact: "8.4.4980-rc"
+            exact: "8.4.4993-rc"
         ),
     ],
     targets: [
@@ -18,7 +18,8 @@ let package = Package(
             dependencies: [
                 .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "FaceSDK", package: "FaceSDK-Swift-Package"),
-            ]
+            ],
+            path: "src"
         ),
     ]
 )

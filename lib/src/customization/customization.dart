@@ -33,7 +33,7 @@ class Customization {
   set onCustomButtonTapped(CustomButtonTappedCompletion completion) => _setCustomButtonTappedCompletion(completion);
 
   /// Allows you to deserialize object.
-  static Customization fromJson(jsonObject) {
+  static Customization fromJson(dynamic jsonObject) {
     var result = Customization();
     result.testSetters = {};
 

@@ -1,6 +1,6 @@
 @file:Suppress("EnumValuesSoftDeprecate")
 
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import com.regula.facesdk.configuration.Customization
 import com.regula.facesdk.configuration.EnrollmentConfiguration
@@ -151,7 +151,6 @@ fun setVerificationConfig(builder: VerificationConfiguration.Builder, config: JS
             "skipStep" -> builder.setSkipStep(*livenessSkipStepArrayFromJSON(v as JSONArray))
             "metadata" -> builder.setMetadata(v as JSONObject)
             "personId" -> builder.setPrivateProperty("u", v as String)
-            "externalId" -> builder.setPrivateProperty("v", v as String)
             "threshold" -> builder.setThreshold(v.toFloat())
         }
     }
@@ -173,7 +172,6 @@ fun getVerificationConfig(input: VerificationConfiguration) = mapOf(
     "skipStep" to generateLivenessSkipStepArray(input.skipStep),
     "metadata" to input.metadata,
     "personId" to input.personId,
-    "externalId" to input.externalId,
     "threshold" to input.threshold,
 ).toJson()
 

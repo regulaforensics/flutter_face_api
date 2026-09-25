@@ -58,11 +58,9 @@ class VerificationConfig {
 
   String? _personId;
 
-  String? _externalId;
-
   double? threshold;
 
-  VerificationConfig.withPersonId(
+  VerificationConfig(
     String personId, {
     bool copyright = true,
     bool cameraSwitchEnabled = false,
@@ -100,51 +98,10 @@ class VerificationConfig {
         _personId = personId,
         threshold = threshold;
 
-  VerificationConfig.withExternalId(
-    String externalId, {
-    bool copyright = true,
-    bool cameraSwitchEnabled = false,
-    bool closeButtonEnabled = true,
-    bool torchButtonEnabled = true,
-    bool vibrateOnSteps = true,
-    int? cameraPositionAndroid,
-    CameraPosition cameraPositionIOS = CameraPosition.FRONT,
-    List<ScreenOrientation> screenOrientation = const [ScreenOrientation.PORTRAIT],
-    bool locationTrackingEnabled = true,
-    bool preventScreenRecording = false,
-    int attemptsCount = 0,
-    RecordingProcess recordingProcess = RecordingProcess.ASYNCHRONOUS_UPLOAD,
-    LivenessType livenessType = LivenessType.ACTIVE,
-    String? tag,
-    List<LivenessSkipStep> skipStep = const [],
-    dynamic metadata,
-    double? threshold,
-  })  : copyright = copyright,
-        cameraSwitchEnabled = cameraSwitchEnabled,
-        closeButtonEnabled = closeButtonEnabled,
-        torchButtonEnabled = torchButtonEnabled,
-        vibrateOnSteps = vibrateOnSteps,
-        cameraPositionAndroid = cameraPositionAndroid,
-        cameraPositionIOS = cameraPositionIOS,
-        screenOrientation = screenOrientation,
-        locationTrackingEnabled = locationTrackingEnabled,
-        preventScreenRecording = preventScreenRecording,
-        attemptsCount = attemptsCount,
-        recordingProcess = recordingProcess,
-        livenessType = livenessType,
-        tag = tag,
-        skipStep = skipStep,
-        metadata = metadata,
-        _externalId = externalId,
-        threshold = threshold;
-
   @visibleForTesting
-  static VerificationConfig? fromJson(jsonObject) {
+  static VerificationConfig? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
-    VerificationConfig? result;
-    if (jsonObject["personId"] != null) result = VerificationConfig.withPersonId(jsonObject["personId"]);
-    if (jsonObject["externalId"] != null) result = VerificationConfig.withExternalId(jsonObject["externalId"]);
-    if (result == null) return null;
+    var result = VerificationConfig(jsonObject["personId"]);
 
     result.copyright = jsonObject["copyright"];
     result.cameraSwitchEnabled = jsonObject["cameraSwitchEnabled"];
@@ -186,7 +143,6 @@ class VerificationConfig {
         "skipStep": skipStep.map((e) => e.value).toList(),
         "metadata": metadata,
         "personId": _personId,
-        "externalId": _externalId,
         "threshold": threshold,
       }.clearNulls();
 }

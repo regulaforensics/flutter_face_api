@@ -10,7 +10,7 @@ class LicenseException {
   LicenseException._privateConstructor();
 
   @visibleForTesting
-  static LicenseException? fromJson(jsonObject) {
+  static LicenseException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = LicenseException._privateConstructor();
 

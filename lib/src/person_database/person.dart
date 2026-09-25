@@ -28,7 +28,7 @@ class Person {
   int? ttl;
 
   @visibleForTesting
-  static Person? fromJson(jsonObject) {
+  static Person? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = new Person();
 

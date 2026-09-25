@@ -48,7 +48,7 @@ class SearchPersonRequest {
         _outputImageParams = outputImageParams;
 
   @visibleForTesting
-  static SearchPersonRequest? fromJson(jsonObject) {
+  static SearchPersonRequest? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     return SearchPersonRequest(
       ImageUpload.fromJson(jsonObject["imageUpload"])!,

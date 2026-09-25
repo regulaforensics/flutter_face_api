@@ -106,13 +106,6 @@ class Tests: XCTestCase {
         ])
     }
     
-    func test_verificationConfig2() {
-        compare("verificationConfig2", VerificationConfiguration.decode2, VerificationConfiguration.encode2, omit: [
-            "cameraPositionAndroid",
-            "screenOrientation",
-        ])
-    }
-    
     func test_livenessResponse() {
         compare("livenessResponse", LivenessResponse.decode, LivenessResponse.encode, omit: ["error"])
     }
@@ -203,5 +196,9 @@ class Tests: XCTestCase {
     
     func test_searchPersonRequest() {
         compare("searchPersonRequest", PersonDatabase.SearchPersonRequest.decode, PersonDatabase.SearchPersonRequest.encode)
+    }
+    
+    func test_searchPersonFilter() {
+        compare("searchPersonFilter", SearchPersonFilter.decode, SearchPersonFilter.encode)
     }
 }

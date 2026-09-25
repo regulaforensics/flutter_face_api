@@ -9,7 +9,7 @@ class MatchFacesConfig {
         locationTrackingEnabled = locationTrackingEnabled;
 
   @visibleForTesting
-  static MatchFacesConfig? fromJson(jsonObject) {
+  static MatchFacesConfig? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = MatchFacesConfig();
 

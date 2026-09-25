@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'dart:async';
+
 import 'package:flutter_face_api/flutter_face_api.dart';
 import 'package:image_picker/image_picker.dart';
-import 'enroll_verify_scene.dart';
 
 void main() => runApp(new MaterialApp(home: new MyApp()));
 var faceSdk = FaceSDK.instance;
@@ -23,18 +24,13 @@ void startFaceCapture(int position) async {
 
 void startLiveness() async {
   var result = await faceSdk.startLiveness(
-    config: LivenessConfig(
-      skipStep: [LivenessSkipStep.ONBOARDING_STEP],
-      closeButtonEnabled: livenessCloseButtonEnabled,
-    ),
+    config: LivenessConfig(skipStep: [LivenessSkipStep.ONBOARDING_STEP]),
     notificationCompletion: (notification) => print(notification.status),
   );
   if (result.image == null) return;
   setImage(result.image!, ImageType.LIVE, 1);
   setLivenessStatus(result.liveness.name.toLowerCase());
 }
-
-const livenessCloseButtonEnabled = false;
 
 void matchFaces() async {
   if (image1 == null || image2 == null) {
@@ -176,19 +172,6 @@ List<Widget> ui() => [
       Row(
         children: [
           Expanded(child: button("Clear", () => clearResults())),
-        ],
-      ),
-      Row(
-        children: [
-          Expanded(
-            child: button(
-              "Enroll & Verify",
-              () => Navigator.push(
-                MyAppState.instance.context,
-                MaterialPageRoute(builder: (_) => const EnrollVerifyScene()),
-              ),
-            ),
-          ),
         ],
       ),
     ],

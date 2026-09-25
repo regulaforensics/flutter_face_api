@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import android.app.Activity
 import android.content.Context

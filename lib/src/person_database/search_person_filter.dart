@@ -28,7 +28,7 @@ class SearchPersonFilter {
   }
 
   @visibleForTesting
-  static SearchPersonFilter? fromJson(jsonObject) {
+  static SearchPersonFilter? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = SearchPersonFilter(
       groups: _stringListFrom(jsonObject["groups"])!,

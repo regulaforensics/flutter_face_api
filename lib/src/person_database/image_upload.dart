@@ -18,7 +18,7 @@ class ImageUpload {
   ImageUpload.withImageUrl(String imageUrl) : _imageUrl = imageUrl;
 
   @visibleForTesting
-  static ImageUpload? fromJson(jsonObject) {
+  static ImageUpload? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = ImageUpload._privateConstructor();
 

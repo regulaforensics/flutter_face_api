@@ -10,7 +10,7 @@ class LivenessNotification {
   LivenessNotification._privateConstructor();
 
   @visibleForTesting
-  static LivenessNotification? fromJson(jsonObject) {
+  static LivenessNotification? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = new LivenessNotification._privateConstructor();
 

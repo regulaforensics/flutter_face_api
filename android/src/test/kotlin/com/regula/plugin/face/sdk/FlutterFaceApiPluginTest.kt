@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -99,9 +99,6 @@ class FlutterFaceApiPluginTest {
     fun verificationConfig() = compare("verificationConfig", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
 
     @Test
-    fun verificationConfig2() = compare("verificationConfig2", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
-
-    @Test
     fun livenessBackendException() = compare("livenessBackendException", ::livenessBackendExceptionFromJSON, ::generateLivenessBackendException)
 
     @Test
@@ -179,4 +176,7 @@ class FlutterFaceApiPluginTest {
 
     @Test
     fun searchPersonRequest() = compare("searchPersonRequest", ::searchPersonRequestFromJSON, ::generateSearchPersonRequest)
+
+    @Test
+    fun searchPersonFilter() = compare("searchPersonFilter", ::searchPersonFilterFromJSON, ::generateSearchPersonFilter)
 }

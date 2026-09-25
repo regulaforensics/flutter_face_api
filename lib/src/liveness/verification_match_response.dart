@@ -12,7 +12,7 @@ class VerificationMatchResponse {
         _similarity = 0;
 
   @visibleForTesting
-  static VerificationMatchResponse? fromJson(jsonObject) {
+  static VerificationMatchResponse? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = new VerificationMatchResponse._privateConstructor();
 

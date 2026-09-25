@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable

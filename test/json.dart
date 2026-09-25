@@ -249,26 +249,6 @@ var verificationConfig = {
   "personId": "test0",
   "threshold": 0.5,
 };
-var verificationConfig2 = {
-  "copyright": true,
-  "cameraSwitchEnabled": false,
-  "closeButtonEnabled": true,
-  "torchButtonEnabled": false,
-  "vibrateOnSteps": true,
-  "cameraPositionAndroid": -1,
-  "cameraPositionIOS": 1,
-  "screenOrientation": [0, 1],
-  "locationTrackingEnabled": true,
-  "preventScreenRecording": false,
-  "attemptsCount": 2,
-  "recordingProcess": 0,
-  "livenessType": 1,
-  "tag": "test",
-  "skipStep": [0, 1],
-  "metadata": customJson,
-  "externalId": "test1",
-  "threshold": 0.5,
-};
 var livenessBackendException = {
   "code": 200,
   "message": "No license",

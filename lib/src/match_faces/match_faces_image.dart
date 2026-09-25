@@ -27,7 +27,7 @@ class MatchFacesImage {
         _identifier = "";
 
   @visibleForTesting
-  static MatchFacesImage? fromJson(jsonObject) {
+  static MatchFacesImage? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
 
     var result = MatchFacesImage(

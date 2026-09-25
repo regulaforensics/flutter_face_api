@@ -25,7 +25,7 @@ class DetectFaceResult {
   DetectFaceResult._privateConstructor();
 
   @visibleForTesting
-  static DetectFaceResult? fromJson(jsonObject) {
+  static DetectFaceResult? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = DetectFaceResult._privateConstructor();
 

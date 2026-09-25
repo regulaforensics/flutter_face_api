@@ -16,7 +16,7 @@ class FaceSDKVersion {
   FaceSDKVersion._privateConstructor();
 
   @visibleForTesting
-  static FaceSDKVersion? fromJson(jsonObject) {
+  static FaceSDKVersion? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = FaceSDKVersion._privateConstructor();
 

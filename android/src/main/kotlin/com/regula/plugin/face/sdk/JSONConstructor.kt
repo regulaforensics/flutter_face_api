@@ -1,6 +1,6 @@
 @file:Suppress("EnumValuesSoftDeprecate", "unused")
 
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -75,9 +75,9 @@ import com.regula.facesdk.request.MatchFacesRequest
 import com.regula.facesdk.request.person.EditGroupPersonsRequest
 import com.regula.facesdk.request.person.ImageUpload
 import com.regula.facesdk.request.person.SearchPersonRequest
-import com.regula.plugin.facesdk.Convert.toBase64
-import com.regula.plugin.facesdk.Convert.toBitmap
-import com.regula.plugin.facesdk.Convert.toByteArray
+import com.regula.plugin.face.sdk.Convert.toBase64
+import com.regula.plugin.face.sdk.Convert.toBitmap
+import com.regula.plugin.face.sdk.Convert.toByteArray
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Double
