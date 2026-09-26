@@ -20,7 +20,7 @@ class MatchFacesResponse {
   MatchFacesResponse._privateConstructor();
 
   @visibleForTesting
-  static MatchFacesResponse? fromJson(jsonObject) {
+  static MatchFacesResponse? fromJson(dynamic jsonObject) {
     var result = MatchFacesResponse._privateConstructor();
 
     for (var item in jsonObject["results"]) {

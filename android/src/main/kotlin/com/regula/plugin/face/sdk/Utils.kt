@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST", "EnumValuesSoftDeprecate", "UseKtx")
 
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,7 +18,7 @@ import com.regula.facesdk.enums.CustomizationFont
 import com.regula.facesdk.enums.ImageType
 import com.regula.facesdk.enums.InitErrorCode
 import com.regula.facesdk.enums.OutputImageCropAspectRatio
-import com.regula.plugin.facesdk.Convert.toDrawable
+import com.regula.plugin.face.sdk.Convert.toDrawable
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream

@@ -22,7 +22,7 @@ class PersonImage {
   PersonImage._privateConstructor();
 
   @visibleForTesting
-  static PersonImage? fromJson(jsonObject) {
+  static PersonImage? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = PersonImage._privateConstructor();
 

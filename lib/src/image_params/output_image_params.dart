@@ -21,7 +21,7 @@ class OutputImageParams {
         _backgroundColor = backgroundColor;
 
   @visibleForTesting
-  static OutputImageParams? fromJson(jsonObject) {
+  static OutputImageParams? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = OutputImageParams();
 

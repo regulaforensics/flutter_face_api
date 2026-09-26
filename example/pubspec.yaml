@@ -4,21 +4,22 @@ publish_to: none
 version: 1.0.0
 
 environment:
-  sdk: ^3.10.0
+  sdk: ^3.13.0
+  flutter: '>=3.47.0'
 
 dependencies:
-  path_provider: ^2.1.5
-  image_picker: ^1.1.2
+  path_provider: ^2.1.6
+  image_picker: ^1.2.3
   flutter:
     sdk: flutter
   flutter_face_api:
     path: ../
-  flutter_face_core_basic: 8.4.738-nightly
+  flutter_face_core_basic: 8.4.744-nightly
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
+  lints: ^6.1.0
 
 flutter:
   assets:

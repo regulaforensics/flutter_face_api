@@ -19,7 +19,7 @@ class PersonGroup {
   PersonGroup._privateConstructor();
 
   @visibleForTesting
-  static PersonGroup? fromJson(jsonObject) {
+  static PersonGroup? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = PersonGroup._privateConstructor();
 

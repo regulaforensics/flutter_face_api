@@ -12,7 +12,7 @@ class Size {
         _height = height;
 
   @visibleForTesting
-  static Size? fromJson(jsonObject) {
+  static Size? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     return new Size(jsonObject["width"], jsonObject["height"]);
   }

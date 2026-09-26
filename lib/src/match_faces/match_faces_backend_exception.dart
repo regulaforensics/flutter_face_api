@@ -10,7 +10,7 @@ class MatchFacesBackendException {
   MatchFacesBackendException._privateConstructor();
 
   @visibleForTesting
-  static MatchFacesBackendException? fromJson(jsonObject) {
+  static MatchFacesBackendException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = MatchFacesBackendException._privateConstructor();
 

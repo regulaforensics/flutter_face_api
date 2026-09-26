@@ -10,7 +10,7 @@ class ComparedFacesSplit {
   ComparedFacesSplit._privateConstructor();
 
   @visibleForTesting
-  static ComparedFacesSplit? fromJson(jsonObject) {
+  static ComparedFacesSplit? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = ComparedFacesSplit._privateConstructor();
 

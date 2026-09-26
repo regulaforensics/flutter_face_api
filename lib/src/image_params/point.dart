@@ -11,7 +11,7 @@ class Point {
   Point._privateConstructor();
 
   @visibleForTesting
-  static Point? fromJson(jsonObject) {
+  static Point? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = Point._privateConstructor();
 

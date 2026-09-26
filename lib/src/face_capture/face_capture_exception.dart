@@ -10,7 +10,7 @@ class FaceCaptureException {
   FaceCaptureException._privateConstructor();
 
   @visibleForTesting
-  static FaceCaptureException? fromJson(jsonObject) {
+  static FaceCaptureException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = FaceCaptureException._privateConstructor();
 

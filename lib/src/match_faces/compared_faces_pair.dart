@@ -27,7 +27,7 @@ class ComparedFacesPair {
   ComparedFacesPair._privateConstructor();
 
   @visibleForTesting
-  static ComparedFacesPair? fromJson(jsonObject) {
+  static ComparedFacesPair? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = ComparedFacesPair._privateConstructor();
 

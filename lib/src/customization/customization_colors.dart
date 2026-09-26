@@ -158,7 +158,7 @@ class CustomizationColors {
   }
 
   /// Allows you to deserialize object.
-  static CustomizationColors fromJson(jsonObject) {
+  static CustomizationColors fromJson(dynamic jsonObject) {
     var result = CustomizationColors();
     result.testSetters = {};
 

@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import android.annotation.SuppressLint
 import com.regula.common.LocalizationCallbacks
@@ -25,7 +25,7 @@ import com.regula.facesdk.model.results.person.PageableItemList
 import com.regula.facesdk.model.results.person.Person
 import com.regula.facesdk.model.results.person.PersonGroup
 import com.regula.facesdk.model.results.person.SearchPerson
-import com.regula.plugin.facesdk.Convert.toBase64
+import com.regula.plugin.face.sdk.Convert.toBase64
 import org.json.JSONArray
 import org.json.JSONObject
 

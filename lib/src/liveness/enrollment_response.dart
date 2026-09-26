@@ -13,7 +13,7 @@ class EnrollmentResponse {
   EnrollmentResponse._privateConstructor();
 
   @visibleForTesting
-  static EnrollmentResponse? fromJson(jsonObject) {
+  static EnrollmentResponse? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = new EnrollmentResponse._privateConstructor();
 

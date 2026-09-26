@@ -13,7 +13,7 @@ class VerificationResponse {
   VerificationResponse._privateConstructor() : _verified = false;
 
   @visibleForTesting
-  static VerificationResponse? fromJson(jsonObject) {
+  static VerificationResponse? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = new VerificationResponse._privateConstructor();
 

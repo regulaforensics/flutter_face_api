@@ -39,7 +39,6 @@ void main() {
     compare('livenessConfig', livenessConfig, LivenessConfig.fromJson);
     compare('enrollmentConfig', enrollmentConfig, EnrollmentConfig.fromJson);
     compare('verificationConfig', verificationConfig, VerificationConfig.fromJson);
-    compare('verificationConfig2', verificationConfig2, VerificationConfig.fromJson);
     compare('livenessBackendException', livenessBackendException, LivenessBackendException.fromJson);
     compare('livenessException', livenessException, LivenessException.fromJson);
     compare('livenessResponse', livenessResponse, LivenessResponse.fromJson);

@@ -99,7 +99,7 @@ class EnrollmentConfig {
         searchFilter = searchFilter;
 
   @visibleForTesting
-  static EnrollmentConfig? fromJson(jsonObject) {
+  static EnrollmentConfig? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = EnrollmentConfig();
 

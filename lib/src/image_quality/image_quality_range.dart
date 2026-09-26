@@ -19,7 +19,7 @@ class ImageQualityRange {
         _max = value;
 
   @visibleForTesting
-  static ImageQualityRange? fromJson(jsonObject) {
+  static ImageQualityRange? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
 
     return ImageQualityRange(

@@ -16,7 +16,7 @@ class SearchPersonDetection {
   SearchPersonDetection._privateConstructor();
 
   @visibleForTesting
-  static SearchPersonDetection? fromJson(jsonObject) {
+  static SearchPersonDetection? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = SearchPersonDetection._privateConstructor();
 

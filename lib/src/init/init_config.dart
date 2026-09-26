@@ -27,7 +27,7 @@ class InitConfig {
         _licenseUpdate = licenseUpdate;
 
   @visibleForTesting
-  static InitConfig? fromJson(jsonObject) {
+  static InitConfig? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
 
     var result = InitConfig(

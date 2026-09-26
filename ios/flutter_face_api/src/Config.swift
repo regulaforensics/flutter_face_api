@@ -152,7 +152,7 @@ public extension LivenessConfiguration {
              "skipStep": self.stepSkippingMask.encode(),
              "metadata": self.metadata,
              "person": self.person.encode(),
-             "searchFilter": self.searchFilter.encode(),
+             "searchFilter": self.searchFilter?.encode(),
          ]
      }
  }
@@ -178,7 +178,6 @@ public extension LivenessConfiguration {
                  case("skipStep"): builder.stepSkippingMask = RFSLivenessStepSkip.decode(v)
                  case("metadata"): builder.metadata = v as! [String: Any]
                  case("personId"): builder.personId = v as! String
-                 case("externalId"): builder.externalId = v as? String
                  case("threshold"): builder.threshold = v as? NSNumber
                  default: break
                  }
@@ -203,7 +202,6 @@ public extension LivenessConfiguration {
              "skipStep": self.stepSkippingMask.encode(),
              "metadata": self.metadata,
              "personId": self.personId,
-             "externalId": self.externalId,
              "threshold": self.threshold,
          ]
      }
