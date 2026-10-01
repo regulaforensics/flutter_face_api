@@ -1,6 +1,6 @@
 import XCTest
 import FaceSDK
-import flutter_face_api
+@testable import flutter_face_api
 
 class Tests: XCTestCase {
     // image_params

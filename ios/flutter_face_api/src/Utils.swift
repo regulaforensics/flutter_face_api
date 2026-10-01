@@ -27,11 +27,13 @@ extension Any? {
 func fixNulls(_ value: Any?) -> Any {
     guard let value else { return NSNull() }
     switch value {
-    case let value as [String: Any]:
+    // Native results can contain unavailable scores represented by NaN or infinity.
+    case let value as NSNumber where !value.doubleValue.isFinite: return -1
+    case let value as [String: Any?]:
         var dict = [String: Any]()
         for (k, v) in value { dict[k] = fixNulls(v) }
         return dict
-    case let value as [Any]: return value.map { fixNulls($0) }
+    case let value as [Any?]: return value.map { fixNulls($0) }
     default: return value
     }
 }

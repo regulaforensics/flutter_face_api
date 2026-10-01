@@ -3,7 +3,7 @@ part of "../../flutter_face_api.dart";
 class SearchPersonFilter {
   List<String> groups;
 
-  double threshold = 0;
+  double? threshold;
 
   int limit = 1;
 
@@ -16,7 +16,7 @@ class SearchPersonFilter {
   bool get exclude => _exclude;
   bool _exclude = false;
 
-  SearchPersonFilter({List<String> groups = const [], double threshold = 0, int limit = 1})
+  SearchPersonFilter({List<String> groups = const [], double? threshold, int limit = 1})
       : groups = groups,
         threshold = threshold,
         limit = limit;
@@ -32,7 +32,7 @@ class SearchPersonFilter {
     if (jsonObject == null) return null;
     var result = SearchPersonFilter(
       groups: _stringListFrom(jsonObject["groups"])!,
-      threshold: _toDouble(jsonObject["threshold"])!,
+      threshold: _toDouble(jsonObject["threshold"]),
       limit: jsonObject["limit"]!,
     );
     result._fieldName = jsonObject["fieldName"];

@@ -33,5 +33,5 @@ Map<String, List<String>?> nullableMap = {
   "person!": [],
   "personGroup": ["metadata"],
   "searchPersonRequest!": ["imageUpload", "detectAll"],
-  "searchPersonFilter": ["fieldName", "fieldValues"],
+  "searchPersonFilter": ["fieldName", "fieldValues", "threshold"],
 };
