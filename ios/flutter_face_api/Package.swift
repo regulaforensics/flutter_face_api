@@ -1,0 +1,25 @@
+// swift-tools-version: 5.9
+import PackageDescription
+
+let package = Package(
+    name: "flutter_face_api",
+    platforms: [.iOS(.v15)],
+    products: [.library(name: "flutter-face-api", targets: ["flutter_face_api"])],
+    dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
+        .package(
+            url: "https://github.com/regulaforensics/FaceSDK-Swift-Package",
+            exact: "8.4.5047-rc"
+        ),
+    ],
+    targets: [
+        .target(
+            name: "flutter_face_api",
+            dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
+                .product(name: "FaceSDK", package: "FaceSDK-Swift-Package"),
+            ],
+            path: "src"
+        ),
+    ]
+)

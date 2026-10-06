@@ -10,7 +10,7 @@ class DetectFacesBackendException {
   DetectFacesBackendException._privateConstructor();
 
   @visibleForTesting
-  static DetectFacesBackendException? fromJson(jsonObject) {
+  static DetectFacesBackendException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = DetectFacesBackendException._privateConstructor();
 

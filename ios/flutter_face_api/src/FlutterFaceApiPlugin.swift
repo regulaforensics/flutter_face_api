@@ -42,10 +42,10 @@ class GenericStreamHandler: NSObject, FlutterStreamHandler {
 
 var eventSinks: [String: FlutterEventSink] = [:]
 func sendEvent(_ event: String, _ data: Any? = nil) {
-    runAsync { _ in eventSinks[event]?(data.toSendable()) }
+    DispatchQueue.main.async { eventSinks[event]?(data.toSendable()) }
 }
 
-func runAsync(_ action: @escaping (UIViewController) -> Void) {
+func withPresenter(_ action: @escaping (UIViewController) -> Void) {
     DispatchQueue.main.async {
         let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.filter { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }.flatMap { $0.windows }
         let candidates = windows.filter { $0.isKeyWindow } + windows.filter { !$0.isKeyWindow && !$0.isHidden && $0.alpha > 0 && $0.windowLevel == .normal }

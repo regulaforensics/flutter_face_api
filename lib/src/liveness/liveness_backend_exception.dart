@@ -10,7 +10,7 @@ class LivenessBackendException {
   LivenessBackendException._privateConstructor();
 
   @visibleForTesting
-  static LivenessBackendException? fromJson(jsonObject) {
+  static LivenessBackendException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = LivenessBackendException._privateConstructor();
 

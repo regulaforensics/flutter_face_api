@@ -122,7 +122,7 @@ class CustomizationImages {
   }
 
   /// Allows you to deserialize object.
-  static CustomizationImages fromJson(jsonObject) {
+  static CustomizationImages fromJson(dynamic jsonObject) {
     var result = CustomizationImages();
     result.testSetters = {};
 

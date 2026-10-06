@@ -13,7 +13,7 @@ class InitException {
   InitException._privateConstructor();
 
   @visibleForTesting
-  static InitException? fromJson(jsonObject) {
+  static InitException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = InitException._privateConstructor();
 

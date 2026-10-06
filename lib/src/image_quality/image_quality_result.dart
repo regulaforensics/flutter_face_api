@@ -25,7 +25,7 @@ class ImageQualityResult {
   ImageQualityResult._privateConstructor();
 
   @visibleForTesting
-  static ImageQualityResult? fromJson(jsonObject) {
+  static ImageQualityResult? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = ImageQualityResult._privateConstructor();
 

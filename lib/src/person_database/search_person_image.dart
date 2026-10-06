@@ -16,7 +16,7 @@ class SearchPersonImage extends PersonImage {
   SearchPersonImage._privateConstructor() : super._privateConstructor();
 
   @visibleForTesting
-  static SearchPersonImage? fromJson(jsonObject) {
+  static SearchPersonImage? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = SearchPersonImage._privateConstructor();
 

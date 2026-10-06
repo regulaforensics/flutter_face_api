@@ -28,7 +28,7 @@ class ImageQualityCharacteristic {
   }
 
   @visibleForTesting
-  static ImageQualityCharacteristic? fromJson(jsonObject) {
+  static ImageQualityCharacteristic? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
 
     return ImageQualityCharacteristic._create(
