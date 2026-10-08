@@ -13,7 +13,7 @@ class DetectFacesException {
   DetectFacesException._privateConstructor();
 
   @visibleForTesting
-  static DetectFacesException? fromJson(jsonObject) {
+  static DetectFacesException? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = DetectFacesException._privateConstructor();
 

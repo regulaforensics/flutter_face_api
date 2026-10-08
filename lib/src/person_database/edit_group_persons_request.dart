@@ -9,7 +9,7 @@ class EditGroupPersonsRequest {
         _personIdsToRemove = personIdsToRemove;
 
   @visibleForTesting
-  static EditGroupPersonsRequest? fromJson(jsonObject) {
+  static EditGroupPersonsRequest? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     return EditGroupPersonsRequest(
       _stringListFrom(jsonObject["personIdsToAdd"]),

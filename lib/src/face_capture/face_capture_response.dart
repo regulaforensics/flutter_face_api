@@ -10,7 +10,7 @@ class FaceCaptureResponse {
   FaceCaptureResponse._privateConstructor();
 
   @visibleForTesting
-  static FaceCaptureResponse? fromJson(jsonObject) {
+  static FaceCaptureResponse? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = new FaceCaptureResponse._privateConstructor();
 

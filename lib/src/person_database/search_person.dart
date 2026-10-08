@@ -10,7 +10,7 @@ class SearchPerson extends Person {
   SearchPersonDetection? get detection => _detection;
   SearchPersonDetection? _detection;
 
-  SearchPerson._privateConstructor() : super._privateConstructor();
+  SearchPerson._privateConstructor() : super();
 
   @visibleForTesting
   static SearchPerson? fromJson(Map<String, dynamic>? jsonObject) {
@@ -24,11 +24,14 @@ class SearchPerson extends Person {
     }
     result._detection = SearchPersonDetection.fromJson(jsonObject["detection"]);
     result.name = result.name = jsonObject["name"];
-    result._updatedAt = DateTime.parse(jsonObject["updatedAt"]);
-    result._groups = (jsonObject["groups"] as List).cast<String>();
-    result._id = jsonObject["id"];
+    result.updatedAt = DateTime.parse(jsonObject["updatedAt"]);
+    result.groups = (jsonObject["groups"] as List).cast<String>();
+    result.id = jsonObject["id"];
     result.metadata = jsonObject["metadata"];
     result._createdAt = DateTime.parse(jsonObject["createdAt"]);
+    result.externalId = jsonObject["externalId"];
+    result.expireAt = switch (jsonObject['expireAt']) { String s => DateTime.parse(s), _ => null };
+    result.ttl = jsonObject["ttl"];
 
     return result;
   }
@@ -43,5 +46,8 @@ class SearchPerson extends Person {
         "id": id,
         "metadata": metadata,
         "createdAt": createdAt.toString(),
+        "externalId": externalId,
+        "expireAt": expireAt?.toString(),
+        "ttl": ttl,
       }.clearNulls();
 }

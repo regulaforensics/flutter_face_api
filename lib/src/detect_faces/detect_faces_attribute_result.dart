@@ -16,7 +16,7 @@ class DetectFacesAttributeResult {
   DetectFacesAttributeResult._privateConstructor();
 
   @visibleForTesting
-  static DetectFacesAttributeResult? fromJson(jsonObject) {
+  static DetectFacesAttributeResult? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = DetectFacesAttributeResult._privateConstructor();
 

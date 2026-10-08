@@ -21,7 +21,7 @@ class MatchFacesDetection {
   MatchFacesDetection._privateConstructor();
 
   @visibleForTesting
-  static MatchFacesDetection? fromJson(jsonObject) {
+  static MatchFacesDetection? fromJson(dynamic jsonObject) {
     var result = MatchFacesDetection._privateConstructor();
 
     result._image = MatchFacesImage.fromJson(jsonObject["image"])!;

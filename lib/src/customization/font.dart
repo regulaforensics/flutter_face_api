@@ -24,7 +24,7 @@ class Font {
         _style = style;
 
   /// Allows you to deserialize object.
-  static Font? fromJson(jsonObject) {
+  static Font? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
 
     var result = Font(jsonObject["name"]);

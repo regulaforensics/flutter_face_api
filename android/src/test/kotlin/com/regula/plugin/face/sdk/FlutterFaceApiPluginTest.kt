@@ -1,4 +1,4 @@
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -92,17 +92,11 @@ class FlutterFaceApiPluginTest {
     @Test
     fun livenessConfig() = compare("livenessConfig", ::livenessConfigFromJSON, ::generateLivenessConfig, "cameraPositionIOS")
 
-//    @Test
-//    fun enrollmentConfig() = compare("enrollmentConfig", ::enrollmentConfigFromJSON, ::generateEnrollmentConfig, "cameraPositionIOS")
-//
-//    @Test
-//    fun verificationConfig() = compare("verificationConfig", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
-//
-//    @Test
-//    fun enrollmentRequest() = compare("enrollmentRequest", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
-//
-//    @Test
-//    fun enrollmentRequest2() = compare("enrollmentRequest2", ::enrollmentRequestFromJSON, ::generateEnrollmentRequest)
+    @Test
+    fun enrollmentConfig() = compare("enrollmentConfig", ::enrollmentConfigFromJSON, ::generateEnrollmentConfig, "cameraPositionIOS")
+
+    @Test
+    fun verificationConfig() = compare("verificationConfig", ::verificationConfigFromJSON, ::generateVerificationConfig, "cameraPositionIOS")
 
     @Test
     fun livenessBackendException() = compare("livenessBackendException", ::livenessBackendExceptionFromJSON, ::generateLivenessBackendException)
@@ -116,17 +110,14 @@ class FlutterFaceApiPluginTest {
     @Test
     fun livenessNotification() = compare("livenessNotification", ::livenessNotificationFromJSON, ::generateLivenessNotification)
 
-//    @Test
-//    fun errorResponse() = compare("errorResponse", ::errorResponseFromJSON, ::generateErrorResponse)
-//
-//    @Test
-//    fun enrollmentResponse() = compare("enrollmentResponse", ::enrollmentResponseFromJSON, ::generateEnrollmentResponse)
-//
-//    @Test
-//    fun verifyMatchResponse() = compare("verifyMatchResponse", ::verifyMatchResponseFromJSON, ::generateVerifyMatchResponse)
-//
-//    @Test
-//    fun verificationResponse() = compare("verificationResponse", ::verificationResponseFromJSON, ::generateVerificationResponse)
+    @Test
+    fun enrollmentResponse() = compare("enrollmentResponse", ::enrollmentResponseFromJSON, ::generateEnrollmentResponse)
+
+    @Test
+    fun verifyMatchResponse() = compare("verifyMatchResponse", ::verifyMatchResponseFromJSON, ::generateVerifyMatchResponse)
+
+    @Test
+    fun verificationResponse() = compare("verificationResponse", ::verificationResponseFromJSON, ::generateVerificationResponse)
 
     // match_faces
 
@@ -185,4 +176,7 @@ class FlutterFaceApiPluginTest {
 
     @Test
     fun searchPersonRequest() = compare("searchPersonRequest", ::searchPersonRequestFromJSON, ::generateSearchPersonRequest)
+
+    @Test
+    fun searchPersonFilter() = compare("searchPersonFilter", ::searchPersonFilterFromJSON, ::generateSearchPersonFilter)
 }

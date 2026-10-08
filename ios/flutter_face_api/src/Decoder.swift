@@ -144,73 +144,57 @@ func generateLivenessNotification(_ status: LivenessProcessStatus, _ result: Liv
     ]
 }
 
-//public extension ErrorResponse {
-//    static func decode(_ it: Any?) -> ErrorResponse? {
-//        guard let it = it as? [String: Any] else { return nil }
-//        let result = ErrorResponse.emptyInit() as ErrorResponse
-//        result.setValue(it["code"] as Any?, forKey: "code")
-//        result.setValue(it["message"] as Any?, forKey: "message")
-//        return result
-//    }
-//    func encode() -> [String: Any?] {
-//        return [
-//            "code": self.code,
-//            "message": self.message,
-//        ]
-//    }
-//}
-//
-//public extension EnrollmentResponse {
-//    static func decode(_ it: Any?) -> EnrollmentResponse? {
-//        guard let it = it as? [String: Any] else { return nil }
-//        let result = EnrollmentResponse.emptyInit() as EnrollmentResponse
-//        result.setValue(ErrorResponse.decode(it["error"]), forKey: "error")
-//        result.setValue(it["personId"] as Any?, forKey: "personId")
-//        result.setValue(it["externalId"] as Any?, forKey: "externalId")
-//        return result
-//    }
-//    func encode() -> [String: Any?] {
-//        return [
-//            "error": self.error?.encode(),
-//            "personId": self.personId,
-//            "externalId": self.externalId,
-//        ]
-//    }
-//}
-//
-//public extension VerifyMatchResponse {
-//    static func decode(_ it: Any?) -> VerifyMatchResponse? {
-//        guard let it = it as? [String: Any] else { return nil }
-//        let result = VerifyMatchResponse.emptyInit() as VerifyMatchResponse
-//        result.setValue(it["passed"] as Any?, forKey: "passed")
-//        result.setValue(it["similarity"] as Any?, forKey: "similarity")
-//        return result
-//    }
-//    func encode() -> [String: Any?] {
-//        return [
-//            "passed": self.passed,
-//            "similarity": self.similarity,
-//        ]
-//    }
-//}
-//
-//public extension VerificationResponse {
-//    static func decode(_ it: Any?) -> VerificationResponse? {
-//        guard let it = it as? [String: Any] else { return nil }
-//        let result = VerificationResponse.emptyInit() as VerificationResponse
-//        result.setValue(VerifyMatchResponse.decode(it["match"]), forKey: "match")
-//        result.setValue(ErrorResponse.decode(it["error"]), forKey: "error")
-//        result.setValue(it["passed"] as Any?, forKey: "passed")
-//        return result
-//    }
-//    func encode() -> [String: Any?] {
-//        return [
-//            "match": self.match?.encode(),
-//            "error": self.error?.encode(),
-//            "passed": self.passed,
-//        ]
-//    }
-//}
+public extension EnrollmentResponse {
+    static func decode(_ it: Any?) -> EnrollmentResponse? {
+        guard let it = it as? [String: Any] else { return nil }
+        let result = EnrollmentResponse.emptyInit() as EnrollmentResponse
+        result.setValue(it["enrolled"] as Any?, forKey: "enrolled")
+        result.setValue(PersonDatabase.Person.decode(it["person"] as Any?), forKey: "person")
+        result.setValue((it["searchPersons"] as? [[String: Any]])?.compactMap { PersonDatabase.SearchPerson.decode2($0) }, forKey: "searchPersons")
+        return result
+    }
+    func encode() -> [String: Any?] {
+        return [
+            "enrolled": self.enrolled,
+             "person": self.person?.encode(),
+             "searchPersons": self.searchPersons?.map { $0.encode2() },
+         ]
+     }
+ }
+
+ public extension VerificationMatchResponse {
+     static func decode(_ it: Any?) -> VerificationMatchResponse? {
+         guard let it = it as? [String: Any] else { return nil }
+         let result = VerificationMatchResponse.emptyInit() as VerificationMatchResponse
+         result.setValue(it["verified"] as Any?, forKey: "verified")
+         result.setValue(it["similarity"] as Any?, forKey: "similarity")
+         return result
+     }
+     func encode() -> [String: Any?] {
+         return [
+             "verified": self.verified,
+             "similarity": self.similarity == nil ? 0.0 : self.similarity,
+         ]
+     }
+ }
+
+ public extension VerificationResponse {
+     static func decode(_ it: Any?) -> VerificationResponse? {
+         guard let it = it as? [String: Any] else { return nil }
+         let result = VerificationResponse.emptyInit() as VerificationResponse
+         result.setValue(it["verified"] as Any?, forKey: "verified")
+         result.setValue(PersonDatabase.Person.decode(it["person"]), forKey: "person")
+         result.setValue(VerificationMatchResponse.decode(it["match"]), forKey: "match")
+         return result
+     }
+     func encode() -> [String: Any?] {
+         return [
+            "verified": self.verified,
+             "person": self.person?.encode(),
+             "match": self.match?.encode(),
+         ]
+     }
+ }
 
 // MARK: - MatchFacesRequest
 
@@ -770,8 +754,8 @@ public extension Date {
         df.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         return df
     }
-    static func decode(_ it: Any?) -> Date {
-        let it = it as! String
+    static func decode(_ it: Any?) -> Date? {
+        guard let it = it as? String else { return nil }
         return formatter().date(from: it)!
     }
     func encode() -> String { return Date.formatter().string(from: self) }
@@ -788,25 +772,31 @@ public extension URL {
 }
 
 public extension PersonDatabase.Person {
-    static func decode(_ it: Any?) -> PersonDatabase.Person {
-        let it = it as! [String: Any]
-        let result = PersonDatabase.Person.emptyInit() as PersonDatabase.Person
+    static func decode(_ it: Any?) -> PersonDatabase.Person? {
+        guard let it = it as? [String: Any] else { return nil }
+        let result = PersonDatabase.Person()
         result.setValue(Date.decode(it["updatedAt"]), forKey: "updatedAt")
         result.setValue(Date.decode(it["createdAt"]), forKey: "createdAt")
         result.setValue(it["name"] as Any?, forKey: "name")
         result.setValue(it["groups"] as Any?, forKey: "groups")
         result.setValue(it["id"] as Any?, forKey: "itemId")
         result.setValue((it["metadata"] as Any?) ?? NSNull(), forKey: "mutableMetadata")
+        result.setValue(it["externalId"] as Any?, forKey: "externalId")
+        result.setValue(Date.decode(it["expireAt"]), forKey: "expireAt")
+        result.setValue(it["ttl"] as Any?, forKey: "ttl")
         return result
     }
-    func encode() -> [String: Any?] {
+    func encode() -> [String: Any?]? {
         return [
-            "updatedAt": self.updatedAt.encode(),
-            "createdAt": self.createdAt.encode(),
+            "updatedAt": self.updatedAt?.encode(),
+            "createdAt": self.createdAt?.encode(),
             "name": self.name,
             "groups": self.groups,
             "id": self.itemId,
             "metadata": self.metadata,
+            "externalId": self.externalId,
+            "expireAt": self.expireAt?.encode(),
+            "ttl": self.ttl,
         ]
     }
     func update(_ it: [String: Any?]) -> Self {
@@ -831,7 +821,7 @@ public extension PersonDatabase.PersonImage {
     func encode() -> [String: Any?] {
         return [
             "url": self.url.encode(),
-            "createdAt": self.createdAt.encode(),
+            "createdAt": self.createdAt?.encode(),
             "path": self.path,
             "contentType": self.contentType,
             "id": self.itemId,
@@ -866,7 +856,7 @@ public extension PersonDatabase.PersonGroup {
     }
     func encode() -> [String: Any?] {
         return [
-            "createdAt": self.createdAt.encode(),
+            "createdAt": self.createdAt?.encode(),
             "name": self.name,
             "id": self.itemId,
             "metadata": self.metadata,
@@ -962,7 +952,7 @@ public extension PersonDatabase.SearchPersonImage {
     func encode2() -> [String: Any?] {
         return [
             "url": self.url.encode(),
-            "createdAt": self.createdAt.encode(),
+            "createdAt": self.createdAt?.encode(),
             "similarity": self.similarity,
             "distance": self.distance,
             "path": self.path,
@@ -985,18 +975,48 @@ public extension PersonDatabase.SearchPerson {
         result.setValue((it["metadata"] as Any?) ?? NSNull(), forKey: "mutableMetadata")
         result.setValue((it["images"] as? [Any])?.map { PersonDatabase.SearchPersonImage.decode2($0) }, forKey: "images")
         result.setValue(PersonDatabase.SearchPersonDetection.decode(it["detection"]), forKey: "detection")
+        result.setValue(it["externalId"] as Any?, forKey: "externalId")
+        result.setValue(Date.decode(it["expireAt"]), forKey: "expireAt")
+        result.setValue(it["ttl"] as Any?, forKey: "ttl")
         return result
     }
     func encode2() -> [String: Any?] {
         return [
             "detection": self.detection.encode(),
             "images": self.images.compactMap({ $0.encode2() }),
-            "createdAt": self.createdAt.encode(),
-            "updatedAt": self.updatedAt.encode(),
+            "createdAt": self.createdAt?.encode(),
+            "updatedAt": self.updatedAt?.encode(),
             "name": self.name,
             "groups": self.groups,
             "id": self.itemId,
             "metadata": self.metadata,
+            "externalId": self.externalId,
+            "expireAt": self.expireAt?.encode(),
+            "ttl": self.ttl,
+        ]
+    }
+}
+
+public extension SearchPersonFilter {
+    static func decode(_ it: Any?) -> Self {
+        let it = it as! [String: Any]
+        let result = Self()
+        result.groups = it["groups"] as! [String]
+        result.threshold = it["threshold"] as! NSNumber?
+        result.limit = it["limit"] as! Int
+        result.setValue(it["fieldName"] as Any?, forKey: "fieldName")
+        result.setValue(it["fieldValues"] as Any?, forKey: "fieldValues")
+        result.setValue(it["exclude"] as Any?, forKey: "exclude")
+        return result
+    }
+    func encode() -> [String: Any?] {
+        return [
+            "groups": self.groups,
+            "threshold": self.threshold,
+            "limit": self.limit,
+            "fieldName": self.fieldName,
+            "fieldValues": self.fieldValues,
+            "exclude": self.exclude,
         ]
     }
 }

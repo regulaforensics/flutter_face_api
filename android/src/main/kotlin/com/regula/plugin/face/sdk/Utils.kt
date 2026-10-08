@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST", "EnumValuesSoftDeprecate", "UseKtx")
 
-package com.regula.plugin.facesdk
+package com.regula.plugin.face.sdk
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,7 +18,7 @@ import com.regula.facesdk.enums.CustomizationFont
 import com.regula.facesdk.enums.ImageType
 import com.regula.facesdk.enums.InitErrorCode
 import com.regula.facesdk.enums.OutputImageCropAspectRatio
-import com.regula.plugin.facesdk.Convert.toDrawable
+import com.regula.plugin.face.sdk.Convert.toDrawable
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -82,9 +82,21 @@ inline fun <reified T> JSONArray?.toArray() = this?.let {
     result
 }
 
+inline fun <reified T> JSONArray?.toArray(fromJson: (JSONObject?) -> T?) = this?.let {
+    val result = arrayOfNulls<T>(length())
+    for (i in 0 until length()) result[i] = fromJson(getJSONObject(i))
+    result
+}
+
 fun <T> Array<T>?.toJson() = this?.let {
     val result = JSONArray()
     for (i in it.indices) result.put(i, it[i])
+    result
+}
+
+fun <T> Array<T>?.toJson(toJson: (T?) -> JSONObject?) = this?.let {
+    val result = JSONArray()
+    for (i in indices) result.put(i, toJson(this[i]))
     result
 }
 
@@ -123,10 +135,14 @@ fun Any.toFloat() = when (this) {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun String.toDate() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(this)!!
+fun String?.toDate() = this?.let {
+    SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(this)!!
+}
 
 @SuppressLint("SimpleDateFormat")
-fun Date.toStr(): String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this)
+fun Date?.toStr(): String? = this?.let {
+    SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this)
+}
 
 fun Any.setColor(customization: Customization, value: Any) {
     val uiConfig = customization.uiConfigurationLive.value!!

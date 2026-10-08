@@ -1,6 +1,6 @@
 part of "../../flutter_face_api.dart";
 
-double? _toDouble(value) => value?.toDouble();
+double? _toDouble(dynamic value) => value?.toDouble();
 
 dynamic _decode(String? value) => value == null ? null : jsonDecode(value);
 

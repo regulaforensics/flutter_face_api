@@ -1,9 +1,12 @@
 # Regula Face SDK plugin for Flutter
+
 <?code-excerpt path-base="example/lib"?>
 
 [![pub package](https://img.shields.io/pub/v/flutter_face_api.svg)](https://pub.dev/packages/flutter_face_api)
 
 Face SDK is a framework that is used for face matching, recognition and liveness detection. This plugin makes possible to use it with flutter.
+
+Requires iOS 15+ & Android 7.0+ (API 24)
 
 ## Documentation
 * [Documentation](https://docs.regulaforensics.com/develop/face-sdk/mobile/)

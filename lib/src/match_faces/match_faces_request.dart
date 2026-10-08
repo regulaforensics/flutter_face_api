@@ -29,7 +29,7 @@ class MatchFacesRequest {
         _metadata = metadata;
 
   @visibleForTesting
-  static MatchFacesRequest? fromJson(jsonObject) {
+  static MatchFacesRequest? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
 
     List<MatchFacesImage> images = [];

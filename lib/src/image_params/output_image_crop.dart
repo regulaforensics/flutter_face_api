@@ -34,7 +34,7 @@ class OutputImageCrop {
         _returnOriginalRect = returnOriginalRect ?? false;
 
   @visibleForTesting
-  static OutputImageCrop? fromJson(jsonObject) {
+  static OutputImageCrop? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     return OutputImageCrop(
       OutputImageCropAspectRatio.getByValue(jsonObject["type"])!,

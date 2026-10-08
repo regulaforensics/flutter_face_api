@@ -62,7 +62,7 @@ class CustomizationFonts {
   }
 
   /// Allows you to deserialize object.
-  static CustomizationFonts fromJson(jsonObject) {
+  static CustomizationFonts fromJson(dynamic jsonObject) {
     var result = CustomizationFonts();
     result.testSetters = {};
 

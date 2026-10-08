@@ -28,7 +28,7 @@ class DetectFacesConfig {
         onlyCentralFace = onlyCentralFace;
 
   @visibleForTesting
-  static DetectFacesConfig? fromJson(jsonObject) {
+  static DetectFacesConfig? fromJson(dynamic jsonObject) {
     if (jsonObject == null) return null;
     var result = DetectFacesConfig();
 
