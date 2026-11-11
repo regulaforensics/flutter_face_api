@@ -158,7 +158,7 @@ fun Any.setFont(customization: Customization, value: Any) {
     val uiConfig = customization.uiConfigurationLive.value!!
     val privateFonts = uiConfig.javaClass.getDeclaredField("f")
     privateFonts.isAccessible = true
-    val fonts = privateFonts.get(uiConfig) as HashMap<CustomizationFont, Typeface>
+    val fonts = privateFonts.get(uiConfig) as HashMap<CustomizationFont, Typeface?>
     val privateSizes = uiConfig.javaClass.getDeclaredField("g")
     privateSizes.isAccessible = true
     val fontsSizes = privateSizes.get(uiConfig) as HashMap<CustomizationFont, Int>

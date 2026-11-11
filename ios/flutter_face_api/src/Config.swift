@@ -11,10 +11,28 @@ func setCustomization(_ it: [String: [String: Any]]) {
         for (k, v) in value {
             switch key {
             case("colors"): dict[Int(k)!] = UIColor.decode(v)
-            case("fonts"): dict[Int(k)!] = UIFont.decode(v)
+            case("fonts"): dict[CustomizationFont.fromDartKey(k)] = UIFont.decode(v)
             case("images"): dict[k] = UIImage.decode(v)
             default: break
             }
+        }
+    }
+}
+
+extension CustomizationFont {
+    static func fromDartKey(_ key: String) -> CustomizationFont? {
+        switch key {
+        case "100": return .onboardingScreenStartButton
+        case "101": return .onboardingScreenTitleLabel
+        case "102": return .onboardingScreenSubtitleLabel
+        case "103": return .onboardingScreenMessageLabels
+        case "200": return .cameraScreenHintLabel
+        case "300": return .retryScreenRetryButton
+        case "301": return .retryScreenTitleLabel
+        case "302": return .retryScreenSubtitleLabel
+        case "303": return .retryScreenHintLabels
+        case "400": return .processingScreenLabel
+        default: return nil
         }
     }
 }

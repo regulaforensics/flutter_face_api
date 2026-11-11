@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.os.Build
 import android.util.Pair
 import android.util.Size
 import com.regula.facesdk.configuration.EnrollmentConfiguration
@@ -85,13 +86,19 @@ import java.lang.Float
 
 // Config ------------------------------
 
-fun typefaceFromJSON(it: JSONObject) = Pair(
-    Typeface.create(
-        it.getString("name"),
-        it.optInt("style", Typeface.NORMAL)
-    ),
-    it.getIntOrNull("size")
-)
+@SuppressLint("DiscouragedApi")
+fun typefaceFromJSON(it: JSONObject): Pair<Typeface?, Int?> {
+    val name = it.getString("name")
+    val font = try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            context.resources.getFont(context.resources.getIdentifier(name, "font", context.packageName))
+        else null
+    } catch (_: Exception) { null }
+    return Pair(
+        font ?: Typeface.create(name, it.optInt("style", Typeface.NORMAL)), 
+        it.getIntOrNull("size")
+    )
+}
 
 fun faceCaptureConfigFromJSON(input: JSONObject) = input.let {
     val result = FaceCaptureConfiguration.Builder()
